@@ -1,31 +1,32 @@
 import React from 'react';
 import { useState } from 'react';
-import './Login.css';
+import { Link } from 'react-router-dom';
+import './DangNhap.css';
 
-export default function Login() {
+export default function DangNhap() {
 
-  const [isShown, setIsSHown] = useState(false);
+  const [isShown, setIsShown] = useState(false);
   const togglePassword = () => {
-    setIsSHown((isShown) => !isShown);
+    setIsShown((isShown) => !isShown);
   };
 
   return (
-   <div className='container'>
+   <div className='dangnhap'>
     <div className='header-container'>
-      <h1>SIGN IN</h1>
+      <h1>Dang nhap</h1>
       <div className='sub-title'>
         <h3>Welcome!</h3>
         <h4>Sign to continue</h4>
       </div> 
     </div>
-    <div className='content'>
+    <div className='dangnhap-content'>
       <form action="form" onSubmit={(e) => e.preventDefault()}>
         <div className='input-container'>
           <label>Email</label>
           <input type="email" placeholder='Email' required/>
         </div>
         <div className='input-container'>
-          <label>Password</label>
+          <label>Mat khau</label>
           <input       
             type={isShown ? "text" : "password"}
             placeholder='Password' required
@@ -38,22 +39,26 @@ export default function Login() {
                 checked={isShown}
                 onChange={togglePassword}
               />
-            Show password?</label>
+            Hien?</label>
           </div>
         </div>
         <div className='checkbox-container'>
           <div className='checkbox-remember'>
-            <input type="checkbox" value="remember"/> Remember me
+            <input type="checkbox" value="remember"/> Ghi nho
           </div>
           <div className='forgot-password'>
-            Forgot <a href="#">Password ?</a>
+            Quen <a href="#">mat khau ?</a>
           </div>
         </div>
         
-        <button type='button'>SIGN IN</button>
+        
+        <Link to='/trangchu'>
+          <button className='btn-dangnhap' type='button'>DANG NHAP</button>
+        </Link>
+
         <div className='signUp'>
-          Don't have an account ?
-          <a href="#">SIGN UP NOW</a>
+          Khong co tai khoan ?
+          <Link to='/dangky'>Dang ky ngay</Link>
         </div>
       </form>
     </div>

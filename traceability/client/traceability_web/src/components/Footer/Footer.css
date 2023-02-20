@@ -1,0 +1,27 @@
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #2ECC71;
+  color: #fff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.footer img {
+  margin: 0.2rem;
+  border-radius: 0.5rem;
+}
+
+.trace-logo {
+  width: 100px;
+}
+
+.hcmus-logo {
+  width: 230px;
+}
+

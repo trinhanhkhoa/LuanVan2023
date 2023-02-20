@@ -1,0 +1,82 @@
+.sanpham {
+  display: flex;
+  flex-direction: column;
+}
+
+.sanpham-tieude {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: space-between;
+  margin: 2rem 4rem;
+}
+
+.btn-themsanpham {
+  width: 10rem;
+  height: 3rem;
+  border-radius: 10px;
+  background-color: #2ECC71;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.danhsachsanpham {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  width: 112rem;
+  height: 50vh;
+  border: 2px solid forestgreen;
+  border-radius: 0.5rem;
+  margin-bottom: 14rem;
+}
+  
+th {
+  border-bottom: 1px solid black;
+  margin: 20px;
+  font-size: 22px;
+}
+  
+td {
+  text-align: center;
+  font-size: 18px;
+}
+
+.btn-xem {
+  padding: 12px;
+  background-color: #2ECC71;
+  border-radius: 0.5rem;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.btn-xem:hover, .btn-themsanpham:hover {
+  transition: background-color 350ms ease-out;
+  background-color: forestgreen;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.check-icon {
+  color: rgb(8, 238, 27);
+  width: 30px;
+  height: 30px;
+}
+
+.close-icon {
+  color: red;
+  width: 30px;
+  height: 30px;
+}
