@@ -24,7 +24,7 @@ export default function TrangChu() {
         </div>
         <div className="trangchu-content">
           <div className="btn-taoma">
-            <Link to="#" className="link-icon">
+            <Link to="/taoqr" className="link-icon">
               <TbIcons.TbQrcode className="qr-icon"/>          
               Tạo mã QR
             </Link>

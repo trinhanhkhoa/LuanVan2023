@@ -1,0 +1,87 @@
+.taoqr {
+  display: flex;
+  margin: 2rem;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  height: 100%;
+}
+
+.taoqr-container {
+  margin-left: 3rem;
+}
+
+.tieude-taoqr {
+  margin: 1rem;
+}
+
+.tieude-taoqr h4 {
+  font-style: italic;
+  font-weight: 100;
+  margin-top: 1rem;
+}
+
+.dienthongtin {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* .dienthongtin label {
+  font-size: 18px;
+} */
+
+.dienthongtin b, .chuthich b, .motasanpham b  {
+  color: red;
+}
+
+.dienthongtin-1, .dienthongtin-2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.tensanpham, .thoigiantrongsanpham, .diachisanpham, .hinhanhsanpham, .motasanpham {
+  display: flex;
+  flex-direction: column;
+  margin: 1.25rem;
+  font-size: 18px;
+}
+
+.tensanpham input, .thoigiantrongsanpham input, .diachisanpham input {
+  margin-top: 1rem;
+  width: 50rem;
+}
+
+.motasanpham textarea {
+  width: 105rem;
+  height: 8rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+}
+.themhinhanh-icon {
+  font-size: 6rem;
+}
+
+.btn-xacnhan {
+  width: 6rem;
+  height: 3rem;
+  margin: 1rem;
+  background-color: #DD8600;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.btn-xacnhan:hover {
+  transition: background-color 350ms ease-out;
+  background-color: #ff9900;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.chuthich {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1rem;
+}
