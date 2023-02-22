@@ -12,7 +12,7 @@ export const SidebarData = [
   },
   {
     title: "Sản Phẩm",
-    path: '/sanpham',
+    path: '/danhsachsanpham',
     icon: <FaIcons.FaCartPlus/>,
     cName: 'nav-text'
   }

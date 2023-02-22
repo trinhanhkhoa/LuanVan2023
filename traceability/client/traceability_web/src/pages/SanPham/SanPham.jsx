@@ -1,63 +1,77 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './SanPham.css';
 import Navbar from "../../components/Navbar";
-import * as MdIcons from "react-icons/md";
-import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
+import cam from "../../asserts/cam.jpg";
+import * as TbIcons from "react-icons/tb";
+import Popup from '../../components/Popup/Popup';
 
-const data = [
-  {id: 1, ten: "Táo", ma: "001", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 1},
-  {id: 2, ten: "Chuối", ma: "002", trangthai: <MdIcons.MdClose className="close-icon"/>, solan: 2},
-  {id: 3, ten: "Xoài", ma: "003", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 0},
-  {id: 4, ten: "Ổi", ma: "004", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 0},
-  {id: 5, ten: "Cam", ma: "005", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 0},
+function SanPham() {
+  const [isOpen, setIsOpen] = useState(false);
+ 
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  }
 
-]
-
-function ProductScreen() {
   return (
     <>
-      <Navbar />
-      <div className='sanpham'>
-        <div className='sanpham-tieude'>
-          <h2>Danh sách sản phẩm</h2>
-          <Link to="#" className="btn-themsanpham">
-            Thêm sản phẩm
-          </Link>
-        </div>
-        <div className="danhsachsanpham">
-          <table>
-            <tr>
-              <th>ID</th>
-              <th>Tên sản phẩm</th>
-              <th>Mã sản phẩm</th>
-              <th>Trạng thái</th>
-              <th>Số lần cập nhật</th>
-              <th></th>
-            </tr>
-            {data.map((val, key) => {
-              return (
-                <tr key={key}>
-                  <td>{val.id}</td>
-                  <td>{val.ten}</td>
-                  <td>{val.ma}</td>
-                  <td>{val.trangthai}</td>
-                  <td>{val.solan}</td>
-                  <td>
-                    <Link to="#" className="btn-xem">
-                      Xem
-                    </Link>
-                  </td>
-                </tr>
-              )
-            })}
-          </table>
+    <Navbar/>
+    <div className='sanpham'>
+      <div className='hinhanh-btn'>
+        <img src={cam} className='hinhanh-sanpham'/>
+        <div className='btn-thongtin'>
+          <input type='button' value="Cập nhật sản phẩm" className='btn-capnhat'/>
           
+          <input type='button' value="Xóa sản phẩm" className='btn-xoa'/>
         </div>
       </div>
-      <Footer/>
-    </>
+      <div className='mota'>
+        <div className='mota-1'>
+          <TbIcons.TbQrcode className="qr-icon"/>          
+          <div className='thongtin-1'>
+            <p><b>Tên sản phẩm:</b> Cam</p>
+            <p><b>Mã sản phảm:</b> 001</p>
+            <p><b>Thời gian trồng:</b> 3 năm</p>
+          </div>
+        </div>
+        <div className='diachi'>
+          <p><b>Địa chỉ: </b> 227 Đường Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh</p>
+        </div>
+        <div className='mota-2'>
+          <ul>
+            <h2>Mô tả:</h2>
+            <li><p>Thời gian tưới nước: 30 phút</p></li>
+            <li><p>Phân bón hữu cơ: 7 kg</p></li>
+            <li><p>Phân bón vô cơ: 1 g</p></li>
+          </ul>
+        </div>
+
+        <div className='mota-3'>
+          <div className='capnhat'>
+            <p><b>Số lần cập nhật: </b> 2 lần</p>
+          </div>
+          <input type="button" value="Chi tiết" onClick={togglePopup}/>
+          {isOpen && <Popup
+            content={
+              <div className='popup-chitiet'>
+                <b>Thông tin cập nhật</b>
+                <ul>
+                  <li>Thời gian tưới nước: 20 phút</li>
+                  <li>Phân bón hữu cơ: 5 kg</li>
+                  <li>Phân bón vô cơ: 1 g</li>
+                  <li>Thuốc trừ sâu: Sherpa 25EC, Trebon 2.5 EC</li>
+                </ul>
+              </div>
+              }
+            handleClose={togglePopup}
+          />}      
+        </div>
+      </div>
+    </div>
+    <Footer/>
+  </>
+  
   )
 }
 
-export default ProductScreen
+export default SanPham

@@ -1,42 +1,31 @@
-import React from "react";
-import "./TrangChu.css";
+import React from 'react';
+import './DanhSachSanPham.css';
 import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer/Footer";
-import tintuc from "../../asserts/tintuc.png";
-import * as TbIcons from "react-icons/tb";
 import * as MdIcons from "react-icons/md";
 import { Link } from "react-router-dom";
+import Footer from "../../components/Footer/Footer";
 
 const data = [
   {id: 1, ten: "Táo", ma: "001", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 1},
   {id: 2, ten: "Chuối", ma: "002", trangthai: <MdIcons.MdClose className="close-icon"/>, solan: 2},
   {id: 3, ten: "Xoài", ma: "003", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 0},
+  {id: 4, ten: "Ổi", ma: "004", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 0},
+  {id: 5, ten: "Cam", ma: "005", trangthai: <MdIcons.MdCheck className="check-icon"/>, solan: 0},
 
 ]
 
-export default function TrangChu() {
+function DanhSachSanPham() {
   return (
     <>
       <Navbar />
-      <div className="trangchu">
-        <div className="tintuc">
-          <img src={tintuc}/>
+      <div className='danhsachsanpham'>
+        <div className='danhsachsanpham-tieude'>
+          <h2>Danh sách sản phẩm</h2>
+          <Link to="#" className="btn-themsanpham">
+            Thêm sản phẩm
+          </Link>
         </div>
-        <div className="trangchu-content">
-          <div className="btn-taoma">
-            <Link to="#" className="link-icon">
-              <TbIcons.TbQrcode className="qr-icon"/>          
-              Tạo mã QR
-            </Link>
-          </div>
-          <div className="btn-quytrinh">
-            <Link to="/quytrinh" className="link-icon">
-              <MdIcons.MdChangeCircle className="process-icon"/>
-              Chọn quy trình
-            </Link>
-          </div>
-        </div>
-        <div className="danhsach">
+        <div className="bangdanhsachsanpham">
           <table>
             <tr>
               <th>ID</th>
@@ -63,10 +52,12 @@ export default function TrangChu() {
               )
             })}
           </table>
+          
         </div>
       </div>
       <Footer/>
     </>
-    
-  );
+  )
 }
+
+export default DanhSachSanPham
