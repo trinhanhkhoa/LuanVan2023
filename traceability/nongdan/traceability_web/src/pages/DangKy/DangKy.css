@@ -20,6 +20,7 @@
   font-size: 30px;
   font-weight: 700;
   text-align: left;
+  margin-top: 1rem;
   margin-left: 12%;
   margin-bottom: 0;
   color: #04AA6D;
@@ -42,10 +43,11 @@
   padding: 10px;
 }
 
-.show-password {
+.show-password input {
   padding-top: 0;
   text-align: right;
   font-size: 14px;
+  margin: 0.2rem;
 }
 
 input {
@@ -78,15 +80,20 @@ a {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
+.checkbox-remember a{
+  color: #2d68c2;
+}
+
 .btn-dangky:hover {
   background-color: #0c4e36;
 }
 
-.signUp {
+.dacotaikhoan {
   display: flex;
   flex-direction: column;
   padding: 20px;
   gap: 8px;
   align-items: center;
   font-size: 15px;
+  color: #2d68c2;
 }

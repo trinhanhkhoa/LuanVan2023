@@ -5,6 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import cam from "../../asserts/cam.jpg";
 import * as TbIcons from "react-icons/tb";
 import Popup from '../../components/Popup/Popup';
+import { Link } from 'react-router-dom';
 
 function SanPham() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +21,12 @@ function SanPham() {
       <div className='hinhanh-btn'>
         <img src={cam} className='hinhanh-sanpham'/>
         <div className='btn-thongtin'>
-          <input type='button' value="Cập nhật sản phẩm" className='btn-capnhat'/>
-          
-          <input type='button' value="Xóa sản phẩm" className='btn-xoa'/>
+          <Link to="/capnhatsanpham">
+            <input type='button' value="Cập nhật sản phẩm" className='btn-capnhat'/>
+          </Link>
+          <Link to="/danhsachsanpham">
+            <input type='button' value="Xóa sản phẩm" className='btn-xoa'/>
+          </Link>
         </div>
       </div>
       <div className='mota'>

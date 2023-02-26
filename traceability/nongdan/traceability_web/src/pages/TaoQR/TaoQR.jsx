@@ -45,7 +45,9 @@ function TaoQR() {
           </div>
           <div className='chuthich'>
             <p><b>(*)</b>: Thông tin bắt buộc</p>
-            <input type="button" value="Xác nhận" className='btn-xacnhan'/>
+            <Link to="/danhsachsanpham">
+              <input type="button" value="Xác nhận" className='btn-xacnhan'/>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
-import Login from "./pages/DangNhap/DangNhap";
-import Register from "./pages/DangKy/DangKy";
+import DangNhap from "./pages/DangNhap/DangNhap";
+import DangKy from "./pages/DangKy/DangKy";
 import TrangChu from "./pages/TrangChu/TrangChu";
 import DanhSachSanPham from './pages/DanhSachSanPham/DanhSachSanPham';
 import QuyTrinh from './pages/QuyTrinh/QuyTrinh';
@@ -14,8 +14,8 @@ function App() {
   return (
     <div className="App">
       <Routes>
-          <Route path="/" element={<Login/>}/>
-          <Route path="/dangky" element={<Register/>}/>
+          <Route path="/" element={<DangNhap/>}/>
+          <Route path="/dangky" element={<DangKy/>}/>
 
           <Route path="/trangchu" element={<TrangChu/>}/>
           <Route path="/danhsachsanpham" element={<DanhSachSanPham/>}/>

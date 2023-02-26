@@ -3,6 +3,7 @@ import './CapNhatSanPham.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer/Footer';
 import * as FcIcons from 'react-icons/fc';
+import * as TbIcons from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 
 function CapNhatSanPham() {
@@ -15,8 +16,14 @@ function CapNhatSanPham() {
             <h1>Mô tả sản phẩm</h1>
             <h4>Thông tin giới thiệu sản phẩm</h4>
           </div>
-          <div className='dienthongtin'>
-            <div className='dienthongtin-1'>
+          <div className='capnhatthongtin'>
+            <div className='capnhatthongtin-1'>
+              <TbIcons.TbQrcode className="qr-icon"/>
+              <Link to="/sanpham">
+                <input type="button" className='btn-xemsanpham' value="Xem sản phẩm"/>
+              </Link>
+            </div>
+            <div className='capnhatthongtin-1'>
               <div className='tensanpham'>
                 <label>Tên sản phẩm <b>(*)</b></label>
                 <input type="text" placeholder='Tên sản phẩm' required/>
@@ -26,7 +33,7 @@ function CapNhatSanPham() {
                 <input type="text" placeholder='Thời gian trồng' required/>
               </div>
             </div>
-            <div className='dienthongtin-2'>
+            <div className='capnhatthongtin-2'>
               <div className='diachisanpham'>
                 <label>Địa chỉ <b>(*)</b></label>
                 <input type="text" placeholder='Địa chỉ'required/>
@@ -45,7 +52,9 @@ function CapNhatSanPham() {
           </div>
           <div className='chuthich'>
             <p><b>(*)</b>: Thông tin bắt buộc</p>
-            <input type="button" value="Xác nhận" className='btn-xacnhan'/>
+            <Link to="/danhsachsanpham">
+              <input type="button" value="Xác nhận" className='btn-xacnhan'/>
+            </Link>
           </div>
         </div>
       </div>

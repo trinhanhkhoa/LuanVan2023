@@ -13,10 +13,10 @@ export default function DangNhap() {
   return (
    <div className='dangnhap'>
     <div className='header-container'>
-      <h1>Dang nhap</h1>
+      <h1>Đăng Nhập</h1>
       <div className='sub-title'>
-        <h3>Welcome!</h3>
-        <h4>Sign to continue</h4>
+        <h3>Chào mừng!</h3>
+        <h4>Đăng nhập để tiếp tục</h4>
       </div> 
     </div>
     <div className='dangnhap-content'>
@@ -26,7 +26,7 @@ export default function DangNhap() {
           <input type="email" placeholder='Email' required/>
         </div>
         <div className='input-container'>
-          <label>Mat khau</label>
+          <label>Mật khẩu</label>
           <input       
             type={isShown ? "text" : "password"}
             placeholder='Password' required
@@ -39,26 +39,26 @@ export default function DangNhap() {
                 checked={isShown}
                 onChange={togglePassword}
               />
-            Hien?</label>
+            Hiện mật khẩu</label>
           </div>
         </div>
         <div className='checkbox-container'>
           <div className='checkbox-remember'>
-            <input type="checkbox" value="remember"/> Ghi nho
+            <input type="checkbox" value="remember"/> Ghi nhớ
           </div>
           <div className='forgot-password'>
-            Quen <a href="#">mat khau ?</a>
+            Quên <a href="#">mật khẩu ?</a>
           </div>
         </div>
         
         
         <Link to='/trangchu'>
-          <button className='btn-dangnhap' type='button'>DANG NHAP</button>
+          <button className='btn-dangnhap' type='button'>ĐĂNG NHẬP</button>
         </Link>
 
         <div className='signUp'>
-          Khong co tai khoan ?
-          <Link to='/dangky'>Dang ky ngay</Link>
+          Bạn không có tài khoản ?
+          <Link to='/dangky'>Đăng ký ngay</Link>
         </div>
       </form>
     </div>

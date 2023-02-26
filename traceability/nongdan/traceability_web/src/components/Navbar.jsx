@@ -19,7 +19,7 @@ function Navbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <Link to="#" className="user">
+          <Link to="/" className="user">
             <FaIcons.FaRegUserCircle/>
           </Link>
         </div>

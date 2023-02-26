@@ -20,21 +20,17 @@
   margin-top: 1rem;
 }
 
-.dienthongtin {
+.capnhatthongtin {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-/* .dienthongtin label {
-  font-size: 18px;
-} */
-
-.dienthongtin b, .chuthich b, .motasanpham b  {
+.capnhatthongtin b, .chuthich b, .motasanpham b  {
   color: red;
 }
 
-.dienthongtin-1, .dienthongtin-2 {
+.capnhatthongtin-1, .capnhatthongtin-2 {
   display: flex;
   flex-direction: column;
 }
@@ -48,7 +44,7 @@
 
 .tensanpham input, .thoigiantrongsanpham input, .diachisanpham input {
   margin-top: 1rem;
-  width: 50rem;
+  width: 40rem;
 }
 
 .motasanpham textarea {
@@ -73,12 +69,32 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
+.btn-xemsanpham {
+  width: 10rem;
+  height: 3rem;
+  margin: 1rem;
+  background-color: #2ECC71;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
 .btn-xacnhan:hover {
   transition: background-color 350ms ease-out;
   background-color: #ff9900;
   /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
+
+.btn-xemsanpham:hover {
+  transition: background-color 350ms ease-out;
+  background-color: forestgreen;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
 
 .chuthich {
   display: flex;

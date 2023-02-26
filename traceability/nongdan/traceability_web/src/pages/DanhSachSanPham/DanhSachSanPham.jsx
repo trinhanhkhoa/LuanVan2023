@@ -21,7 +21,7 @@ function DanhSachSanPham() {
       <div className='danhsachsanpham'>
         <div className='danhsachsanpham-tieude'>
           <h2>Danh sách sản phẩm</h2>
-          <Link to="#" className="btn-themsanpham">
+          <Link to="/taoqr" className="btn-themsanpham">
             Thêm sản phẩm
           </Link>
         </div>
@@ -44,7 +44,7 @@ function DanhSachSanPham() {
                   <td>{val.trangthai}</td>
                   <td>{val.solan}</td>
                   <td>
-                    <Link to="/sanpham" className="btn-xem">
+                    <Link to="/capnhatsanpham" className="btn-xem">
                       Xem
                     </Link>
                   </td>
