@@ -61,7 +61,7 @@
   align-items: center;
 }
 
-table {
+.danhsach table {
   width: 112rem;
   height: 30vh;
   border: 2px solid forestgreen;
@@ -69,13 +69,13 @@ table {
   margin-bottom: 14rem;
 }
   
-th {
+.danhsach th {
   border-bottom: 1px solid black;
   margin: 20px;
   font-size: 22px;
 }
   
-td {
+.danhsach td {
   text-align: center;
   font-size: 18px;
 }

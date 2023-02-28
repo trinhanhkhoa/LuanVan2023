@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1, 
+    "ten": "Táo", 
+    "ma": "001", 
+    "trangthai": true, 
+    "solan": 1
+  },
+  {
+    "id": 2, 
+    "ten": "Cam", 
+    "ma": "002", 
+    "trangthai": true, 
+    "solan": 0
+  },
+  {
+    "id": 3, 
+    "ten": "Xoài", 
+    "ma": "003", 
+    "trangthai": false, 
+    "solan": 2
+  },
+  {
+    "id": 4, 
+    "ten": "Chanh", 
+    "ma": "004", 
+    "trangthai": true, 
+    "solan": 1
+  },
+  {
+    "id": 5, 
+    "ten": "Quýt", 
+    "ma": "005", 
+    "trangthai": true, 
+    "solan": 1
+  },
+  {
+    "id": 6, 
+    "ten": "Nho", 
+    "ma": "006", 
+    "trangthai": false, 
+    "solan": 3
+  }
+]

@@ -3,7 +3,7 @@ import "./App.css";
 import DangNhap from "./pages/DangNhap/DangNhap";
 import DangKy from "./pages/DangKy/DangKy";
 import TrangChu from "./pages/TrangChu/TrangChu";
-import DanhSachSanPham from './pages/DanhSachSanPham/DanhSachSanPham';
+import ListOfProducts from './pages/ListOfProducts/ListOfProducts';
 import QuyTrinh from './pages/QuyTrinh/QuyTrinh';
 import SanPham from "./pages/SanPham/SanPham";
 import TaoQR from "./pages/TaoQR/TaoQR";
@@ -18,7 +18,7 @@ function App() {
           <Route path="/dangky" element={<DangKy/>}/>
 
           <Route path="/trangchu" element={<TrangChu/>}/>
-          <Route path="/danhsachsanpham" element={<DanhSachSanPham/>}/>
+          <Route path="/list" element={<ListOfProducts/>}/>
           <Route path="/quytrinh" element={<QuyTrinh/>}/>
           <Route path="/sanpham" element={<SanPham/>}/>
           

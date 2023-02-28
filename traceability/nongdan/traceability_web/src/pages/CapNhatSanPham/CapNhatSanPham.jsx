@@ -1,16 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CapNhatSanPham.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer/Footer';
 import * as FcIcons from 'react-icons/fc';
 import * as TbIcons from 'react-icons/tb';
 import { Link } from 'react-router-dom';
+import Popup from '../../components/Popup/Popup';
+
 
 function CapNhatSanPham() {
+  const [isOpen, setIsOpen] = useState(false);
+ 
+  const togglePopup = () => {
+    setIsOpen(isOpen);
+  }
+
   return (
     <>
       <Navbar/>
-      <div className='capnhatsanpham'>
+      <div className='capnhatsanpham' >
+      {/* onClick={togglePopup} */}
+        {/* <Popup
+          content={
+            <div className='popup-thongbao'>
+              <b>Thông tin hôm nay đã cập nhật chưa ?</b>
+            </div>
+            }
+          handleClose={togglePopup}
+        /> */}
+        
         <div className='capnhatsanpham-container'>
           <div className='tieude-capnhatsanpham'>
             <h1>Mô tả sản phẩm</h1>
