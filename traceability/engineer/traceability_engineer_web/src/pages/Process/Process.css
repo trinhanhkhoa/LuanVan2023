@@ -1,0 +1,103 @@
+.process {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 3rem;
+}
+
+.process-title {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 2rem 4rem;
+}
+
+.btn-add-process {
+  width: 10rem;
+  height: 3rem;
+  border-radius: 10px;
+  background-color: #2ECC71;
+  color: #fff;
+  font-size: 18px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.list-process {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.list-process table {
+  width: 112rem;
+  height: 50vh;
+  border: 2px solid forestgreen;
+  border-radius: 0.5rem;
+}
+  
+.list-process th {
+  border-bottom: 1px solid black;
+  margin: 20px;
+  font-size: 22px;
+}
+  
+.list-process td {
+  text-align: center;
+  font-size: 18px;
+}
+
+.btn-watch {
+  padding: 12px;
+  background-color: #2ECC71;
+  border-radius: 0.5rem;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.btn-watch:hover, .btn-add-process:hover {
+  transition: background-color 350ms ease-out;
+  background-color: forestgreen;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.list-process .pagination {
+  display: inline-flex;
+  margin-top: 3rem;
+}
+
+.list-process .page-item {
+  list-style-type: none;
+  margin: 0.5rem;
+  color: #000;
+}
+
+.list-process .page-link {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #2ECC71;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.list-process .page-item:hover {
+  font-weight: 700;
+  border-radius: 2rem;
+  transition: background-color 350ms ease-out;
+  box-shadow: 0 10px 15px -3px rgba(46, 41, 51, 0.08),
+  0 4px 6px -2px rgba(71, 63, 79, 0.16);
+}
+
+.list-process .page-link:hover {
+  transition: background-color 350ms ease-out;
+  background-color: forestgreen;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
