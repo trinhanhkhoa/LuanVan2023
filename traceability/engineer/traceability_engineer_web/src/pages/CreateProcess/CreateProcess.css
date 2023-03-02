@@ -1,4 +1,4 @@
-.create-qr {
+.create-process {
   display: flex;
   margin: 2rem;
   border: 1px solid #000;
@@ -6,15 +6,15 @@
   height: 100%;
 }
 
-.create-qr-container {
+.create-process-container {
   margin-left: 3rem;
 }
 
-.create-qr-title {
+.create-process-title {
   margin: 1rem;
 }
 
-.create-qr-title h4 {
+.create-process-title h4 {
   font-style: italic;
   font-weight: 100;
   margin-top: 1rem;
@@ -35,14 +35,14 @@
   flex-direction: column;
 }
 
-.product-name, .time, .address, .image, .describe {
+.process-name, .time, .address, .image, .describe {
   display: flex;
   flex-direction: column;
   margin: 1.25rem;
   font-size: 18px;
 }
 
-.product-name input, .time input, .address input {
+.process-name input, .time input, .address input {
   margin-top: 1rem;
   width: 50rem;
 }

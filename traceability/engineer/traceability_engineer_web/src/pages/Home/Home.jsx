@@ -6,17 +6,8 @@ import news_img from "../../asserts/news.png";
 import * as TbIcons from "react-icons/tb";
 import * as MdIcons from "react-icons/md";
 import { Link } from "react-router-dom";
-import DataProcess from '../../DataProcess.json';
 
 export default function Home() {
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const records = DataProcess.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(DataProcess.length / recordsPerPage);
-  const numbers = [...Array(npage + 1).keys()].slice(1);
 
   return (
     <>
@@ -27,84 +18,21 @@ export default function Home() {
         </div>
         <div className="home-content">
           <div className="btn-createQR">
-            <Link to="/createQR" className="link-icon">
+            <Link to="/createprocess" className="link-icon">
               <TbIcons.TbQrcode className="qr-icon"/>          
-              Create QR
+              Create process
             </Link>
           </div>
           <div className="btn-process">
-            <Link to="/process" className="link-icon">
+            <Link to="/list" className="link-icon">
               <MdIcons.MdChangeCircle className="process-icon"/>
               Choose process
             </Link>
           </div>
-        </div>
-        <div className="list-item">
-          <table>
-            <tr>
-              <th>Ordinal numbers</th>
-              <th>Product's name</th>
-              <th>Product's ID</th>
-              <th></th>
-            </tr>
-            {records.map((val, key) => {
-              return (
-                <tr key={key}>
-                  <td>{val.id}</td>
-                  <td>{val.name}</td>
-                  <td>{val.pID}</td>
-                  <td>
-                    <Link to="/product" className="btn-watch">
-                      Watch
-                    </Link>
-                  </td>
-                </tr>
-              )
-            })}
-          </table>
-          <nav>
-            <ul className='pagination'>
-              <li className='page-item'>
-                <a href="#" className='page-link' onClick={prePage}>
-                  Prev
-                </a>
-              </li>
-              {
-                numbers.map((n, i) => (
-                  <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-                    <a href="#" className='page-item' onClick={() => changePage(n)}>
-                      {n}
-                    </a>
-                  </li>
-                ))
-              }
-              <li className='page-item'>
-                <a href="#" className='page-link' onClick={nextPage}>
-                  Next
-                </a>
-              </li>
-            </ul>
-          </nav>
         </div>
       </div>
       <Footer/>
     </>
     
   );
-
-  function prePage() {
-    if(currentPage !== 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
-  
-  function changePage(id) {
-    setCurrentPage(id)
-  }
-
-  function nextPage() {
-    if(currentPage !== npage) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
 }

@@ -1,105 +1,65 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './Process.css';
 import Navbar from "../../components/Navbar";
-import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
-import DataProcess from '../../DataProcess.json';
-
-// const data = [
-//   {id: 1, name: "Process of planting Apple", pID: "001"},
-//   {id: 2, name: "Process of planting Banana", pID: "002"},
-//   {id: 3, name: "Process of planting Mango", pID: "003"},
-//   {id: 4, name: "Process of planting Grape", pID: "004"},
-//   {id: 5, name: "Process of planting Orange", pID: "005"},
-// ]
+import Popup from '../../components/Popup/Popup';
+import { Link } from 'react-router-dom';
+import DataProcess from "../../DataProcess.json";
 
 function Process() {
+  const [isOpen, setIsOpen] = useState(false);
+ 
+  const togglePopup = () => {
+    setIsOpen(!isOpen);
+  }
   
-  const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
-  const lastIndex = currentPage * recordsPerPage;
-  const firstIndex = lastIndex - recordsPerPage;
-  const records = DataProcess.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(DataProcess.length / recordsPerPage);
-  const numbers = [...Array(npage + 1).keys()].slice(1);
-
   return (
     <>
-      <Navbar />
-      <div className='process'>
-        <div className='process-title'>
-          <h2>List of processes</h2>
-          <Link to="#" className="btn-add-process">
-            Add process
-          </Link>
+    <Navbar/>
+    <div className='process'>
+      <div className='description'>
+        <div className='description-1'>   
+          <div className='information'>
+            <p><b>Process's name:</b> {DataProcess[0].name}</p>
+            <p><b>Process's ID: </b> {DataProcess[0].pID}</p>
+          </div>
         </div>
-        <div className="list-process">
-          <table>
-            <tr>
-              <th>ID</th>
-              <th>Process's Name</th>
-              <th>Process's ID</th>
-              <th></th>
-            </tr>
-            {records.map((val, key) => {
-              return (
-                <tr key={key}>
-                  <td>{val.id}</td>
-                  <td>{val.name}</td>
-                  <td>{val.pID}</td>
-                  <td>
-                    <Link to="#" className="btn-watch">
-                      Watch
-                    </Link>
-                  </td>
-                </tr>
-              )
-            })}
-          </table>
-          <nav>
-            <ul className='pagination'>
-              <li className='page-item'>
-                <a href="#" className='page-link' onClick={prePage}>
-                  Prev
-                </a>
-              </li>
-              {
-                numbers.map((n, i) => (
-                  <li className={`page-item ${currentPage === n ? 'active' : ''}`} key={i}>
-                    <a href="#" className='page-item' onClick={() => changePage(n)}>
-                      {n}
-                    </a>
-                  </li>
-                ))
+        <div className='address'>
+          <p><b>Address: </b> 227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City</p>
+        </div>
+        <div className='description-2'>
+          <h3>Description:</h3>
+          <p>{DataProcess[0].description.sub}</p>
+        </div>
+
+        <div className='description-3'>
+          <div className='info-btn'>
+            <Link to="/createprocess">
+              <input type='button' value="Update information" className='btn-update-process-info'/>
+            </Link>
+            <Link to="/list">
+              <input type='button' value="Delete process" className='btn-delete'/>
+            </Link>
+          </div>
+          <input type="button" className='btn-detail' value="Detail" onClick={togglePopup}/>
+          {isOpen && <Popup
+            content={
+              <div className='popup-detail'>
+                <h2>Full Process Information</h2>
+                <p>
+                  {DataProcess[0].description.full}
+                </p>
+              </div>
               }
-              <li className='page-item'>
-                <a href="#" className='page-link' onClick={nextPage}>
-                  Next
-                </a>
-              </li>
-            </ul>
-          </nav>
+            handleClose={togglePopup}
+          />}      
         </div>
       </div>
-      <Footer/>
-    </>
-  )
-
-  function prePage() {
-    if(currentPage !== 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
+    </div>
+    <Footer/>
+  </>
   
-  function changePage(id) {
-    setCurrentPage(id)
-  }
-
-  function nextPage() {
-    if(currentPage !== npage) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
+  )
 }
 
 export default Process

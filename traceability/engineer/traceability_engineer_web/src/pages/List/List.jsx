@@ -6,7 +6,7 @@ import * as RiIcons from "react-icons/ri";
 import * as BiIcons from "react-icons/bi";
 import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
-import Data from "../../Data.json";
+import DataProcess from "../../DataProcess.json";
 
 function List() {
 
@@ -14,8 +14,8 @@ function List() {
   const recordsPerPage = 3;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = Data.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(Data.length / recordsPerPage);
+  const records = DataProcess.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(DataProcess.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
   return (
@@ -23,19 +23,17 @@ function List() {
       <Navbar />
       <div className='list'>
         <div className='list-title'>
-          <h2>List of products</h2>
-          <Link to="/createqr" className="btn-add-product">
-            Add product
+          <h2>List of processes</h2>
+          <Link to="/createprocess" className="btn-add-process">
+            Add process
           </Link>
         </div>
-        <div className="product-list">
+        <div className="process-list">
           <table>
             <tr>
               <th>Ordinal numbers</th>
-              <th>Product's name</th>
-              <th>Product's ID</th>
-              <th>Status</th>
-              <th>Number of updates</th>
+              <th>Process's name</th>
+              <th>Process's ID</th>
               <th></th>
             </tr>
             {records.map((val, key) => {
@@ -43,11 +41,12 @@ function List() {
                 <tr key={key}>
                   <td>{val.id}</td>
                   <td>{val.name}</td>
-                  <td>{val.pId}</td>
-                  <td>{val.status}</td>
-                  <td>{val.numberOfUpdates}</td>
+                  <td>{val.pID}</td>
                   <td>
-                    <Link to="/updateproduct" className="btn-edit">
+                    <Link to="/process" className="btn-watch">
+                      <BiIcons.BiSearch/>
+                    </Link>
+                    <Link to="/createprocess" className="btn-edit">
                       <RiIcons.RiEditBoxLine/>
                     </Link>
                     <Link to="/list" className="btn-remove">
