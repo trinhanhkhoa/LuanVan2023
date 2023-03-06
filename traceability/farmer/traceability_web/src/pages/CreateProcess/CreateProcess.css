@@ -1,4 +1,4 @@
-.create-qr {
+.create-process {
   display: flex;
   margin: 2rem;
   border: 1px solid #000;
@@ -6,55 +6,55 @@
   height: 100%;
 }
 
-.create-qr-container {
+.create-process-container {
   margin-left: 3rem;
 }
 
-.create-qr-title {
+.create-process-title {
   margin: 1rem;
 }
 
-.create-qr-title h4 {
+.create-process-title h4 {
   font-style: italic;
   font-weight: 100;
   margin-top: 1rem;
 }
 
-.fill-qr {
+.fill-process {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.fill-qr b, .note-qr b, .describe-qr b  {
+.fill-process b, .note b, .describe b  {
   color: red;
 }
 
-.fill-qr-1, .fill-qr-2 {
+.fill-process-1, .fill-process-2 {
   display: flex;
   flex-direction: column;
 }
 
-.product-name, .time, .address, .image, .describe-qr {
+.process-name, .time-process, .address-process, .image-process, .describe-process {
   display: flex;
   flex-direction: column;
   margin: 1.25rem;
   font-size: 18px;
 }
 
-.product-name input, .time input, .address input {
+.process-name input, .time-process input, .address-process input {
   margin-top: 1rem;
   width: 50rem;
 }
 
-.describe-qr textarea {
+.describe-process textarea {
   width: 105rem;
   height: 8rem;
   margin-top: 0.5rem;
   border-radius: 0.5rem;
 }
 .add-image-icon {
-  font-size: 4rem;
+  font-size: 6rem;
 }
 
 .btn-confirm {
@@ -76,21 +76,8 @@
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
-.note-qr {
+.note-process {
   display: flex;
   justify-content: space-between;
   margin-left: 1rem;
-}
-
-.image form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  border: 2px dashed #1475cf;
-  height: 200px;
-  width: 220px;
-  cursor: pointer;
-  border-radius: 5px;
 }

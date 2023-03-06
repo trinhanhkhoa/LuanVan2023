@@ -19,8 +19,8 @@ function CreateQR() {
             <h1>Describe a product</h1>
             <h4>Product introduction information</h4>
           </div>
-          <div className='fill'>
-            <div className='fill-1'>
+          <div className='fill-qr'>
+            <div className='fill-qr-1'>
               <div className='product-name'>
                 <label>Product's name <b>(*)</b></label>
                 <input type="text" placeholder="Product's name" required/>
@@ -30,7 +30,7 @@ function CreateQR() {
                 <input type="text" placeholder='3 months' required/>
               </div>
             </div>
-            <div className='fill-2'>
+            <div className='fill-qr-2'>
               <div className='address'>
                 <label>Address <b>(*)</b></label>
                 <input type="text" placeholder='Address'required/>
@@ -59,11 +59,11 @@ function CreateQR() {
               </div>
             </div>
           </div>
-          <div className='describe'>
+          <div className='describe-qr'>
             <label>Describe information<b>(*)</b></label>
             <textarea placeholder='Describe information' required/>
           </div>
-          <div className='note'>
+          <div className='note-qr'>
             <p><b>(*)</b>: Required information</p>
             <Link to="/list">
               <input type="button" value="Confirm" className='btn-confirm'/>

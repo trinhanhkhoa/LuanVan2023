@@ -9,6 +9,8 @@ import Product from "./pages/Product/Product";
 import CreateQR from "./pages/CreateQR/CreateQR";
 import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 import Layouts from "./components/Layouts";
+import ProcessDetail from "./pages/ProcessDetail/ProcessDetail";
+import CreateProcess from "./pages/CreateProcess/CreateProcess";
 
 function App() {
   return (
@@ -19,11 +21,16 @@ function App() {
 
           <Route path="/home" element={<Home/>}/>
           <Route path="/list" element={<List/>}/>
-          <Route path="/process" element={<Process/>}/>
-          <Route path="/product" element={<Product/>}/>
-          
+
+          <Route path="/product" element={<Product/>}/>          
           <Route path="/createQR" element={<CreateQR/>}/>
           <Route path="/updateproduct" element={<UpdateProduct/>}/>
+
+          <Route path="/process" element={<Process/>}/>
+          <Route path="/createprocess" element={<CreateProcess/>}/>
+          <Route path="/processdetail" element={<ProcessDetail/>}/>
+
+
 
       </Routes>
     </div>

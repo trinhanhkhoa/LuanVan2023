@@ -66,11 +66,12 @@ function UpdateProduct() {
                       }
                     }}
                   />
-                  {
+                  <img src={Data[0].image}/>
+                  {/* {
                     image ?
-                    <img src={image} width={210} height={190} alt={fileName}/> :
+                    // <img src={image} width={210} height={190} alt={fileName}/> :
                     <FcIcons.FcAddImage className='add-image-icon'/>  
-                  }
+                  } */}
                 </form>
               </div>
             </div>

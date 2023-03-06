@@ -34,21 +34,17 @@ function Product() {
         <div className='description-1'>
           <TbIcons.TbQrcode className="qr-icon"/>          
           <div className='information'>
-            <p><b>Product's name:</b> Orange</p>
-            <p><b>Product's ID:</b> 001</p>
-            <p><b>Plant time:</b> 3 years</p>
+            <p><b>Product's name:</b> {Data[0].name}</p>
+            <p><b>Product's ID:</b> {Data[0].pId}</p>
+            <p><b>Plant time:</b> {Data[0].time}</p>
           </div>
         </div>
         <div className='address'>
-          <p><b>Address: </b> 227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City</p>
+          <p><b>Address: </b> {Data[0].address}</p>
         </div>
         <div className='description-2'>
-          <ul>
-            <h2>Description:</h2>
-            <li><p>Watering time: 30 minutes</p></li>
-            <li><p>Organic fertilizer: 7 kg</p></li>
-            <li><p>Inorganic fertilizers: 1 g</p></li>
-          </ul>
+          <h2>Description:</h2>
+          <p>{Data[0].description}</p>
         </div>
 
         <div className='description-3'>

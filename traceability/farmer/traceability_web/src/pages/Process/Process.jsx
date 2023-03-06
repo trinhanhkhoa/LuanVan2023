@@ -5,14 +5,6 @@ import { Link } from "react-router-dom";
 import Footer from "../../components/Footer/Footer";
 import DataProcess from '../../DataProcess.json';
 
-// const data = [
-//   {id: 1, name: "Process of planting Apple", pID: "001"},
-//   {id: 2, name: "Process of planting Banana", pID: "002"},
-//   {id: 3, name: "Process of planting Mango", pID: "003"},
-//   {id: 4, name: "Process of planting Grape", pID: "004"},
-//   {id: 5, name: "Process of planting Orange", pID: "005"},
-// ]
-
 function Process() {
   
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,7 +21,7 @@ function Process() {
       <div className='process'>
         <div className='process-title'>
           <h2>List of processes</h2>
-          <Link to="#" className="btn-add-process">
+          <Link to="/createprocess" className="btn-add-process">
             Add process
           </Link>
         </div>
@@ -48,7 +40,7 @@ function Process() {
                   <td>{val.name}</td>
                   <td>{val.pID}</td>
                   <td>
-                    <Link to="#" className="btn-watch">
+                    <Link to="/processdetail" className="btn-watch">
                       Watch
                     </Link>
                   </td>
