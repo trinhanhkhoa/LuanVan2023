@@ -6,6 +6,7 @@ import cam from "../../asserts/cam.jpg";
 import * as TbIcons from "react-icons/tb";
 import Popup from '../../components/Popup/Popup';
 import { Link } from 'react-router-dom';
+import Data from "../../Data.json";
 
 function Product() {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,12 +60,7 @@ function Product() {
             content={
               <div className='popup-detail'>
                 <b>Update Information</b>
-                <ul>
-                  <li>Watering time: 20 minutes</li>
-                  <li>Organic fertilizer: 5 kg</li>
-                  <li>Inorganic fertilizer 1 g</li>
-                  <li>Pesticides: Sherpa 25EC, Trebon 2.5 EC</li>
-                </ul>
+                <p>{Data[0].detail}</p>
               </div>
               }
             handleClose={togglePopup}

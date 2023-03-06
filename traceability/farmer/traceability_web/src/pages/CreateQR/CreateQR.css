@@ -54,7 +54,7 @@
   border-radius: 0.5rem;
 }
 .add-image-icon {
-  font-size: 6rem;
+  font-size: 4rem;
 }
 
 .btn-confirm {
@@ -80,4 +80,17 @@
   display: flex;
   justify-content: space-between;
   margin-left: 1rem;
+}
+
+.image form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  border: 2px dashed #1475cf;
+  height: 200px;
+  width: 220px;
+  cursor: pointer;
+  border-radius: 5px;
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CreateQR.css';
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer/Footer';
@@ -6,6 +6,10 @@ import * as FcIcons from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 
 function CreateQR() {
+  const [image, setImage] = useState(null);
+
+  const [fileName, setFileName] = useState("No choosen file")
+
   return (
     <>
       <Navbar/>
@@ -33,9 +37,25 @@ function CreateQR() {
               </div>
               <div className='image'>
                 <label>Image <b>(*)</b></label>
-                <Link to="#">
-                  <FcIcons.FcAddImage className='add-image-icon'/>
-                </Link>
+                <form action="" onClick={() => document.querySelector(".image-field").click()}>
+                  <input 
+                    type="file"
+                    accept='image/*' 
+                    className='image-field' 
+                    hidden 
+                    onChange={({target: {files}}) => {
+                      files[0] && setFileName(files[0].name)
+                      if(files) {
+                        setImage(URL.createObjectURL(files[0]))
+                      }
+                    }}
+                  />
+                  {
+                    image ?
+                    <img src={image} width={210} height={190} alt={fileName}/> :
+                    <FcIcons.FcAddImage className='add-image-icon'/>  
+                  }
+                </form>
               </div>
             </div>
           </div>

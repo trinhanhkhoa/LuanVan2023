@@ -2,9 +2,13 @@
   {
     "id": 1, 
     "name": "Apple", 
-    "pId": "001", 
+    "pId": "001",     
     "status": true, 
-    "numberOfUpdates": 1
+    "numberOfUpdates": 1,
+    "time": "3 years",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 2, 

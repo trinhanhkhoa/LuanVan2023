@@ -125,10 +125,17 @@
   align-items: center;
   margin: 1.5rem;
   z-index: 2;
+  white-space: pre-line;  
+  vertical-align: bottom;
 }
 
 .popup-detail b {
   font-size: 2rem;
+}
+
+.popup-detail p {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .popup-detail li {
