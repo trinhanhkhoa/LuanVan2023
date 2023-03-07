@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 function CreateProcess() {
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className='create-process'>
         <div className='create-process-container'>
           <div className='create-process-title'>
@@ -51,7 +51,7 @@ function CreateProcess() {
           </div>
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 }

@@ -17,7 +17,7 @@ function Process() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='process'>
         <div className='process-title'>
           <h2>List of processes</h2>
@@ -73,7 +73,7 @@ function Process() {
           </nav>
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 

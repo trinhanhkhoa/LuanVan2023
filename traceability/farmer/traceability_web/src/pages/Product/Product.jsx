@@ -17,7 +17,7 @@ function Product() {
 
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className='product'>
       <div className='btn-img'>
         <img src={cam} className='img-product'/>
@@ -64,7 +64,7 @@ function Product() {
         </div>
       </div>
     </div>
-    <Footer/>
+    {/* <Footer/> */}
   </>
   
   )

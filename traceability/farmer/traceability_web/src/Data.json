@@ -16,70 +16,120 @@
     "name": "Orange", 
     "pId": "002", 
     "status": true, 
-    "numberOfUpdates": 0
+    "numberOfUpdates": 0,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 3, 
     "name": "Mango", 
     "pId": "003", 
     "status": false, 
-    "numberOfUpdates": 2
+    "numberOfUpdates": 2,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 4, 
     "name": "Lemon", 
     "pId": "004", 
     "status": true, 
-    "numberOfUpdates": 1
+    "numberOfUpdates": 1,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 5, 
     "name": "Durian", 
     "pId": "005", 
     "status": true, 
-    "numberOfUpdates": 1
+    "numberOfUpdates": 1,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 6, 
     "name": "Grape", 
     "pId": "006", 
     "status": false, 
-    "numberOfUpdates": 3
+    "numberOfUpdates": 3,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 7, 
     "name": "Straberry", 
     "pId": "007", 
     "status": false, 
-    "numberOfUpdates": 3
+    "numberOfUpdates": 3,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 8, 
     "name": "Potato", 
     "pId": "008", 
     "status": false, 
-    "numberOfUpdates": 3
+    "numberOfUpdates": 3,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 9, 
     "name": "Tomato", 
     "pId": "009", 
     "status": false, 
-    "numberOfUpdates": 3
+    "numberOfUpdates": 3,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 10, 
     "name": "Melon", 
     "pId": "010", 
     "status": false, 
-    "numberOfUpdates": 3
+    "numberOfUpdates": 3,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   },
   {
     "id": 11, 
     "name": "Peach", 
     "pId": "011", 
     "status": false, 
-    "numberOfUpdates": 3
+    "numberOfUpdates": 3,
+    "time": "3 years",
+    "image": "./asserts/cam.jpg",
+    "address": "227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City",
+    "detail": " - Watering time: 20 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC",
+    "description": " - Watering time: 30 minutes\n - Organic fertilizer: 5 kg\n - Inorganic fertilizer 1 g\n - Pesticides: Sherpa 25EC, Trebon 2.5 EC"
   }
 
 ]

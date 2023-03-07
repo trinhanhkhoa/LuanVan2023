@@ -12,7 +12,7 @@ function CreateQR() {
 
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className='create-qr'>
         <div className='create-qr-container'>
           <div className='create-qr-title'>
@@ -71,7 +71,7 @@ function CreateQR() {
           </div>
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 }

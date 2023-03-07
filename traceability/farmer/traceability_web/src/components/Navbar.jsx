@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./index.css";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -17,6 +17,13 @@ function Navbar() {
 
   const showDropdown = () => setDropdown(!dropdown);
 
+  const auth = localStorage.getItem('user');
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.clear();
+    navigate('/');
+  }
+
   return (
     <>
       <IconContext.Provider value={{color: '#fff'}}>
@@ -31,7 +38,14 @@ function Navbar() {
 
         <nav className={dropdown ? "logo-menu active" : "logo-menu"}>
           <ul className="dropdown" onClick={showDropdown}>
-            {UserData.map((item, index) => {
+            <li>
+              <Link to='#'><span>Information</span></Link>
+            </li>
+            <li> 
+              {auth ? <Link onClick={logout} to='/'><span>Log out</span></Link> : <Link to='/signup'><span>Log out</span></Link> }
+            </li>
+
+            {/* {UserData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
@@ -39,7 +53,7 @@ function Navbar() {
                   </Link>
                 </li>
               );
-            })}
+            })} */}
           </ul>
         </nav>
 

@@ -15,7 +15,7 @@ function ProcessDetail() {
   
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className='process-detail'>
       <div className='description-process'>
         <div className='description-process-1'>   
@@ -56,7 +56,7 @@ function ProcessDetail() {
         </div>
       </div>
     </div>
-    <Footer/>
+    {/* <Footer/> */}
   </>
   
   )

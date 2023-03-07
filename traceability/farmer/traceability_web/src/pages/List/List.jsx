@@ -20,7 +20,7 @@ function List() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='list'>
         <div className='list-title'>
           <h2>List of products</h2>
@@ -84,7 +84,7 @@ function List() {
         </div>
       </div>
       
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 

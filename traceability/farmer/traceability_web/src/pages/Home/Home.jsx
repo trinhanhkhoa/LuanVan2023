@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="home">
         <div className="news_img">
           <img src={news_img}/>
@@ -69,7 +69,7 @@ export default function Home() {
           {/*  */}
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
     
   );

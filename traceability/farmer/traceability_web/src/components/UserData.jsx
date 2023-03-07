@@ -8,7 +8,7 @@ export const UserData = [
   },
   {
     title: 'Log out',
-    path: '/',
+    path: '/signin',
     cName: 'logo-text'
   }
 ];

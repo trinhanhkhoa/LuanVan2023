@@ -22,7 +22,7 @@ function UpdateProduct() {
 
   return (
     <>
-      <Navbar/>
+      {/* <Navbar/> */}
       <div className='update-product'>
         <div className='update-product-container'>
           <div className='update-product-title'>
@@ -88,7 +88,7 @@ function UpdateProduct() {
           </div>
         </div>
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   )
 }

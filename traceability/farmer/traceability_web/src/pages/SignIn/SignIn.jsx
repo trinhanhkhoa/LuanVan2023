@@ -1,14 +1,37 @@
-import React from 'react';
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SignIn.css';
+import PropTypes from 'prop-types';
 
-export default function SignIn() {
+// async function loginUser(credentials) {
+//   return fetch('http://localhost:8080/signin', {
+//     method: 'POST',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(credentials)
+//   })
+//     .then(data => data.json())
+//  }
 
+export default function SignIn({ setToken }) {
+ 
   const [isShown, setIsShown] = useState(false);
   const togglePassword = () => {
     setIsShown((isShown) => !isShown);
   };
+
+  // const [username, setUserName] = useState();
+  // const [password, setPassword] = useState();
+
+  // const handleSubmit = async e => {
+  //   e.preventDefault();
+  //   const token = await loginUser({
+  //     username,
+  //     password
+  //   });
+  //   setToken(token);
+  // }
 
   return (
    <div className='sign-in'>
@@ -20,10 +43,12 @@ export default function SignIn() {
       </div> 
     </div>
     <div className='sign-in-content'>
-      <form action="form" onSubmit={(e) => e.preventDefault()}>
+      {/* <form action="form" onSubmit={handleSubmit}> */}
+      <form action="form">
         <div className='input-container'>
-          <label>Email</label>
-          <input type="email" placeholder='Email' required/>
+          <label>Username</label>
+          {/* <input type="text" placeholder='Username' required onChange={e => setUserName(e.target.value)}/> */}
+          <input type="text" placeholder='Username' required/>
         </div>
         <div className='input-container'>
           <label>Password</label>
@@ -37,7 +62,8 @@ export default function SignIn() {
                 id="checkbox"
                 type="checkbox"
                 checked={isShown}
-                onChange={togglePassword}
+                onClick={togglePassword}
+                // onChange={e => setPassword(e.target.value)}
               />
             Show password</label>
           </div>
@@ -52,8 +78,8 @@ export default function SignIn() {
         </div>
         
         
-        <Link to='/home'>
-          <button className='btn-sign-in' type='button'>SIGN IN</button>
+        <Link to='/'>
+          <button className='btn-sign-in' type='submit'>SIGN IN</button>
         </Link>
 
         <div className='dont-have-account'>
@@ -65,3 +91,6 @@ export default function SignIn() {
   </div>
   )
 }
+
+// SignIn.propTypes = { setToken: PropTypes.func.isRequired }
+
