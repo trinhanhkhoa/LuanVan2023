@@ -6,8 +6,7 @@
   padding: 1.5rem;
   background-color: #2ECC71;
   color: #fff;
-  /* position: fixed; */
-  left: 0;
+  position: fix;
   bottom: 0;
   width: 100%;
 }

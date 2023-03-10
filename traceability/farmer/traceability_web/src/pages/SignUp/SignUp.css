@@ -1,12 +1,13 @@
 .sign-up{
   margin-left: 35%;
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin-top: 6%;
+  margin-bottom: 5%;
   justify-content: center;
   align-items: center;
   border: 1px solid #000000;
   border-radius: 15px;
   width: 30rem;
+  min-height: 60vh;
 }
 
 .header-container h1 { 

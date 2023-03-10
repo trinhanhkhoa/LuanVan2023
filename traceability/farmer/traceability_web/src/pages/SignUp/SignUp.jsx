@@ -38,56 +38,54 @@ export default function SignUp() {
 
   return (
     <div className='sign-up'>
-    <div className='header-container'>
-      <h1>Register</h1>
-      <div className='sub-title'>
-        <h3>Hi!</h3>
-        <h4>Create a new account.</h4>
-      </div> 
-    </div>
-    <div className='sign-up-content'>
-      <form action="form" onSubmit={(e) => e.collectData()}>
-        <div className='input-container'>
-          <label>Fullname</label>
-          <input type="text" placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} required/>
-        </div>
-        <div className='input-container'>
-          <label>Email</label>
-          <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}  required/>
-        </div>
-        <div className='input-container'>
-          <label>Password</label>
-          <input       
-            type={isShown ? "text" : "password"}
-            placeholder='Password' required
-            value={password} onChange={(e) => setPassword(e.target.value)} 
-          />
-          <div className="show-password">
-            <label>
-              <input
-                id="checkbox"
-                type="checkbox"
-                checked={isShown}
-                onChange={togglePassword}
-              />
-            Show password</label>
+      <div className='header-container'>
+        <h1>Register</h1>
+        <div className='sub-title'>
+          <h3>Hi!</h3>
+          <h4>Create a new account.</h4>
+        </div> 
+      </div>
+      <div className='sign-up-content'>
+        <form action="form" onSubmit={(e) => e.collectData()}>
+          <div className='input-container'>
+            <label>Fullname</label>
+            <input type="text" placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} required/>
           </div>
-        </div>
-        <div className='checkbox-container'>
-          <div className='checkbox-remember'>
-            <input type="checkbox" value="remember"/> Agree with <a href="#Agreement">Terms and Conditions</a>  
+          <div className='input-container'>
+            <label>Email</label>
+            <input type="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}  required/>
           </div>
-        </div>
-        {/* <Link to='/home'> */}
+          <div className='input-container'>
+            <label>Password</label>
+            <input       
+              type={isShown ? "text" : "password"}
+              placeholder='Password' required
+              value={password} onChange={(e) => setPassword(e.target.value)} 
+            />
+            <div className="show-password">
+              <label>
+                <input
+                  id="checkbox"
+                  type="checkbox"
+                  checked={isShown}
+                  onChange={togglePassword}
+                />
+              Show password</label>
+            </div>
+          </div>
+          <div className='checkbox-container'>
+            <div className='checkbox-remember'>
+              <input type="checkbox" value="remember"/> Agree with <a href="#Agreement">Terms and Conditions</a>  
+            </div>
+          </div>
           <button className='btn-sign-up' type='button' onClick={collectData}>SIGN UP</button>
-        {/* </Link> */}
-        <div >
-          <Link className='already-have' to='/'>
-            <p>Already have an account</p>
-          </Link>
-        </div>
-      </form>
-    </div>
+          <div>
+            <Link className='already-have' to='/signin'>
+              <p>Already have an account</p>
+            </Link>
+          </div>
+        </form>
+      </div>
   </div>
   )
 }

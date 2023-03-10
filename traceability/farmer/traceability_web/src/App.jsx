@@ -28,11 +28,11 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Navbar/>
-        <Routes>
+        <Routes >
             <Route path="/signin" element={<SignIn/>}/>
             <Route path="/signup" element={<SignUp/>}/>
 
-            <Route path="/" element={<Home/>}/>
+            <Route path="/home" element={<Home/>}/>
             <Route path="/list" element={<List/>}/>
 
             <Route path="/product" element={<Product/>}/>          

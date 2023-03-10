@@ -21,7 +21,7 @@ function Navbar() {
   const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
-    navigate('/');
+    navigate('/signin');
   }
 
   return (
@@ -42,18 +42,8 @@ function Navbar() {
               <Link to='#'><span>Information</span></Link>
             </li>
             <li> 
-              {auth ? <Link onClick={logout} to='/'><span>Log out</span></Link> : <Link to='/signup'><span>Log out</span></Link> }
+              {auth ? <Link onClick={logout} to='/'><span>Log out</span></Link> : <Link to='/signin'><span>Log out</span></Link> }
             </li>
-
-            {/* {UserData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    <span>{item.title}</span>
-                  </Link>
-                </li>
-              );
-            })} */}
           </ul>
         </nav>
 

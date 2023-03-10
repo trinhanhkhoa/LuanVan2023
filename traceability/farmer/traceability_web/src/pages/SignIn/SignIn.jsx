@@ -1,18 +1,6 @@
 import React,{ useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SignIn.css';
-import PropTypes from 'prop-types';
-
-// async function loginUser(credentials) {
-//   return fetch('http://localhost:8080/signin', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(credentials)
-//   })
-//     .then(data => data.json())
-//  }
 
 export default function SignIn({ setToken }) {
  
@@ -21,17 +9,33 @@ export default function SignIn({ setToken }) {
     setIsShown((isShown) => !isShown);
   };
 
-  // const [username, setUserName] = useState();
-  // const [password, setPassword] = useState();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   const token = await loginUser({
-  //     username,
-  //     password
-  //   });
-  //   setToken(token);
-  // }
+  const handleSubmit = () => {
+    console.log(email, password);
+    fetch("http://localhost:5000/signin", {
+      method:"POST",
+      crossDomain:true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin":"*"
+      },
+      body: JSON.stringify({
+        email,
+        password
+      })
+    })
+      .then((res) => res.json() )
+      .then((data) => {
+        console.log(data, "userRegister");
+        if(data.status == "Ok") {
+          alert("Login successful");
+          window.location.href = "/home";
+        }
+      });
+  }
 
   return (
    <div className='sign-in'>
@@ -43,18 +47,18 @@ export default function SignIn({ setToken }) {
       </div> 
     </div>
     <div className='sign-in-content'>
-      {/* <form action="form" onSubmit={handleSubmit}> */}
-      <form action="form">
+      <form action="form" onSubmit={handleSubmit}>
         <div className='input-container'>
-          <label>Username</label>
-          {/* <input type="text" placeholder='Username' required onChange={e => setUserName(e.target.value)}/> */}
-          <input type="text" placeholder='Username' required/>
+          <label>Email</label>
+          <input type="text" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required/>
         </div>
         <div className='input-container'>
           <label>Password</label>
           <input       
             type={isShown ? "text" : "password"}
             placeholder='Password' required
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)}
           />
           <div className="show-password">
             <label>
@@ -62,8 +66,7 @@ export default function SignIn({ setToken }) {
                 id="checkbox"
                 type="checkbox"
                 checked={isShown}
-                onClick={togglePassword}
-                // onChange={e => setPassword(e.target.value)}
+                onClick={togglePassword}    
               />
             Show password</label>
           </div>
@@ -77,10 +80,7 @@ export default function SignIn({ setToken }) {
           </div>
         </div>
         
-        
-        <Link to='/'>
-          <button className='btn-sign-in' type='submit'>SIGN IN</button>
-        </Link>
+        <button className='btn-sign-in' type='button' onClick={handleSubmit}>SIGN IN</button>
 
         <div className='dont-have-account'>
           You don't have an account ?
