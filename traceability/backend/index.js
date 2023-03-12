@@ -52,7 +52,7 @@ app.post("/signin", async(req, res) => {
   }
 
   if(await bcrypt.compare(password, userLogin.password)) {
-    const token = jwt.sign({}, JWT_SECRET);
+    const token = jwt.sign({ email: userLogin.email }, JWT_SECRET);
 
     if(res.status(201)) {
       return res.json({status: "Ok", data: token});
@@ -61,6 +61,23 @@ app.post("/signin", async(req, res) => {
     }
   }
   res.json({ status: "error", error: "Invalid Password"});
+})
+
+app.post("/userinfo", async (req, res) => {
+  const { token } = req.body;
+  try {
+    const userInfo = jwt.verify(token, JWT_SECRET);
+    const userEmail = userInfo.email;
+    user.findOne({ email: userEmail })
+      .then((data) => {
+      res.send({ status: "Ok", data:data });
+    })
+      .catch((error) => {
+      res.send({ status: "error", data:error });
+    });
+  } catch (error) {
+    
+  }
 })
 
 app.listen(5000, () => {
