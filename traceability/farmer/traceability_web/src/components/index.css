@@ -40,6 +40,11 @@
   transition: 350ms;
 }
 
+.dropdown {
+  list-style-type: none;
+  font-size: 18px;
+}
+
 .logo-menu {
   position: absolute;
   right: 0;
@@ -145,3 +150,4 @@ span {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   transition: background-color 350ms ease-out;
 }
+

@@ -39,7 +39,7 @@ function Navbar() {
         <nav className={dropdown ? "logo-menu active" : "logo-menu"}>
           <ul className="dropdown" onClick={showDropdown}>
             <li>
-              <Link to='#'><span>Information</span></Link>
+              <Link to='/userinfo'><span>Information</span></Link>
             </li>
             <li> 
               {auth ? <Link onClick={logout} to='/'><span>Log out</span></Link> : <Link to='/signin'><span>Log out</span></Link> }

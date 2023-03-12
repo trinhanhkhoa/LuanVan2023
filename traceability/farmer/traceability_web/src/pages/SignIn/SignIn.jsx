@@ -32,6 +32,7 @@ export default function SignIn({ setToken }) {
         console.log(data, "userRegister");
         if(data.status == "Ok") {
           alert("Login successful");
+          window.localStorage.setItem("token", data.data);
           window.location.href = "/home";
         }
       });

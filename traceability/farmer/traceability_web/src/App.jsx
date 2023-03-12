@@ -14,16 +14,10 @@ import ProcessDetail from "./pages/ProcessDetail/ProcessDetail";
 import CreateProcess from "./pages/CreateProcess/CreateProcess";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer/Footer";
+import UserInfo from "./pages/UserInfo/UserInfo";
 
 
 function App() {
-  // const [token, setToken] = useState();
-
-  // if(!token) {
-  //   return <SignIn setToken={setToken} />
-  // }
-
-
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,6 +25,7 @@ function App() {
         <Routes >
             <Route path="/signin" element={<SignIn/>}/>
             <Route path="/signup" element={<SignUp/>}/>
+            <Route path="/userinfo" element={<UserInfo/>}/>
 
             <Route path="/home" element={<Home/>}/>
             <Route path="/list" element={<List/>}/>
