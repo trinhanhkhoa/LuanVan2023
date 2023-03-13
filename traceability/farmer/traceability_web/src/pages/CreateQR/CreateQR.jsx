@@ -21,21 +21,21 @@ function CreateQR() {
           </div>
           <div className='fill-qr'>
             <div className='fill-qr-1'>
-              <div className='product-name'>
+              <div className='product-name-qr'>
                 <label>Product's name <b>(*)</b></label>
                 <input type="text" placeholder="Product's name" required/>
               </div>
-              <div className='time'>
+              <div className='time-qr'>
                 <label>Time <b>(*)</b></label>
                 <input type="text" placeholder='3 months' required/>
               </div>
             </div>
             <div className='fill-qr-2'>
-              <div className='address'>
+              <div className='address-qr'>
                 <label>Address <b>(*)</b></label>
                 <input type="text" placeholder='Address'required/>
               </div>
-              <div className='image'>
+              <div className='image-qr'>
                 <label>Image <b>(*)</b></label>
                 <form action="" onClick={() => document.querySelector(".image-field").click()}>
                   <input 
@@ -53,7 +53,7 @@ function CreateQR() {
                   {
                     image ?
                     <img src={image} width={210} height={190} alt={fileName}/> :
-                    <FcIcons.FcAddImage className='add-image-icon'/>  
+                    <FcIcons.FcAddImage className='add-image-qr-icon'/>  
                   }
                 </form>
               </div>

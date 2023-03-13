@@ -30,28 +30,28 @@ function UpdateProduct() {
             <h4>Product introduction information</h4>
           </div>
           <div className='update-info'>
-            <div className='update-info-1'>
-              <TbIcons.TbQrcode className="qr-icon"/>
+            <div className='update-info-qr'>
+              <TbIcons.TbQrcode className="qr-icon-update"/>
               <Link to="/product">
                 <input type="button" className='btn-watch-product' value="Watch product"/>
               </Link>
             </div>
             <div className='update-info-1'>
-              <div className='product-name'>
+              <div className='product-name-update'>
                 <label>Product's name <b>(*)</b></label>
                 <input type="text" placeholder="Product's name" value={Data[0].name}/>
               </div>
-              <div className='time'>
+              <div className='time-update'>
                 <label>Time <b>(*)</b></label>
                 <input type="text" placeholder='3 months' value={Data[0].time}/>
               </div>
             </div>
             <div className='update-info-2'>
-              <div className='address'>
+              <div className='address-update'>
                 <label>Address <b>(*)</b></label>
                 <input type="text" placeholder='Address'value={Data[0].address}/>
               </div>
-              <div className='image'>
+              <div className='image-update'>
                 <label>Image <b>(*)</b></label>
                 <form action="" onClick={() => document.querySelector(".image-field").click()}>
                   <input 
@@ -66,24 +66,24 @@ function UpdateProduct() {
                       }
                     }}
                   />
-                  <img src={Data[0].image}/>
-                  {/* {
+                  {/* <img src={Data[0].image}/> */}
+                  {
                     image ?
-                    // <img src={image} width={210} height={190} alt={fileName}/> :
-                    <FcIcons.FcAddImage className='add-image-icon'/>  
-                  } */}
+                    <img src={image} width={210} height={190} alt={fileName}/> :
+                    <FcIcons.FcAddImage className='add-image-update-icon'/>  
+                  }
                 </form>
               </div>
             </div>
           </div>
-          <div className='describe'>
+          <div className='describe-update'>
             <label>Describe information <b>(*)</b></label>
             <textarea placeholder='Describe information' value={Data[0].description}/>
           </div>
           <div className='note'>
             <p><b>(*)</b>: Required information</p>
             <Link to="/list">
-              <input type="button" value="Confirm" className='btn-confirm'/>
+              <input type="button" value="Confirm" className='btn-confirm-update'/>
             </Link>
           </div>
         </div>

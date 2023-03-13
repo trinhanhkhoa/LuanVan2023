@@ -3,7 +3,7 @@
   margin: 2rem;
   border: 1px solid #000;
   border-radius: 0.5rem;
-  height: 100%;
+  min-height: 80vh;
 }
 
 .update-product-container {
@@ -26,7 +26,7 @@
   justify-content: space-between;
 }
 
-.update-info b, .note b, .describe b  {
+.update-info b, .note b, .describe-update b  {
   color: red;
 }
 
@@ -35,29 +35,46 @@
   flex-direction: column;
 }
 
-.product-name, .time, .address, .image, .describe {
+.qr-icon-update {
+  font-size: 10rem;
+}
+
+.image-update form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  border: 2px dashed #1475cf;
+  height: 200px;
+  width: 220px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.product-name-update, .time-update, .address-update, .image-update, .describe-update {
   display: flex;
   flex-direction: column;
   margin: 1.25rem;
   font-size: 18px;
 }
 
-.product-name input, .time input, .address input {
+.product-name-update input, .time-update input, .address-update input {
   margin-top: 1rem;
   width: 40rem;
 }
 
-.describe textarea {
+.describe-update textarea {
   width: 105rem;
   height: 8rem;
   margin-top: 0.5rem;
   border-radius: 0.5rem;
 }
-.add-image-icon {
+.add-image-update-icon {
   font-size: 6rem;
 }
 
-.btn-confirm {
+.btn-confirm-update {
   width: 6rem;
   height: 3rem;
   margin: 1rem;
@@ -95,9 +112,205 @@
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
-
 .note {
   display: flex;
   justify-content: space-between;
   margin-left: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .update-product { margin: 1rem; }
+  .update-info-qr {
+    display: flex;
+    flex-direction: row;
+  }
+  .update-info, .update-info-1, .update-info-2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-icon-update {
+    font-size: 8rem;
+  }
+  .add-image-update-icon {
+    font-size: 4rem;
+  }
+  .image-update form {
+    height: 100px;
+    width: 120px;
+  }
+  .product-name-update, .time-update, .address-update, .image-update, .describe-update {
+    font-size: 16px;
+  }
+  .product-name-update input, .time-update input, .address-update input {
+    margin-top: 1rem;
+    width: 20rem;
+  }
+  .btn-watch-product {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+  .describe-update textarea {
+    width: 100%;
+    height: 8rem;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .update-product { margin: 1rem; }
+  .update-info-qr {
+    display: flex;
+    flex-direction: row;
+  }
+  .update-info, .update-info-1, .update-info-2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-icon-update {
+    font-size: 8rem;
+  }
+  .add-image-update-icon {
+    font-size: 4rem;
+  }
+  .image-update form {
+    height: 100px;
+    width: 120px;
+  }
+  .product-name-update, .time-update, .address-update, .image-update, .describe-update {
+    font-size: 16px;
+  }
+  .product-name-update input, .time-update input, .address-update input {
+    margin-top: 1rem;
+    width: 30rem;
+  }
+  .btn-watch-product {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+  .describe-update textarea {
+    width: 100%;
+    height: 8rem;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .update-product { 
+    margin: 1rem; 
+    justify-content: center;
+  }
+  .update-info-qr {
+    display: flex;
+    flex-direction: row;
+  }
+  .update-info, .update-info-1, .update-info-2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-icon-update {
+    font-size: 8rem;
+  }
+  .add-image-update-icon {
+    font-size: 4rem;
+  }
+  .image-update form {
+    height: 100px;
+    width: 120px;
+  }
+  .product-name-update, .time-update, .address-update, .image-update, .describe-update {
+    font-size: 16px;
+  }
+  .product-name-update input, .time-update input, .address-update input {
+    margin-top: 1rem;
+    width: 40rem;
+  }
+  .btn-watch-product {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+  .describe-update textarea {
+    width: 100%;
+    height: 8rem;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .update-product { margin: 1rem; }
+  .update-info {
+    display: flex;
+    flex-direction: row;
+  }
+  .update-info-qr, .update-info-1, .update-info-2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-icon-update {
+    font-size: 10rem;
+  }
+  .add-image-update-icon {
+    font-size: 10rem;
+  }
+  .image-update form {
+    height: 200px;
+    width: 220px;
+  }
+  .product-name-update, .time-update, .address-update, .image-update, .describe-update {
+    font-size: 16px;
+  }
+  .product-name-update input, .time-update input, .address-update input {
+    margin-top: 1rem;
+    width: 30rem;
+  }
+  .btn-watch-product {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+  .describe-update textarea {
+    width: 100%;
+    height: 8rem;
+  }
+}
+
+@media only screen and (min-width: 1600px) {
+  .update-product { margin: 2rem; }
+  .update-info {
+    display: flex;
+    flex-direction: row;
+  }
+  .update-info-qr, .update-info-1, .update-info-2 {
+    display: flex;
+    flex-direction: column;
+  }
+  .qr-icon-update {
+    font-size: 10rem;
+  }
+  .add-image-update-icon {
+    font-size: 6rem;
+  }
+  .image-update form {
+    height: 200px;
+    width: 220px;
+  }
+  .product-name-update, .time-update, .address-update, .image-update, .describe-update {
+    font-size: 16px;
+  }
+  .product-name-update input, .time-update input, .address-update input {
+    margin-top: 1rem;
+    width: 40rem;
+  }
+  .btn-watch-product {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+  .describe-update textarea {
+    width: 100%;
+    height: 8rem;
+  }
 }

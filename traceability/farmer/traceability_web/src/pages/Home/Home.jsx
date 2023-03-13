@@ -28,7 +28,7 @@ export default function Home() {
         <div className="home-content">
           <div className="btn-createQR">
             <Link to="/createQR" className="link-icon">
-              <TbIcons.TbQrcode className="qr-icon"/>          
+              <TbIcons.TbQrcode className="qr-icon-home"/>          
               Create QR
             </Link>
           </div>
@@ -39,7 +39,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div className="list-item">
+        <div className="list-item-home">
           <table>
             <tr>
               <th>Ordinal numbers</th>
@@ -58,7 +58,7 @@ export default function Home() {
                   <td>{val.status}</td>
                   <td>{val.numberOfUpdates}</td>
                   <td>
-                    <Link to="/product" className="btn-watch">
+                    <Link to="/product" className="btn-watch-home">
                       Watch
                     </Link>
                   </td>

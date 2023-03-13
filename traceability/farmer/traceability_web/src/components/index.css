@@ -57,7 +57,7 @@
   padding: 0.5rem 0;
   list-style: none;
   background-color: #fff;
-  border: 1px solid #000;
+  border: 1px solid #fff;
   border-radius: 0.5rem;
   display: none;
 }
@@ -138,8 +138,9 @@ span {
 }
 
 .logo {
-  width: 100%;
-  margin-top: 520px;
+  width: 290px;
+  bottom: 0;
+  position: fixed;
 }
 
 .btn-close {
@@ -151,3 +152,16 @@ span {
   transition: background-color 350ms ease-out;
 }
 
+@media only screen and (max-width: 600px) { 
+  .navbar { height: 60px; }
+  .menu-bars { font-size: 1.5rem;}
+  .nav-menu { width: 210px; }
+  .nav-text { 
+    padding: 8px 0px 8px 16px;
+    height: 50px;
+  }
+  .nav-text a { font-size: 18px;}
+  .logo { width: 210px; }
+  .dropdown { font-size: 14px;}
+  .logo-menu { margin-top: 0rem;}
+}

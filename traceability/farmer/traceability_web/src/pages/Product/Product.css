@@ -7,7 +7,7 @@
   min-height: 65vh;
 }
 
-.btn-img {
+.product-btn-img {
   display: flex;
   flex-direction: column;
   margin-right: 2rem;
@@ -18,14 +18,13 @@
   border-radius: 0.5rem;
 }
 
-.info-btn {
+.product-info-btn {
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
-
 }
 
-.info-btn input {
+.product-info-btn input {
   border-radius: 0.5rem;
   border: none;
   color: #fff;
@@ -58,28 +57,28 @@
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
-.description {
+.product-description {
   border: 1px solid #000;
   border-radius: 0.5rem;
   width: 800px;
   height: 100%;
 }
 
-.description-1 {
+.product-description-1 {
   display: flex;
   flex-direction: row;
 }
 
-.qr-icon {
+.product-qr-icon {
   font-size: 12rem;
 }
 
-.information p, .diachi{
+.product-information p, .product-address{
   margin: 1.5rem;
   font-size: 1.5rem;
 }
 
-.description-2 {
+.product-description-2 {
   margin: 1.5rem;
   white-space: pre-line;  
   vertical-align: bottom;
@@ -87,18 +86,18 @@
   margin-left: 1.5rem;
 }
 
-.description-3 {
+.product-description-3 {
   display: flex;
   justify-content: space-between;
   margin: 1.5rem;
 }
 
-.description-3 .update{
+.product-description-3 .product-update{
   color: red;
   font-size: 1.5rem;
 }
 
-.description-3 input {
+.product-description-3 input {
   width: 6rem;
   height: 3rem;
   background-color: #DD8600;
@@ -109,7 +108,7 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
-.description-3 input:hover {
+.product-description-3 input:hover {
   transition: background-color 350ms ease-out;
   background-color: #ff9900;
   /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
@@ -132,4 +131,224 @@
 .popup-detail p {
   margin-bottom: 1rem;
   margin-top: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .product {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    min-height: 82vh;
+  }
+  .product-btn-img {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .product-info-btn {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+  }
+  .product-info-btn input{
+    font-size: 16px;
+  }
+  .btn-delete, .btn-update-product-info {
+    width: 10rem;
+    height: 3rem;
+    margin-bottom: 2rem;
+  }
+  .img-product {
+    width: 60%;
+  }
+  .product-description {
+    width: 100%;
+  }
+
+  .product-qr-icon {
+    font-size: 8rem;
+  }
+  .product-information p, .product-address{
+    font-size: 18px;
+    margin: 1rem;
+  }
+  .product-description-2 {
+    font-size: 18px;
+  }  
+  .product-description-3 .product-update{
+    color: red;
+    font-size: 18px;
+  }
+  .product-description-3 input {
+    width: 4rem;
+    height: 3rem;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .product {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+    min-height: 82vh;
+  }
+  .product-btn-img {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .product-info-btn {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+  }
+  .product-info-btn input{
+    font-size: 16px;
+  }
+  .btn-delete, .btn-update-product-info {
+    width: 10rem;
+    height: 3rem;
+    margin-bottom: 2rem;
+  }
+  .img-product {
+    width: 60%;
+  }
+  .product-description {
+    width: 100%;
+  }
+
+  .product-qr-icon {
+    font-size: 8rem;
+  }
+  .product-information p, .product-address{
+    font-size: 18px;
+    margin: 1rem;
+  }
+  .product-description-2 {
+    font-size: 18px;
+  }  
+  .product-description-3 .product-update{
+    color: red;
+    font-size: 18px;
+  }
+  .product-description-3 input {
+    width: 4rem;
+    height: 3rem;
+    font-size: 14px;
+  }
+}
+
+
+/* Large devices (laptops/desktops, 992px and up) */
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 992px) {
+  .product {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-height: 82vh;
+  }
+  .product-btn-img {
+    display: flex;
+    flex-direction: column;
+  }
+  .product-info-btn {
+    display: flex;
+    flex-direction: row;
+  }
+  .product-info-btn input{
+    font-size: 16px;
+  }
+  .btn-delete, .btn-update-product-info {
+    width: 10rem;
+    height: 3rem;
+    margin: 0.5rem;
+  }
+  .img-product {
+    width: 100%;
+  }
+  .product-description {
+    width: 100%;
+    margin: 1rem;
+  }
+
+  .product-qr-icon {
+    font-size: 12rem;
+  }
+  .product-information p, .product-address{
+    font-size: 22px;
+    margin: 1rem;
+  }
+  .product-description-2 {
+    font-size: 22px;
+  }  
+  .product-description-3 .product-update{
+    color: red;
+    font-size: 22px;
+  }
+  .product-description-3 input {
+    width: 4rem;
+    height: 3rem;
+    font-size: 14px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+/* @media only screen and (min-width: 1200px) {} */
+
+@media only screen and (min-width: 1500px) {
+  .product {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 65vh;
+    margin: 4rem 5rem;
+  }
+  .product-btn-img {
+    display: flex;
+    flex-direction: column;
+  }
+  .product-info-btn {
+    display: flex;
+    flex-direction: row;
+  }
+  .product-info-btn input{
+    font-size: 18px;
+  }
+  .btn-delete, .btn-update-product-info {
+    width: 15rem;
+    height: 3rem;
+    margin-right: 1rem;
+  }
+  .img-product {
+    width: 100%;
+  }
+  .product-description {
+    width: 100%;
+  }
+
+  .product-qr-icon {
+    font-size: 14rem;
+    
+  }
+  .product-information p, .product-address{
+    font-size: 28px;
+    margin: 1rem;
+  }
+  .product-description-2 {
+    font-size: 26px;
+  }  
+  .product-description-3 .product-update{
+    color: red;
+    font-size: 22px;
+  }
+  .product-description-3 input {
+    width: 6rem;
+    height: 3rem;
+    font-size: 16px;
+  }
 }

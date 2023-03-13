@@ -19,9 +19,9 @@ function Product() {
     <>
     {/* <Navbar/> */}
     <div className='product'>
-      <div className='btn-img'>
+      <div className='product-btn-img'>
         <img src={cam} className='img-product'/>
-        <div className='info-btn'>
+        <div className='product-info-btn'>
           <Link to="/updateproduct">
             <input type='button' value="Update information" className='btn-update-product-info'/>
           </Link>
@@ -30,25 +30,25 @@ function Product() {
           </Link>
         </div>
       </div>
-      <div className='description'>
-        <div className='description-1'>
-          <TbIcons.TbQrcode className="qr-icon"/>          
-          <div className='information'>
+      <div className='product-description'>
+        <div className='product-description-1'>
+          <TbIcons.TbQrcode className="product-qr-icon"/>          
+          <div className='product-information'>
             <p><b>Product's name:</b> {Data[0].name}</p>
             <p><b>Product's ID:</b> {Data[0].pId}</p>
             <p><b>Plant time:</b> {Data[0].time}</p>
           </div>
         </div>
-        <div className='address'>
+        <div className='product-address'>
           <p><b>Address: </b> {Data[0].address}</p>
         </div>
-        <div className='description-2'>
+        <div className='product-description-2'>
           <h2>Description:</h2>
           <p>{Data[0].description}</p>
         </div>
 
-        <div className='description-3'>
-          <div className='update'>
+        <div className='product-description-3'>
+          <div className='product-update'>
             <p><b>Number of updates: </b> 2 times</p>
           </div>
           <input type="button" value="Detail" onClick={togglePopup}/>

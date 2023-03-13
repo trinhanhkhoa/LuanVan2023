@@ -47,12 +47,14 @@ function List() {
                   <td>{val.status}</td>
                   <td>{val.numberOfUpdates}</td>
                   <td>
-                    <Link to="/updateproduct" className="btn-edit">
-                      <RiIcons.RiEditBoxLine/>
-                    </Link>
-                    <Link to="/list" className="btn-remove">
-                      <BiIcons.BiTrash/>
-                    </Link>
+                    <div className='btn-list'>
+                      <Link to="/updateproduct" className="btn-edit-product">
+                        <RiIcons.RiEditBoxLine/>
+                      </Link>
+                      <Link to="/list" className="btn-remove-product">
+                        <BiIcons.BiTrash/>
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               )

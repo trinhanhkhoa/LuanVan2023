@@ -16,11 +16,19 @@
   border-radius: 0.5rem;
 }
 
-.trace-logo {
-  width: 100px;
+.trace-logo { width: 100px; }
+.hcmus-logo { width: 230px; }
+
+@media only screen and (max-width: 600px) {
+  .footer { padding: 0.5rem; }
+  .footer h3 { font-size: 12px; }
+  .trace-logo { width: 60px; }
+  .hcmus-logo { width: 140px; }
 }
 
-.hcmus-logo {
-  width: 230px;
-}
-
+@media only screen and (min-width: 600px) {
+  .footer { padding: 0.75rem; }
+  .footer h3 { font-size: 14px; }
+  .trace-logo { width: 60px; }
+  .hcmus-logo { width: 140px; }
+ }
