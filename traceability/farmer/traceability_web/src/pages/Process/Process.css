@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 3rem;
-  min-height: 75vh;
+  min-height: 80vh;
 }
 
 .process-title {
@@ -52,7 +52,7 @@
   font-size: 18px;
 }
 
-.btn-watch {
+.btn-watch-process {
   padding: 12px;
   background-color: #2ECC71;
   border-radius: 0.5rem;
@@ -101,4 +101,123 @@
   transition: background-color 350ms ease-out;
   background-color: forestgreen;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+@media only screen and (max-width: 600px) {
+  .process { justify-content: center; }
+  .process-title { margin: 2rem 3rem; }
+  .process-title h2 { font-size: 18px; }
+  .list-process table { width: 26rem; }
+  .list-process th {
+    margin: 20px;
+    font-size: 16px;
+  }
+  .list-process td {
+    font-size: 14px;
+  }
+  .btn-watch-process {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .btn-add-process {
+    width: 6rem;
+    height: 3rem;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .process { justify-content: center; }
+  .process-title { margin: 2rem 3rem; }
+  .process-title h2 { font-size: 22px; }
+  .list-process table { width: 40rem; }
+  .list-process th {
+    margin: 20px;
+    font-size: 16px;
+  }
+  .list-process td {
+    font-size: 16px;
+  }
+  .btn-watch-process {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .btn-add-process {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .process { justify-content: center; }
+  .process-title { margin: 2rem 3rem; }
+  .process-title h2 { font-size: 22px; }
+  .list-process table { width: 55rem; }
+  .list-process th {
+    margin: 20px;
+    font-size: 16px;
+  }
+  .list-process td {
+    font-size: 16px;
+  }
+  .btn-watch-process {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .btn-add-process {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .process { justify-content: center; }
+  .process-title { margin: 2rem 8rem; }
+  .process-title h2 { font-size: 24px; }
+  .list-process table { width: 80%; }
+  .list-process th {
+    margin: 20px;
+    font-size: 16px;
+  }
+  .list-process td {
+    font-size: 18px;
+  }
+  .btn-watch-process {
+    padding: 12px;
+    font-size: 16px;
+  }
+  .btn-add-process {
+    width: 8rem;
+    height: 3rem;
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .process { justify-content: center; }
+  .process-title { margin: 2rem 6rem; }
+  .process-title h2 { font-size: 22px; }
+  .list-process table { width: 90%; }
+  .list-process th {
+    margin: 20px;
+    font-size: 18px;
+  }
+  .list-process td {
+    font-size: 18px;
+  }
+  .btn-watch-process {
+    padding: 12px;
+    font-size: 16px;
+  }
+  .btn-add-process {
+    width: 10rem;
+    height: 3rem;
+    font-size: 18px;
+  }
 }

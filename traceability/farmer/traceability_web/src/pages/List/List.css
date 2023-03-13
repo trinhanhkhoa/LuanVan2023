@@ -1,7 +1,7 @@
 .list{
   display: flex;
   flex-direction: column;
-  min-height: 80vh;
+  min-height: 85vh;
 }
 
 .list-title {
@@ -126,9 +126,7 @@
     min-height: 85vh;
     justify-content: center;
   }
-  .list-title { 
-    margin: 1rem 3rem; 
-  }
+  .list-title { margin: 1rem 3rem; }
   .list-title h2 { font-size: 18px; }
   .product-list table { 
     width: 26rem;
@@ -137,17 +135,12 @@
     font-size: 12px;
     margin: 16px;
   }
-    
-  .product-list td {
-    font-size: 14px;
-  }
-
+  .product-list td { font-size: 14px; }
   .btn-add-product {
     width: 8rem;
     height: 2rem;
     font-size: 14px;
   }
-
   .btn-list {
     display: flex;
     flex-direction: row;
@@ -160,32 +153,20 @@
 }
 
 @media only screen and (min-width: 600px) {
-  .list {
-    min-height: 85vh;
-    justify-content: center;
-  }
-  .list-title { 
-    margin: 1rem 5rem; 
-  }
+  .list { justify-content: center; }
+  .list-title { margin: 1rem 5rem; }
   .list-title h2 { font-size: 22px; }
-  .product-list table { 
-    width: 35rem;
-  }
+  .product-list table { width: 35rem; }
   .product-list th {
     font-size: 14px;
     margin: 16px;
   }
-    
-  .product-list td {
-    font-size: 16px;
-  }
-
+  .product-list td { font-size: 16px; }
   .btn-add-product {
     width: 8rem;
     height: 3rem;
     font-size: 16px;
   }
-
   .btn-list {
     display: flex;
     flex-direction: row;

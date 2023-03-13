@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import './Process.css';
-import Navbar from "../../components/Navbar";
 import { Link } from "react-router-dom";
-import Footer from "../../components/Footer/Footer";
 import DataProcess from '../../DataProcess.json';
 
 function Process() {
@@ -17,7 +15,6 @@ function Process() {
 
   return (
     <>
-      {/* <Navbar /> */}
       <div className='process'>
         <div className='process-title'>
           <h2>List of processes</h2>
@@ -40,7 +37,7 @@ function Process() {
                   <td>{val.name}</td>
                   <td>{val.pID}</td>
                   <td>
-                    <Link to="/processdetail" className="btn-watch">
+                    <Link to="/processdetail" className="btn-watch-process">
                       Watch
                     </Link>
                   </td>
@@ -73,7 +70,6 @@ function Process() {
           </nav>
         </div>
       </div>
-      {/* <Footer/> */}
     </>
   )
 
