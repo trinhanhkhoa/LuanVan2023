@@ -24,7 +24,7 @@ function ProcessDetail() {
             <p><b>Process's ID: </b> {DataProcess[0].pID}</p>
           </div>
         </div>
-        <div className='address-process'>
+        <div className='address-detail-process'>
           <p><b>Address: </b> 227 Nguyễn Văn Cừ Street, Ward 4, District 5, Hồ Chí Minh City</p>
         </div>
         <div className='description-process-2'>
@@ -34,29 +34,28 @@ function ProcessDetail() {
 
         <div className='description-process-3'>
           <div className='info-btn-process'>
-            <Link to="/createprocess">
+            <Link to="/updateprocess">
               <input type='button' value="Update information" className='btn-update-process-info'/>
             </Link>
-            <Link to="/list">
+            <Link to="/process">
               <input type='button' value="Delete process" className='btn-delete-process'/>
             </Link>
-          </div>
-          <input type="button" className='btn-detail' value="Detail" onClick={togglePopup}/>
-          {isOpen && <Popup
-            content={
-              <div className='popup-detail-process'>
-                <h2>Full Process Information</h2>
-                <p>
-                  {DataProcess[0].description.full}
-                </p>
-              </div>
-              }
-            handleClose={togglePopup}
-          />}      
+            <input type="button" className='btn-detail' value="Detail" onClick={togglePopup}/>
+            {isOpen && <Popup
+              content={
+                <div className='popup-detail-process'>
+                  <h2>Full Process Information</h2>
+                  <p>
+                    {DataProcess[0].description.full}
+                  </p>
+                </div>
+                }
+              handleClose={togglePopup}
+            />}      
+          </div>        
         </div>
       </div>
     </div>
-    {/* <Footer/> */}
   </>
   
   )

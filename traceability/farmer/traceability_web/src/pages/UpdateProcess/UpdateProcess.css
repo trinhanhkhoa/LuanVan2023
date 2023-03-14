@@ -1,4 +1,4 @@
-.create-process {
+.update-process {
   display: flex;
   margin: 2rem;
   border: 1px solid #000;
@@ -6,55 +6,52 @@
   min-height: 80vh;
 }
 
-.create-process-container {
+.update-process-container {
   margin-left: 3rem;
 }
 
-.create-process-title {
+.update-process-title {
   margin: 1rem;
 }
 
-.create-process-title h4 {
+.update-process-title h4 {
   font-style: italic;
   font-weight: 100;
   margin-top: 1rem;
 }
 
-.fill-process {
+.fill-update-process {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.fill-process b, .note-process b, .describe-process b  {
+.fill-update-process b, .note-update-process b, .describe-update-process b  {
   color: red;
 }
 
-.fill-process-1, .fill-process-2 {
+.fill-update-process-1, .fill-update-process-2 {
   display: flex;
   flex-direction: column;
 }
 
-.process-name, .time-process, .address-process, .image-process, .describe-process {
+.update-process-name, .time-update-process, .address-update-process, .describe-update-process {
   display: flex;
   flex-direction: column;
   margin: 1.25rem;
   font-size: 18px;
 }
 
-.process-name input, .time-process input, .address-process input {
+.update-process-name input, .time-update-process input, .address-update-process input {
   margin-top: 1rem;
   width: 50rem;
 }
 
-.describe-process textarea {
+.describe-update-process textarea {
   width: 105rem;
   height: 8rem;
   margin-top: 0.5rem;
   border-radius: 0.5rem;
-}
-.add-image-process-icon {
-  font-size: 6rem;
 }
 
 .btn-confirm {
@@ -76,37 +73,34 @@
   box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
 }
 
-.note-process-process {
+.note-update-process {
   display: flex;
   justify-content: space-between;
   margin-left: 1rem;
 }
 
 @media only screen and (max-width: 600px) {
-  .fill-process {
+  .fill-update-process {
     display: flex;
     flex-direction: column;
   }
 
-  .process-name, .time-process, .address-process, .image-process, .describe-process {
+  .update-process-name, .time-update-process, .address-update-process,  .describe-update-process {
     font-size: 16px;
     margin: 0.5rem;
   }
 
-  .process-name input, .time-process input, .address-process input {
+  .update-process-name input, .time-update-process input, .address-update-process input {
     margin-top: 1rem;
     width: 18rem;
   }
-
-  .add-image-process-icon {
-    font-size: 3rem;
-  }
-  
-  .describe-process textarea {
+ 
+  .describe-update-process textarea {
     width: 100%;
+    height: 20rem;
   }
 
-  .note-process { 
+  .note-update-process { 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,30 +109,27 @@
 }
 
 @media only screen and (min-width: 600px) {
-  .fill-process {
+  .fill-update-process {
     display: flex;
     flex-direction: column;
   }
 
-  .process-name, .time-process, .address-process, .image-process, .describe-process {
+  .update-process-name, .time-update-process, .address-update-process, .describe-update-process {
     font-size: 16px;
     margin: 0.5rem;
   }
 
-  .process-name input, .time-process input, .address-process input {
+  .update-process-name input, .time-update-process input, .address-update-process input {
     margin-top: 1rem;
     width: 28rem;
   }
-
-  .add-image-process-icon {
-    font-size: 3rem;
-  }
   
-  .describe-process textarea {
+  .describe-update-process textarea {
     width: 100%;
+    height: 20rem;
   }
 
-  .note-process { 
+  .note-update-process { 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -148,33 +139,30 @@
 
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  .create-process {
+  .update-process {
     justify-content: center;
   }
-  .fill-process {
+  .fill-update-process {
     display: flex;
     flex-direction: column;
   }
 
-  .process-name, .time-process, .address-process, .image-process, .describe-process {
+  .update-process-name, .time-update-process, .address-update-process, .describe-update-process {
     font-size: 16px;
     margin: 0.5rem;
   }
 
-  .process-name input, .time-process input, .address-process input {
+  .update-process-name input, .time-update-process input, .address-update-process input {
     margin-top: 1rem;
     width: 38rem;
   }
 
-  .add-image-process-icon {
-    font-size: 3rem;
-  }
-  
-  .describe-process textarea {
+  .describe-update-process textarea {
     width: 100%;
+    height: 20rem;
   }
 
-  .note-process { 
+  .note-update-process { 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -186,33 +174,30 @@
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-  .create-process {
+  .update-process {
     align-items: center;
   }
-  .fill-process {
+  .fill-update-process {
     display: flex;
     flex-direction: row;
   }
 
-  .process-name, .time-process, .address-process, .image-process, .describe-process {
+  .update-process-name, .time-update-process, .address-update-process, .describe-update-process {
     font-size: 18px;
     margin: 1rem;
   }
 
-  .process-name input, .time-process input, .address-process input {
+  .update-process-name input, .time-update-process input, .address-update-process input {
     margin-top: 1rem;
     width: 30rem;
   }
-
-  .add-image-process-icon {
-    font-size: 3rem;
-  }
   
-  .describe-process textarea {
+  .describe-update-process textarea {
     width: 100%;
+    height: 20rem;
   }
 
-  .note-process { 
+  .note-update-process { 
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -221,29 +206,30 @@
 }
 
 @media only screen and (min-width: 1500px) {
-  .create-process {
+  .update-process {
     align-items: center;
   }
-  .fill-process {
+  .fill-update-process {
     display: flex;
     flex-direction: row;
   }
 
-  .process-name, .time-process, .address-process, .image-process, .describe-process {
+  .update-process-name, .time-update-process, .address-update-process, .describe-update-process {
     font-size: 18px;
     margin: 1rem;
   }
 
-  .process-name input, .time-process input, .address-process input {
+  .update-process-name input, .time-update-process input, .address-update-process input {
     margin-top: 1rem;
     width: 41rem;
   }
 
-  .describe-process textarea {
+  .describe-update-process textarea {
     width: 100%;
+    height: 20rem;
   }
 
-  .note-process { 
+  .note-update-process { 
     display: flex;
     flex-direction: row;
     justify-content: space-between;

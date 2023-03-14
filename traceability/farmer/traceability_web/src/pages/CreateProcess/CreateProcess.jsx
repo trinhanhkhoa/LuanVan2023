@@ -1,11 +1,9 @@
 import React from 'react';
 import './CreateProcess.css';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer/Footer';
-import * as FcIcons from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 
 function CreateProcess() {
+
   return (
     <>
       {/* <Navbar/> */}
@@ -31,21 +29,15 @@ function CreateProcess() {
                 <label>Address <b>(*)</b></label>
                 <input type="text" placeholder='Address'required/>
               </div>
-              <div className='image-process'>
-                <label>Image <b>(*)</b></label>
-                <Link to="#">
-                  <FcIcons.FcAddImage className='add-image-icon'/>
-                </Link>
-              </div>
             </div>
           </div>
           <div className='describe-process'>
-            <label>Describe information<b>(*)</b></label>
+            <label>Describe information <b>(*)</b></label>
             <textarea placeholder='Describe information' required/>
           </div>
           <div className='note-process'>
             <p><b>(*)</b>: Required information</p>
-            <Link to="/list">
+            <Link to="/process">
               <input type="button" value="Confirm" className='btn-confirm'/>
             </Link>
           </div>

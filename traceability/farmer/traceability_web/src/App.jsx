@@ -12,6 +12,7 @@ import UpdateProduct from "./pages/UpdateProduct/UpdateProduct";
 import Layouts from "./components/Layouts";
 import ProcessDetail from "./pages/ProcessDetail/ProcessDetail";
 import CreateProcess from "./pages/CreateProcess/CreateProcess";
+import UpdateProcess from "./pages/UpdateProcess/UpdateProcess";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer/Footer";
 import UserInfo from "./pages/UserInfo/UserInfo";
@@ -37,6 +38,8 @@ function App() {
             <Route path="/process" element={<Process/>}/>
             <Route path="/createprocess" element={<CreateProcess/>}/>
             <Route path="/processdetail" element={<ProcessDetail/>}/>
+            <Route path="/updateprocess" element={<UpdateProcess/>}/>
+
         </Routes>
         <Footer/>
       </BrowserRouter>
