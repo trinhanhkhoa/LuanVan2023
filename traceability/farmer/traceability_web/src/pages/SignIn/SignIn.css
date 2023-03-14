@@ -1,7 +1,11 @@
-.sign-in {
-  margin: 7% 35%;
+.signin {
+  display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 80vh;
+  margin: 1rem;
+}
+.signin-container {
   border: 1px solid #000000;
   border-radius: 15px;
   width: 30rem;
@@ -70,7 +74,7 @@ a {
   background-color: #04AA6D;
   color: white;
   padding: 14px 20px;
-  margin: 0 180px;
+  margin: 0 150px;
   border: none;
   cursor: pointer;
   width: 25%;
@@ -85,8 +89,41 @@ a {
 .dont-have-account {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  gap: 8px;
+  padding: 10px;
+  gap: 5px;
   align-items: center;
   font-size: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .signin {
+    margin: 0;
+    min-height: 85vh;
+  }
+  .signin-container {
+    width: 25rem;
+  }
+  .header-container h1 { font-size: 20px; }
+  .header-container h3 { font-size: 15px; }
+  .header-container h4 { font-size: 15px; }
+  .dont-have-account { font-size: 14px; }
+  .btn-sign-in { margin: 10px 140px; }
+}
+
+@media only screen and (min-width: 600px) {
+  .signin {
+    margin: 0;
+    min-height: 85vh;
+  }
+  .signin-container {
+    width: 30rem;
+  }
+  .header-container h1 { font-size: 30px; }
+  .header-container h3 { font-size: 20px; }
+  .header-container h4 { 
+    font-size: 18px; 
+    margin-bottom: 10px;
+  }
+  .dont-have-account { font-size: 16px; }
+  .btn-sign-in { margin: 10px 180px; }
 }
