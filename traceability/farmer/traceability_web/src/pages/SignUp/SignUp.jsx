@@ -81,7 +81,7 @@ export default function SignUp() {
                 </div>
                 <button className='btn-sign-up' type='button' onClick={collectData}>SIGN UP</button>
                 <div>
-                  <Link className='already-have' to='/signin'>
+                  <Link className='already-have' to='/'>
                     <p>Already have an account</p>
                   </Link>
                 </div>

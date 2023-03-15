@@ -19,16 +19,17 @@ import UserInfo from "./pages/UserInfo/UserInfo";
 
 
 function App() {
+  const isSignedIn = window.localStorage.getItem("signedIn");
   return (
     <div className="App">
       <BrowserRouter>
         <Navbar/>
         <Routes >
-            <Route path="/signin" element={<SignIn/>}/>
+            <Route path="/" element={isSignedIn == "true" ? <Home/> : <SignIn/>}/>
             <Route path="/signup" element={<SignUp/>}/>
             <Route path="/userinfo" element={<UserInfo/>}/>
 
-            <Route path="/home" element={<Home/>}/>
+            {/* <Route path="/" element={<Home/>}/>  */}
             <Route path="/list" element={<List/>}/>
 
             <Route path="/product" element={<Product/>}/>          

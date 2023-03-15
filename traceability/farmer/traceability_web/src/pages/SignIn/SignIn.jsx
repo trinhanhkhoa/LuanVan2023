@@ -33,7 +33,8 @@ export default function SignIn({ setToken }) {
         if(data.status == "Ok") {
           alert("Login successful");
           window.localStorage.setItem("token", data.data);
-          window.location.href = "/home";
+          window.localStorage.setItem("signedIn", true);
+          window.location.href = "/";
         }
       });
   }

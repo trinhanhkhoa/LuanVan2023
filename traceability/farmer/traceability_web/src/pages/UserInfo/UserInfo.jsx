@@ -26,6 +26,12 @@ export default function UserInfo () {
         console.log(data.data.name, "userRegister");
         setName(data.data.name);
         setEmail(data.data.email);
+        if(data.data.name == "Token expired" && data.data.email == "Token expired")
+        {
+          alert("Token expired, please login again");
+          window.localStorage.clear();
+          window.location.href = "/";
+        }
         console.log(name, email);
       });
   });

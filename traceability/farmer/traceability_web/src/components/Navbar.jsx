@@ -17,11 +17,9 @@ function Navbar() {
 
   const showDropdown = () => setDropdown(!dropdown);
 
-  const auth = localStorage.getItem('user');
-  const navigate = useNavigate();
   const logout = () => {
-    localStorage.clear();
-    navigate('/signin');
+    window.localStorage.clear();
+    window.location.href = "/";
   }
 
   return (
@@ -42,7 +40,7 @@ function Navbar() {
               <Link to='/userinfo'><span>Information</span></Link>
             </li>
             <li> 
-              {auth ? <Link onClick={logout} to='/'><span>Log out</span></Link> : <Link to='/signin'><span>Log out</span></Link> }
+              <input type="button" className="btn-logout" value={"Log out"} onClick={logout}/>
             </li>
           </ul>
         </nav>
