@@ -20,7 +20,6 @@ export default function Home() {
 
   return (
     <>
-      {/* <Navbar /> */}
       <div className="home">
         <div className="news_img">
           <img src={news_img}/>

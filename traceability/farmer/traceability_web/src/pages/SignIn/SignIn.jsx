@@ -34,7 +34,7 @@ export default function SignIn({ setToken }) {
           alert("Login successful");
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("signedIn", true);
-          window.location.href = "/";
+          window.location.href = "/home";
         }
       });
   }
