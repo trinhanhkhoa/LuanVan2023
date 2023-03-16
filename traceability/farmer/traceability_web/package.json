@@ -17,6 +17,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "react-pro-sidebar": "^1.0.0",
+    "react-qr-code": "^2.0.11",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"

@@ -22,6 +22,7 @@ mongoose
   .catch((e) => console.log(e));
 
 require("./user");
+
 const user = mongoose.model("userAccount");
 app.post("/signup", async(req, res) => {
   const {name,email,password} = req.body;
@@ -53,7 +54,7 @@ app.post("/signin", async(req, res) => {
 
   if(await bcrypt.compare(password, userLogin.password)) {
     const token = jwt.sign({ email: userLogin.email }, JWT_SECRET, {
-      expiresIn: 6,
+      expiresIn: 15,
     });
 
     if(res.status(201)) {
@@ -92,3 +93,29 @@ app.post("/userinfo", async (req, res) => {
 app.listen(5000, () => {
   console.log("server started")
 });
+
+require("./product");
+const product = mongoose.model("products");
+app.post("/createqr", async(req, res) => {
+  const {id,pId,name,time,address,image,description} = req.body;
+
+  try {
+    // const oldProduct = await product.findOne({id,pId});
+    // if(oldProduct) {
+    //   return res.send({ error: "Product Exists"})
+    // }
+    // await
+    product.create({
+      id,
+      pId,
+      name,
+      time,
+      address,
+      image,
+      description
+    });
+    res.send({status: "OK"})
+  } catch (error) {
+    res.send({ status: "Error"})
+  }
+})

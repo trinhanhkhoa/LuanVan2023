@@ -35,10 +35,6 @@
   flex-direction: column;
 }
 
-.qr-icon-update {
-  font-size: 10rem;
-}
-
 .image-update form {
   display: flex;
   flex-direction: column;

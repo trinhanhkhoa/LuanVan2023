@@ -1,13 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import './UpdateProduct.css';
-import Navbar from '../../components/Navbar';
-import Footer from '../../components/Footer/Footer';
 import * as FcIcons from 'react-icons/fc';
 import * as TbIcons from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import Popup from '../../components/Popup/Popup';
 import Data from "../../Data.json";
-
+import QRCode from 'react-qr-code';
 
 function UpdateProduct() {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +18,14 @@ function UpdateProduct() {
 
   const [fileName, setFileName] = useState("No choosen file")
 
+  const [text, setText] = useState("");
+
+  const generateQR = (e) => {
+    setText(e.target.value);
+  }
+
   return (
     <>
-      {/* <Navbar/> */}
       <div className='update-product'>
         <div className='update-product-container'>
           <div className='update-product-title'>
@@ -31,7 +34,7 @@ function UpdateProduct() {
           </div>
           <div className='update-info'>
             <div className='update-info-qr'>
-              <TbIcons.TbQrcode className="qr-icon-update"/>
+              <QRCode value={text} size={160}/>
               <Link to="/product">
                 <input type="button" className='btn-watch-product' value="Watch product"/>
               </Link>
@@ -39,17 +42,17 @@ function UpdateProduct() {
             <div className='update-info-1'>
               <div className='product-name-update'>
                 <label>Product's name <b>(*)</b></label>
-                <input type="text" placeholder="Product's name" value={Data[0].name}/>
+                <input type="text" placeholder="Product's name" onChange={(e) => {generateQR(e)}} />
               </div>
               <div className='time-update'>
                 <label>Time <b>(*)</b></label>
-                <input type="text" placeholder='3 months' value={Data[0].time}/>
+                <input type="text" placeholder='3 months' onChange={(e) => {generateQR(e)}}/>
               </div>
             </div>
             <div className='update-info-2'>
               <div className='address-update'>
                 <label>Address <b>(*)</b></label>
-                <input type="text" placeholder='Address'value={Data[0].address}/>
+                <input type="text" placeholder='Address' onChange={(e) => {generateQR(e)}}/>
               </div>
               <div className='image-update'>
                 <label>Image <b>(*)</b></label>
@@ -66,7 +69,6 @@ function UpdateProduct() {
                       }
                     }}
                   />
-                  {/* <img src={Data[0].image}/> */}
                   {
                     image ?
                     <img src={image} width={210} height={190} alt={fileName}/> :
@@ -88,7 +90,6 @@ function UpdateProduct() {
           </div>
         </div>
       </div>
-      {/* <Footer/> */}
     </>
   )
 }
