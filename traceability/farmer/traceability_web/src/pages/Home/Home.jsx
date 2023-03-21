@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import "./Home.css";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer/Footer";
 import news_img from "../../asserts/news.png";
 import * as TbIcons from "react-icons/tb";
 import * as MdIcons from "react-icons/md";
@@ -65,10 +63,8 @@ export default function Home() {
               )
             })}
           </table>
-          {/*  */}
         </div>
       </div>
-      {/* <Footer/> */}
     </>
     
   );

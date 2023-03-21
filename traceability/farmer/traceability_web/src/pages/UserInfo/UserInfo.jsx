@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import Home from '../Home/Home';
 import "./UserInfo.css";
 
 export default function UserInfo () {
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-
+  const [admin, setAdmin] = useState(false);
 
   useEffect(() => {
     console.log(token);
@@ -24,6 +25,8 @@ export default function UserInfo () {
       .then((res) => res.json() )
       .then((data) => {
         console.log(data.data.name, "userRegister");
+        if(data.data.userType == "Admin")
+          setAdmin(true);
         setName(data.data.name);
         setEmail(data.data.email);
         if(data.data.name == "Token expired" && data.data.email == "Token expired")
@@ -34,7 +37,7 @@ export default function UserInfo () {
         }
         console.log(name, email);
       });
-  });
+  }, []);
   return (
     <div className='userinfo'>
       <div className='userinfo-container'>
@@ -46,5 +49,6 @@ export default function UserInfo () {
         </div>
       </div>
     </div>
+    // admin?<h1>"Welcome Admin"</h1>:<Home email={email}/>
   )
 }

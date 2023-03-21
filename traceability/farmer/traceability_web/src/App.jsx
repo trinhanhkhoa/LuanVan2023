@@ -17,6 +17,8 @@ import ProcessDetail from "./pages/ProcessDetail/ProcessDetail";
 import CreateProcess from "./pages/CreateProcess/CreateProcess";
 import UpdateProcess from "./pages/UpdateProcess/UpdateProcess";
 import UserInfo from "./pages/UserInfo/UserInfo";
+import EnHome from "./pages/EnHome/EnHome";
+
 
 function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
@@ -27,11 +29,16 @@ function App() {
         <Routes>
           <Route
             path="/"
-            element={isSignedIn == "true" ? <Home /> : <SignIn />}
+            element={
+              isSignedIn == "true"
+              ? <EnHome/>
+              : <SignIn/>
+            }
           />
           <Route path="/signup" element={<SignUp />} />
           <Route element={<WithNav />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/enhome" element={<EnHome />} />
             <Route path="/list" element={<List />} />
             <Route path="/userinfo" element={<UserInfo />} />
 

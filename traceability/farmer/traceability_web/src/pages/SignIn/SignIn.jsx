@@ -2,7 +2,7 @@ import React,{ useState } from 'react';
 import { Link } from 'react-router-dom';
 import './SignIn.css';
 
-export default function SignIn({ setToken }) {
+export default function SignIn() {
  
   const [isShown, setIsShown] = useState(false);
   const togglePassword = () => {
@@ -11,6 +11,7 @@ export default function SignIn({ setToken }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
 
   const handleSubmit = () => {
     console.log(email, password);
@@ -24,7 +25,8 @@ export default function SignIn({ setToken }) {
       },
       body: JSON.stringify({
         email,
-        password
+        password,
+        userType
       })
     })
       .then((res) => res.json() )
@@ -34,7 +36,8 @@ export default function SignIn({ setToken }) {
           alert("Login successful");
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("signedIn", true);
-          window.location.href = "/home";
+          window.localStorage.setItem("userType", userType);
+          window.location.href = "/enhome";
         }
       });
   }

@@ -37,6 +37,14 @@
   margin-left: 12%;
   margin-top: 0;
 }
+.radio-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin: 0 50px;
+  font-size: 18px;
+  padding: 10px;
+}
 
 .input-container {
   display: flex;

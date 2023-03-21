@@ -12,27 +12,36 @@ export default function SignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
+  const [secretKey, setSecretKey] = useState("");
 
   const collectData = () => {
-    console.log(name, email, password);
-    fetch("http://localhost:5000/signup", {
-      method:"POST",
-      crossDomain:true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin":"*"
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        password
+    if(userType == "Admin" && secretKey != "12345") {
+      alert("Invalid Admin")
+    } else {
+      console.log(name, email, password);
+      fetch("http://localhost:5000/signup", {
+        method:"POST",
+        crossDomain:true,
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin":"*"
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+          userType
+        })
       })
-    })
-      .then((res) => res.json() )
-      .then((data) => {
-        console.log(data, "userRegister");
-      });
+        .then((res) => res.json() )
+        .then((data) => {
+          console.log(data, "userRegister");
+          console.log(userType);
+        });
+    }
+
   }
   
 
@@ -48,6 +57,31 @@ export default function SignUp() {
             </div>
             <div className='sign-up-content'>
               <form action="form" onSubmit={(e) => e.collectData()}>
+                <div className='radio-container'>
+                  <input 
+                    type="radio" 
+                    name='UserType'
+                    value="User"
+                    onChange={(e) => setUserType(e.target.value)}
+                  />
+                  User
+                  <input 
+                    type="radio" 
+                    name='UserType'
+                    value="Admin"
+                    onChange={(e) => setUserType(e.target.value)}
+                  />
+                  Admin
+                </div>
+                { 
+                userType == "Admin" ? 
+                  <div className='input-container'>
+                    <label>Secret key</label>
+                    <input type="text" placeholder='Key' onChange={(e) => setSecretKey(e.target.value)} required/>
+                  </div> 
+                  : null 
+                }
+                
                 <div className='input-container'>
                   <label>Fullname</label>
                   <input type="text" placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} required/>
