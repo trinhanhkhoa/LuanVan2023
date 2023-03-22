@@ -1,0 +1,252 @@
+.create-process {
+  display: flex;
+  margin: 2rem;
+  border: 1px solid #000;
+  border-radius: 0.5rem;
+  min-height: 80vh;
+}
+
+.create-process-container {
+  margin-left: 3rem;
+}
+
+.create-process-title {
+  margin: 1rem;
+}
+
+.create-process-title h4 {
+  font-style: italic;
+  font-weight: 100;
+  margin-top: 1rem;
+}
+
+.fill-process {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.fill-process b, .note-process b, .describe-process b  {
+  color: red;
+}
+
+.fill-process-1, .fill-process-2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.process-name, .time-process, .address-process, .image-process, .describe-process {
+  display: flex;
+  flex-direction: column;
+  margin: 1.25rem;
+  font-size: 18px;
+}
+
+.process-name input, .time-process input, .address-process input {
+  margin-top: 1rem;
+  width: 50rem;
+}
+
+.describe-process textarea {
+  width: 105rem;
+  height: 8rem;
+  margin-top: 0.5rem;
+  border-radius: 0.5rem;
+}
+.add-image-process-icon {
+  font-size: 6rem;
+}
+
+.btn-confirm {
+  width: 6rem;
+  height: 3rem;
+  margin: 1rem;
+  background-color: #DD8600;
+  border: none;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-size: 18px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.btn-confirm:hover {
+  transition: background-color 350ms ease-out;
+  background-color: #ff9900;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.note-process-process {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .fill-process {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .process-name, .time-process, .address-process, .image-process, .describe-process {
+    font-size: 16px;
+    margin: 0.5rem;
+  }
+
+  .process-name input, .time-process input, .address-process input {
+    margin-top: 1rem;
+    width: 18rem;
+  }
+
+  .add-image-process-icon {
+    font-size: 3rem;
+  }
+  
+  .describe-process textarea {
+    width: 100%;
+  }
+
+  .note-process { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  .fill-process {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .process-name, .time-process, .address-process, .image-process, .describe-process {
+    font-size: 16px;
+    margin: 0.5rem;
+  }
+
+  .process-name input, .time-process input, .address-process input {
+    margin-top: 1rem;
+    width: 28rem;
+  }
+
+  .add-image-process-icon {
+    font-size: 3rem;
+  }
+  
+  .describe-process textarea {
+    width: 100%;
+  }
+
+  .note-process { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .create-process {
+    justify-content: center;
+  }
+  .fill-process {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .process-name, .time-process, .address-process, .image-process, .describe-process {
+    font-size: 16px;
+    margin: 0.5rem;
+  }
+
+  .process-name input, .time-process input, .address-process input {
+    margin-top: 1rem;
+    width: 38rem;
+  }
+
+  .add-image-process-icon {
+    font-size: 3rem;
+  }
+  
+  .describe-process textarea {
+    width: 100%;
+  }
+
+  .note-process { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .create-process {
+    align-items: center;
+  }
+  .fill-process {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .process-name, .time-process, .address-process, .image-process, .describe-process {
+    font-size: 18px;
+    margin: 1rem;
+  }
+
+  .process-name input, .time-process input, .address-process input {
+    margin-top: 1rem;
+    width: 30rem;
+  }
+
+  .add-image-process-icon {
+    font-size: 3rem;
+  }
+  
+  .describe-process textarea {
+    width: 100%;
+  }
+
+  .note-process { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 16px;
+  }
+}
+
+@media only screen and (min-width: 1500px) {
+  .create-process {
+    align-items: center;
+  }
+  .fill-process {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .process-name, .time-process, .address-process, .image-process, .describe-process {
+    font-size: 18px;
+    margin: 1rem;
+  }
+
+  .process-name input, .time-process input, .address-process input {
+    margin-top: 1rem;
+    width: 41rem;
+  }
+
+  .describe-process textarea {
+    width: 100%;
+  }
+
+  .note-process { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 16px;
+  }
+}

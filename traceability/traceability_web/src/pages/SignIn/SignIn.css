@@ -1,0 +1,128 @@
+.signin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+.signin-container {
+  border: 1px solid #000000;
+  border-radius: 15px;
+  width: 30rem;
+}
+
+.header-container h1 { 
+  background-color: #04AA6D;
+  color: #fff;
+  padding: 50px;
+  text-align: center;
+  margin: 0;
+  border-radius: 15px 15px 0 0;
+}
+
+.header-container h3 {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: left;
+  margin-left: 12%;
+  margin-bottom: 0;
+  color: #04AA6D;
+}
+
+.header-container h4 {
+  font-weight: 400;
+  font-style: italic;
+  text-align: left;
+  margin-left: 12%;
+  margin-top: 0;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 50px;
+  font-size: 18px;
+  padding: 10px;
+}
+
+.show-password {
+  padding-top: 0;
+  text-align: right;
+  font-size: 14px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.checkbox-container {
+  display: flex;
+  flex-direction: row;
+  margin: 0 50px;
+  justify-content: space-between;
+  font-size: 14px;
+  padding: 10px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn-sign-in {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 0 150px;
+  border: none;
+  cursor: pointer;
+  width: 25%;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.btn-sign-in:hover {
+  background-color: #0c4e36;
+}
+
+.dont-have-account {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 5px;
+  align-items: center;
+  font-size: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+  .signin {
+    margin: 0;
+    min-height: 100vh;
+  }
+  .signin-container {
+    width: 25rem;
+  }
+  .header-container h1 { font-size: 20px; }
+  .header-container h3 { font-size: 15px; }
+  .header-container h4 { font-size: 15px; }
+  .dont-have-account { font-size: 14px; }
+  .btn-sign-in { margin: 10px 140px; }
+}
+
+@media only screen and (min-width: 600px) {
+  .signin {
+    margin: 0;
+    min-height: 100vh;
+  }
+  .signin-container {
+    width: 30rem;
+  }
+  .header-container h1 { font-size: 30px; }
+  .header-container h3 { font-size: 20px; }
+  .header-container h4 { 
+    font-size: 18px; 
+    margin-bottom: 10px;
+  }
+  .dont-have-account { font-size: 16px; }
+  .btn-sign-in { margin: 10px 180px; }
+}
