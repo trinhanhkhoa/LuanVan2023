@@ -41,10 +41,8 @@ export default function SignUp() {
           console.log(userType);
         });
     }
-
   }
   
-
   return (
     <div className='signup'>
       <div className='signup-container'>
@@ -81,7 +79,6 @@ export default function SignUp() {
                   </div> 
                   : null 
                 }
-                
                 <div className='input-container'>
                   <label>Fullname</label>
                   <input type="text" placeholder='Username' value={name} onChange={(e) => setName(e.target.value)} required/>

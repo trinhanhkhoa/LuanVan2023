@@ -42,8 +42,9 @@ export default function EnHome() {
   }, []);
 
   return (
-    admin 
-    ? <div className="en-home">
+    admin
+    ?
+     <div className="en-home">
         <div className="news_img">
           <img src={news_img}/>
         </div>
@@ -62,7 +63,6 @@ export default function EnHome() {
           </div>
         </div>
       </div>
-    : <Home/>  
-        
+    : <Home/>    
   );
 }

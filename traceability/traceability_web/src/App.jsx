@@ -3,9 +3,10 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import React,{ useState } from 'react';
 import "./App.css";
-import SignIn from "./pages/SignIn/SignIn";
-import SignUp from "./pages/SignUp/SignUp";
+import SignIn from "./authen/SignIn/SignIn";
+import SignUp from "./authen/SignUp/SignUp";
 import Home from "./pages/farmer/Home/Home";
 import List from "./pages/farmer/List/List";
 import Process from "./pages/farmer/Process/Process";
@@ -18,7 +19,10 @@ import CreateProcess from "./pages/farmer/CreateProcess/CreateProcess";
 import UpdateProcess from "./pages/farmer/UpdateProcess/UpdateProcess";
 import UserInfo from "./pages/farmer/UserInfo/UserInfo";
 import EnHome from "./pages/engineer/EnHome/EnHome";
-
+import EnCreateProcess from "./pages/engineer/EnCreateProcess/EnCreateProcess";
+import ListOfProcesses from "./pages/engineer/ListOfProcesses/ListOfProcesses";
+import EnProcess from "./pages/engineer/EnProcess/EnProcess";
+import EnUpdateProcess from "./pages/engineer/EnUpdateProcess/EnUpdateProcess";
 
 function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
@@ -30,15 +34,15 @@ function App() {
           <Route
             path="/"
             element={
-              isSignedIn == "true"
-              ? <EnHome/>
+              isSignedIn == true
+              ? <EnHome />
               : <SignIn/>
             }
           />
           <Route path="/signup" element={<SignUp />} />
-          <Route element={<WithNav />}>
+          <Route element={<WithNav/>}>
             <Route path="/home" element={<Home />} />
-            <Route path="/enhome" element={<EnHome />} />
+            <Route path="/enhome" element={<EnHome/>} />
             <Route path="/list" element={<List />} />
             <Route path="/userinfo" element={<UserInfo />} />
 
@@ -50,6 +54,12 @@ function App() {
             <Route path="/createprocess" element={<CreateProcess />} />
             <Route path="/processdetail" element={<ProcessDetail />} />
             <Route path="/updateprocess" element={<UpdateProcess />} />
+            
+            <Route path="/encreateprocess" element={<EnCreateProcess />} />
+            <Route path="/listofprocesses" element={<ListOfProcesses />} />
+            <Route path="/enprocess" element={<EnProcess />} />
+            <Route path="/enupdateprocess" element={<EnUpdateProcess />} />
+            
           </Route>
         </Routes>
       </BrowserRouter>

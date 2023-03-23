@@ -12,8 +12,12 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
+  const [secretKey, setSecretKey] = useState("");
 
   const handleSubmit = () => {
+    if(userType == "Admin" && secretKey != "12345") {
+      alert("Invalid Admin")
+    } else {
     console.log(email, password);
     fetch("http://localhost:5000/signin", {
       method:"POST",
@@ -31,15 +35,22 @@ export default function SignIn() {
     })
       .then((res) => res.json() )
       .then((data) => {
-        console.log(data, "userRegister");
-        if(data.status == "Ok") {
-          alert("Login successful");
+        console.log(userType, "userRegister");
+        if(data.status == "Ok" && userType == "Admin") {
+          alert("Login admin successful");
           window.localStorage.setItem("token", data.data);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", userType);
           window.location.href = "/enhome";
+        } else {
+          alert("Login user successful");
+          window.localStorage.setItem("token", data.data);
+          window.localStorage.setItem("signedIn", true);
+          window.localStorage.setItem("userType", userType);
+          window.location.href = "/home";
         }
       });
+    }
   }
 
   return (
@@ -54,6 +65,32 @@ export default function SignIn() {
         </div>
       <div className='sign-in-content'>
         <form action="form" onSubmit={handleSubmit}>
+          <div className='sign-up-content'>
+            <div className='radio-container'>
+              <input 
+                type="radio" 
+                name='UserType'
+                value="User"
+                onChange={(e) => setUserType(e.target.value)}
+              />
+              User
+              <input 
+                type="radio" 
+                name='UserType'
+                value="Admin"
+                onChange={(e) => setUserType(e.target.value)}
+              />
+              Admin
+            </div>
+            { 
+              userType == "Admin" ? 
+              <div className='input-container'>
+                <label>Secret key</label>
+                <input type="text" placeholder='Key' onChange={(e) => setSecretKey(e.target.value)} required/>
+              </div> 
+              : null 
+            }
+          </div>
           <div className='input-container'>
             <label>Email</label>
             <input type="text" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required/>

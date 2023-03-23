@@ -3,12 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "./index.css";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
-import { SidebarData } from "./SidebarData";
+import { EnSidebarData } from "./EnSidebarData";
 import { IconContext } from "react-icons/lib";
 import logo from "../asserts/logo.png";
-import { UserData } from "./UserData";
 
-function Navbar() {
+function EnNavbar() {
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -25,7 +24,7 @@ function Navbar() {
   return (
     <>
       <IconContext.Provider value={{color: '#fff'}}>
-        <div className="navbar">
+        <div className="ennavbar">
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
@@ -45,14 +44,14 @@ function Navbar() {
           </ul>
         </nav>
 
-        <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
+        <nav className={sidebar ? "ennav-menu active" : "ennav-menu"}>
           <ul className="nav-menu-items"  onClick={showSidebar}>
-            <li className="navbar-toggle">
+            <li className="ennavbar-toggle">
               <Link to="#" className="menu-bars">
                 <AiIcons.AiOutlineClose className="btn-close"/>
               </Link>
             </li>
-            {SidebarData.map((item, index) => {
+            {EnSidebarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
@@ -70,4 +69,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default EnNavbar;
