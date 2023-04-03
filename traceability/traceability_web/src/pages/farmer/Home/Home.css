@@ -4,7 +4,7 @@
   flex-direction: column;
   margin-top: 12rem;
   min-height: 100vh;
-  margin-bottom: 10rem;
+  /* margin-bottom: 10rem; */
 }
 
 .news_img {
@@ -322,8 +322,7 @@
 
 @media only screen and (min-width: 1680px) { 
   .home {
-    margin-top: 6rem;
-    margin-bottom: 18rem;
+    margin-top: 4rem;
     min-height: 80vh;
   }
   .news_img { margin-top: 12rem; }

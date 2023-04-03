@@ -49,13 +49,13 @@ export default function EnHome() {
           <img src={news_img}/>
         </div>
         <div className="en-home-content">
-          <div className="btn-createQR">
+          <div className="en-btn-createQR">
             <Link to="/createQR" className="link-icon">
               <TbIcons.TbQrcode className="qr-icon-en-home"/>          
               Create process
             </Link>
           </div>
-          <div className="btn-process">
+          <div className="en-btn-process">
             <Link to="/process" className="link-icon">
               <MdIcons.MdChangeCircle className="process-icon"/>
               Choose process

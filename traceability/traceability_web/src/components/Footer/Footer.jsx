@@ -5,8 +5,10 @@ import './Footer.css';
 
 
 function Footer() {
+  const userType = window.localStorage.getItem("userType");
+
   return (
-    <div className='footer'>
+    <div className={userType == "Admin" ? 'enfooter' : 'footer'}>
       <h3>Traceability agriculture &copy; 2023 - created by</h3>
       <div>
         <img src={hcmusLogo} className='hcmus-logo'/> <img src={logo} className='trace-logo'/>

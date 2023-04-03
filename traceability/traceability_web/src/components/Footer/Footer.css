@@ -11,6 +11,19 @@
   width: 100%;
 }
 
+.enfooter {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  background-color: #FFB100;
+  color: #fff;
+  position: fix;
+  bottom: 0;
+  width: 100%;
+}
+
 .footer img {
   margin: 0.2rem;
   border-radius: 0.5rem;
