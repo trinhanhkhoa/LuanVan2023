@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const productsSchema = new mongoose.Schema(
+const listProductSchema = new mongoose.Schema(
   {
     id:Number,
     name:String,
@@ -13,8 +13,8 @@ const productsSchema = new mongoose.Schema(
     description:String
   },
   {
-    collection: "products"
+    collection: "list"
   }
 );
 
-mongoose.model("products", productsSchema); 
+mongoose.model("list", listProductSchema); 

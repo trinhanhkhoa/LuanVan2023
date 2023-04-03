@@ -4,7 +4,9 @@ const userSchema = new mongoose.Schema(
   {
     name:String,
     email:{ type: String, unique: true },
-    password:String
+    password:String,
+    userType: String,
+    // list: {type: mongoose.Types.ObjectId, ref: "list"}
   },
   {
     collection: "userAccount"

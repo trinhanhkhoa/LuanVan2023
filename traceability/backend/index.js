@@ -25,7 +25,7 @@ require("./user");
 
 const user = mongoose.model("userAccount");
 app.post("/signup", async(req, res) => {
-  const {name,email,password} = req.body;
+  const {name,email,password,userType} = req.body;
 
   const encryptedPassword = await bcrypt.hash(password, 10);
   try {
@@ -36,7 +36,8 @@ app.post("/signup", async(req, res) => {
     await user.create({
       name,
       email,
-      password:encryptedPassword
+      password:encryptedPassword,
+      userType
     });
     res.send({status:"OK"})
   } catch (error) {
@@ -54,7 +55,7 @@ app.post("/signin", async(req, res) => {
 
   if(await bcrypt.compare(password, userLogin.password)) {
     const token = jwt.sign({ email: userLogin.email }, JWT_SECRET, {
-      expiresIn: 15,
+      expiresIn: 15000,
     });
 
     if(res.status(201)) {
@@ -90,22 +91,43 @@ app.post("/userinfo", async (req, res) => {
   }
 })
 
-app.listen(5000, () => {
-  console.log("server started")
-});
+app.post("/enhome", async (req, res) => {
+  const { token } = req.body;
+  try {
+    const userInfo = jwt.verify(token, JWT_SECRET, (err, res) => {
+      if(err) {
+        return "Token expired";
+      }
+      return res;
+    });
+    if(userInfo == "Token expired")
+      return res.send({ status: "Error", data: "Token expired"});
+    const userEmail = userInfo.email;
+    user.findOne({ email: userEmail })
+      .then((data) => {
+      res.send({ status: "Ok", data:data });
+    })
+      .catch((error) => {
+      res.send({ status: "error", data:error });
+    });
+  } catch (error) {
+    
+  }
+})
 
 require("./product");
-const product = mongoose.model("products");
+const products = mongoose.model("products");
+
 app.post("/createqr", async(req, res) => {
   const {id,pId,name,time,address,image,description} = req.body;
 
   try {
-    // const oldProduct = await product.findOne({id,pId});
+    // const oldProduct = await products.findOne({id,pId});
     // if(oldProduct) {
     //   return res.send({ error: "Product Exists"})
     // }
     // await
-    product.create({
+    products.create({
       id,
       pId,
       name,
@@ -119,3 +141,19 @@ app.post("/createqr", async(req, res) => {
     res.send({ status: "Error"})
   }
 })
+
+require("./list");
+const list = mongoose.model("list");
+
+app.get("/list", async(req, res) => {
+  try {
+    const productItem = await list.find (); 
+    res.send({ status: "Ok", data: productItem });
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+app.listen(5000, () => {
+  console.log("server started")
+});
