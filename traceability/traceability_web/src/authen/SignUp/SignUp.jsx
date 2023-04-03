@@ -35,7 +35,7 @@ export default function SignUp() {
           userType
         })
       })
-        .then((res) => res.json() )
+        .then((res) => res.json())
         .then((data) => {
           console.log(data, "userRegister");
           console.log(userType);

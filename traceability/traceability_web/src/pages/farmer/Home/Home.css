@@ -322,7 +322,7 @@
 
 @media only screen and (min-width: 1680px) { 
   .home {
-    margin-top: 4rem;
+    margin-top: 8rem;
     min-height: 80vh;
   }
   .news_img { margin-top: 12rem; }
@@ -338,6 +338,7 @@
   .link-icon { font-size: 3rem; }
   .list-item-home table {
     width: 104rem;
+    margin-bottom: 4rem;
   }
   .list-item-home th {
     margin: 20px;

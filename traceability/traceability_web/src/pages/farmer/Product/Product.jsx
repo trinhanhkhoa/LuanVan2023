@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Product.css';
 import cam from "../../../asserts/cam.jpg";
 import * as TbIcons from "react-icons/tb";

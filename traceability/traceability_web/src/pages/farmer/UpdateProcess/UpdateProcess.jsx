@@ -1,10 +1,10 @@
 import React from 'react';
 import './UpdateProcess.css';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import DataProcess from "../../../DataProcess.json";
 
 function UpdateProcess() {
-
+  
   return (
     <>
       <div className='update-process'>

@@ -1,7 +1,7 @@
 import {
   BrowserRouter,
   Routes,
-  Route
+  Route, useParams
 } from "react-router-dom";
 import React,{ useState } from 'react';
 import "./App.css";
@@ -48,7 +48,7 @@ function App() {
 
             <Route path="/product" element={<Product />} />
             <Route path="/createQR" element={<CreateQR />} />
-            <Route path="/updateproduct" element={<UpdateProduct />} />
+            <Route path="/updateproduct/:name" element={<UpdateProduct />} />
 
             <Route path="/process" element={<Process />} />
             <Route path="/createprocess" element={<CreateProcess />} />

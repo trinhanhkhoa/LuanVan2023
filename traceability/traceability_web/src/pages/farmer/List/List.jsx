@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './List.css';
 import * as RiIcons from "react-icons/ri";
 import * as BiIcons from "react-icons/bi";
@@ -6,14 +6,29 @@ import { Link } from "react-router-dom";
 import Data from "../../../Data.json";
 
 function List() {
+  const [data, setData] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const recordsPerPage = 3;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = Data.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(Data.length / recordsPerPage);
+  const records = data.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(data.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
+
+  
+  useEffect(() => {
+    fetch("http://localhost:5000/list", {
+      method:"GET",
+    })
+      .then((res) => res.json() )
+      .then((data) => {
+        console.log(data.data);
+
+        setData(data.data);
+      });
+  }, []);
+
 
   return (
     <>
@@ -27,9 +42,8 @@ function List() {
         <div className="product-list">
           <table>
             <tr>
-              <th>Ordinal numbers</th>
-              <th>Product's name</th>
               <th>Product's ID</th>
+              <th>Product's name</th>
               <th>Status</th>
               <th>Number of updates</th>
               <th></th>
@@ -37,14 +51,13 @@ function List() {
             {records.map((val, key) => {
               return (
                 <tr key={key}>
-                  <td>{val.id}</td>
-                  <td>{val.name}</td>
                   <td>{val.pId}</td>
-                  <td>{val.status}</td>
+                  <td>{val.name}</td>
+                  <td>{val.status == true ? <BiIcons.BiCheck className='check-icon'/> : <RiIcons.RiCloseLine className='close-icon'/>}</td>
                   <td>{val.numberOfUpdates}</td>
                   <td>
                     <div className='btn-list'>
-                      <Link to="/updateproduct" className="btn-edit-product">
+                      <Link to={`/updateproduct/${val.name}`} className="btn-edit-product">
                         <RiIcons.RiEditBoxLine/>
                       </Link>
                       <Link to="/list" className="btn-remove-product">

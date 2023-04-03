@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './CreateQR.css';
 import * as FcIcons from 'react-icons/fc';
+import QRCode from 'react-qr-code';
 
 function CreateQR() {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState("");
   const [fileName, setFileName] = useState("No choosen file")
   const [text, setText] = useState("");
 
@@ -13,14 +14,22 @@ function CreateQR() {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   
+  const [src, setSrc] = useState("");
   
-  function randomNumberInRange(min, max) {
+  const randomNumberInRange = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+
+  const generateQR = () => {
+    setText(name + time + address);
+    QRCode.toDataURL(text).then(setSrc);
+  }
+
 
   const collectInfo = () => {
     console.log(name,
       address,
+      image,
       time,
       description);
     fetch("http://localhost:5000/createqr", {
@@ -32,17 +41,18 @@ function CreateQR() {
         "Access-Control-Allow-Origin":"*"
       },
       body: JSON.stringify({
-        id,
+        id:id,
         name,
         address,
+        image,
         time,
         description
       })
     })
       .then((res) => res.json() )
       .then((data) => {
-        setId(randomNumberInRange(1, 9999));
-        console.log(data, "products");
+        console.log(name);
+        console.log(id);
       });
   }
 
@@ -87,7 +97,7 @@ function CreateQR() {
                   />
                   {
                     image ?
-                    <img src={image} width={210} height={190} alt={fileName}/> :
+                    <img src={image} width={210} height={190} alt={fileName} /> :
                     <FcIcons.FcAddImage className='add-image-qr-icon'/>  
                   }
                 </form>
@@ -100,9 +110,17 @@ function CreateQR() {
           </div>
           <div className='note-qr'>
             <p><b>(*)</b>: Required information</p>
-
-            <input type="button" value="Confirm" onClick={collectInfo} className='btn-confirm'/>
-
+            <input 
+              type="button" 
+              value="Confirm"
+              className='btn-confirm'
+              onClick={() => {
+                collectInfo();
+                setId(randomNumberInRange(1, 9999));
+                generateQR();
+                }
+              } 
+            />
           </div>
         </div>
       </div>
