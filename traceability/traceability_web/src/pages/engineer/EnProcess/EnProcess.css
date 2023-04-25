@@ -1,10 +1,10 @@
-.process {
+.enprocess {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
-  margin: 5rem;
-  min-height: 60vh;
+  align-items: center;
+  /* margin: 5rem; */
+  min-height: 80vh;
 }
 
 .info-btn {

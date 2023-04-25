@@ -6,49 +6,62 @@ export default function UserInfo () {
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [admin, setAdmin] = useState(false);
+  const [userType, setUserType] = useState("");
 
-  useEffect(() => {
-    console.log(token);
-    fetch("http://localhost:5000/userinfo", {
+  const tokenData = window.localStorage.getItem("token");
+  const id = window.localStorage.getItem("userId");
+
+  const tokenIsValid = () => {
+    fetch("http://localhost:5000/tokenIsValid", {
       method:"POST",
       crossDomain:true,
       headers: {
+        'x-auth-token': tokenData,
         "Content-Type": "application/json",
-        Accept: "application/json",
         "Access-Control-Allow-Origin":"*"
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem("token")
-      })
+      }
     })
       .then((res) => res.json() )
       .then((data) => {
-        console.log(data.data.name, "userRegister");
-        if(data.data.userType == "Admin")
-          setAdmin(true);
-        setName(data.data.name);
-        setEmail(data.data.email);
-        if(data.data.name == "Token expired" && data.data.email == "Token expired")
-        {
-          alert("Token expired, please login again");
-          window.localStorage.clear();
-          window.location.href = "/";
-        }
-        console.log(name, email);
+        // console.log(token);
+        // setToken(data);
+        console.log("token", data)
       });
+  }
+
+  const getProfile = () => {
+    fetch(`http://localhost:5000/users/${id}`, {
+      method:"GET",
+      headers: {
+        'x-auth-token': tokenData,
+      },
+      })
+      .then((res) => res.json() )
+      .then((data) => {
+        console.log(data.data.name, "userRegister");
+        setName(data.data.name);
+        setEmail(data.data.email)
+        setUserType(data.data.userType);
+  })
+}
+  useEffect(() => {
+    tokenIsValid();
+    getProfile();
   }, []);
+  
   return (
     <div className='userinfo'>
       <div className='userinfo-container'>
         <div className='userinfo-name'>
-          <h2>Name</h2> <h1>{ name }</h1>
+          <h1>Name</h1> <h2>{ name }</h2>
         </div>
         <div className='userinfo-email'>
-          <h2>Email</h2> <h1>{ email }</h1>
+          <h1>Email</h1> <h2>{ email }</h2>
+        </div>
+        <div className='userinfo-role'>
+          <h1>Role</h1> <h2>{ userType }</h2>
         </div>
       </div>
     </div>
-    // admin?<h1>"Welcome Admin"</h1>:<Home email={email}/>
   )
 }

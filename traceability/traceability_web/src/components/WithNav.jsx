@@ -9,7 +9,7 @@ export default function WithNav() {
 
   return (
     <div>
-      {userType == "Admin" ? <EnNavBar/> : <Navbar/>}
+      {userType == "admin" ? <EnNavBar/> : <Navbar/>}
       <Outlet />      
       <Footer/>
     </div>

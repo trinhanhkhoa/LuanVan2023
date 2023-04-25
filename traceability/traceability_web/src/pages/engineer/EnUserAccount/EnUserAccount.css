@@ -1,0 +1,84 @@
+.manage-page{
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+  justify-content: center;
+}
+
+.manage-page-title {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 2rem 4rem;
+}
+
+.manage-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.manage-list table {
+  width: 112rem;
+  height: 50vh;
+  border: 2px solid forestgreen;
+  border-radius: 0.5rem;
+}
+  
+.manage-list th {
+  border-bottom: 1px solid black;
+  margin: 20px;
+  font-size: 22px;
+}
+  
+.manage-list td {
+  text-align: center;
+  font-size: 18px;
+}
+
+.manage-list .pagination {
+  display: inline-flex;
+  margin-top: 3rem;
+}
+
+.manage-list .page-item {
+  list-style-type: none;
+  margin: 0.5rem;
+  color: #000;
+}
+
+.manage-list .page-item:hover {
+  font-weight: 700;
+  border-radius: 2rem;
+  transition: background-color 350ms ease-out;
+  box-shadow: 0 10px 15px -3px rgba(46, 41, 51, 0.08),
+  0 4px 6px -2px rgba(71, 63, 79, 0.16);
+}
+
+.manage-list .page-link {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #FFB100;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.manage-list .page-link:hover {
+  transition: background-color 350ms ease-out;
+  background-color: #ff9900;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.btn-watch {
+  padding: 12px;
+  background-color: #2ECC71;
+  border-radius: 0.5rem;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin-right: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}

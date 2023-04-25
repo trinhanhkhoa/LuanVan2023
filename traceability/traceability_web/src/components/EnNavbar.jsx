@@ -16,11 +16,14 @@ function EnNavbar() {
 
   const showDropdown = () => setDropdown(!dropdown);
 
+  const profile = () => {
+    window.location.href = "/userinfo";
+  }
+
   const logout = () => {
     window.localStorage.clear();
     window.location.href = "/";
   }
-
   return (
     <>
       <IconContext.Provider value={{color: '#fff'}}>
@@ -28,21 +31,16 @@ function EnNavbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <Link to="#" className="user">
-            <FaIcons.FaRegUserCircle onClick={showDropdown}/>
-          </Link>
+          <div className="dropdown">
+            <button className="dropdown-btn">
+              <FaIcons.FaRegUserCircle/>
+            </button>
+            <div className="dropdown-content">
+              <input type="button" className="btn-logout" value={"Profile"} onClick={profile}/>
+              <input type="button" className="btn-logout" value={"Logout"} onClick={logout}/>
+            </div>
+          </div>
         </div>
-
-        <nav className={dropdown ? "logo-menu active" : "logo-menu"}>
-          <ul className="dropdown" onClick={showDropdown}>
-            <li>
-              <Link to='/userinfo'><span>Information</span></Link>
-            </li>
-            <li> 
-              <input type="button" className="btn-logout" value={"Log out"} onClick={logout}/>
-            </li>
-          </ul>
-        </nav>
 
         <nav className={sidebar ? "ennav-menu active" : "ennav-menu"}>
           <ul className="nav-menu-items"  onClick={showSidebar}>

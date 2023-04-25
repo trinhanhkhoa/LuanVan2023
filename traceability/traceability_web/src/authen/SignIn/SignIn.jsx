@@ -15,7 +15,7 @@ export default function SignIn() {
   const [secretKey, setSecretKey] = useState("");
 
   const handleSubmit = () => {
-    if(userType == "Admin" && secretKey != "12345") {
+    if(userType == "admin" && secretKey != "12345") {
       alert("Invalid Admin")
     } else {
     console.log(email, password);
@@ -24,7 +24,6 @@ export default function SignIn() {
       crossDomain:true,
       headers: {
         "Content-Type": "application/json",
-        Accept: "application/json",
         "Access-Control-Allow-Origin":"*"
       },
       body: JSON.stringify({
@@ -35,16 +34,21 @@ export default function SignIn() {
     })
       .then((res) => res.json() )
       .then((data) => {
-        console.log(userType, "userRegister");
-        if(data.status == "Ok" && userType == "Admin") {
+        console.log(data._id, "userRegister");
+        if(userType == "admin") {
           alert("Login admin successful");
-          window.localStorage.setItem("token", data.data);
+          console.log("user json: ", data);
+          window.localStorage.setItem("user", JSON.stringify(data));
+          window.localStorage.setItem("userId", data._id);
+          window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", userType);
           window.location.href = "/enhome";
         } else {
           alert("Login user successful");
-          window.localStorage.setItem("token", data.data);
+          window.localStorage.setItem("user", JSON.stringify(data));
+          window.localStorage.setItem("userId", data._id);
+          window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", userType);
           window.location.href = "/home";
@@ -70,20 +74,20 @@ export default function SignIn() {
               <input 
                 type="radio" 
                 name='UserType'
-                value="User"
+                value="user"
                 onChange={(e) => setUserType(e.target.value)}
               />
               User
               <input 
                 type="radio" 
                 name='UserType'
-                value="Admin"
+                value="admin"
                 onChange={(e) => setUserType(e.target.value)}
               />
               Admin
             </div>
             { 
-              userType == "Admin" ? 
+              userType == "admin" ? 
               <div className='input-container'>
                 <label>Secret key</label>
                 <input type="text" placeholder='Key' onChange={(e) => setSecretKey(e.target.value)} required/>

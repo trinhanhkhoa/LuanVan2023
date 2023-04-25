@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SignUp.css';
-import { Outlet, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function SignUp() {
 
@@ -16,7 +16,7 @@ export default function SignUp() {
   const [secretKey, setSecretKey] = useState("");
 
   const collectData = () => {
-    if(userType == "Admin" && secretKey != "12345") {
+    if(userType == "admin" && secretKey != "12345") {
       alert("Invalid Admin")
     } else {
       console.log(name, email, password);
@@ -35,9 +35,11 @@ export default function SignUp() {
           userType
         })
       })
-        .then((res) => res.json())
+        .then((res) => {
+          res.json();          
+        })
         .then((data) => {
-          console.log(data, "userRegister");
+          window.location.href = "/";
           console.log(userType);
         });
     }
@@ -59,20 +61,20 @@ export default function SignUp() {
                   <input 
                     type="radio" 
                     name='UserType'
-                    value="User"
+                    value="user"
                     onChange={(e) => setUserType(e.target.value)}
                   />
                   User
                   <input 
                     type="radio" 
                     name='UserType'
-                    value="Admin"
+                    value="admin"
                     onChange={(e) => setUserType(e.target.value)}
                   />
                   Admin
                 </div>
                 { 
-                userType == "Admin" ? 
+                userType == "admin" ? 
                   <div className='input-container'>
                     <label>Secret key</label>
                     <input type="text" placeholder='Key' onChange={(e) => setSecretKey(e.target.value)} required/>

@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import './Process.css';
-import { Link } from "react-router-dom";
-import DataProcess from '../../../DataProcess.json';
+import React, { useState, useEffect } from 'react'
+import { Link, useParams } from "react-router-dom";
+import './EnUserAccount.css';
+import * as RiIcons from "react-icons/ri";
 
-function Process() {
+
+function EnUserAccount() {
+
   const [data, setData] = useState([]);
-  
+
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
+  const recordsPerPage = 3;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const records = data.slice(firstIndex, lastIndex);
   const npage = Math.ceil(data.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
-  
+
+  const params = useParams();
+  console.log(params);
+
   const tokenData = window.localStorage.getItem("token");
+  const id = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
     fetch("http://localhost:5000/tokenIsValid", {
@@ -32,57 +38,62 @@ function Process() {
       });
   }
 
-  const getProcesses = () => {
-    fetch("http://localhost:5000/process/get-processes", {
+  const getUsers = () => {
+    fetch(`http://localhost:5000/users/${params.id}`, {
       method:"GET",
       headers: {
         'x-auth-token': tokenData,
-      },
+      }
     })
       .then((res) => res.json() )
       .then((data) => {
-        console.log(data.data);
-        setData(data.data);
+        console.log(data.data.products.length);
+        setData(data.data.products);
       });
   }
 
   useEffect(() => {
     tokenIsValid();
-    getProcesses();
+    getUsers();
+    // console.log("length",data.length);
   }, []);
-
 
   return (
     <>
-      <div className='process'>
-        <div className='process-title'>
-          <h2>List of processes</h2>
+      <div className='manage-page'>
+        <div className='manage-page-title'>
+          <h2>User Account</h2>
         </div>
-        <div className="list-process">
+        <div className="manage-list">
           <table>
             <tr>
-              <th>ID</th>
-              <th>Process's Name</th>
-              {/* <th>Process's ID</th> */}
+              <th>Product's name</th>
+              <th>Type of product</th>
               <th></th>
             </tr>
-            {records.map((item, index) => {
+            {records.length == 0 ? 
+                <tr>
+                  <td>null</td>
+                  <td>null</td>
+                </tr>
+             : records.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{index+1}</td>
                   <td>{item.name}</td>
-                  {/* <td>{}</td> */}
+                  <td>{}</td>
                   <td>
-                    <Link to={`/processdetail/${item._id}`} className="btn-watch-process">
-                      Watch
-                    </Link>
+                    <div className='btn-list'>
+                      <Link to={`/enproducttracking`} className="btn-watch">
+                        <RiIcons.RiEditBoxLine/>
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               )
             })}
           </table>
           {
-            numbers.length <= 1 ? null 
+            records.length == 0 ? null 
             : <nav>
               <ul className='pagination'>
                 <li className='page-item'>
@@ -129,4 +140,4 @@ function Process() {
   }
 }
 
-export default Process
+export default EnUserAccount

@@ -1,19 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import './Process.css';
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
-import DataProcess from '../../../DataProcess.json';
+import './EnManageAccounts.css';
+import * as RiIcons from "react-icons/ri";
 
-function Process() {
+
+function EnManageAccounts() {
   const [data, setData] = useState([]);
-  
+
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 5;
+  const recordsPerPage = 3;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
   const records = data.slice(firstIndex, lastIndex);
   const npage = Math.ceil(data.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
-  
+
+  const [token, setToken] = useState("");
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [userType, setUserType] = useState("");
+  const [userId, setUserId] = useState([]);
+  const [products, setProducts] = useState([]);
+
   const tokenData = window.localStorage.getItem("token");
 
   const tokenIsValid = () => {
@@ -32,57 +40,57 @@ function Process() {
       });
   }
 
-  const getProcesses = () => {
-    fetch("http://localhost:5000/process/get-processes", {
+  const getUsers = () => {
+    fetch("http://localhost:5000/users", {
       method:"GET",
       headers: {
         'x-auth-token': tokenData,
-      },
-    })
+        },
+      })
       .then((res) => res.json() )
       .then((data) => {
-        console.log(data.data);
+        console.log(data.data, "userRegister");
         setData(data.data);
-      });
-  }
-
+  })
+}
   useEffect(() => {
     tokenIsValid();
-    getProcesses();
+    getUsers();
   }, []);
-
-
+  
   return (
     <>
-      <div className='process'>
-        <div className='process-title'>
-          <h2>List of processes</h2>
+      <div className='manage-page'>
+        <div className='manage-page-title'>
+          <h2>Accounts Management</h2>
         </div>
-        <div className="list-process">
+        <div className="manage-list">
           <table>
             <tr>
-              <th>ID</th>
-              <th>Process's Name</th>
-              {/* <th>Process's ID</th> */}
+              <th>Username</th>
+              <th>Email</th>
+              <th>Number of products</th>
               <th></th>
             </tr>
             {records.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{index+1}</td>
                   <td>{item.name}</td>
-                  {/* <td>{}</td> */}
+                  <td>{item.email}</td>
+                  <td>{item.products.length}</td>
                   <td>
-                    <Link to={`/processdetail/${item._id}`} className="btn-watch-process">
-                      Watch
-                    </Link>
+                    <div className='btn-list'>
+                      <Link to={`/enuseraccount/${item._id}`} className="btn-watch">
+                        <RiIcons.RiEditBoxLine/>
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               )
             })}
           </table>
           {
-            numbers.length <= 1 ? null 
+            records.length == 0 ? null 
             : <nav>
               <ul className='pagination'>
                 <li className='page-item'>
@@ -129,4 +137,4 @@ function Process() {
   }
 }
 
-export default Process
+export default EnManageAccounts

@@ -15,22 +15,47 @@ export default function Home() {
   const recordsPerPage = 5;
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
-  const records = Data.slice(firstIndex, lastIndex);
-  const npage = Math.ceil(Data.length / recordsPerPage);
+  const records = data.slice(firstIndex, lastIndex);
+  const npage = Math.ceil(data.length / recordsPerPage);
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
-  useEffect(() => {
-    fetch("http://localhost:5000/list", {
-      method:"GET",
+  const tokenData = window.localStorage.getItem("token");
+  const id = window.localStorage.getItem("userId");
+
+  const tokenIsValid = () => {
+    fetch("http://localhost:5000/tokenIsValid", {
+      method:"POST",
+      crossDomain:true,
+      headers: {
+        'x-auth-token': tokenData,
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin":"*"
+      }
     })
       .then((res) => res.json() )
       .then((data) => {
-        console.log(data.data);
+        console.log("token", data)
+      });
+  }
 
+  const getProducts = () => {
+    fetch("http://localhost:5000/product/get-product", {
+      method:"GET",
+      headers: {
+        'x-auth-token': tokenData,
+      },
+    })  
+      .then((res) => res.json() )
+      .then((data) => {
+        console.log(data.data, "list products");
         setData(data.data);
       });
-  }, []);
+  }
 
+  useEffect(() => {
+    tokenIsValid();
+    getProducts();
+  }, []);
 
   return (
     <>
@@ -40,36 +65,36 @@ export default function Home() {
         </div>
         <div className="home-content">
           <div className="btn-createQR">
-            <Link to="/createQR" className="link-icon">
+            <Link to="/createqr" className="link-icon">
               <TbIcons.TbQrcode className="qr-icon-home"/>          
-              Create QR
+              Create product
             </Link>
           </div>
           <div className="btn-process">
             <Link to="/process" className="link-icon">
               <MdIcons.MdChangeCircle className="process-icon"/>
-              Choose process
+              Watch process
             </Link>
           </div>
         </div>
         <div className="list-item-home">
           <table>
             <tr>
-              <th>Product's ID</th>
+              <th>No.</th>
               <th>Product's name</th>
               <th>Status</th>
               <th>Number of updates</th>
               <th></th>
             </tr>
-            {records.map((val, key) => {
+            {records.map((item, index) => {
               return (
-                <tr key={key}>
-                  <td>{val.pId}</td>
-                  <td>{val.name}</td>
-                  <td>{val.status == true ? <BiIcons.BiCheck className='check-icon'/> : <RiIcons.RiCloseLine className='close-icon'/>}</td>
-                  <td>{val.numberOfUpdates}</td>
+                <tr key={index+1}>
+                  <td>{index+1}</td>
+                  <td>{item.name}</td>
+                  <td>{item.status == true ? <BiIcons.BiCheck className='check-icon'/> : <RiIcons.RiCloseLine className='close-icon'/>}</td>
+                  <td>{item.numberOfUpdates}</td>
                   <td>
-                    <Link to="/product" className="btn-watch-home">
+                    <Link to={`/product/${item._id}`} className="btn-watch-home">
                       Watch
                     </Link>
                   </td>
@@ -82,20 +107,4 @@ export default function Home() {
     </>
     
   );
-
-  function prePage() {
-    if(currentPage !== 1) {
-      setCurrentPage(currentPage - 1)
-    }
-  }
-  
-  function changePage(id) {
-    setCurrentPage(id)
-  }
-
-  function nextPage() {
-    if(currentPage !== npage) {
-      setCurrentPage(currentPage + 1)
-    }
-  }
 }

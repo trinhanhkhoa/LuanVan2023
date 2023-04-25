@@ -18,29 +18,14 @@ export default function EnHome() {
   const numbers = [...Array(npage + 1).keys()].slice(1);
 
   const [admin, setAdmin] = useState(false);
+  const userType = window.localStorage.getItem("userType");
 
   useEffect(() => {
-    fetch("http://localhost:5000/enhome", {
-      method:"POST",
-      crossDomain:true,
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin":"*"
-      },
-      body: JSON.stringify({
-        token: window.localStorage.getItem("token")
-      })
-    })
-      .then((res) => res.json() )
-      .then((data) => {
-        console.log(data.data.userType);
-        if(data.data.userType == "Admin")
-          setAdmin(true);
-        console.log(admin);
-      });
+    if(userType == "admin")
+      setAdmin(true);
+    console.log(admin);
   }, []);
-
+ 
   return (
     admin
     ?
@@ -50,15 +35,15 @@ export default function EnHome() {
         </div>
         <div className="en-home-content">
           <div className="en-btn-createQR">
-            <Link to="/createQR" className="link-icon">
+            <Link to="/encreateprocess" className="link-icon">
               <TbIcons.TbQrcode className="qr-icon-en-home"/>          
               Create process
             </Link>
           </div>
           <div className="en-btn-process">
-            <Link to="/process" className="link-icon">
+            <Link to="/listofprocesses" className="link-icon">
               <MdIcons.MdChangeCircle className="process-icon"/>
-              Choose process
+              Watch processes
             </Link>
           </div>
         </div>

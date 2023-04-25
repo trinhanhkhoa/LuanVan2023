@@ -219,9 +219,14 @@
     margin: 1rem;
   }
 
+  .fill-update-process-1 {
+    display: flex;
+    flex-direction: row;
+  }
+
   .update-process-name input, .time-update-process input, .address-update-process input {
     margin-top: 1rem;
-    width: 41rem;
+    width: 40rem;
   }
 
   .describe-update-process textarea {

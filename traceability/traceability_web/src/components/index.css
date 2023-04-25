@@ -28,7 +28,6 @@
   background: none;
 }
 
-
 .user {
   font-size: 2rem;
   margin-left: 40%;
@@ -71,55 +70,50 @@
   transition: 350ms;
 }
 
-
-.dropdown {
-  list-style-type: none;
-  font-size: 18px;
-}
-
-.logo-menu {
-  position: fixed;
+.dropdown-btn {
+  font-size: 2rem;
   right: 1rem;
-  /* left: auto; */
-  box-shadow: 0 10px 15px -3px rgba(46, 41, 51, 0.08),
-    0 4px 6px -2px rgba(71, 63, 79, 0.16);
-  z-index: 9999;
-  min-width: 10rem;
-  padding: 1rem;
-  list-style: none;
-  background-color: #fff;
-  border: 0.1rem solid #0B4619;
   border-radius: 0.5rem;
-  display: none;
+  padding: 1rem;
+  border: none;
+  background-color: transparent;
 }
 
-.logo-menu.active {
+.dropdown{
+  position: relative;
+  margin-left: 40%;
+  margin-top: 1rem;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  transition: background-color 350ms ease-out;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.dropdown-content input {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.dropdown:hover .dropdown-content {
   display: block;
 }
 
-.logo-text {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 8px 0px 8px 16px;
-  list-style: none;
-  height: 60px;
+
+.btn-logout {
+  border: none;
+  background-color: #fff;
+  font-size: 18px;
 }
 
-.logo-text a {
-  text-decoration: none;
-  color: #000;
-  font-size: 1.0rem;
-  height: 100%;
-  width: 95%;
-  display: flex;
-  align-items: center;
-  padding: 0 20px;
-  border-radius: 4px;
-}
-
-.logo-text a:hover{
-  background-color: #5FD068;
+.btn-logout:hover {
+  background-color: #2ECC71;
+  color: #fff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
   transition: background-color 350ms ease-out;
 }
@@ -157,7 +151,7 @@
 .ennav-text a {
   text-decoration: none;
   color: #fff;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   height: 100%;
   width: 95%;
   display: flex;
@@ -219,11 +213,6 @@ span {
   transition: background-color 350ms ease-out;
 }
 
-.btn-logout {
-  border: #fff;
-  background-color: #fff;
-  font-size: 18px;
-}
 
 @media only screen and (max-width: 600px) { 
   .navbar { height: 60px; }
@@ -236,5 +225,5 @@ span {
   .nav-text a { font-size: 18px;}
   .logo { width: 210px; }
   .dropdown { font-size: 14px;}
-  .logo-menu { margin-top: 0rem;}
+  .dropdownbtn { margin-top: 0rem;}
 }

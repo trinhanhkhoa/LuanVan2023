@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./index.css";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -17,10 +17,17 @@ function Navbar() {
 
   const showDropdown = () => setDropdown(!dropdown);
 
+  const params = useParams();
+  console.log(params.id);
+  const profile = () => {
+    window.location.href = `/userinfo`;
+  }
+
   const logout = () => {
     window.localStorage.clear();
     window.location.href = "/";
   }
+
 
   return (
     <>
@@ -29,21 +36,16 @@ function Navbar() {
           <Link to="#" className="menu-bars">
             <FaIcons.FaBars onClick={showSidebar} />
           </Link>
-          <Link to="#" className="user">
-            <FaIcons.FaRegUserCircle onClick={showDropdown}/>
-          </Link>
+          <div className="dropdown">
+            <button className="dropdown-btn">
+              <FaIcons.FaRegUserCircle/>
+            </button>
+            <div className="dropdown-content">
+              <input type="button" className="btn-logout" value={"Profile"} onClick={profile}/>
+              <input type="button" className="btn-logout" value={"Logout"} onClick={logout}/>
+            </div>
+          </div>
         </div>
-
-        <nav className={dropdown ? "logo-menu active" : "logo-menu"}>
-          <ul className="dropdown" onClick={showDropdown}>
-            <li>
-              <Link to='/userinfo'><span>Information</span></Link>
-            </li>
-            <li> 
-              <input type="button" className="btn-logout" value={"Log out"} onClick={logout}/>
-            </li>
-          </ul>
-        </nav>
 
         <nav className={sidebar ? "nav-menu active" : "nav-menu"}>
           <ul className="nav-menu-items"  onClick={showSidebar}>

@@ -23,6 +23,9 @@ import EnCreateProcess from "./pages/engineer/EnCreateProcess/EnCreateProcess";
 import ListOfProcesses from "./pages/engineer/ListOfProcesses/ListOfProcesses";
 import EnProcess from "./pages/engineer/EnProcess/EnProcess";
 import EnUpdateProcess from "./pages/engineer/EnUpdateProcess/EnUpdateProcess";
+import EnManageAccounts from "./pages/engineer/EnManageAccounts/EnManageAccounts";
+import EnUserAccount from "./pages/engineer/EnUserAccount/EnUserAccount";
+
 
 function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
@@ -46,20 +49,22 @@ function App() {
             <Route path="/list" element={<List />} />
             <Route path="/userinfo" element={<UserInfo />} />
 
-            <Route path="/product" element={<Product />} />
-            <Route path="/createQR" element={<CreateQR />} />
-            <Route path="/updateproduct/:name" element={<UpdateProduct />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/createqr" element={<CreateQR />} />
+            <Route path="/updateproduct/:id" element={<UpdateProduct />} />
 
             <Route path="/process" element={<Process />} />
             <Route path="/createprocess" element={<CreateProcess />} />
-            <Route path="/processdetail" element={<ProcessDetail />} />
-            <Route path="/updateprocess" element={<UpdateProcess />} />
+            <Route path="/processdetail/:id" element={<ProcessDetail />} />
+            <Route path="/updateprocess/:id" element={<UpdateProcess />} />
             
             <Route path="/encreateprocess" element={<EnCreateProcess />} />
             <Route path="/listofprocesses" element={<ListOfProcesses />} />
-            <Route path="/enprocess" element={<EnProcess />} />
-            <Route path="/enupdateprocess" element={<EnUpdateProcess />} />
-            
+            <Route path="/enprocess/:id" element={<EnProcess />} />
+            <Route path="/enupdateprocess/:id" element={<EnUpdateProcess />} />
+            <Route path="/enmanageaccounts" element={<EnManageAccounts />} />
+            <Route path="/enuseraccount/:id" element={<EnUserAccount />} />
+
           </Route>
         </Routes>
       </BrowserRouter>
