@@ -1,23 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import './UpdateProduct.css';
-import * as FcIcons from 'react-icons/fc';
-import * as TbIcons from 'react-icons/tb';
-import { Link, useParams } from 'react-router-dom';
-import Popup from '../../../components/Popup/Popup';
-import QRCode from 'react-qr-code';
-import {uploadImage} from "../../../components/MultiUpload";
-
+import React, { useState, useEffect } from "react";
+import "./UpdateProduct.css";
+import { Link, useParams } from "react-router-dom";
+import QRCode from "react-qr-code";
+import { uploadImage } from "../../../components/MultiUpload";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  ImageList,
+  ImageListItem,
+  TextField,
+  TextareaAutosize,
+  Typography,
+} from "@mui/material";
 
 function UpdateProduct() {
   const [isOpen, setIsOpen] = useState(false);
- 
+
   const togglePopup = () => {
     setIsOpen(isOpen);
-  }
+  };
 
   const [images, setImages] = useState([]);
 
-  const [fileName, setFileName] = useState("No choosen file")
+  const [fileName, setFileName] = useState("No choosen file");
 
   const [text, setText] = useState("");
   const [name, setName] = useState("");
@@ -29,7 +36,7 @@ function UpdateProduct() {
     e.preventDefault();
     try {
       let arr = [];
-      let imgArr = []
+      let imgArr = [];
       for (let i = 0; i < images.length; i++) {
         const data = await uploadImage(images[i]);
         arr.push(data);
@@ -40,7 +47,7 @@ function UpdateProduct() {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   const params = useParams();
 
@@ -50,28 +57,26 @@ function UpdateProduct() {
 
   const tokenIsValid = () => {
     fetch("http://localhost:5000/tokenIsValid", {
-      method:"POST",
-      crossDomain:true,
+      method: "POST",
+      crossDomain: true,
       headers: {
-        'x-auth-token': tokenData,
+        "x-auth-token": tokenData,
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin":"*"
-      }
+        "Access-Control-Allow-Origin": "*",
+      },
     })
-      .then((res) => res.json() )
+      .then((res) => res.json())
       .then((data) => {
-        // console.log(token);
-        // setToken(data);
-        console.log("token", data)
+        console.log("token", data);
       });
-  }
+  };
 
   const getInfoProduct = () => {
     fetch(`http://localhost:5000/product/get-product/${params.id}`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
-      }
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -80,20 +85,20 @@ function UpdateProduct() {
         setAddress(data.data.address);
         setDescription(data.data.description);
         setTime(data.data.time);
-        console.log(data.image);
+        console.log("img",data.data.image);
         console.log(data);
       });
-  }
+  };
 
   const putInfoProduct = () => {
     fetch(`http://localhost:5000/product/update-product/${params.id}`, {
       method: "PUT",
-      crossDomain:true,
+      crossDomain: true,
       headers: {
         "Content-Type": "application/json",
         "x-auth-token": tokenData,
         Accept: "application/json",
-        "Access-Control-Allow-Origin":"*"
+        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
         userId,
@@ -102,15 +107,15 @@ function UpdateProduct() {
         address,
         images,
         time,
-        description
-      })
+        description,
+      }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
         window.location.href = "/list";
       });
-  }
+  };
 
   useEffect(() => {
     tokenIsValid();
@@ -118,75 +123,143 @@ function UpdateProduct() {
   }, []);
 
   return (
-    <>
-      <div className='update-product'>
-        <div className='update-product-container'>
-          <div className='update-product-title'>
-            <h1>Describe a product</h1>
-            <h4>Product introduction information</h4>
-          </div>
-          <div className='update-info'>
-            <div className='update-info-qr'>
-            <QRCode value={`http://localhost:3000/product/${userId}`} size={200}/>
-              <Link to={`/product/${params.id}`}>
-                <input type="button" className='btn-watch-product' value="Watch product"/>
-              </Link>
-            </div>
-            <div className='update-info-1'>
-              <div className='product-name-update'>
-                <label>Product's name <b>(*)</b></label>
-                <input type="text" placeholder="Product's name" value={name} onChange={(e) => {setName(e.target.value)}} required/>
-              </div>
-              <div className='time-update'>
-                <label>Time <b>(*)</b></label>
-                <input type="date"
-                // pattern="\d{2}-\d{2}-\d{4}"
-                placeholder='3 months' value={time} onChange={(e) => {setTime(e.target.value)}} required/>
-              </div>
-            </div>
-            <div className='update-info-2'>
-              <div className='address-update'>
-                <label>Address <b>(*)</b></label>
-                <input type="text" placeholder='Address' value={address} onChange={(e) => {setAddress(e.target.value)}} required/>
-              </div>
-              <div className='image-update'>
-                <label>Image <b>(*)</b></label>
-                <input
-                  type="file"
-                  className="image-field"
-                  multiple 
-                  hidden
-                  onChange= {(e)=> setImages(e.target.files)}
-                />
-                { 
-                  images && images.length > 0 && images.length < 3 && images.map((link, index) => {
-                    return (
-                      <div className="images-link" key={index++}>
-                        <img className="image" src={link}  width={190} height={170} />
-                      </div>
-                    )
-                  })
-                }
-              </div>
-            </div>
-          </div>
-          <div className='describe-update'>
-            <label>Describe information <b>(*)</b></label>
-            <textarea placeholder='Describe information' value={description} required/>
-          </div>
-          <div className='note'>
-            <p><b>(*)</b>: Required information</p>
-            <input
-             type="button" 
-             value="Confirm" 
-             onClick={putInfoProduct} 
-             className='btn-confirm-update'
+    <Container fixed sx={{ justifyContent: "center", alignItems: "center" }}>
+      <Box sx={{ marginBottom: "10px" }}>
+        <Typography variant="h3">Update product</Typography>
+        <Typography variant="h6">Product introduction information</Typography>
+      </Box>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          margin: "20px",
+          maxWidth: "100%",
+        }}
+      >
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <QRCode
+            value={`http://localhost:3000/product/${userId}`}
+            size={200}
+          />
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ borderRadius: "10px", marginTop: "20px", width: "200px" }}
+            onClick={() => {
+              window.location.href = `/product/${params.id}`;
+            }}
+          >
+            Watch product
+          </Button>
+        </Box>
+        <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+          >
+            <label>
+              Product's name <b>(*)</b>
+            </label>
+            <TextField
+              variant="outlined"
+              placeholder="Product's name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              sx={{ width: 800, borderRadius: "20%" }}
             />
-          </div>
-        </div>
-      </div>
-    </>
-  )
+          </Box>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+          >
+            <label>
+              Time <b>(*)</b>
+            </label>
+            <TextField
+              variant="outlined"
+              type="date"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              sx={{ width: 800, borderRadius: "20%" }}
+            />
+          </Box>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+          >
+            <label> 
+              Address <b>(*)</b>
+            </label>
+            <TextField
+              variant="outlined"
+              placeholder="Address"
+              type="text"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              sx={{ width: 800, borderRadius: "20%" }}
+            />
+          </Box>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+          >
+            <label>
+              Image <b>(*)</b>
+            </label>
+            <input
+              type="file"
+              // className="image-field"
+              multiple
+              hidden
+              onChange={(e) => setImages(e.target.files)}
+            />
+            <ImageList
+              sx={{ width: 600, height: 200 }}
+              cols={3}
+              rowHeight={164}
+            >
+              {images.map((item, index) => {
+                return (
+                <ImageListItem key={index}>
+                  <img
+                    src={item}
+                    width={200}
+                    height={200}
+                  />
+                </ImageListItem>
+              )})}
+            </ImageList>
+          </Box>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+          >
+            <label>
+              Describe information <b>(*)</b>
+            </label>
+            <TextareaAutosize
+              maxRows={20}
+              aria-label="maximum height"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              style={{ width: "100%", minHeight: "100px" }}
+            />
+          </Box>
+        </Box>
+      </Box>
+      <Box
+        m={1} //margin
+        display="flex"
+        justifyContent="flex-end"
+        alignItems="flex-end"
+      >
+        <Button
+          variant="contained"
+          color="warning"
+          sx={{ borderRadius: "10px" }}
+          onClick={putInfoProduct}
+        >
+          Confirm
+        </Button>
+      </Box>
+    </Container>
+  );
 }
 
-export default UpdateProduct
+export default UpdateProduct;

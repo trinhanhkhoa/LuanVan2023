@@ -1,17 +1,14 @@
 import React from "react";
-import { Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
-import EnNavBar from "./EnNavbar";
-import Footer from "./Footer/Footer";
+import Navbar from "./Try/Navbar";
+import StickyFooter from "./Try/Footer";
 
 export default function WithNav() {
   const userType = window.localStorage.getItem("userType");
 
   return (
     <div>
-      {userType == "admin" ? <EnNavBar/> : <Navbar/>}
-      <Outlet />      
-      <Footer/>
+      <Navbar/>
+      <StickyFooter/>
     </div>
   );
 }

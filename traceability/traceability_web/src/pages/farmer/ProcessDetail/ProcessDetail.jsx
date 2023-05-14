@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react';
 import './ProcessDetail.css';
-import Popup from '../../../components/Popup/Popup';
 import { Link, useParams } from 'react-router-dom';
 import DataProcess from "../../../DataProcess.json";
 
@@ -69,23 +68,6 @@ function ProcessDetail() {
         <div className='description-process-2'>
           <h3>Description:</h3>
           <p>{description}</p>
-        </div>
-
-        <div className='description-process-3'>
-          <div className='info-btn-process'>
-            <input type="button" className='btn-detail' value="Detail" onClick={togglePopup}/>
-            {isOpen && <Popup
-              content={
-                <div className='popup-detail-process'>
-                  <h2>Full Process Information</h2>
-                  <p>
-                    {description}
-                  </p>
-                </div>
-                }
-              handleClose={togglePopup}
-            />}      
-          </div>        
         </div>
       </div>
     </div>

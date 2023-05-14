@@ -12,6 +12,13 @@
   margin: 2rem 4rem;
 }
 
+.MuiTableHead-root {
+  display: table-header-group;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+}
+
 .check-icon {
   color: rgb(8, 238, 27);
   width: 30px;
@@ -22,20 +29,6 @@
   color: red;
   width: 30px;
   height: 30px;
-}
-
-.btn-add-product {
-  width: 10rem;
-  height: 3rem;
-  border-radius: 10px;
-  background-color: #2ECC71;
-  color: #fff;
-  font-size: 18px;
-  border: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .product-list {
