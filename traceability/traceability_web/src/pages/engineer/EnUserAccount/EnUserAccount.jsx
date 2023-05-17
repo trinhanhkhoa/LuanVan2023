@@ -174,7 +174,7 @@ function EnUserAccount() {
     <Container
     sx={{
       minWidth: "100%",
-      minHeight: "70vh",
+      minHeight: "80vh",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
@@ -239,8 +239,7 @@ function EnUserAccount() {
                   <Button
                     color="info"
                     onClick={() => {
-                      // window.location.href = `/enuseraccount/${item._id}`;
-                      window.location.href = `/producttracking`;
+                      window.location.href = `/producttracking/${item.id}`;
 
                     }}
                   >

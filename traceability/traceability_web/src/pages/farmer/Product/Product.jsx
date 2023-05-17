@@ -10,6 +10,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Box,
   Button,
+  Card,
   Container,
   Divider,
   ImageListItem,
@@ -25,10 +26,11 @@ import { useMediaQuery } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ProductTracking from "../ProductTracking/ProductTracking";
 
-const ProductDetailWrapper = styled(Box)(({ theme }) => ({
+const ProductDetailWrapper = styled(Card)(({ theme }) => ({
   display: "flex",
   padding: theme.spacing(4),
   justifyContent: "center",
+  borderRadius: 10,
 }));
 
 const ProductDetailInfoWrapper = styled(Box)(() => ({
@@ -149,16 +151,19 @@ function Product() {
       maxWidth={false}
       sx={{
         display: "flex",
-        // justifyContent: "left",
+        justifyContent: "center",
+        // flexDirection: 'row',
         alignItems: "center",
         minHeight: 800,
       }}
     >
       <ProductDetailWrapper
-        display={"flex"}
-        flexDirection={matches ? "column" : "row"}
+      // display={"flex"}
+      // flexDirection={matches ? "column" : "row"}
       >
-        <ProductDetailInfoWrapper>
+        <ProductDetailInfoWrapper
+          sx={{ display: "flex", flexDirection: "row",  }}
+        >
           <ProductDetail sx={{ mr: 4 }}>
             <Carousel className="main-slide">
               {images &&
@@ -167,84 +172,91 @@ function Product() {
                 })}
             </Carousel>
           </ProductDetail>
-          <Box display={"flex"} flexDirection={"row"} >
-            <QRCode
-              value={`http://localhost:3000/product/${userId}`}
-              size={200}
-            />
+          <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box display={"flex"} flexDirection={"row"}>
+              <QRCode
+                value={`http://localhost:3000/product/${userId}`}
+                size={200}
+              />
 
-            <Box display={"flex"} flexDirection={"column"} sx={{ ml: 5 }}>
-              <Typography variant="h4" sx={{ mb: 3 }}>
-                Name: {name}
-              </Typography>
-              <Typography variant="h5" sx={{ lineHeight: 3 }}>
-                Product ID: {params.id}
-              </Typography>
-              <Typography sx={{ lineHeight: 3 }} variant="h5">
-                Address: {address}
-              </Typography>
+              <Box display={"flex"} flexDirection={"column"} sx={{ ml: 5 }}>
+                <Typography variant="h4" sx={{ mb: 3 }}>
+                  Name: {name}
+                </Typography>
+                <Typography variant="h5" sx={{ lineHeight: 2 }}>
+                  Product ID: {params.id}
+                </Typography>
+                <Typography sx={{ lineHeight: 2 }} variant="h5">
+                  Address: {address}
+                </Typography>
+                <Typography sx={{ lineHeight: 2 }} variant="h5">
+                  A number of update: {address}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-          <Divider sx={{ mt: 2, mb: 2 }} />
-          <Typography
-            variant="body"
-            sx={{ lineHeight: 2, whiteSpace: "pre-line" }}
-          >
-            {" "}
-            <ReactReadMoreReadLess
-              readMoreClassName="readMoreClassName"
-              readLessClassName="readMoreClassName"
-              charLimit={200}
-              readMoreText="Read more"
-              readLessText="Read less"
-            >
-              {description}
-            </ReactReadMoreReadLess>
-          </Typography>
-          <Box sx={{ mt: 4 }}>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ borderRadius: "10px", width: 200, mr: 2 }}
-              onClick={() => {
-                setOpenPopup(true);
-              }}
-            >
-              Update Tracking
-            </Button>
-            <Popup
-              title="Update Tracking"
-              openPopup={openPopup}
-              setOpenPopup={setOpenPopup}
-            >
-              <TrackingForm />
-            </Popup>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ borderRadius: "10px", width: 200, mr: 2 }}
-              onClick={() => deleteProduct(params.id)}
-            >
-              Delete Product
-            </Button>
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{ borderRadius: "10px" }}
-              onClick={() => {
-                // window.location.href = `/producttracking/${params.id}`;
-                setOpenPopupTracking(true);
-              }}
-            >
-              Tracking
-            </Button>
-            <Popup
-              title="Tracking"
-              openPopup={openPopupTracking}
-              setOpenPopup={setOpenPopupTracking}
-            >
-              <ProductTracking />
-            </Popup>
+            {/* <Divider sx={{ mt: 2, mb: 2 }} /> */}
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              <Typography
+                variant="body"
+                sx={{ lineHeight: 2, whiteSpace: "pre-line" }}
+              >
+                {" "}
+                <ReactReadMoreReadLess
+                  readMoreClassName="readMoreClassName"
+                  readLessClassName="readMoreClassName"
+                  charLimit={200}
+                  readMoreText="Read more"
+                  readLessText="Read less"
+                >
+                  {description}
+                </ReactReadMoreReadLess>
+              </Typography>
+              <Box sx={{ mt: 4 }}>
+                <Button
+                  variant="contained"
+                  color="success"
+                  sx={{ borderRadius: "10px", width: 200, mr: 2 }}
+                  onClick={() => {
+                    setOpenPopup(true);
+                  }}
+                >
+                  Update Tracking
+                </Button>
+                <Popup
+                  title="Update Tracking"
+                  openPopup={openPopup}
+                  setOpenPopup={setOpenPopup}
+                >
+                  <TrackingForm />
+                </Popup>
+                <Button
+                  variant="contained"
+                  color="error"
+                  sx={{ borderRadius: "10px", width: 200, mr: 2 }}
+                  onClick={() => deleteProduct(params.id)}
+                >
+                  Delete Product
+                </Button>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  sx={{ borderRadius: "10px" }}
+                  onClick={() => {
+                    // window.location.href = `/producttracking/${params.id}`;
+                    setOpenPopupTracking(true);
+                  }}
+                >
+                  Tracking
+                </Button>
+                <Popup
+                  title="Tracking"
+                  openPopup={openPopupTracking}
+                  setOpenPopup={setOpenPopupTracking}
+                >
+                  <ProductTracking />
+                </Popup>
+              </Box>
+            </Box>
           </Box>
         </ProductDetailInfoWrapper>
       </ProductDetailWrapper>

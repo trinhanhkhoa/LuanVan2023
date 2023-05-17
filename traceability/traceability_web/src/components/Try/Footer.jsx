@@ -9,7 +9,7 @@ import logo from '../../asserts/logo.png';
 
 function Copyright() {
   return (
-    <Box>
+    <Box sx={{display: 'flex'}}>
       <Container>
         <Typography variant="body1" color="white">Traceability agriculture</Typography> 
         <Typography variant="body2" color="white">
@@ -21,7 +21,7 @@ function Copyright() {
           {"."}
         </Typography>
       </Container>
-      <Container>
+      <Container sx={{display: 'flex', flexDirection: 'row'}}>
         <img src={logo} alt=""  width={100} height={100}/>
         <img src={hcmuslogo} alt="" width={200} height={100} />
       </Container>
@@ -34,12 +34,7 @@ export default function StickyFooter() {
   const userType = window.localStorage.getItem("userType");
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <Box>
       <CssBaseline />
       <Box
         component="footer"

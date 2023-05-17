@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   return (
     <Box flex={1} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
-      <Box position="fixed">
+      <Box>
         <List>
           <ListItem disablePadding>
             <ListItemButton

@@ -30,6 +30,7 @@ import {
 import { styled, useTheme } from "@mui/material/styles";
 import { makeStyles } from "@mui/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import Loading from "../../../components/Loading";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -72,6 +73,8 @@ export default function Home() {
     },
   });
 
+  const [loading, setLoading] = useState(false);
+
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
 
@@ -101,7 +104,9 @@ export default function Home() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.data, "list products");
+        setLoading(true);
         setData(data.data.products);
+        setLoading(false);
       });
   };
 
@@ -173,16 +178,15 @@ export default function Home() {
 
   return (
     <div className="home">
-      <div className="carousel">
-        <Carousel showThumbs={false}>
-          <div className="news_img">
-            <img src={news_img} />
-          </div>
-          <div className="news_img">
-            <img src={news_img} />
-          </div>
-        </Carousel>
-      </div>
+      <Loading loading={loading} />
+      <Carousel class="carousel-home" showThumbs={false}>
+        <div className="news_img">
+          <img src={news_img} />
+        </div>
+        <div className="news_img">
+          <img src={news_img} />
+        </div>
+      </Carousel>
       <div className="home-content">
         <div className="btn-createQR">
           <Link to="/createqr" className="link-icon">

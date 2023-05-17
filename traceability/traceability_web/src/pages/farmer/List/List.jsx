@@ -187,7 +187,7 @@ function List() {
     <Container
       sx={{
         minWidth: "100%",
-        minHeight: "70vh",
+        minHeight: "80vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

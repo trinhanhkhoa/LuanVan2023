@@ -9,19 +9,19 @@
 }
 
 .main-slide {
-  width: 100%;
+  width: 80%;
 }
 
-.carousel {
+.main-slide .carousel {
   text-align: center;
 }
 
-.carousel .slider-wrapper {
+.main-slide .carousel .slider-wrapper {
   width: 70%;
   height: 500px;
 }
 
-.carousel .thumb {
+.main-slide .carousel .thumb {
   width: 5%;
   height: 50px;
 }

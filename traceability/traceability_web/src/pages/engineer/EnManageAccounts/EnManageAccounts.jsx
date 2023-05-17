@@ -27,6 +27,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
+  { id: "userType", label: "Role" },
   { id: "email", label: "Email" },
   { id: "button", label: "" },
 ];
@@ -173,7 +174,7 @@ function EnManageAccounts() {
     <Container
       sx={{
         minWidth: "100%",
-        minHeight: "70vh",
+        minHeight: "80vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -233,6 +234,7 @@ function EnManageAccounts() {
               <StyledTableRow key={index + 1}>
                 <StyledTableCell>{index + 1}</StyledTableCell>
                 <StyledTableCell>{item.name}</StyledTableCell>
+                <StyledTableCell>{item.userType}</StyledTableCell>
                 <StyledTableCell>{item.email}</StyledTableCell>
                 <StyledTableCell align="center">
                   <ButtonGroup variant="contained">

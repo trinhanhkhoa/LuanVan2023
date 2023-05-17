@@ -109,7 +109,7 @@ function EnUpdateProcess() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: 700
+        minHeight: 800
       }}
     >
       <Box sx={{  marginBottom: "10px" }}>

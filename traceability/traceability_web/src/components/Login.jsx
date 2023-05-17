@@ -14,7 +14,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Card, InputLabel } from "@mui/material";
 import Register from "./Register";
-import login_background from "../asserts/green-texture.jpg";
+import login_background from "../asserts/login_bg.jpg";
 
 function Copyright(props) {
   return (

@@ -21,12 +21,12 @@ import avatarImg from "../../asserts/logo.png";
 import { Outlet } from "react-router-dom";
 import Web3 from 'web3';
 
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(2),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -218,7 +218,7 @@ export default function PersistentDrawerLeft() {
             edge="start"
             sx={{ mr: 2, ...(openMenu && { display: "none" }) }}
           >
-            <MenuIcon />
+            <MenuRoundedIcon />
           </IconButton>
           <Typography
             variant="h6"
@@ -226,19 +226,13 @@ export default function PersistentDrawerLeft() {
           >
             TRACEABILITY AGRICULTURE
           </Typography>
-          {/* <MenuRoundedIcon sx={{ display: { xs: "block", sm: "none" } }} /> */}
           <Search>
-            <InputBase placeholder="search..." />
+            {/* <InputBase placeholder="search..." /> */}
           </Search>
           <Icons>
             <Badge badgeContent={4} color="error">
               <NotificationsRoundedIcon />
             </Badge>
-            {/* <Avatar
-              sx={{ width: 30, height: 30 }}
-              src={avatarImg}
-              onClick={(e) => setOpen(true)}
-            /> */}
             <AvatarBox onClick={(e) => setOpen(true)}>
               <Avatar sx={{ width: 30, height: 30 }} src={avatarImg} />
               <Typography variant="span">{data.name}</Typography>
