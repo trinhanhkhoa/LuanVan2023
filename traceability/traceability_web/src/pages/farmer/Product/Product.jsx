@@ -16,6 +16,7 @@ import {
   ImageListItem,
   Slide,
   Typography,
+  useStepContext,
 } from "@mui/material";
 import QRCode from "react-qr-code";
 import ReactReadMoreReadLess from "react-read-more-read-less";
@@ -75,6 +76,7 @@ function Product() {
   const [images, setImages] = useState([]);
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
+  const [tracking, setTracking] = useState([]);
 
   const tokenData = window.localStorage.getItem("token");
   const user = window.localStorage.getItem("userId");
@@ -112,6 +114,8 @@ function Product() {
         setDescription(data.data.description);
         setTime(data.data.time);
         setImages(data.data.images);
+        setTracking(data.data.tracking);
+        console.log(data.data);
       });
   };
 
@@ -136,11 +140,6 @@ function Product() {
     tokenIsValid();
     getInfoProduct();
   }, []);
-
-  const handleClickOpen = () => {
-    // <UpdateTracking open={true}/>
-    // setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -194,7 +193,7 @@ function Product() {
                 </Typography>
               </Box>
             </Box>
-            {/* <Divider sx={{ mt: 2, mb: 2 }} /> */}
+            <Divider sx={{ mt: 2, mb: 2 }} />
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography
                 variant="body"
@@ -253,7 +252,7 @@ function Product() {
                   openPopup={openPopupTracking}
                   setOpenPopup={setOpenPopupTracking}
                 >
-                  <ProductTracking />
+                  <ProductTracking id={params.id}/>
                 </Popup>
               </Box>
             </Box>

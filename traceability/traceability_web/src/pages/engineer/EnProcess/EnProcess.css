@@ -1,130 +1,17 @@
-.enprocess {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  /* margin: 5rem; */
-  min-height: 80vh;
+.main-slide-enprocess {
+  width: 80%;
 }
 
-.info-btn {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
+.main-slide-enprocess .carousel {
+  text-align: center;
 }
 
-.info-btn input {
-  margin-right: 2rem;
-  border-radius: 0.5rem;
-  border: none;
-  color: #fff;
-  font-size: 18px;
-  font-weight: 500;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+.main-slide-enprocess .carousel .slider-wrapper {
+  width: 100%;
+  height: 400px;
 }
 
-.btn-delete {
-  background-color: #be1515;
-  width: 15rem;
-  height: 3rem;
-}
-
-.btn-update-process-info {
-  background-color: rgb(23, 192, 23);
-  width: 15rem;
-  height: 3rem; 
-}
-
-.btn-update-process-info:hover {
-  transition: background-color 350ms ease-out;
-  background-color: rgb(7, 145, 7);
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-}
-
-.btn-delete:hover {
-  transition: background-color 350ms ease-out;
-  background-color: #920808;
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-}
-
-.description {
-  border: 1px solid #000;
-  border-radius: 0.5rem;
-  width: 70%;
-  height: 100%;
-}
-
-.description-1 {
-  display: flex;
-  flex-direction: row;
-}
-
-.qr-icon {
-  font-size: 12rem;
-}
-
-.information p, .diachi, .address{
-  margin: 1.5rem;
-  font-size: 1.5rem;
-}
-
-.description-2 {
-  margin: 1.5rem;
-  white-space: pre-line;  
-  vertical-align: bottom;
-}
-
-.description-2 p {
-  margin: 1rem;
-  font-size: 20px;
-}
-
-.description-3 {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin: 1.5rem;
-}
-
-.description-3 .update{
-  color: red;
-  font-size: 1.5rem;
-}
-
-.btn-detail {
-  width: 10rem;
-  height: 3rem;
-  background-color: #DD8600;
-  border: none;
-  border-radius: 0.5rem;
-  color: #fff;
-  font-size: 18px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-}
-
-.btn-detail:hover {
-  transition: background-color 350ms ease-out;
-  background-color: #ff9900;
-  /* box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset; */
-  box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-}
-
-.popup-detail {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 1.5rem;
-  z-index: 2;
-  white-space: pre-line;  
-  vertical-align: bottom;
-}
-
-.popup-detail p {
-  font-size: 18px;
-}
-
-.popup-capnhat {
-  font-size: 5rem;
-  z-index: 3;
+.main-slide-enprocess .carousel .thumb {
+  width: 5%;
+  height: 50px;
 }

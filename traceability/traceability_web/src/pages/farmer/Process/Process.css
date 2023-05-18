@@ -13,6 +13,24 @@
   margin: 2rem 4rem;
 }
 
+.main-slide-process {
+  width: 80%;
+}
+
+.main-slide-process .carousel {
+  text-align: center;
+}
+
+.main-slide-process .carousel .slider-wrapper {
+  width: 70%;
+  height: 500px;
+}
+
+.main-slide-process .carousel .thumb {
+  width: 5%;
+  height: 50px;
+}
+
 .btn-add-process {
   width: 10rem;
   height: 3rem;

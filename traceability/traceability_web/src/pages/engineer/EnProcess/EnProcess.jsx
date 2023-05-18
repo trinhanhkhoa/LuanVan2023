@@ -24,8 +24,9 @@ const ProductDetailInfoWrapper = styled(Box)(() => ({
 export const ProductDetail = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
-  alignItems: "center",
+  alignItems: "left",
   flexDirection: "column",
+  width: 1000,
   [theme.breakpoints.up("md")]: {
     position: "relative",
   },
@@ -126,9 +127,9 @@ function EnProcess() {
         flexDirection={matches ? "column" : "row"}
       >
         <ProductDetailInfoWrapper>
-          <Box display={"flex"} flexDirection={"row"}>
+          <Box display={"flex"} flexDirection={"row"} justifyContent={'left'}>
             <ProductDetail sx={{ mr: 4 }}>
-              <Carousel className="main-slide">
+              <Carousel className="main-slide-enprocess">
                 {images &&
                   images.map((item, index) => {
                     return <img src={item} />;
