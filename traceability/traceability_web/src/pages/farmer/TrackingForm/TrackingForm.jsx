@@ -5,7 +5,6 @@ import QRCode from "react-qr-code";
 import newID from "../../../utils/newID";
 import { uploadImage } from "../../../components/MultiUpload";
 import axios from "axios";
-import Carousel from "react-elastic-carousel";
 import {
   Box,
   Button,
