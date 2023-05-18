@@ -138,7 +138,7 @@ function UpdateProduct() {
       >
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <QRCode
-            value={`http://localhost:3000/product/${params.id}`}
+            value={`https://luan-van2023.vercel.app/${params.id}`}
             size={200}
           />
           <Button
