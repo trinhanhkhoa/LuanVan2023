@@ -174,7 +174,7 @@ function Product() {
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box display={"flex"} flexDirection={"row"}>
               <QRCode
-                value={`http://localhost:3000/product/${userId}`}
+                value={`https://luan-van2023.vercel.app/product/${userId}`}
                 size={200}
               />
 
