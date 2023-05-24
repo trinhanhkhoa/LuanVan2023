@@ -12,6 +12,9 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Card,
+  CardActions,
+  CardContent,
   Container,
   Input,
   InputAdornment,
@@ -57,6 +60,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
+// const useStyles = styled({
+//   button: {
+//     backgroundColor: '#3c52b2',
+//     color: '#fff',
+//     '&:hover': {
+//       backgroundColor: '#fff',
+//       color: '#3c52b2',
+//   },
+// }})
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -187,20 +200,61 @@ export default function Home() {
         </div>
       </Carousel>
       <div className="home-content">
-        <div className="btn-createQR">
-          <Link to="/createqr" className="link-icon">
+        <Button
+          sx={{
+            borderRadius: "20px",
+            margin: "3rem",
+            border: "1px solid #000",
+            boxShadow:
+              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+            minWidth: "52rem",
+            minHeight: "20rem",
+            color: "black",
+            borderRadius: "20px",
+            backgroundColor: "transparent",
+            ":hover": {
+              backgroundColor: "#2ECC71",
+              color: "#fff",
+            },
+          }}
+          onClick={() => {
+            window.location.href = "/createqr";
+          }}
+        >
+          <CardContent>
             <TbIcons.TbQrcode className="qr-icon-home" />
-            Create product
-          </Link>
-        </div>
-        <div className="btn-process">
-          <Link to="/process" className="link-icon">
+            <Typography>Create product</Typography>
+          </CardContent>
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: "20px",
+            margin: "3rem",
+            border: "1px solid #000",
+            boxShadow:
+              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+            minWidth: "52rem",
+            minHeight: "20rem",
+            color: "black",
+            borderRadius: "20px",
+            backgroundColor: "transparent",
+            ":hover": {
+              backgroundColor: "#2ECC71",
+              color: "#fff",
+            },
+          }}
+          onClick={() => {
+            window.location.href = "/process";
+          }}
+        >
+          <CardContent>
             <MdIcons.MdChangeCircle className="process-icon" />
-            Watch process
-          </Link>
-        </div>
+            <Typography>Watch process</Typography>
+          </CardContent>
+        </Button>
       </div>
-      <Box sx={{ width: "89%" }}>
+      <Box sx={{ width: "95%", borderRadius: "10px" }}>
         <Table>
           <TableHead>
             {headCell.map((item) => (
