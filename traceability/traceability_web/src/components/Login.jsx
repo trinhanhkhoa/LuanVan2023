@@ -42,7 +42,7 @@ export default function SignIn() {
   const [userType, setUserType] = useState("");
 
   const handleSubmit = () => {
-    fetch("http://localhost:5000/signin", {
+    fetch("http://backend.teamluanvan.software/signin", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -58,8 +58,8 @@ export default function SignIn() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.userType, "userRegister");
-        if (data.userType == "admin") {
-          alert("Login admin successful");
+        if (data.userType == "Admin") {
+          alert("Login Admin successful");
           console.log("user json: ", data);
           window.localStorage.setItem("user", JSON.stringify(data));
           window.localStorage.setItem("userId", data._id);
@@ -68,7 +68,7 @@ export default function SignIn() {
           window.localStorage.setItem("userType", data.userType);
           window.location.href = "/enhome";
         } else {
-          alert("Login user successful");
+          alert("Login Farmer successful");
           window.localStorage.setItem("user", JSON.stringify(data));
           window.localStorage.setItem("userId", data._id);
           window.localStorage.setItem("token", data.token);

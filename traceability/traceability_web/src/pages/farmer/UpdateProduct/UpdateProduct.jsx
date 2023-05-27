@@ -14,6 +14,7 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
+import Loading from "../../../components/Loading";
 
 function UpdateProduct() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,6 +32,7 @@ function UpdateProduct() {
   const [time, setTime] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const upload = async (e) => {
     e.preventDefault();
@@ -56,7 +58,7 @@ function UpdateProduct() {
   const userId = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("http://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -71,13 +73,18 @@ function UpdateProduct() {
       });
   };
 
-  const getInfoProduct = () => {
-    fetch(`http://localhost:5000/product/get-product/${params.id}`, {
-      method: "GET",
-      headers: {
-        "x-auth-token": tokenData,
-      },
-    })
+  const getInfoProduct = async () => {
+    setLoading(true);
+
+    await fetch(
+      `http://backend.teamluanvan.software/product/get-product/${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setName(data.data.name);
@@ -85,34 +92,42 @@ function UpdateProduct() {
         setAddress(data.data.address);
         setDescription(data.data.description);
         setTime(data.data.time);
-        console.log("img",data.data.image);
+        console.log("img", data.data.image);
         console.log(data);
       });
+    setLoading(false);
   };
 
-  const putInfoProduct = () => {
-    fetch(`http://localhost:5000/product/update-product/${params.id}`, {
-      method: "PUT",
-      crossDomain: true,
-      headers: {
-        "Content-Type": "application/json",
-        "x-auth-token": tokenData,
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        userId,
-        user,
-        name,
-        address,
-        images,
-        time,
-        description,
-      }),
-    })
+  const putInfoProduct = async () => {
+    setLoading(true);
+
+    await fetch(
+      `http://backend.teamluanvan.software/product/update-product/${params.id}`,
+      {
+        method: "PUT",
+        crossDomain: true,
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": tokenData,
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          userId,
+          user,
+          name,
+          address,
+          images,
+          time,
+          description,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setLoading(false);
+
         window.location.href = "/list";
       });
   };
@@ -124,6 +139,8 @@ function UpdateProduct() {
 
   return (
     <Container fixed sx={{ justifyContent: "center", alignItems: "center" }}>
+      <Loading loading={loading} />
+
       <Box sx={{ marginBottom: "10px" }}>
         <Typography variant="h3">Update product</Typography>
         <Typography variant="h6">Product introduction information</Typography>
@@ -185,7 +202,7 @@ function UpdateProduct() {
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
-            <label> 
+            <label>
               Address <b>(*)</b>
             </label>
             <TextField
@@ -217,14 +234,11 @@ function UpdateProduct() {
             >
               {images.map((item, index) => {
                 return (
-                <ImageListItem key={index}>
-                  <img
-                    src={item}
-                    width={200}
-                    height={200}
-                  />
-                </ImageListItem>
-              )})}
+                  <ImageListItem key={index}>
+                    <img src={item} width={200} height={200} />
+                  </ImageListItem>
+                );
+              })}
             </ImageList>
           </Box>
           <Box

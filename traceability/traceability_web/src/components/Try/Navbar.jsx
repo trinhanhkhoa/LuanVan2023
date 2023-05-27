@@ -124,7 +124,7 @@ export default function PersistentDrawerLeft() {
   const id = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("http://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -140,7 +140,7 @@ export default function PersistentDrawerLeft() {
   };
 
   const getUser = () => {
-    fetch(`http://localhost:5000/getAnAuth`, {
+    fetch(`http://backend.teamluanvan.software/getAnAuth`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,

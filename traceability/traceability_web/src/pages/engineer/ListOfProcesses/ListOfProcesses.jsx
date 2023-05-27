@@ -24,6 +24,7 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import Loading from "../../../components/Loading";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -65,11 +66,12 @@ function ListOfProcesses() {
       return items;
     },
   });
+  const [loading, setLoading] = useState(false);
 
   const tokenData = window.localStorage.getItem("token");
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("http://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -84,8 +86,10 @@ function ListOfProcesses() {
       });
   };
 
-  const getProcesses = () => {
-    fetch("http://localhost:5000/process/get-processes", {
+  const getProcesses = async () => {
+    setLoading(true);
+
+    await fetch("http://backend.teamluanvan.software/process/get-processes", {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -94,12 +98,16 @@ function ListOfProcesses() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.data);
+        setLoading(false);
+
         setData(data.data);
       });
   };
 
-  const deleteProcess = (id) => {
-    fetch(`http://localhost:5000/process/delete-process/${id}`, {
+  const deleteProcess = async (id) => {
+    setLoading(true);
+
+    await fetch(`http://backend.teamluanvan.software/process/delete-process/${id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": tokenData,
@@ -108,6 +116,8 @@ function ListOfProcesses() {
       .then((res) => res.json())
       .then((data) => {
         alert("Product is deleted");
+        setLoading(false);
+
         window.location.href = "/listofprocesses";
       });
   };
@@ -189,6 +199,8 @@ function ListOfProcesses() {
         justifyContent: "center",
       }}
     >
+      <Loading loading={loading} />
+
       <Box
         sx={{
           display: "flex",

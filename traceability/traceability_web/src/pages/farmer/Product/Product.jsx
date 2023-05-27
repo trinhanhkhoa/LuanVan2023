@@ -26,6 +26,10 @@ import { useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ProductTracking from "../ProductTracking/ProductTracking";
+import Loading from "../../../components/Loading";
+import * as GiIcons from "react-icons/gi";
+import * as HiIcons from "react-icons/hi";
+import * as GrIcons from "react-icons/gr";
 
 const ProductDetailWrapper = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -70,20 +74,24 @@ function Product() {
   };
 
   const params = useParams();
+  const [user, setUser] = useState([]);
 
   const [name, setName] = useState("");
   const [time, setTime] = useState("");
+  const [url, setUrl] = useState("");
   const [images, setImages] = useState([]);
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [tracking, setTracking] = useState([]);
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const tokenData = window.localStorage.getItem("token");
-  const user = window.localStorage.getItem("userId");
+  // const user = window.localStorage.getItem("userId");
   const userId = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("http://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -94,33 +102,12 @@ function Product() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(token);
-        // setToken(data);
         console.log("token", data);
       });
   };
 
-  const getInfoProduct = () => {
-    fetch(`http://localhost:5000/product/get-product/${params.id}`, {
-      method: "GET",
-      headers: {
-        "x-auth-token": tokenData,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setName(data.data.name);
-        setAddress(data.data.address);
-        setDescription(data.data.description);
-        setTime(data.data.time);
-        setImages(data.data.images);
-        setTracking(data.data.tracking);
-        console.log(data.data);
-      });
-  };
-
   const deleteProduct = (id) => {
-    fetch(`http://localhost:5000/product/${id}`, {
+    fetch(`http://backend.teamluanvan.software/product/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -134,10 +121,51 @@ function Product() {
   const [openPopupTracking, setOpenPopupTracking] = useState(false);
 
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   useEffect(() => {
     tokenIsValid();
+
+    const getUser = async () => {
+      await fetch(`http://backend.teamluanvan.software/getAnAuth`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data.data.name, "USER NAME");
+          setUser(data.data);
+        });
+    };
+
+    getUser();
+
+    const getInfoProduct = async () => {
+      setLoading(true);
+
+      await fetch(`http://backend.teamluanvan.software/product/get-product/${params.id}`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setName(data.data.name);
+          setAddress(data.data.address);
+          setDescription(data.data.description);
+          setTime(data.data.time);
+          setImages(data.data.images);
+          setTracking(data.data.tracking);
+          setUrl(data.data.url);
+          // if(data.dataBC[6] == 0)
+          //   setStatus("CREATED");
+          // else if(data.dataBD[6] === "")
+          // console.log(data.dataBC[6]);
+        });
+      setLoading(false);
+    };
     getInfoProduct();
   }, []);
 
@@ -156,12 +184,11 @@ function Product() {
         minHeight: 800,
       }}
     >
-      <ProductDetailWrapper
-      // display={"flex"}
-      // flexDirection={matches ? "column" : "row"}
-      >
+      <Loading loading={loading} />
+
+      <ProductDetailWrapper>
         <ProductDetailInfoWrapper
-          sx={{ display: "flex", flexDirection: "row",  }}
+          sx={{ display: "flex", flexDirection: "row" }}
         >
           <ProductDetail sx={{ mr: 4 }}>
             <Carousel className="main-slide">
@@ -173,26 +200,57 @@ function Product() {
           </ProductDetail>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box display={"flex"} flexDirection={"row"}>
-              <QRCode
-                value={`https://luan-van2023.vercel.app/product/${userId}`}
-                size={200}
-              />
-
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <QRCode
+                  value={`https://luan-van2023.vercel.app/product/${userId}`}
+                  size={200}
+                />
+              </Box>
               <Box display={"flex"} flexDirection={"column"} sx={{ ml: 5 }}>
-                <Typography variant="h4" sx={{ mb: 3 }}>
-                  Name: {name}
+                <Typography variant="h4" sx={{ lineHeight: 2 }}>
+                  <GiIcons.GiFruiting /> Name: {name}
                 </Typography>
                 <Typography variant="h5" sx={{ lineHeight: 2 }}>
-                  Product ID: {params.id}
+                  <GrIcons.GrStatusGood style={{ marginRight: 13 }}/> Product Status: CREATED
                 </Typography>
                 <Typography sx={{ lineHeight: 2 }} variant="h5">
+                  <HiIcons.HiLocationMarker style={{ marginRight: 13 }} />{" "}
                   Address: {address}
                 </Typography>
-                <Typography sx={{ lineHeight: 2 }} variant="h5">
-                  A number of update: {address}
-                </Typography>
+                <Button
+                  variant="contained"
+                  sx={{
+                    borderRadius: "10px",
+                    width: 150,
+                    lineHeight: 2,
+                    mt: 2,
+                  }}
+                  onClick={() => {
+                    window.location.href = `${url}`;
+                  }}
+                >
+                  Check product
+                </Button>
               </Box>
             </Box>
+            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Box display={"flex"} flexDirection={"column"}>
+              <Typography variant="text" sx={{}}>
+                <HiIcons.HiUser style={{marginRight: 10, fontSize: 25 }} />{" "}
+                Farmer: {user.name}
+              </Typography>
+              <Typography variant="text" sx={{}}>
+                <HiIcons.HiOutlineMail style={{ marginRight: 10, fontSize: 25 }} />{" "}
+                Email: {user.email}
+              </Typography>
+            </Box>
+
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography
@@ -252,10 +310,17 @@ function Product() {
                   openPopup={openPopupTracking}
                   setOpenPopup={setOpenPopupTracking}
                 >
-                  <ProductTracking id={params.id}/>
+                  <ProductTracking id={params.id} />
                 </Popup>
               </Box>
             </Box>
+            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Typography sx={{ mt: 2, fontSize: 15 }} variant="h5">
+              <HiIcons.HiInformationCircle
+                style={{ marginRight: 10, fontSize: 20 }}
+              />
+              Updated: 2
+            </Typography>
           </Box>
         </ProductDetailInfoWrapper>
       </ProductDetailWrapper>

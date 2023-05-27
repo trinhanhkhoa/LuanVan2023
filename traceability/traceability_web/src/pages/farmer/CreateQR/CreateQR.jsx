@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./CreateQR.css";
-import * as FcIcons from "react-icons/fc";
 import QRCode from "react-qr-code";
-import newID from "../../../utils/newID";
 import { uploadImage } from "../../../components/MultiUpload";
-import axios from "axios";
 import {
   Box,
   Button,
@@ -15,6 +12,7 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
+import Loading from "../../../components/Loading";
 
 function CreateQR() {
   const [images, setImages] = useState([]);
@@ -25,13 +23,14 @@ function CreateQR() {
   const [address, setAddress] = useState("");
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const tokenData = window.localStorage.getItem("token");
-  const user = window.localStorage.getItem("userId");
   const userId = window.localStorage.getItem("userId");
 
   const collectInfo = async () => {
-    await fetch("http://localhost:5000/product/add-product", {
+    setLoading(true);
+    await fetch("http://backend.teamluanvan.software/product/add-product", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -42,7 +41,6 @@ function CreateQR() {
       },
       body: JSON.stringify({
         userId,
-        // user,
         name,
         address,
         time,
@@ -54,11 +52,15 @@ function CreateQR() {
       .then((data) => {
         console.log("data", data);
         console.log("upload img", img);
+        setLoading(false);
+
         window.location.href = "/list";
       });
   };
 
   const upload = async (e) => {
+    setLoading(true);
+
     e.preventDefault();
     try {
       let arr = [];
@@ -73,6 +75,7 @@ function CreateQR() {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -89,6 +92,8 @@ function CreateQR() {
           maxWidth: "100%",
         }}
       >
+        <Loading loading={loading} />
+
         <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
@@ -151,13 +156,14 @@ function CreateQR() {
               cols={3}
               rowHeight={164}
             >
-              {links && links.map((item, index) => {
-                return (
-                  <ImageListItem key={index}>
-                    <img src={item} width={200} height={200} />
-                  </ImageListItem>
-                );
-              })}
+              {links &&
+                links.map((item, index) => {
+                  return (
+                    <ImageListItem key={index}>
+                      <img src={item} width={200} height={200} />
+                    </ImageListItem>
+                  );
+                })}
             </ImageList>
             <Button
               variant="contained"
@@ -167,7 +173,6 @@ function CreateQR() {
             >
               Upload
             </Button>
-            
           </Box>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}

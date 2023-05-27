@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./List.css";
-import * as RiIcons from "react-icons/ri";
-import * as BiIcons from "react-icons/bi";
 import { Link, useParams } from "react-router-dom";
 import {
   Box,
@@ -24,6 +22,8 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import Loading from "../../../components/Loading";
+
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -68,41 +68,15 @@ function List() {
   });
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
+  const [loading, setLoading] = useState(false);
+
   const params = useParams();
   // console.log(params.id);
 
-  const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
+  const deleteProduct = async (id) => {
+    setLoading(true);
 
-  const getProducts = () => {
-    fetch(`http://localhost:5000/getAnAuth`, {
-      method: "GET",
-      headers: {
-        "x-auth-token": tokenData,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.data.products);
-        setData(data.data.products);
-      });
-  };
-
-  const deleteProduct = (id) => {
-    fetch(`http://localhost:5000/product/delete-product/${id}`, {
+    await fetch(`http://backend.teamluanvan.software/product/delete-product/${id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": tokenData,
@@ -111,16 +85,56 @@ function List() {
       .then((res) => res.json())
       .then((data) => {
         alert("Product is deleted");
+        setLoading(false);
         window.location.href = "/list";
       });
   };
-  
+
   useEffect(() => {
+    const tokenIsValid = () => {
+      fetch("http://backend.teamluanvan.software/tokenIsValid", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "x-auth-token": tokenData,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("token", data);
+        });
+    };
+
     tokenIsValid();
+
+    const getProducts = async () => {
+      setLoading(true);
+
+      await fetch(`http://backend.teamluanvan.software/product/get-product`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.data);
+          let data = res.data;
+
+          data = data.filter((p) => p.userId == id);
+          console.log(`product has user id: `, data);
+
+          setData(data);
+        });
+
+      setLoading(false);
+    };
+
     getProducts();
   }, []);
 
- 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -173,7 +187,7 @@ function List() {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
-        console.log(target)
+        console.log(target);
         if (e.target.value == "") return items;
         else
           return items.filter((x) =>
@@ -193,6 +207,8 @@ function List() {
         justifyContent: "center",
       }}
     >
+      <Loading loading={loading} />
+
       <Box
         sx={{
           display: "flex",

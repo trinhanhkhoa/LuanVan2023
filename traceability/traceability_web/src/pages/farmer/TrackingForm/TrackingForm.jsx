@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import "./TrackingForm.css";
-import * as FcIcons from "react-icons/fc";
-import QRCode from "react-qr-code";
-import newID from "../../../utils/newID";
 import { uploadImage } from "../../../components/MultiUpload";
-import axios from "axios";
 import {
   Box,
   Button,
@@ -16,13 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import dayjs from "dayjs";
-import moment from "moment";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
+import Loading from "../../../components/Loading";
 
 function TrackingForm() {
   const [images, setImages] = useState([]);
@@ -33,6 +22,7 @@ function TrackingForm() {
   const [address, setAddress] = useState("");
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const params = useParams();
 
@@ -41,33 +31,41 @@ function TrackingForm() {
   const userId = window.localStorage.getItem("userId");
 
   const collectInfo = async () => {
-    await fetch(`http://localhost:5000/tracking/add-tracking/${params.id}`, {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        userId,
-        user,
-        name,
-        time,
-        address,
-        images: img,
-        description,
-      }),
-    })
+    setLoading(true);
+
+    await fetch(
+      `http://backend.teamluanvan.software/tracking/add-tracking/${params.id}`,
+      {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "x-auth-token": tokenData,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          userId,
+          user,
+          name,
+          time,
+          address,
+          images: img,
+          description,
+        }),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
         console.log("upload img", img);
       });
+    setLoading(false);
   };
 
   const upload = async (e) => {
+    setLoading(true);
+
     e.preventDefault();
     try {
       let arr = [];
@@ -82,6 +80,7 @@ function TrackingForm() {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -93,6 +92,8 @@ function TrackingForm() {
           maxWidth: "100%",
         }}
       >
+        <Loading loading={loading} />
+
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}

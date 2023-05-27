@@ -67,11 +67,11 @@ export default function SignUp() {
   };
 
   const handleSubmit = () => {
-    if (userType == "admin" && secretKey != "12345") {
+    if (userType == "Admin" && secretKey != "12345") {
       alert("Invalid secret key !!!");
     } else {
       console.log(name, email, password);
-      fetch("http://localhost:5000/signup", {
+      fetch("http://backend.teamluanvan.software/signup", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -144,19 +144,19 @@ export default function SignUp() {
                     sx={{ ml: 2 }}
                   >
                     <FormControlLabel
-                      value="user"
+                      value="Farmer"
                       control={<Radio />}
                       onChange={(e) => setUserType(e.target.value)}
-                      label="User"
+                      label="Farmer"
                     />
                     <FormControlLabel
-                      value="admin"
+                      value="Admin"
                       control={<Radio />}
                       onChange={(e) => setUserType(e.target.value)}
                       label="Admin"
                     />
                   </RadioGroup>
-                  {userType == "admin" ? (
+                  {userType == "Admin" ? (
                     <Grid item xs={12}>
                       <TextField
                         required

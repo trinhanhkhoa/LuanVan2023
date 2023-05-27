@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import Loading from "../../../components/Loading";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -65,6 +66,7 @@ function EnManageAccounts() {
       return items;
     },
   });
+  const [loading, setLoading] = useState(false);
 
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
@@ -76,7 +78,7 @@ function EnManageAccounts() {
   const tokenData = window.localStorage.getItem("token");
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("http://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -91,8 +93,10 @@ function EnManageAccounts() {
       });
   };
 
-  const getUsers = () => {
-    fetch("http://localhost:5000/", {
+  const getUsers = async () => {
+    setLoading(true);
+
+    await fetch("http://backend.teamluanvan.software/", {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -102,6 +106,8 @@ function EnManageAccounts() {
       .then((data) => {
         console.log(data.data, "userRegister");
         setData(data.data);
+        setLoading(false);
+
       });
   };
   useEffect(() => {
@@ -180,6 +186,8 @@ function EnManageAccounts() {
         justifyContent: "center",
       }}
     >
+      <Loading loading={loading} />
+
       <Box
         sx={{
           display: "flex",
@@ -230,7 +238,7 @@ function EnManageAccounts() {
           </TableHead>
           <TableBody>
             {recordsAfterPagingAndSorting().map((item, index) => (
-              item.userType == 'user' ? 
+              item.userType === 'User' || item.userType === 'Farmer' ? 
               <StyledTableRow key={index + 1}>
                 <StyledTableCell>{index + 1}</StyledTableCell>
                 <StyledTableCell>{item.name}</StyledTableCell>

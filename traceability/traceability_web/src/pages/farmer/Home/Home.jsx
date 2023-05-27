@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
 import news_img from "../../../asserts/news.png";
-import nature_img from "../../../asserts/nature.jpeg";
 
 import * as TbIcons from "react-icons/tb";
 import * as MdIcons from "react-icons/md";
@@ -11,13 +10,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Box,
   Button,
-  ButtonGroup,
-  Card,
-  CardActions,
   CardContent,
-  Container,
-  Input,
-  InputAdornment,
   Table,
   TableBody,
   TableCell,
@@ -25,13 +18,10 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  TextField,
-  Toolbar,
   Typography,
   tableCellClasses,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Loading from "../../../components/Loading";
 
 const headCell = [
@@ -61,16 +51,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// const useStyles = styled({
-//   button: {
-//     backgroundColor: '#3c52b2',
-//     color: '#fff',
-//     '&:hover': {
-//       backgroundColor: '#fff',
-//       color: '#3c52b2',
-//   },
-// }})
-
 export default function Home() {
   const [data, setData] = useState([]);
 
@@ -90,41 +70,49 @@ export default function Home() {
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
 
-  const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
-
-  const getProducts = () => {
-    fetch(`http://localhost:5000/getAnAuth`, {
-      method: "GET",
-      headers: {
-        "x-auth-token": tokenData,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data.data, "list products");
-        setLoading(true);
-        setData(data.data.products);
-        setLoading(false);
-      });
-  };
-
   useEffect(() => {
+    const tokenIsValid = () => {
+      fetch("http://backend.teamluanvan.software/tokenIsValid", {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "x-auth-token": tokenData,
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("token", data);
+        });
+    };
+
     tokenIsValid();
-    getProducts();
+
+    const getProduct = async () => {
+      setLoading(true);
+
+      await fetch(`http://backend.teamluanvan.software/product/get-product`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.data);
+          let data = res.data;
+
+          data = data.filter((p) => p.userId == id);
+          console.log(`product has user id: `, data);
+
+          setData(data);
+        });
+
+      setLoading(false);
+    };
+
+    getProduct();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -137,12 +125,18 @@ export default function Home() {
   };
 
   function stableSort(array, comparator) {
+    if (!array) {
+      alert("array is null");
+      return;
+    }
+
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
       const order = comparator(a[0], b[0]);
       if (order !== 0) return order;
       return a[1] - b[1];
     });
+
     return stabilizedThis.map((el) => el[0]);
   }
 
@@ -163,10 +157,13 @@ export default function Home() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    return stableSort(filterFn.fn(data), getComparator(order, orderBy)).slice(
-      page * rowsPerPage,
-      (page + 1) * rowsPerPage
-    );
+    const sorted = stableSort(
+      filterFn.fn(data),
+      getComparator(order, orderBy)
+    ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
+
+    console.log(`sroted `, sorted);
+    return sorted;
   };
 
   const handleSordRequest = (id) => {
@@ -187,10 +184,8 @@ export default function Home() {
       },
     });
   };
-
   return (
     <div className="home">
-      <Loading loading={loading} />
       <Carousel class="carousel-home" showThumbs={false}>
         <div className="news_img">
           <img src={news_img} />
@@ -254,6 +249,8 @@ export default function Home() {
           </CardContent>
         </Button>
       </div>
+      <Loading loading={loading} />
+
       <Box sx={{ width: "95%", borderRadius: "10px" }}>
         <Table>
           <TableHead>
@@ -277,14 +274,16 @@ export default function Home() {
             ))}
           </TableHead>
           <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) => (
-              <StyledTableRow key={index + 1}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{item.name}</StyledTableCell>
-                <StyledTableCell>{item.status}</StyledTableCell>
-                <StyledTableCell>{item.time}</StyledTableCell>
-              </StyledTableRow>
-            ))}
+            {
+              recordsAfterPagingAndSorting().map((item, index) => (
+                <StyledTableRow key={index + 1}>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>{item.name}</StyledTableCell>
+                  <StyledTableCell>{item.status}</StyledTableCell>
+                  <StyledTableCell>{item.time}</StyledTableCell>
+                </StyledTableRow>
+              ))
+            }
           </TableBody>
         </Table>
         <TablePagination
