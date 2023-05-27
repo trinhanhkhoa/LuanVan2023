@@ -46,7 +46,7 @@ export default function SignIn() {
   const handleSubmit = async () => {
     setLoading(true);
 
-    await fetch("http://backend.teamluanvan.software/signin", {
+    await fetch("http://backend.teamluanvan.software", {
       method: "POST",
       crossDomain: true,
       headers: {
