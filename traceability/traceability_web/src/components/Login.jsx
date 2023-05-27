@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Card, InputLabel } from "@mui/material";
 import Register from "./Register";
 import login_background from "../asserts/login_bg.jpg";
+import Loading from "../../../components/Loading";
 
 function Copyright(props) {
   return (
@@ -40,9 +41,12 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
-    fetch("http://backend.teamluanvan.software/signin", {
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    await fetch("http://backend.teamluanvan.software/signin", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -58,6 +62,8 @@ export default function SignIn() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data.userType, "userRegister");
+        setLoading(false);
+
         if (data.userType == "Admin") {
           alert("Login Admin successful");
           console.log("user json: ", data);
@@ -90,6 +96,8 @@ export default function SignIn() {
           height: "100vh",
         }}
       >
+        <Loading loading={loading} />
+
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box
@@ -104,9 +112,9 @@ export default function SignIn() {
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                backgroundColor: 'rgba(255, 255, 255, .4)',
-                padding: '30px',
-                borderRadius: '10px'
+                backgroundColor: "rgba(255, 255, 255, .4)",
+                padding: "30px",
+                borderRadius: "10px",
               }}
             >
               <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -115,7 +123,13 @@ export default function SignIn() {
               <Typography component="h1" variant="h5" color="black">
                 Welcome to website!
               </Typography>
-              <Typography component="h3" variant="h5" fontStyle={'italic'} fontSize={'15px'} color="black">
+              <Typography
+                component="h3"
+                variant="h5"
+                fontStyle={"italic"}
+                fontSize={"15px"}
+                color="black"
+              >
                 Please enter your account
               </Typography>
               <Box
