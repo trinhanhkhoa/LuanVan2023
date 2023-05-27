@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Card, InputLabel } from "@mui/material";
 import Register from "./Register";
 import login_background from "../asserts/login_bg.jpg";
-import Loading from "../../../components/Loading";
+import Loading from "./Loading";
 
 function Copyright(props) {
   return (
