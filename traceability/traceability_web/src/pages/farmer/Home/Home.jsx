@@ -72,7 +72,7 @@ export default function Home() {
 
   useEffect(() => {
     const tokenIsValid = () => {
-      fetch("http://backend.teamluanvan.software/tokenIsValid", {
+      fetch("https://backend.teamluanvan.software/tokenIsValid", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -92,7 +92,7 @@ export default function Home() {
     const getProduct = async () => {
       setLoading(true);
 
-      await fetch(`http://backend.teamluanvan.software/product/get-product`, {
+      await fetch(`https://backend.teamluanvan.software/product/get-product`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
