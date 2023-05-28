@@ -30,7 +30,7 @@ function CreateQR() {
 
   const collectInfo = async () => {
     setLoading(true);
-    await fetch("http://backend.teamluanvan.software/product/add-product", {
+    await fetch("https://backend.teamluanvan.software/product/add-product", {
       method: "POST",
       crossDomain: true,
       headers: {

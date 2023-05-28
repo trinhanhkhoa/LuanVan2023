@@ -63,7 +63,7 @@ function ProcessDetail() {
   const matches = useMediaQuery(theme.breakpoints.down("md"));
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method:"POST",
       crossDomain:true,
       headers: {
@@ -79,7 +79,7 @@ function ProcessDetail() {
   }
 
   const getInfoProcess = () => {
-    fetch(`http://backend.teamluanvan.software/process/get-process/${params.id}`, {
+    fetch(`https://backend.teamluanvan.software/process/get-process/${params.id}`, {
       method: "GET",
       headers: {
         'x-auth-token': tokenData,

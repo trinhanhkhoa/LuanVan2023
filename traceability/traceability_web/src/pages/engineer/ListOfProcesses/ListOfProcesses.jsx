@@ -71,7 +71,7 @@ function ListOfProcesses() {
   const tokenData = window.localStorage.getItem("token");
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -89,7 +89,7 @@ function ListOfProcesses() {
   const getProcesses = async () => {
     setLoading(true);
 
-    await fetch("http://backend.teamluanvan.software/process/get-processes", {
+    await fetch("https://backend.teamluanvan.software/process/get-processes", {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -107,7 +107,7 @@ function ListOfProcesses() {
   const deleteProcess = async (id) => {
     setLoading(true);
 
-    await fetch(`http://backend.teamluanvan.software/process/delete-process/${id}`, {
+    await fetch(`https://backend.teamluanvan.software/process/delete-process/${id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": tokenData,

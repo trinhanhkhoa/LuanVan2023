@@ -91,7 +91,7 @@ function Product() {
   const userId = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -107,7 +107,7 @@ function Product() {
   };
 
   const deleteProduct = (id) => {
-    fetch(`http://backend.teamluanvan.software/product/${id}`, {
+    fetch(`https://backend.teamluanvan.software/product/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
@@ -126,7 +126,7 @@ function Product() {
     tokenIsValid();
 
     const getUser = async () => {
-      await fetch(`http://backend.teamluanvan.software/getAnAuth`, {
+      await fetch(`https://backend.teamluanvan.software/getAnAuth`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
@@ -144,7 +144,7 @@ function Product() {
     const getInfoProduct = async () => {
       setLoading(true);
 
-      await fetch(`http://backend.teamluanvan.software/product/get-product/${params.id}`, {
+      await fetch(`https://backend.teamluanvan.software/product/get-product/${params.id}`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
@@ -208,7 +208,8 @@ function Product() {
                 }}
               >
                 <QRCode
-                  value={`https://luan-van2023.vercel.app/product/${userId}`}
+                  // value={`https://luan-van2023.vercel.app/product/${userId}`}
+                  value={`https://backend.teamluanvan.software/product/get-product/${params.id}`}
                   size={200}
                 />
               </Box>

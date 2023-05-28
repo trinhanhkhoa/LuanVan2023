@@ -28,7 +28,7 @@ export default function ProductTracking(props) {
   const [loading, setLoading] = useState(false);
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -49,7 +49,7 @@ export default function ProductTracking(props) {
     const getTracking = async () => {
       setLoading(true);
 
-      await fetch(`http://backend.teamluanvan.software/tracking/get-tracking/${id}`, {
+      await fetch(`https://backend.teamluanvan.software/tracking/get-tracking/${id}`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,

@@ -58,7 +58,7 @@ function UpdateProduct() {
   const userId = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -77,7 +77,7 @@ function UpdateProduct() {
     setLoading(true);
 
     await fetch(
-      `http://backend.teamluanvan.software/product/get-product/${params.id}`,
+      `https://backend.teamluanvan.software/product/get-product/${params.id}`,
       {
         method: "GET",
         headers: {
@@ -102,7 +102,7 @@ function UpdateProduct() {
     setLoading(true);
 
     await fetch(
-      `http://backend.teamluanvan.software/product/update-product/${params.id}`,
+      `https://backend.teamluanvan.software/product/update-product/${params.id}`,
       {
         method: "PUT",
         crossDomain: true,

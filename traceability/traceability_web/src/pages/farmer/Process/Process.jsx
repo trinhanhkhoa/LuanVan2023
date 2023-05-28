@@ -72,7 +72,7 @@ function Process() {
   // console.log(params.id);
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -88,7 +88,7 @@ function Process() {
   };
 
   const getProcesses= () => {
-    fetch(`http://backend.teamluanvan.software/process/get-processes`, {
+    fetch(`https://backend.teamluanvan.software/process/get-processes`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,

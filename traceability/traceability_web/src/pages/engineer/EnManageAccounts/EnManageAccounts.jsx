@@ -78,7 +78,7 @@ function EnManageAccounts() {
   const tokenData = window.localStorage.getItem("token");
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -96,7 +96,7 @@ function EnManageAccounts() {
   const getUsers = async () => {
     setLoading(true);
 
-    await fetch("http://backend.teamluanvan.software/", {
+    await fetch("https://backend.teamluanvan.software/", {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,

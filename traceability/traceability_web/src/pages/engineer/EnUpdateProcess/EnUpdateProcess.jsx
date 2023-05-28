@@ -40,7 +40,7 @@ function EnUpdateProcess() {
   const [value, setValue] = useState(dayjs(date));
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -56,7 +56,7 @@ function EnUpdateProcess() {
   };
 
   const getInfoProcess = () => {
-    fetch(`http://localhost:5000/process/get-process/${params.id}`, {
+    fetch(`https://backend.teamluanvan.software/process/get-process/${params.id}`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -73,7 +73,7 @@ function EnUpdateProcess() {
   };
 
   const putInfoProcess = () => {
-    fetch(`http://localhost:5000/process/update-process/${params.id}`, {
+    fetch(`https://backend.teamluanvan.software/process/update-process/${params.id}`, {
       method: "PUT",
       crossDomain: true,
       headers: {

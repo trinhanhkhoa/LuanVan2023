@@ -63,7 +63,7 @@ function EnProcess() {
   const tokenData = window.localStorage.getItem("token");
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -79,7 +79,7 @@ function EnProcess() {
   };
 
   const getInfoProcess = () => {
-    fetch(`http://localhost:5000/process/get-process/${params.id}`, {
+    fetch(`https://backend.teamluanvan.software/process/get-process/${params.id}`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -96,7 +96,7 @@ function EnProcess() {
   };
 
   const deleteProcess = (id) => {
-    fetch(`http://localhost:5000/process/delete-process/${id}`, {
+    fetch(`https://backend.teamluanvan.software/process/delete-process/${id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())

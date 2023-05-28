@@ -76,7 +76,7 @@ function List() {
   const deleteProduct = async (id) => {
     setLoading(true);
 
-    await fetch(`http://backend.teamluanvan.software/product/delete-product/${id}`, {
+    await fetch(`https://backend.teamluanvan.software/product/delete-product/${id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": tokenData,
@@ -92,7 +92,7 @@ function List() {
 
   useEffect(() => {
     const tokenIsValid = () => {
-      fetch("http://backend.teamluanvan.software/tokenIsValid", {
+      fetch("https://backend.teamluanvan.software/tokenIsValid", {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -112,7 +112,7 @@ function List() {
     const getProducts = async () => {
       setLoading(true);
 
-      await fetch(`http://backend.teamluanvan.software/product/get-product`, {
+      await fetch(`https://backend.teamluanvan.software/product/get-product`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,

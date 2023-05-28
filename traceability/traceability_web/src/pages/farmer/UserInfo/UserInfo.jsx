@@ -15,7 +15,7 @@ export default function UserInfo() {
   const tokenIsValid = async () => {
     setLoading(true);
 
-    await fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    await fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -34,7 +34,7 @@ export default function UserInfo() {
   const getProfile = async () => {
     setLoading(true);
 
-    await fetch(`http://backend.teamluanvan.software/users/${id}`, {
+    await fetch(`https://backend.teamluanvan.software/users/${id}`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,

@@ -34,7 +34,7 @@ function TrackingForm() {
     setLoading(true);
 
     await fetch(
-      `http://backend.teamluanvan.software/tracking/add-tracking/${params.id}`,
+      `https://backend.teamluanvan.software/tracking/add-tracking/${params.id}`,
       {
         method: "POST",
         crossDomain: true,

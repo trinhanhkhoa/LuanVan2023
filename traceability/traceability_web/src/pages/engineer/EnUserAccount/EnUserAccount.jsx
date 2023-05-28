@@ -74,7 +74,7 @@ function EnUserAccount() {
   const id = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("http://localhost:5000/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method:"POST",
       crossDomain:true,
       headers: {
@@ -90,7 +90,7 @@ function EnUserAccount() {
   }
 
   const getUsers = () => {
-    fetch(`http://localhost:5000/admin/${params.id}`, {
+    fetch(`https://backend.teamluanvan.software/admin/${params.id}`, {
       method:"GET",
       headers: {
         'x-auth-token': tokenData,

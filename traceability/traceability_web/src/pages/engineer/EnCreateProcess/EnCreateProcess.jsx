@@ -42,7 +42,7 @@ function EnCreateProcess() {
     const userId = JSON.parse(window.localStorage.getItem("user"))._id;
     console.log("userId: ", userId);
     console.log(name, time, description);
-    fetch("http://localhost:5000/process/add-process", {
+    fetch("https://localhost:5000/process/add-process", {
       method: "POST",
       crossDomain: true,
       headers: {
