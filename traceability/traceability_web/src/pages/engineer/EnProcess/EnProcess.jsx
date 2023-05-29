@@ -140,9 +140,6 @@ function EnProcess() {
               <Typography variant="h4" sx={{ mb: 3 }}>
                 Name: {name}
               </Typography>
-              <Typography variant="h5" sx={{ lineHeight: 3 }}>
-                Product ID: {params.id}
-              </Typography>
               <Typography sx={{ lineHeight: 3 }} variant="h5">
                 Address: {address}
               </Typography>

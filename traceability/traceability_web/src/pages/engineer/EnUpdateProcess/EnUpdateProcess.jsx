@@ -146,7 +146,7 @@ function EnUpdateProcess() {
             <label>
               Time <b>(*)</b>
             </label>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
                   label="Controlled picker"
@@ -160,7 +160,15 @@ function EnUpdateProcess() {
                   }}
                 />
               </DemoContainer>
-            </LocalizationProvider>
+            </LocalizationProvider> */}
+            <TextField
+              variant="outlined"
+              type="date"
+              value={time}
+              format="DD/MM/YYYY"
+              onChange={(e) => setTime(e.target.value)}
+              sx={{ width: 800, borderRadius: "20%" }}
+            />
           </Box>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}

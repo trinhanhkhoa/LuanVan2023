@@ -6,6 +6,7 @@ import {
   Button,
   ButtonGroup,
   Container,
+  IconButton,
   Input,
   InputAdornment,
   Table,
@@ -17,18 +18,23 @@ import {
   TableSortLabel,
   TextField,
   Toolbar,
+  Tooltip,
   Typography,
   tableCellClasses,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Loading from "../../../components/Loading";
-
+import SearchIcon from "@mui/icons-material/Search";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Popup from "../../../components/Popup";
+import ConfirmNotice from "../../../components/Try/ConfirmNotice";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
-  { id: "status", label: "Status (Is updated ?)" },
+  { id: "length", label: "Tracking" },
   { id: "time", label: "End time" },
   { id: "button", label: "" },
 ];
@@ -69,46 +75,10 @@ function List() {
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
   const [loading, setLoading] = useState(false);
-
-  const params = useParams();
-  // console.log(params.id);
-
-  const deleteProduct = async (id) => {
-    setLoading(true);
-
-    await fetch(`https://backend.teamluanvan.software/product/delete-product/${id}`, {
-      method: "DELETE",
-      headers: {
-        "x-auth-token": tokenData,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("Product is deleted");
-        setLoading(false);
-        window.location.href = "/list";
-      });
-  };
+  const [openPopup, setOpenPopup] = useState(false);
+  const [IdPopup, setIdPopup] = useState("");
 
   useEffect(() => {
-    const tokenIsValid = () => {
-      fetch("https://backend.teamluanvan.software/tokenIsValid", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "x-auth-token": tokenData,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("token", data);
-        });
-    };
-
-    tokenIsValid();
-
     const getProducts = async () => {
       setLoading(true);
 
@@ -120,7 +90,7 @@ function List() {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           let data = res.data;
 
           data = data.filter((p) => p.userId == id);
@@ -272,35 +242,50 @@ function List() {
               <StyledTableRow key={index + 1}>
                 <StyledTableCell>{index + 1}</StyledTableCell>
                 <StyledTableCell>{item.name}</StyledTableCell>
-                <StyledTableCell>{item.status}</StyledTableCell>
+                <StyledTableCell>{item.tracking.length}</StyledTableCell>
                 <StyledTableCell>{item.time}</StyledTableCell>
                 <StyledTableCell align="center">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      color="info"
-                      onClick={() => {
-                        window.location.href = `/product/${item._id}`;
-                      }}
+                  <Box>
+                    <Tooltip title="Detail">
+                      <IconButton
+                        color="info"
+                        onClick={() => {
+                          window.location.href = `/product/${item._id}`;
+                        }}
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                    </Tooltip>
+
+                    <Tooltip title="Edit">
+                      <IconButton
+                        color="success"
+                        onClick={() => {
+                          window.location.href = `/updateproduct/${item._id}`;
+                        }}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                      <IconButton
+                        color="error"
+                        onClick={() => {
+                          setOpenPopup(true);
+                          setIdPopup(item._id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Popup
+                      title="Confirm Delete"
+                      openPopup={openPopup}
+                      setOpenPopup={setOpenPopup}
                     >
-                      Detail
-                    </Button>
-                    <Button
-                      color="success"
-                      onClick={() => {
-                        window.location.href = `/updateproduct/${item._id}`;
-                      }}
-                    >
-                      Update
-                    </Button>
-                    <Button
-                      color="error"
-                      onClick={() => {
-                        deleteProduct(item._id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </ButtonGroup>
+                      <ConfirmNotice id={IdPopup} />
+                    </Popup>
+                  </Box>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

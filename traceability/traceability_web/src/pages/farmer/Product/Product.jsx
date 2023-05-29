@@ -87,24 +87,6 @@ function Product() {
   const [loading, setLoading] = useState(false);
 
   const tokenData = window.localStorage.getItem("token");
-  // const user = window.localStorage.getItem("userId");
-  const userId = window.localStorage.getItem("userId");
-
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
 
   const deleteProduct = (id) => {
     fetch(`https://backend.teamluanvan.software/product/${id}`, {
@@ -120,10 +102,7 @@ function Product() {
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupTracking, setOpenPopupTracking] = useState(false);
 
-  const theme = useTheme();
-
   useEffect(() => {
-    tokenIsValid();
 
     const getUser = async () => {
       await fetch(`https://backend.teamluanvan.software/getAnAuth`, {
@@ -209,7 +188,7 @@ function Product() {
               >
                 <QRCode
                   // value={`https://luan-van2023.vercel.app/product/${userId}`}
-                  value={`https://backend.teamluanvan.software/product/get-product/${params.id}`}
+                  value={`${params.id}`}
                   size={200}
                 />
               </Box>

@@ -77,22 +77,6 @@ function EnManageAccounts() {
 
   const tokenData = window.localStorage.getItem("token");
 
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
-
   const getUsers = async () => {
     setLoading(true);
 
@@ -111,7 +95,6 @@ function EnManageAccounts() {
       });
   };
   useEffect(() => {
-    tokenIsValid();
     getUsers();
   }, []);
 
@@ -238,7 +221,7 @@ function EnManageAccounts() {
           </TableHead>
           <TableBody>
             {recordsAfterPagingAndSorting().map((item, index) => (
-              item.userType === 'User' || item.userType === 'Farmer' ? 
+              item.userType === 'User' || item.userType === 'user' || item.userType === 'Farmer' ? 
               <StyledTableRow key={index + 1}>
                 <StyledTableCell>{index + 1}</StyledTableCell>
                 <StyledTableCell>{item.name}</StyledTableCell>

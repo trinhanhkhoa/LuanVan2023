@@ -49,15 +49,15 @@ export default function SignUp() {
   const [userType, setUserType] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [isShown, setIsShown] = useState(false);
+  // const [isError, setIsError] = useState(false);
+
+  const isNameValid = (name) => name.length < 5;
+  
   const togglePassword = () => {
     setIsShown((isShown) => !isShown);
   };
   const [open, setOpen] = useState(false);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
-
+  
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -67,6 +67,11 @@ export default function SignUp() {
   };
 
   const handleSubmit = () => {
+    // setName(name);
+    // if(validate(secretKey, name, email, password))
+    //   alert("testing");
+      
+
     if (userType == "Admin" && secretKey != "12345") {
       alert("Invalid secret key !!!");
     } else {
@@ -90,7 +95,7 @@ export default function SignUp() {
           res.json();
         })
         .then((data) => {
-          window.location.href = "/";
+          // window.location.href = "/";
           console.log(userType);
         });
     }
@@ -110,7 +115,7 @@ export default function SignUp() {
           <Box
             sx={{
               display: "flex",
-              width: '500px',
+              width: "500px",
             }}
           >
             <Card
@@ -132,7 +137,7 @@ export default function SignUp() {
               </Typography>
               <Box
                 component="form"
-                noValidate
+                // noValidate
                 onSubmit={handleSubmit}
                 sx={{ m: 5 }}
               >
@@ -160,40 +165,50 @@ export default function SignUp() {
                     <Grid item xs={12}>
                       <TextField
                         required
+                        // value={userType}
+                        // error={isError}
+                        // helperText="Incorrect secrect key"
                         fullWidth
                         label="Secret Key"
                         onChange={(e) => setSecretKey(e.target.value)}
+                        autoComplete="off"
                       />
                     </Grid>
                   ) : null}
                   <Grid item xs={12}>
                     <TextField
                       required
+                      // error={isNameValid}
                       fullWidth
                       label="Fullname"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
+                      autoComplete="off"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       required
+                      // error={isError}
                       fullWidth
                       label="Email Address"
-                      autoComplete="email"
+                      // autoComplete="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      autoComplete="off"
                     />
                   </Grid>
                   <Grid item xs={12}>
                     <TextField
                       required
+                      // error={isError}
                       fullWidth
                       label="Password"
                       type={isShown ? "text" : "password"}
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      autoComplete="new-password"
+                      // autoComplete="new-password"
+                      autoComplete="off"
                     />
                     <FormControlLabel
                       control={
@@ -210,7 +225,7 @@ export default function SignUp() {
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <FormControlLabel
                       control={
                         <Checkbox value="allowExtraEmails" color="primary" />
@@ -221,16 +236,16 @@ export default function SignUp() {
                         </InputLabel>
                       }
                     />
-                  </Grid>
+                  </Grid> */}
                 </Grid>
                 <Button
-                  type="button"
+                  type="submit"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
                   onClick={() => {
                     handleSubmit();
-                    handleClick();
+                    // handleClick();
                   }}
                 >
                   Sign Up

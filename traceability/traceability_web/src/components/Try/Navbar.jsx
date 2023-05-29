@@ -19,7 +19,6 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import avatarImg from "../../asserts/logo.png";
 import { Outlet } from "react-router-dom";
-import Web3 from 'web3';
 
 const drawerWidth = 270;
 
@@ -124,7 +123,7 @@ export default function PersistentDrawerLeft() {
   const id = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("http://backend.teamluanvan.software/tokenIsValid", {
+    fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -140,7 +139,7 @@ export default function PersistentDrawerLeft() {
   };
 
   const getUser = () => {
-    fetch(`http://backend.teamluanvan.software/getAnAuth`, {
+    fetch(`https://backend.teamluanvan.software/getAnAuth`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,

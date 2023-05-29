@@ -27,8 +27,8 @@ import Loading from "../../../components/Loading";
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
-  { id: "status", label: "Status (Is updated ?)" },
-  { id: "time", label: "End time" },
+  // { id: "status", label: "Status (Is updated ?)" },
+  { id: "time", label: "Created At" },
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -71,24 +71,6 @@ export default function Home() {
   const id = window.localStorage.getItem("userId");
 
   useEffect(() => {
-    const tokenIsValid = () => {
-      fetch("https://backend.teamluanvan.software/tokenIsValid", {
-        method: "POST",
-        crossDomain: true,
-        headers: {
-          "x-auth-token": tokenData,
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("token", data);
-        });
-    };
-
-    tokenIsValid();
-
     const getProduct = async () => {
       setLoading(true);
 
@@ -245,7 +227,7 @@ export default function Home() {
         >
           <CardContent>
             <MdIcons.MdChangeCircle className="process-icon" />
-            <Typography>Watch process</Typography>
+            <Typography>Process information</Typography>
           </CardContent>
         </Button>
       </div>
@@ -279,7 +261,7 @@ export default function Home() {
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.name}</StyledTableCell>
-                  <StyledTableCell>{item.status}</StyledTableCell>
+                  {/* <StyledTableCell>{item.status}</StyledTableCell> */}
                   <StyledTableCell>{item.time}</StyledTableCell>
                 </StyledTableRow>
               ))

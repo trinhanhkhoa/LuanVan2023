@@ -18,7 +18,8 @@ export default function ProductTracking(props) {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const { id } = props;
+  const {id} = props;
+  console.log(id);
 
   const params = useParams();
 
@@ -27,25 +28,7 @@ export default function ProductTracking(props) {
   const userId = window.localStorage.getItem("userId");
   const [loading, setLoading] = useState(false);
 
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
-
   useEffect(() => {
-    tokenIsValid();
-
     const getTracking = async () => {
       setLoading(true);
 
@@ -57,7 +40,7 @@ export default function ProductTracking(props) {
       })
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           let data = res.data;
 
           data = data.filter((p) => p.productID == id);
@@ -105,6 +88,7 @@ export default function ProductTracking(props) {
         alignItems: "left",
         justifyContent: "left",
         minWidth: 500,
+        minHeight: "80vh"
       }}
     >
       <Loading loading={loading} />

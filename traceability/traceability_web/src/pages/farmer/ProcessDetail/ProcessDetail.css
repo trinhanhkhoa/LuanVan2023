@@ -7,6 +7,17 @@
   min-height: 60vh;
 }
 
+
+.main-slide-process .carousel {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.main-slide-process .carousel .slider-wrapper {
+  width:100%;
+  /* height: 500px; */
+}
+
 .info-btn-process {
   display: flex;
   justify-content: space-between;

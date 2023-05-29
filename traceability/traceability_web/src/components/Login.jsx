@@ -12,10 +12,15 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Card, InputLabel } from "@mui/material";
+import { Card, InputLabel, Snackbar } from "@mui/material";
 import Register from "./Register";
 import login_background from "../asserts/login_bg.jpg";
 import Loading from "./Loading";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function Copyright(props) {
   return (
@@ -42,6 +47,8 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
   const [loading, setLoading] = useState(false);
+  const [snackbarState, setSnackbarState] = useState(false);
+  const [isValid, setIsValid] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -64,24 +71,34 @@ export default function SignIn() {
         console.log(data.userType, "userRegister");
         setLoading(false);
 
-        if (data.userType == "Admin") {
-          alert("Login Admin successful");
+        if (data.userType == "Admin" || data.userType == "admin") {
           console.log("user json: ", data);
           window.localStorage.setItem("user", JSON.stringify(data));
           window.localStorage.setItem("userId", data._id);
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", data.userType);
-          window.location.href = "/enhome";
-        } else {
-          alert("Login Farmer successful");
+          setSnackbarState(true);
+          setIsValid(true);
+
+          setTimeout(() => {
+            window.location.href = "/enhome";
+          }, 1500);
+        } else if (data.userType == "User" || data.userType == "user" || data.userType == "Farmer" || data.userType == "farmer") {
           window.localStorage.setItem("user", JSON.stringify(data));
           window.localStorage.setItem("userId", data._id);
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", data.userType);
+          setSnackbarState(true);
+          setIsValid(true);
 
-          window.location.href = "/home";
+          setTimeout(() => {
+            window.location.href = "/home";
+          }, 1500);
+        } else {
+          setSnackbarState(true);
+          setIsValid(false);
         }
       });
     // }
@@ -189,6 +206,21 @@ export default function SignIn() {
               </Box>
             </Card>
           </Box>
+          <Snackbar
+            open={snackbarState}
+            autoHideDuration={1000}
+            // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          >
+            {isValid == true ? (
+              <Alert severity="success" sx={{ width: "100%" }}>
+                Login successfull !!!
+              </Alert>
+            ) : (
+              <Alert severity="error" sx={{ width: "100%" }}>
+                Incorrect email or password !!!
+              </Alert>
+            )}
+          </Snackbar>
           <Copyright sx={{ mt: 8, mb: 4 }} />
         </Container>
       </Box>

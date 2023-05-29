@@ -8,6 +8,7 @@ import {
   Button,
   ButtonGroup,
   Container,
+  IconButton,
   Input,
   InputAdornment,
   Table,
@@ -19,12 +20,18 @@ import {
   TableSortLabel,
   TextField,
   Toolbar,
+  Tooltip,
   Typography,
   tableCellClasses,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Loading from "../../../components/Loading";
+import SearchIcon from "@mui/icons-material/Search";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Popup from "../../../components/Popup";
+import ConfirmNotice from "../../../components/Try/ConfirmNotice";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -67,7 +74,8 @@ function ListOfProcesses() {
     },
   });
   const [loading, setLoading] = useState(false);
-
+  const [openPopup, setOpenPopup] = useState(false);
+  const [IdPopup, setIdPopup] = useState("");
   const tokenData = window.localStorage.getItem("token");
 
   const tokenIsValid = () => {
@@ -103,25 +111,6 @@ function ListOfProcesses() {
         setData(data.data);
       });
   };
-
-  const deleteProcess = async (id) => {
-    setLoading(true);
-
-    await fetch(`https://backend.teamluanvan.software/process/delete-process/${id}`, {
-      method: "DELETE",
-      headers: {
-        "x-auth-token": tokenData,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("Product is deleted");
-        setLoading(false);
-
-        window.location.href = "/listofprocesses";
-      });
-  };
-  
 
   useEffect(() => {
     tokenIsValid();
@@ -266,32 +255,46 @@ function ListOfProcesses() {
                 <StyledTableCell>{item.name}</StyledTableCell>
                 <StyledTableCell>{item.time}</StyledTableCell>
                 <StyledTableCell align="center">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      color="info"
-                      onClick={() => {
-                        window.location.href = `/enprocess/${item._id}`;
-                      }}
+                  <Box>
+                  <Tooltip title="Detail">
+                      <IconButton
+                        color="info"
+                        onClick={() => {
+                          window.location.href = `/enprocess/${item._id}`;
+                        }}
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Edit">
+                      <IconButton
+                        color="success"
+                        onClick={() => {
+                          window.location.href = `/enupdateprocess/${item._id}`;
+                        }}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Delete">
+                      <IconButton
+                        color="error"
+                        onClick={() => {
+                          setOpenPopup(true);
+                          setIdPopup(item._id);
+                        }}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </Tooltip>
+                    <Popup
+                      title="Confirm Delete"
+                      openPopup={openPopup}
+                      setOpenPopup={setOpenPopup}
                     >
-                      Detail
-                    </Button>
-                    <Button
-                      color="success"
-                      onClick={() => {
-                        window.location.href = `/enupdateprocess/${item._id}`;
-                      }}
-                    >
-                      Update
-                    </Button>
-                    <Button
-                      color="error"
-                      onClick={() => {
-                        deleteProcess(item._id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </ButtonGroup>
+                      <ConfirmNotice id={IdPopup} />
+                    </Popup>
+                  </Box>
                 </StyledTableCell>
               </StyledTableRow>
             ))}

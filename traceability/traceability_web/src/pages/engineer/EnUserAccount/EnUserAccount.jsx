@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import './EnUserAccount.css';
+import "./EnUserAccount.css";
 import * as RiIcons from "react-icons/ri";
 import {
   Box,
@@ -23,11 +23,14 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import Loading from "../../../components/Loading";
+import Popup from "../../../components/Popup";
+import ProductTracking from "../../farmer/ProductTracking/ProductTracking";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
-  { id: "type", label: "Type" },
+  { id: "length", label: "Tracking" },
   { id: "button", label: "" },
 ];
 
@@ -51,9 +54,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
 function EnUserAccount() {
-
   const [data, setData] = useState([]);
 
   const pages = [5, 10, 25];
@@ -66,47 +67,39 @@ function EnUserAccount() {
       return items;
     },
   });
+  const [openPopupTracking, setOpenPopupTracking] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const params = useParams();
-  console.log(params);
+  // console.log(params);
 
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
 
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method:"POST",
-      crossDomain:true,
-      headers: {
-        'x-auth-token': tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin":"*"
-      }
-    })
-      .then((res) => res.json() )
-      .then((data) => {
-        console.log("token", data)
-      });
-  }
-
-  const getUsers = () => {
-    fetch(`https://backend.teamluanvan.software/admin/${params.id}`, {
-      method:"GET",
-      headers: {
-        'x-auth-token': tokenData,
-      }
-    })
-      .then((res) => res.json() )
-      .then((data) => {
-        console.log(data.data.products.length);
-        setData(data.data.products);
-      });
-  }
-
   useEffect(() => {
-    tokenIsValid();
+    const getUsers = async () => {
+      setLoading(true);
+
+      await fetch(`https://backend.teamluanvan.software/product/get-product`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          // console.log(res.data);
+          let data = res.data;
+
+          data = data.filter((p) => p.userId == params.id);
+          console.log(`product has user id: `, data);
+
+          setData(data);
+        });
+      setLoading(false);
+    };
+
     getUsers();
-    // console.log("length",data.length);
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -172,97 +165,105 @@ function EnUserAccount() {
 
   return (
     <Container
-    sx={{
-      minWidth: "100%",
-      minHeight: "80vh",
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-    }}
-  >
-    <Box
       sx={{
+        minWidth: "100%",
+        minHeight: "80vh",
         display: "flex",
-        justifyContent: "space-between",
-        marginBottom: "20px",
+        flexDirection: "column",
+        justifyContent: "center",
       }}
     >
-      <Typography variant="h3">USER's PRODUCTS</Typography>
-    </Box>
-    <Box>
-      <Toolbar>
-        <TextField
-          variant="outlined"
-          label="Search product"
-          // name={name}
-          // value={value}
-          onChange={handleSearch}
-          sx={{ width: "20%", marginBottom: "20px", marginLeft: "0" }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchRoundedIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
-      </Toolbar>
-      <Table>
-        <TableHead>
-          {headCell.map((item) => (
-            <StyledTableCell
-              key={item.id}
-              sortDirection={orderBy === item.id ? order : false}
-            >
-              {item.disableSorting ? (
-                item.label
-              ) : (
-                <TableSortLabel
-                  active={orderBy === item.id}
-                  direction={orderBy === item.id ? order : "asc"}
-                  onClick={() => handleSordRequest(item.id)}
-                >
-                  {item.label}
-                </TableSortLabel>
-              )}
-            </StyledTableCell>
-          ))}
-        </TableHead>
-        <TableBody>
-          {recordsAfterPagingAndSorting().map((item, index) => (
-            <StyledTableRow key={index + 1}>
-              <StyledTableCell>{index + 1}</StyledTableCell>
-              <StyledTableCell>{item.name}</StyledTableCell>
-              <StyledTableCell></StyledTableCell>
-              <StyledTableCell align="center">
-                <ButtonGroup variant="contained">
-                  <Button
-                    color="info"
-                    onClick={() => {
-                      window.location.href = `/producttracking/${item.id}`;
+      <Loading loading={loading} />
 
-                    }}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          marginBottom: "20px",
+        }}
+      >
+        <Typography variant="h3">USER'S PRODUCTS</Typography>
+      </Box>
+      <Box>
+        <Toolbar>
+          <TextField
+            variant="outlined"
+            label="Search product"
+            // name={name}
+            // value={value}
+            onChange={handleSearch}
+            sx={{ width: "20%", marginBottom: "20px", marginLeft: "0" }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
+        <Table>
+          <TableHead>
+            {headCell.map((item) => (
+              <StyledTableCell
+                key={item.id}
+                sortDirection={orderBy === item.id ? order : false}
+              >
+                {item.disableSorting ? (
+                  item.label
+                ) : (
+                  <TableSortLabel
+                    active={orderBy === item.id}
+                    direction={orderBy === item.id ? order : "asc"}
+                    onClick={() => handleSordRequest(item.id)}
                   >
-                    Detail
-                  </Button>
-                </ButtonGroup>
+                    {item.label}
+                  </TableSortLabel>
+                )}
               </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <TablePagination
-        component="div"
-        page={page}
-        rowsPerPageOptions={pages}
-        rowsPerPage={rowsPerPage}
-        count={data.length}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Box>
-  </Container>
-  )
+            ))}
+          </TableHead>
+          <TableBody>
+            {recordsAfterPagingAndSorting().map((item, index) => (
+              <StyledTableRow key={index + 1}>
+                <StyledTableCell>{index + 1}</StyledTableCell>
+                <StyledTableCell>{item.name}</StyledTableCell>
+                <StyledTableCell>{item.tracking.length}</StyledTableCell>
+                <StyledTableCell align="center">
+                  <ButtonGroup variant="contained">
+                    <Button
+                      color="info"
+                      onClick={() => {
+                        setOpenPopupTracking(true);
+                      }}
+                    >
+                      Detail
+                    </Button>
+                    <Popup
+                      title="Tracking"
+                      openPopup={openPopupTracking}
+                      setOpenPopup={setOpenPopupTracking}
+                    >
+                      <ProductTracking id={item._id} />
+                    </Popup>
+                  </ButtonGroup>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+        <TablePagination
+          component="div"
+          page={page}
+          rowsPerPageOptions={pages}
+          rowsPerPage={rowsPerPage}
+          count={data.length}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Box>
+    </Container>
+  );
 }
 
-export default EnUserAccount
+export default EnUserAccount;
