@@ -141,7 +141,7 @@ function Product() {
           // if(data.dataBC[6] == 0)
           //   setStatus("CREATED");
           // else if(data.dataBD[6] === "")
-          // console.log(data.dataBC[6]);
+          console.log(data);
         });
       setLoading(false);
     };
@@ -299,7 +299,7 @@ function Product() {
               <HiIcons.HiInformationCircle
                 style={{ marginRight: 10, fontSize: 20 }}
               />
-              Updated: 2
+              Update tracking: {tracking.length} times
             </Typography>
           </Box>
         </ProductDetailInfoWrapper>

@@ -6,12 +6,18 @@ import {
   Container,
   ImageList,
   ImageListItem,
+  Snackbar,
   TextField,
   TextareaAutosize,
   Typography,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import Loading from "../../../components/Loading";
+import { useForm, Form } from "../../../components/Try/useForm";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function TrackingForm() {
   const [images, setImages] = useState([]);
@@ -23,6 +29,7 @@ function TrackingForm() {
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [snackbarState, setSnackbarState] = useState(false);
 
   const params = useParams();
 
@@ -30,7 +37,10 @@ function TrackingForm() {
   const user = window.localStorage.getItem("userId");
   const userId = window.localStorage.getItem("userId");
 
-  const collectInfo = async () => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     setLoading(true);
 
     await fetch(
@@ -59,6 +69,12 @@ function TrackingForm() {
       .then((data) => {
         console.log("data", data);
         console.log("upload img", img);
+
+        setSnackbarState(true);
+
+        setTimeout(() => {
+          window.location.href = "/list";
+        }, 1500);
       });
     setLoading(false);
   };
@@ -91,6 +107,8 @@ function TrackingForm() {
           flexDirection: "row",
           maxWidth: "100%",
         }}
+        component="form"
+        onSubmit={handleSubmit}
       >
         <Loading loading={loading} />
 
@@ -106,6 +124,8 @@ function TrackingForm() {
               placeholder="Tracking progress"
               type="text"
               value={name}
+                // error={errors.name}
+                // helperText={errors.name}
               onChange={(e) => setName(e.target.value)}
               sx={{ width: 500, borderRadius: "20%" }}
             />
@@ -189,21 +209,27 @@ function TrackingForm() {
             />
           </Box>
         </Box>
-      </Box>
-      <Box
-        m={1} //margin
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="flex-end"
-      >
-        <Button
-          variant="contained"
-          color="warning"
-          sx={{ borderRadius: "10px" }}
-          onClick={collectInfo}
+        <Box
+          m={1} //margin
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
         >
-          Confirm
-        </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            color="warning"
+            sx={{ borderRadius: "10px" }}
+            // onClick={collectInfo}
+          >
+            Confirm
+          </Button>
+        </Box>
+        <Snackbar open={snackbarState} autoHideDuration={1000}>
+          <Alert severity="success" sx={{ width: "100%" }}>
+            Product is deleted
+          </Alert>
+        </Snackbar>
       </Box>
     </Container>
   );

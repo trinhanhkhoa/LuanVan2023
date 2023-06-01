@@ -101,7 +101,6 @@ export default function SignIn() {
           setIsValid(false);
         }
       });
-    // }
   };
 
   return (

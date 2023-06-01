@@ -22,11 +22,14 @@ import EnUserAccount from "./pages/engineer/EnUserAccount/EnUserAccount";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ProductTracking from "./pages/farmer/ProductTracking/ProductTracking";
+import TrackingForm from "./pages/farmer/TrackingForm/TrackingForm";
 
 function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
 
   return (
+    // <CreateQR />
+
     <div className="App">
       <BrowserRouter>
         <Routes>
@@ -60,7 +63,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
-    // <TableForm />
+  
   );
 }
 

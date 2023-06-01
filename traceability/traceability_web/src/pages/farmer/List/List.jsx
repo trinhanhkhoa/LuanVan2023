@@ -103,6 +103,31 @@ function List() {
     };
 
     getProducts();
+
+    const getTracking = async () => {
+      setLoading(true);
+
+      await fetch(`https://backend.teamluanvan.software/tracking/get-tracking/${id}`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res.data);
+          let data = res.data;
+
+          data = data.filter((p) => p.productID == id);
+          // console.log(`product has user id: `, data);
+
+          setData(data);
+        });
+
+      setLoading(false);
+    };
+
+    getTracking();
   }, []);
 
   const handleChangePage = (event, newPage) => {

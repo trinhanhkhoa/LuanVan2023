@@ -21,6 +21,7 @@ import {
   Snackbar,
 } from "@mui/material";
 import login_background from "../asserts/login_bg.jpg";
+import { useForm, Form } from "./Try/useForm";
 
 function Copyright(props) {
   return (
@@ -49,15 +50,14 @@ export default function SignUp() {
   const [userType, setUserType] = useState("");
   const [secretKey, setSecretKey] = useState("");
   const [isShown, setIsShown] = useState(false);
-  // const [isError, setIsError] = useState(false);
 
-  const isNameValid = (name) => name.length < 5;
-  
+  const tokenData = window.localStorage.getItem("token");
+
   const togglePassword = () => {
     setIsShown((isShown) => !isShown);
   };
   const [open, setOpen] = useState(false);
-  
+
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -66,22 +66,20 @@ export default function SignUp() {
     setOpen(false);
   };
 
-  const handleSubmit = () => {
-    // setName(name);
-    // if(validate(secretKey, name, email, password))
-    //   alert("testing");
-      
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     if (userType == "Admin" && secretKey != "12345") {
       alert("Invalid secret key !!!");
     } else {
       console.log(name, email, password);
-      fetch("http://backend.teamluanvan.software/signup", {
+      fetch("https://backend.teamluanvan.software/signup", {
         method: "POST",
         crossDomain: true,
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          "x-auth-token": tokenData,
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
@@ -95,7 +93,7 @@ export default function SignUp() {
           res.json();
         })
         .then((data) => {
-          // window.location.href = "/";
+          window.location.href = "/";
           console.log(userType);
         });
     }
@@ -135,97 +133,102 @@ export default function SignUp() {
               <Typography component="h1" variant="h5" color="black">
                 Sign up
               </Typography>
-              <Box
-                component="form"
-                // noValidate
-                onSubmit={handleSubmit}
-                sx={{ m: 5 }}
-              >
-                <Grid container spacing={2}>
-                  <RadioGroup
-                    row
-                    aria-labelledby="demo-row-radio-buttons-group-label"
-                    name="row-radio-buttons-group"
-                    sx={{ ml: 2 }}
-                  >
-                    <FormControlLabel
-                      value="Farmer"
-                      control={<Radio />}
-                      onChange={(e) => setUserType(e.target.value)}
-                      label="Farmer"
-                    />
-                    <FormControlLabel
-                      value="Admin"
-                      control={<Radio />}
-                      onChange={(e) => setUserType(e.target.value)}
-                      label="Admin"
-                    />
-                  </RadioGroup>
-                  {userType == "Admin" ? (
+
+              <Box sx={{ m: 5 }}>
+                <Form onSubmit={handleSubmit}>
+                  <Grid container spacing={2}>
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                      sx={{ ml: 2 }}
+                    >
+                      <FormControlLabel
+                        value="Farmer"
+                        control={<Radio />}
+                        onChange={(e) => setUserType(e.target.value)}
+                        label="Farmer"
+                      />
+                      <FormControlLabel
+                        value="Admin"
+                        control={<Radio />}
+                        onChange={(e) => setUserType(e.target.value)}
+                        label="Admin"
+                      />
+                    </RadioGroup>
+                    {userType == "Admin" ? (
+                      <Grid item xs={12}>
+                        <TextField
+                          required
+                          name="secretKey"
+                          value={secretKey}
+                          // error={errors.secretKey}
+                          // helperText={errors.secretKey}
+                          fullWidth
+                          label="Secret Key"
+                          onChange={(e) => setSecretKey(e.target.value)}
+                          autoComplete="off"
+                        />
+                      </Grid>
+                    ) : null}
                     <Grid item xs={12}>
                       <TextField
                         required
-                        // value={userType}
-                        // error={isError}
-                        // helperText="Incorrect secrect key"
                         fullWidth
-                        label="Secret Key"
-                        onChange={(e) => setSecretKey(e.target.value)}
+                        name="name"
+                        label="Full Name"
+                        value={name}
+                        // error={errors.name}
+                        // helperText={errors.name}
+                        onChange={(e) => setName(e.target.value)}
                         autoComplete="off"
                       />
                     </Grid>
-                  ) : null}
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      // error={isNameValid}
-                      fullWidth
-                      label="Fullname"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      autoComplete="off"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      // error={isError}
-                      fullWidth
-                      label="Email Address"
-                      // autoComplete="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      autoComplete="off"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      // error={isError}
-                      fullWidth
-                      label="Password"
-                      type={isShown ? "text" : "password"}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      // autoComplete="new-password"
-                      autoComplete="off"
-                    />
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isShown}
-                          onChange={togglePassword}
-                          color="primary"
-                        />
-                      }
-                      label={
-                        <InputLabel style={{ color: "#000" }}>
-                          Show password
-                        </InputLabel>
-                      }
-                    />
-                  </Grid>
-                  {/* <Grid item xs={12}>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        // error={isError}
+                        fullWidth
+                        label="Email Address"
+                        name="email"
+                        value={email}
+                        // error={errors.email}
+                        // helperText={errors.email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        autoComplete="off"
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        // error={isError}
+                        fullWidth
+                        label="Password"
+                        type={isShown ? "text" : "password"}
+                        name="password"
+                        value={password}
+                        // error={errors.password}
+                        // helperText={errors.password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        // autoComplete="new-password"
+                        autoComplete="off"
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isShown}
+                            onChange={togglePassword}
+                            color="primary"
+                          />
+                        }
+                        label={
+                          <InputLabel style={{ color: "#000" }}>
+                            Show password
+                          </InputLabel>
+                        }
+                      />
+                    </Grid>
+                    {/* <Grid item xs={12}>
                     <FormControlLabel
                       control={
                         <Checkbox value="allowExtraEmails" color="primary" />
@@ -237,19 +240,17 @@ export default function SignUp() {
                       }
                     />
                   </Grid> */}
-                </Grid>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={() => {
-                    handleSubmit();
-                    // handleClick();
-                  }}
-                >
-                  Sign Up
-                </Button>
+                  </Grid>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 3, mb: 2 }}
+                  >
+                    Sign Up
+                  </Button>
+                </Form>
+
                 <Grid container justifyContent="flex-end">
                   <Grid item>
                     <Link href="/" variant="body2">

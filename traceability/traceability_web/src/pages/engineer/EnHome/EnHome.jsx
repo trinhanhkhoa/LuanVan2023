@@ -9,14 +9,29 @@ import LineChart from "../../../components/LineChart";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-import { Box, Button, CardContent, Table, TableBody, TableCell, TableHead, TablePagination, TableRow, TableSortLabel, Typography, tableCellClasses } from "@mui/material";
+import {
+  Box,
+  Button,
+  CardContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
+  Typography,
+  tableCellClasses,
+} from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
+import Loading from "../../../components/Loading";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
-  { id: "status", label: "Status (Is updated ?)" },
-  { id: "time", label: "End time" },
+  { id: "uid", label: "User ID" },
+  { id: "address", label: "Address" },
+  { id: "status", label: "Status" },
 ];
 
 const StyleTableCell = styled(TableCell)(({ theme }) => ({
@@ -41,7 +56,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function EnHome() {
   const [data, setData] = useState([]);
-
+  const [status, setStatus] = useState([]);
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
@@ -57,6 +72,8 @@ export default function EnHome() {
 
   const [admin, setAdmin] = useState(false);
   const userType = window.localStorage.getItem("userType");
+  const tokenData = window.localStorage.getItem("token");
+  const id = window.localStorage.getItem("userId");
 
   const onDisconnected = () => {
     setIsConnected(false);
@@ -67,6 +84,31 @@ export default function EnHome() {
       setAdmin(true);
     }
 
+    const getProducts = async () => {
+      setLoading(true);
+
+      await fetch(`https://backend.teamluanvan.software/product/get-product`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          // console.log(res.dataSC[1]);
+          let data = res.data;
+          let dataSC = res.dataSC;
+          console.log(dataSC);
+          dataSC = dataSC.filter((p) => p.status != -1);
+          console.log(`product has user id: `, dataSC);
+
+          setData(dataSC);
+        });
+
+      setLoading(false);
+    };
+
+    getProducts();
     console.log(admin);
   }, []);
 
@@ -141,6 +183,8 @@ export default function EnHome() {
           <img src={news_img} />
         </div>
       </Carousel>
+      <Loading loading={loading} />
+
       <div className="en-home-content">
         <Button
           sx={{
@@ -227,8 +271,21 @@ export default function EnHome() {
               <StyledTableRow key={index + 1}>
                 <StyleTableCell>{index + 1}</StyleTableCell>
                 <StyleTableCell>{item.name}</StyleTableCell>
-                <StyleTableCell>{item.status}</StyleTableCell>
-                <StyleTableCell>{item.time}</StyleTableCell>
+                <StyleTableCell>
+                  {item.uid}
+                </StyleTableCell>
+                <StyleTableCell>{item.address}</StyleTableCell>
+                <StyleTableCell>
+                  {item.status == 0
+                    ? "CREATED"
+                    : item.status == 1
+                    ? "UPDATED"
+                    : item.status == 2
+                    ? "DELETED"
+                    : item.status == 3
+                    ? "DELIVERIED"
+                    : "error"}
+                </StyleTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

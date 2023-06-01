@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import "./EnCreateProcess.css";
-import * as FcIcons from "react-icons/fc";
 import { Link } from "react-router-dom";
-import newID from "../../../utils/newID";
 import {
   Box,
   Button,
   Container,
   ImageList,
   ImageListItem,
+  Snackbar,
   TextField,
   TextareaAutosize,
   Typography,
 } from "@mui/material";
 import { uploadImage } from "../../../components/MultiUpload";
 import dayjs from "dayjs";
-import moment from "moment";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import Loading from "../../../components/Loading";
+import { useForm, Form } from "../../../components/Try/useForm";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function EnCreateProcess() {
   const [name, setName] = useState("");
@@ -31,6 +31,8 @@ function EnCreateProcess() {
   const [img, setImg] = useState([]);
 
   const tokenData = window.localStorage.getItem("token");
+  const [loading, setLoading] = useState(false);
+  const [snackbarState, setSnackbarState] = useState(false);
 
   const current = new Date();
   const date = `${current.getDate()}/${
@@ -38,11 +40,12 @@ function EnCreateProcess() {
   }/${current.getFullYear()}`;
   const [value, setValue] = useState(dayjs(date));
 
-  const collectInfo = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
     const userId = JSON.parse(window.localStorage.getItem("user"))._id;
-    console.log("userId: ", userId);
-    console.log(name, time, description);
-    fetch("https://localhost:5000/process/add-process", {
+
+    await fetch("https://localhost:5000/process/add-process", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -63,7 +66,13 @@ function EnCreateProcess() {
       .then((data) => {
         console.log(data);
         console.log(time);
-        window.location.href = "/listofprocesses";
+        setLoading(false);
+
+        setSnackbarState(true);
+
+        setTimeout(() => {
+          window.location.href = "/listofprocesses";
+        }, 1500);
       });
   };
 
@@ -85,59 +94,66 @@ function EnCreateProcess() {
   };
 
   return (
-    <Container
-      fixed
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: 700,
-      }}
-    >
-      <Box sx={{ marginBottom: "10px" }}>
-        <Typography variant="h3">Describe a product</Typography>
-        <Typography variant="h6">Product introduction information</Typography>
-      </Box>
-      <Box
+    <Form onSubmit={handleSubmit}>
+      <Loading loading={loading} />
+
+      <Container
+        fixed
         sx={{
           display: "flex",
-          flexDirection: "row",
-          margin: "20px",
-          maxWidth: "100%",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: 700,
         }}
       >
-        <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Product's name <b>(*)</b>
-            </label>
-            <TextField
-              variant="outlined"
-              placeholder="Product's name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              sx={{ width: 1000, borderRadius: "20%" }}
-            />
-          </Box>
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Time <b>(*)</b>
-            </label>
-            <TextField
-              variant="outlined"
-              type="date"
-              value={time}
-              format="DD/MM/YYYY"
-              onChange={(e) => setTime(e.target.value)}
-              sx={{ width: 1000, borderRadius: "20%" }}
-            />
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Box sx={{ marginBottom: "10px" }}>
+          <Typography variant="h3">Describe a process</Typography>
+          <Typography variant="h6">Process introduction information</Typography>
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            margin: "20px",
+            maxWidth: "100%",
+          }}
+        >
+          <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+            >
+              <label>
+                Process's name <b>(*)</b>
+              </label>
+              <TextField
+                variant="outlined"
+                name="name"
+                placeholder="Process's name"
+                type="text"
+                value={name}
+                // error={errors.name}
+                // helperText={errors.name}
+                onChange={(e) => setName(e.target.value)}
+                sx={{ width: 1000, borderRadius: "20%" }}
+              />
+            </Box>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+            >
+              <label>
+                Time <b>(*)</b>
+              </label>
+              <TextField
+                variant="outlined"
+                type="date"
+                name="time"
+                value={time}
+                format="DD/MM/YYYY"
+                onChange={(e) => setTime(e.target.value)}
+                sx={{ width: 1000, borderRadius: "20%" }}
+              />
+              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
                   label="Controlled picker"
@@ -152,74 +168,84 @@ function EnCreateProcess() {
                 />
               </DemoContainer>
             </LocalizationProvider> */}
-          </Box>
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Image <b>(*)</b>
-            </label>
-            <input
-              type="file"
-              multiple
-              // hidden
-              onChange={(e) => setImages(e.target.files)}
-            />
-            <ImageList
-              sx={{ width: 600, height: 200 }}
-              cols={3}
-              rowHeight={164}
+            </Box>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
             >
-              {links &&
-                links.map((item, index) => {
-                  return (
-                    <ImageListItem key={index}>
-                      <img src={item} width={200} height={200} />
-                    </ImageListItem>
-                  );
-                })}
-            </ImageList>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ borderRadius: "10px", marginTop: 2, width: 100 }}
-              onClick={upload}
+              <label>
+                Image <b>(*)</b>
+              </label>
+              <input
+                type="file"
+                multiple
+                // hidden
+                onChange={(e) => setImages(e.target.files)}
+              />
+              <ImageList
+                sx={{ width: 600, height: 200 }}
+                cols={3}
+                rowHeight={164}
+              >
+                {links &&
+                  links.map((item, index) => {
+                    return (
+                      <ImageListItem key={index}>
+                        <img src={item} width={200} height={200} />
+                      </ImageListItem>
+                    );
+                  })}
+              </ImageList>
+              <Button
+                variant="contained"
+                color="success"
+                sx={{ borderRadius: "10px", marginTop: 2, width: 100 }}
+                onClick={upload}
+              >
+                Upload
+              </Button>
+            </Box>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
             >
-              Upload
-            </Button>
-          </Box>
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Describe information <b>(*)</b>
-            </label>
-            <TextareaAutosize
-              maxRows={20}
-              aria-label="maximum height"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              style={{ width: "100%", minHeight: "100px" }}
-            />
+              <label>
+                Describe information <b>(*)</b>
+              </label>
+              <TextareaAutosize
+                maxRows={20}
+                aria-label="maximum height"
+                name="description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                style={{ width: "100%", minHeight: "100px" }}
+              />
+            </Box>
           </Box>
         </Box>
-      </Box>
-      <Box
-        m={1} //margin
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="flex-end"
-      >
-        <Button
-          variant="contained"
-          color="warning"
-          sx={{ borderRadius: "10px" }}
-          onClick={collectInfo}
+        <Box
+          m={1} //margin
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="flex-end"
         >
-          Confirm
-        </Button>
-      </Box>
-    </Container>
+          {/* <Button onClick={resetForm}>Reset</Button> */}
+
+          <Button
+            type="submit"
+            variant="contained"
+            color="warning"
+            sx={{ borderRadius: "10px" }}
+            // onClick={collectInfo}
+          >
+            Confirm
+          </Button>
+        </Box>
+        <Snackbar open={snackbarState} autoHideDuration={1000}>
+          <Alert severity="success" sx={{ width: "100%" }}>
+            Product is deleted
+          </Alert>
+        </Snackbar>
+      </Container>
+    </Form>
   );
 }
 
