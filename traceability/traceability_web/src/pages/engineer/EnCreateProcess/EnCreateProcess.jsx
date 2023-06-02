@@ -44,6 +44,7 @@ function EnCreateProcess() {
     e.preventDefault();
 
     const userId = JSON.parse(window.localStorage.getItem("user"))._id;
+    setLoading(true);
 
     await fetch("https://localhost:5000/process/add-process", {
       method: "POST",
@@ -94,19 +95,19 @@ function EnCreateProcess() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Loading loading={loading} />
+    <Container
+      fixed
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: 700,
+      }}
+    >
+      <Form onSubmit={handleSubmit}>
+        <Loading loading={loading} />
 
-      <Container
-        fixed
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: 700,
-        }}
-      >
         <Box sx={{ marginBottom: "10px" }}>
           <Typography variant="h3">Describe a process</Typography>
           <Typography variant="h6">Process introduction information</Typography>
@@ -127,6 +128,7 @@ function EnCreateProcess() {
                 Process's name <b>(*)</b>
               </label>
               <TextField
+                required
                 variant="outlined"
                 name="name"
                 placeholder="Process's name"
@@ -145,6 +147,7 @@ function EnCreateProcess() {
                 Time <b>(*)</b>
               </label>
               <TextField
+                required
                 variant="outlined"
                 type="date"
                 name="time"
@@ -176,6 +179,7 @@ function EnCreateProcess() {
                 Image <b>(*)</b>
               </label>
               <input
+                required
                 type="file"
                 multiple
                 // hidden
@@ -211,6 +215,7 @@ function EnCreateProcess() {
                 Describe information <b>(*)</b>
               </label>
               <TextareaAutosize
+                required
                 maxRows={20}
                 aria-label="maximum height"
                 name="description"
@@ -227,14 +232,11 @@ function EnCreateProcess() {
           justifyContent="flex-end"
           alignItems="flex-end"
         >
-          {/* <Button onClick={resetForm}>Reset</Button> */}
-
           <Button
             type="submit"
             variant="contained"
             color="warning"
             sx={{ borderRadius: "10px" }}
-            // onClick={collectInfo}
           >
             Confirm
           </Button>
@@ -244,8 +246,8 @@ function EnCreateProcess() {
             Product is deleted
           </Alert>
         </Snackbar>
-      </Container>
-    </Form>
+      </Form>
+    </Container>
   );
 }
 

@@ -13,7 +13,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
 import { Avatar, Badge, InputBase, Menu, MenuItem } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
@@ -157,39 +156,27 @@ export default function PersistentDrawerLeft() {
     getUser();
   }, []);
 
-  const detectCurrentProvider = () => {
-    let provider;
-    if(window.ethereum) {
-      provider = window.ethereum;
-    } else if (window.web3) {
-      provider = window.web3.currentProvider;
-    } else {
-      console.log("Non-ethereum browser detected. You should install Metamask")
-    }
 
-    return provider;
-  }
+  // const [isConnected, setIsConnected] = useState(true);
+  // const [ethBalance, setEthBalance] = useState("");
 
-  const [isConnected, setIsConnected] = useState(true);
-  const [ethBalance, setEthBalance] = useState("");
-
-  const onConnect = async () => {
-    try {
-      const currentProvider = detectCurrentProvider();
-      if(currentProvider) {
-        await currentProvider.request({method: 'eth_requestAccounts'})
-        const web3 = new Web3(currentProvider);
-        const userAccount = await web3.eth.getAccounts();
-        const account = userAccount[0];
-        let ethBalance = await web3.eth.getBalance(account);
-        let value = web3.utils.fromWei(ethBalance, 'ether');
-        setEthBalance(value);
-        setIsConnected(true);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const onConnect = async () => {
+  //   try {
+  //     const currentProvider = detectCurrentProvider();
+  //     if(currentProvider) {
+  //       await currentProvider.request({method: 'eth_requestAccounts'})
+  //       const web3 = new Web3(currentProvider);
+  //       const userAccount = await web3.eth.getAccounts();
+  //       const account = userAccount[0];
+  //       let ethBalance = await web3.eth.getBalance(account);
+  //       let value = web3.utils.fromWei(ethBalance, 'ether');
+  //       setEthBalance(value);
+  //       setIsConnected(true);
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   const onDisconnected = () => {
     setIsConnected(false);
@@ -197,9 +184,13 @@ export default function PersistentDrawerLeft() {
 
   const logout = () => {
     window.localStorage.clear();
-    onDisconnected();
     window.location.href = "/";
   };
+
+  const profile = () => {
+    window.location.href = "/profile";
+  };
+
 
   return (
     <Box sx={{ display: "flex" }} >
@@ -256,8 +247,8 @@ export default function PersistentDrawerLeft() {
             horizontal: "right",
           }}
         >
-          <MenuItem>Profile</MenuItem>
-          <MenuItem>My account</MenuItem>
+          <MenuItem onClick={profile}>Profile</MenuItem>
+          {/* <MenuItem>My account</MenuItem> */}
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
       </AppBar>

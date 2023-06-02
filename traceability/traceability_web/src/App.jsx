@@ -42,7 +42,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/enhome" element={<EnHome />} />
             <Route path="/list" element={<List />} />
-            <Route path="/userinfo" element={<UserInfo />} />
+            <Route path="/profile" element={<UserInfo />} />
 
             <Route path="/product/:id" element={<Product />} />
             <Route path="/createqr" element={<CreateQR />} />

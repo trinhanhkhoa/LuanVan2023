@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Alert,
   Card,
+  InputAdornment,
   InputLabel,
   Radio,
   RadioGroup,
@@ -142,6 +143,7 @@ export default function SignUp() {
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
                       sx={{ ml: 2 }}
+                      defaultValue={"Farmer"}
                     >
                       <FormControlLabel
                         value="Farmer"
@@ -165,7 +167,9 @@ export default function SignUp() {
                           // error={errors.secretKey}
                           // helperText={errors.secretKey}
                           fullWidth
-                          label="Secret Key"
+                          InputProps={{
+                            startAdornment: <InputAdornment position="start">Secret key</InputAdornment>,
+                          }}
                           onChange={(e) => setSecretKey(e.target.value)}
                           autoComplete="off"
                         />
@@ -176,7 +180,9 @@ export default function SignUp() {
                         required
                         fullWidth
                         name="name"
-                        label="Full Name"
+                        InputProps={{
+                          startAdornment: <InputAdornment position="start">Full name</InputAdornment>,
+                        }}
                         value={name}
                         // error={errors.name}
                         // helperText={errors.name}
@@ -189,7 +195,9 @@ export default function SignUp() {
                         required
                         // error={isError}
                         fullWidth
-                        label="Email Address"
+                        InputProps={{
+                          startAdornment: <InputAdornment position="start">Email</InputAdornment>,
+                        }}
                         name="email"
                         value={email}
                         // error={errors.email}
@@ -203,7 +211,9 @@ export default function SignUp() {
                         required
                         // error={isError}
                         fullWidth
-                        label="Password"
+                        InputProps={{
+                          startAdornment: <InputAdornment position="start">Password</InputAdornment>,
+                        }}
                         type={isShown ? "text" : "password"}
                         name="password"
                         value={password}

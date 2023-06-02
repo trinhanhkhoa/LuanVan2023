@@ -29,6 +29,7 @@ import Loading from "../../../components/Loading";
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
+  { id: "pid", label: "Product ID" },
   { id: "uid", label: "User ID" },
   { id: "address", label: "Address" },
   { id: "status", label: "Status" },
@@ -271,6 +272,9 @@ export default function EnHome() {
               <StyledTableRow key={index + 1}>
                 <StyleTableCell>{index + 1}</StyleTableCell>
                 <StyleTableCell>{item.name}</StyleTableCell>
+                <StyleTableCell>
+                  {item.pid}
+                </StyleTableCell>
                 <StyleTableCell>
                   {item.uid}
                 </StyleTableCell>

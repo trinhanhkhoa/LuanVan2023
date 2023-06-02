@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Card, InputLabel, Snackbar } from "@mui/material";
+import { Card, InputAdornment, InputLabel, Snackbar } from "@mui/material";
 import Register from "./Register";
 import login_background from "../asserts/login_bg.jpg";
 import Loading from "./Loading";
@@ -151,23 +151,25 @@ export default function SignIn() {
               <Box
                 component="form"
                 onSubmit={handleSubmit}
-                noValidate
                 sx={{ mt: 1 }}
               >
                 <TextField
                   margin="normal"
                   required
                   fullWidth
-                  label="Email Address"
                   value={email}
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">Email</InputAdornment>,
+                  }}
                   onChange={(e) => setEmail(e.target.value)}
-                  autoFocus
                 />
                 <TextField
                   margin="normal"
                   required
                   fullWidth
-                  label="Password"
+                  InputProps={{
+                    startAdornment: <InputAdornment position="start">Password</InputAdornment>,
+                  }}
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
