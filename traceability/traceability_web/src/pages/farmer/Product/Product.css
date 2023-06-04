@@ -9,7 +9,7 @@
 }
 
 .main-slide {
-  width: 80%;
+  width: 60%;
 }
 
 .main-slide .carousel {
@@ -17,8 +17,8 @@
 }
 
 .main-slide .carousel .slider-wrapper {
-  width: 100%;
-  height: 400px;
+  width: 60%;
+  height: 500px;
 }
 
 .main-slide .carousel .thumb {
