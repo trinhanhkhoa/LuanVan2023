@@ -5,7 +5,7 @@ import * as TbIcons from "react-icons/tb";
 // import Popup from "../../../components/Popup/Popup";
 import { Link, useParams } from "react-router-dom";
 import Data from "../../../Data.json";
-import { Carousel } from "react-responsive-carousel";
+// import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Box,
@@ -30,6 +30,8 @@ import Loading from "../../../components/Loading";
 import * as GiIcons from "react-icons/gi";
 import * as HiIcons from "react-icons/hi";
 import * as GrIcons from "react-icons/gr";
+import { Carousel } from "react-carousel-minimal";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 const ProductDetailWrapper = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -55,6 +57,25 @@ export const ProductDetail = styled(Box)(({ theme }) => ({
   },
 }));
 
+const test = [
+  {
+    image:
+      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
+  },
+  {
+    image:
+      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
+  },
+];
+
 export const ProductImage = styled("img")(({ src, theme }) => ({
   src: `url(${src})`,
   width: "100%",
@@ -75,6 +96,7 @@ function Product() {
 
   const params = useParams();
   const [user, setUser] = useState([]);
+  const tokenData = window.localStorage.getItem("token");
 
   const [name, setName] = useState("");
   const [time, setTime] = useState("");
@@ -86,7 +108,7 @@ function Product() {
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const tokenData = window.localStorage.getItem("token");
+  const [img, setImg] = useState([]);
 
   const deleteProduct = (id) => {
     fetch(`https://backend.teamluanvan.software/product/${id}`, {
@@ -102,8 +124,20 @@ function Product() {
   const [openPopup, setOpenPopup] = useState(false);
   const [openPopupTracking, setOpenPopupTracking] = useState(false);
 
-  useEffect(() => {
+  const prepareImages = async (images) => {
+    if (images) {
+      const mappingImages = await Promise.all([
+        images.map((i) => {
+          return { image: i };
+        }),
+      ]);
 
+      return mappingImages;
+    }
+    return null;
+  };
+
+  useEffect(() => {
     const getUser = async () => {
       await fetch(`https://backend.teamluanvan.software/getAnAuth`, {
         method: "GET",
@@ -113,7 +147,6 @@ function Product() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data.data.name, "USER NAME");
           setUser(data.data);
         });
     };
@@ -123,33 +156,53 @@ function Product() {
     const getInfoProduct = async () => {
       setLoading(true);
 
-      await fetch(`https://backend.teamluanvan.software/product/get-product/${params.id}`, {
-        method: "GET",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      })
+      const data = await fetch(
+        `https://backend.teamluanvan.software/product/get-product/${params.id}`,
+        {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        }
+      )
         .then((res) => res.json())
-        .then((data) => {
-          setName(data.data.name);
-          setAddress(data.data.address);
-          setDescription(data.data.description);
-          setTime(data.data.time);
-          setImages(data.data.images);
-          setTracking(data.data.tracking);
-          setUrl(data.data.url);
-          // if(data.dataBC[6] == 0)
-          //   setStatus("CREATED");
-          // else if(data.dataBD[6] === "")
-          console.log(data);
-        });
+        //   // if(data.dataBC[6] == 0)
+        //   //   setStatus("CREATED");
+        //   // else if(data.dataBD[6] === "")
+        //   // console.log(data.data.images);
+        //   // console.log(test);
+        .then((res) => res.data);
+      
+      setName(data.name);
+      setAddress(data.address);
+      setDescription(data.description);
+      setTime(data.time);
+      setTracking(data.tracking);
+      setUrl(data.url);
+      setImages(data.images);
+
       setLoading(false);
+
+      // mapping
+      const mappingImages = await prepareImages(data.images);
+
+      if (mappingImages) setImg([...mappingImages[0]]);
     };
+
     getInfoProduct();
   }, []);
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const captionStyle = {
+    fontSize: "2em",
+    fontWeight: "bold",
+  };
+  const slideNumberStyle = {
+    fontSize: "20px",
+    fontWeight: "bold",
   };
 
   return (
@@ -160,7 +213,7 @@ function Product() {
         justifyContent: "center",
         // flexDirection: 'row',
         alignItems: "center",
-        minHeight: 800,
+        minHeight: 900,
       }}
     >
       <Loading loading={loading} />
@@ -170,12 +223,33 @@ function Product() {
           sx={{ display: "flex", flexDirection: "row" }}
         >
           <ProductDetail sx={{ mr: 4 }}>
-            <Carousel className="main-slide">
-              {images &&
-                images.map((item, index) => {
-                  return <img src={item} />;
-                })}
-            </Carousel>
+            {img && img.length > 0 && (
+              <Carousel
+                data={img}
+                time={2000}
+                width="1050px"
+                height="500px"
+                captionStyle={captionStyle}
+                radius="10px"
+                slideNumber={true}
+                slideNumberStyle={slideNumberStyle}
+                captionPosition="bottom"
+                automatic={true}
+                dots={true}
+                pauseIconColor="white"
+                pauseIconSize="40px"
+                slideBackgroundColor="darkgrey"
+                slideImageFit="cover"
+                thumbnails={true}
+                thumbnailWidth="100px"
+                style={{
+                  textAlign: "center",
+                  maxWidth: "1050px",
+                  maxHeight: "500px",
+                  margin: "40px auto",
+                }}
+              />
+            )}
           </ProductDetail>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box display={"flex"} flexDirection={"row"}>
@@ -196,7 +270,8 @@ function Product() {
                   <GiIcons.GiFruiting /> Name: {name}
                 </Typography>
                 <Typography variant="h5" sx={{ lineHeight: 2 }}>
-                  <GrIcons.GrStatusGood style={{ marginRight: 13 }}/> Product Status: CREATED
+                  <GrIcons.GrStatusGood style={{ marginRight: 13 }} /> Product
+                  Status: CREATED
                 </Typography>
                 <Typography sx={{ lineHeight: 2 }} variant="h5">
                   <HiIcons.HiLocationMarker style={{ marginRight: 13 }} />{" "}
@@ -221,11 +296,13 @@ function Product() {
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Box display={"flex"} flexDirection={"column"}>
               <Typography variant="text" sx={{}}>
-                <HiIcons.HiUser style={{marginRight: 10, fontSize: 25 }} />{" "}
+                <HiIcons.HiUser style={{ marginRight: 10, fontSize: 25 }} />{" "}
                 Farmer: {user.name}
               </Typography>
               <Typography variant="text" sx={{}}>
-                <HiIcons.HiOutlineMail style={{ marginRight: 10, fontSize: 25 }} />{" "}
+                <HiIcons.HiOutlineMail
+                  style={{ marginRight: 10, fontSize: 25 }}
+                />{" "}
                 Email: {user.email}
               </Typography>
             </Box>

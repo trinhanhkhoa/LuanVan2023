@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CreateQR.css";
 import { uploadImage } from "../../../components/MultiUpload";
 import {
+  Autocomplete,
   Box,
   Button,
   Container,
@@ -18,6 +19,16 @@ import { useForm, Form } from "../../../components/Try/useForm";
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+const topFruit = [
+  { label: "Táo" },
+  { label: "Quýt Hồng" },
+  { label: "Cam Sành" },
+  { label: "Quýt Đường" },
+  { label: "Bưởi Da Xanh" },
+  { label: "Xoài Cát" },
+  { label: "Sầu Riêng" },
+];
 
 function CreateQR() {
   const [images, setImages] = useState([]);
@@ -108,42 +119,59 @@ function CreateQR() {
           <Loading loading={loading} />
 
           <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-            >
-              <label>
-                Product's name <b>(*)</b>
-              </label>
-              <TextField
-                required
-                variant="outlined"
-                name="name"
-                placeholder="Product's name"
-                type="text"
-                value={name}
-                // error={errors.name}
-                // helperText={errors.name}
+            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: 2,
+                }}
+              >
+                <label>
+                  Product's name <b>(*)</b>
+                </label>
+                <Autocomplete
+                  disablePortal
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  id="combo-box-demo"
+                  options={topFruit}
+                  sx={{ width: 300 }}
+                  renderInput={(params) => (
+                    <TextField
+                      required
+                      variant="outlined"
+                      name="name"
+                      placeholder="Product's name"
+                      sx={{ minWidth: 500, borderRadius: "20%" }}
+                      {...params}
+                      // label="Movie"
+                    />
+                  )}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: 2,
+                }}
+              >
+                <label>
+                  Time <b>(*)</b>
+                </label>
+                <TextField
+                  required
+                  variant="outlined"
+                  type="date"
+                  name="time"
+                  value={time}
+                  onChange={(e) => setTime(e.target.value)}
+                  sx={{ minWidth: 400, borderRadius: "20%" }}
+                />
+              </Box>
+            </Box>
 
-                onChange={(e) => setName(e.target.value)}
-                sx={{ width: 1000, borderRadius: "20%" }}
-              />
-            </Box>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-            >
-              <label>
-                Time <b>(*)</b>
-              </label>
-              <TextField
-                required
-                variant="outlined"
-                type="date"
-                name="time"
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
-                sx={{ width: 1000, borderRadius: "20%" }}
-              />
-            </Box>
             <Box
               sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
             >
