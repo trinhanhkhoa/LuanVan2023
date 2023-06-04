@@ -187,7 +187,6 @@ function Product() {
                 }}
               >
                 <QRCode
-                  // value={`https://luan-van2023.vercel.app/product/${userId}`}
                   value={`${params.id}`}
                   size={200}
                 />
@@ -279,7 +278,6 @@ function Product() {
                   color="warning"
                   sx={{ borderRadius: "10px" }}
                   onClick={() => {
-                    // window.location.href = `/producttracking/${params.id}`;
                     setOpenPopupTracking(true);
                   }}
                 >
@@ -290,7 +288,7 @@ function Product() {
                   openPopup={openPopupTracking}
                   setOpenPopup={setOpenPopupTracking}
                 >
-                  <ProductTracking id={params.id} />
+                  <ProductTracking id={params.id} trackingLength={tracking.length} />
                 </Popup>
               </Box>
             </Box>

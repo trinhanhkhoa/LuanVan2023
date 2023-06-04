@@ -11,15 +11,15 @@ import "./ProductTracking.css";
 
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import Loading from "../../../components/Loading";
-import { InputAdornment, TextField, Toolbar } from "@mui/material";
+import { Button, InputAdornment, TextField, Toolbar } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 export default function ProductTracking(props) {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const {id} = props;
-  console.log(id);
+  const { id, trackingLength } = props;
+  console.log("id: ", id, " length: ", trackingLength);
 
   const params = useParams();
 
@@ -32,12 +32,15 @@ export default function ProductTracking(props) {
     const getTracking = async () => {
       setLoading(true);
 
-      await fetch(`https://backend.teamluanvan.software/tracking/get-tracking/${id}`, {
-        method: "GET",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      })
+      await fetch(
+        `https://backend.teamluanvan.software/tracking/get-tracking/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((res) => {
           console.log(res.data);
@@ -88,7 +91,7 @@ export default function ProductTracking(props) {
         alignItems: "left",
         justifyContent: "left",
         minWidth: 500,
-        minHeight: "80vh"
+        minHeight: "80vh",
       }}
     >
       <Loading loading={loading} />
@@ -107,6 +110,19 @@ export default function ProductTracking(props) {
               ),
             }}
           />
+          {trackingLength < 0 ? (
+            ""
+          ) : (
+            <Button
+              variant="contained"
+              color="warning"
+              sx={{ borderRadius: "5px", marginLeft: "10px", marginBottom: "20px", padding: "15px" }}
+              onClick={() => { }} // tắt nút update tracking
+            >
+              {" "}
+              Deliveried{" "}
+            </Button>
+          )}
         </Toolbar>
         <Stepper orientation="vertical">
           {filterSearching().length != 0 ? (
