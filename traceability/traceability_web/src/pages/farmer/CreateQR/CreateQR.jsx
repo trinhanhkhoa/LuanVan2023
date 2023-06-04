@@ -15,19 +15,21 @@ import {
 } from "@mui/material";
 import Loading from "../../../components/Loading";
 import { useForm, Form } from "../../../components/Try/useForm";
+import MuiAlert from "@mui/material/Alert";
+
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
 const topFruit = [
-  { label: "Táo" },
-  { label: "Quýt Hồng" },
-  { label: "Cam Sành" },
-  { label: "Quýt Đường" },
-  { label: "Bưởi Da Xanh" },
-  { label: "Xoài Cát" },
-  { label: "Sầu Riêng" },
+  "Táo",
+  "Quýt Hồng",
+  "Cam Sành",
+  "Quýt Đường",
+  "Bưởi Da Xanh",
+  "Xoài Cát",
+  "Sầu Riêng"
 ];
 
 function CreateQR() {
@@ -119,7 +121,13 @@ function CreateQR() {
           <Loading loading={loading} />
 
           <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
-            <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
               <Box
                 sx={{
                   display: "flex",
@@ -133,13 +141,18 @@ function CreateQR() {
                 <Autocomplete
                   disablePortal
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e, newValue) => {setName(newValue); console.log(newValue);}}
                   id="combo-box-demo"
                   options={topFruit}
                   sx={{ width: 300 }}
-                  renderInput={(params) => (
+                  renderInput={(params) => (  
                     <TextField
                       required
+                      value={name}
+                      onChange={(e, newValue) => {
+                        setName(newValue);
+                        console.log(name);
+                      }}
                       variant="outlined"
                       name="name"
                       placeholder="Product's name"
@@ -314,7 +327,7 @@ function CreateQR() {
         </Box>
         <Snackbar open={snackbarState} autoHideDuration={1000}>
           <Alert severity="success" sx={{ width: "100%" }}>
-            Product is deleted
+            Create product successfull !
           </Alert>
         </Snackbar>
       </Form>

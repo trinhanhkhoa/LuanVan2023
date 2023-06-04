@@ -172,7 +172,7 @@ function Product() {
         //   // console.log(data.data.images);
         //   // console.log(test);
         .then((res) => res.data);
-      
+      console.log(data);
       setName(data.name);
       setAddress(data.address);
       setDescription(data.description);
@@ -227,27 +227,20 @@ function Product() {
               <Carousel
                 data={img}
                 time={2000}
-                width="1050px"
-                height="500px"
+                width="850px"
+                height="600px"
                 captionStyle={captionStyle}
                 radius="10px"
                 slideNumber={true}
                 slideNumberStyle={slideNumberStyle}
-                captionPosition="bottom"
                 automatic={true}
                 dots={true}
                 pauseIconColor="white"
                 pauseIconSize="40px"
                 slideBackgroundColor="darkgrey"
                 slideImageFit="cover"
-                thumbnails={true}
-                thumbnailWidth="100px"
-                style={{
-                  textAlign: "center",
-                  maxWidth: "1050px",
-                  maxHeight: "500px",
-                  margin: "40px auto",
-                }}
+                // thumbnails={true}
+                // thumbnailWidth="100px"
               />
             )}
           </ProductDetail>
@@ -308,7 +301,7 @@ function Product() {
             </Box>
 
             <Divider sx={{ mt: 2, mb: 2 }} />
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
+            <Box sx={{ display: "flex", flexDirection: "column", maxWidth: 600 }}>
               <Typography
                 variant="body"
                 sx={{ lineHeight: 2, whiteSpace: "pre-line" }}

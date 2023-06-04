@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import {
   Alert,
   Card,
+  IconButton,
   InputAdornment,
   InputLabel,
   Radio,
@@ -23,6 +24,11 @@ import {
 } from "@mui/material";
 import login_background from "../asserts/login_bg.jpg";
 import { useForm, Form } from "./Try/useForm";
+import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
+import MailRoundedIcon from '@mui/icons-material/MailRounded';
 
 function Copyright(props) {
   return (
@@ -50,12 +56,21 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
   const [secretKey, setSecretKey] = useState("");
-  const [isShown, setIsShown] = useState(false);
 
   const tokenData = window.localStorage.getItem("token");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showKey, setShowKey] = useState(false);
 
-  const togglePassword = () => {
-    setIsShown((isShown) => !isShown);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handleClickShowKey = () => setShowKey((show) => !show);
+
+  const handleMouseDownKey = (event) => {
+    event.preventDefault();
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
   const [open, setOpen] = useState(false);
 
@@ -164,11 +179,32 @@ export default function SignUp() {
                           required
                           name="secretKey"
                           value={secretKey}
+                          type={showKey ? "text" : "password"}
+
                           // error={errors.secretKey}
                           // helperText={errors.secretKey}
                           fullWidth
                           InputProps={{
-                            startAdornment: <InputAdornment position="start">Secret key</InputAdornment>,
+                            startAdornment: (
+                              <InputAdornment position="start">
+                                <KeyRoundedIcon />
+                              </InputAdornment>
+                            ),
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={handleClickShowKey}
+                                  onMouseDown={handleMouseDownKey}
+                                >
+                                  {showKey ? (
+                                    <VisibilityOff />
+                                  ) : (
+                                    <Visibility />
+                                  )}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
                           }}
                           onChange={(e) => setSecretKey(e.target.value)}
                           autoComplete="off"
@@ -181,7 +217,11 @@ export default function SignUp() {
                         fullWidth
                         name="name"
                         InputProps={{
-                          startAdornment: <InputAdornment position="start">Full name</InputAdornment>,
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <PermIdentityRoundedIcon/>
+                            </InputAdornment>
+                          ),
                         }}
                         value={name}
                         // error={errors.name}
@@ -196,7 +236,11 @@ export default function SignUp() {
                         // error={isError}
                         fullWidth
                         InputProps={{
-                          startAdornment: <InputAdornment position="start">Email</InputAdornment>,
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <MailRoundedIcon/>
+                            </InputAdornment>
+                          ),
                         }}
                         name="email"
                         value={email}
@@ -209,33 +253,35 @@ export default function SignUp() {
                     <Grid item xs={12}>
                       <TextField
                         required
-                        // error={isError}
                         fullWidth
-                        InputProps={{
-                          startAdornment: <InputAdornment position="start">Password</InputAdornment>,
-                        }}
-                        type={isShown ? "text" : "password"}
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         value={password}
                         // error={errors.password}
                         // helperText={errors.password}
                         onChange={(e) => setPassword(e.target.value)}
-                        // autoComplete="new-password"
-                        autoComplete="off"
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={isShown}
-                            onChange={togglePassword}
-                            color="primary"
-                          />
-                        }
-                        label={
-                          <InputLabel style={{ color: "#000" }}>
-                            Show password
-                          </InputLabel>
-                        }
+                        InputProps={{
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <KeyRoundedIcon />
+                            </InputAdornment>
+                          ),
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                              >
+                                {showPassword ? (
+                                  <VisibilityOff />
+                                ) : (
+                                  <Visibility />
+                                )}
+                              </IconButton>
+                            </InputAdornment>
+                          ),
+                        }}
                       />
                     </Grid>
                     {/* <Grid item xs={12}>

@@ -12,11 +12,23 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { Card, InputAdornment, InputLabel, Snackbar } from "@mui/material";
+import {
+  Card,
+  FormControl,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+  Snackbar,
+} from "@mui/material";
 import Register from "./Register";
 import login_background from "../asserts/login_bg.jpg";
 import Loading from "./Loading";
 import MuiAlert from "@mui/material/Alert";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -49,6 +61,13 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -84,7 +103,12 @@ export default function SignIn() {
           setTimeout(() => {
             window.location.href = "/enhome";
           }, 1500);
-        } else if (data.userType == "User" || data.userType == "user" || data.userType == "Farmer" || data.userType == "farmer") {
+        } else if (
+          data.userType == "User" ||
+          data.userType == "user" ||
+          data.userType == "Farmer" ||
+          data.userType == "farmer"
+        ) {
           window.localStorage.setItem("user", JSON.stringify(data));
           window.localStorage.setItem("userId", data._id);
           window.localStorage.setItem("token", data.token);
@@ -148,18 +172,31 @@ export default function SignIn() {
               >
                 Please enter your account
               </Typography>
-              <Box
-                component="form"
-                onSubmit={handleSubmit}
-                sx={{ mt: 1 }}
-              >
+              <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+                {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}>
+                  <AlternateEmailRoundedIcon
+                    sx={{ color: "action.active", mr: 1, my: 0.5 }}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    variant="standard"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Box> */}
                 <TextField
                   margin="normal"
                   required
                   fullWidth
                   value={email}
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">Email</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
                   }}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -167,21 +204,38 @@ export default function SignIn() {
                   margin="normal"
                   required
                   fullWidth
-                  InputProps={{
-                    startAdornment: <InputAdornment position="start">Password</InputAdornment>,
-                  }}
-                  type="password"
+                  // type="password"
                   value={password}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <KeyRoundedIcon />
+                      </InputAdornment>
+                    ),
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  type={showPassword ? "text" : "password"}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                <FormControlLabel
+
+                {/* <FormControlLabel
                   control={<Checkbox value="remember" color="primary" />}
                   label={
                     <InputLabel style={{ color: "#000" }}>
                       Remember me
                     </InputLabel>
                   }
-                />
+                /> */}
                 <Button
                   type="button"
                   fullWidth

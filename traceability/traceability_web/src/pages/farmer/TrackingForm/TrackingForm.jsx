@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { uploadImage } from "../../../components/MultiUpload";
 import {
+  Autocomplete,
   Box,
   Button,
   Container,
@@ -19,6 +20,15 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
+const optionsTracking = [
+  "Gieo giống cây",
+  "Tưới cây",
+  "Bón phân",
+  "Đậy trái",
+  "Ra hoa",
+  "Chuyển khâu thu mua",
+];
+
 function TrackingForm() {
   const [images, setImages] = useState([]);
   const [links, setLinks] = useState([]);
@@ -36,7 +46,6 @@ function TrackingForm() {
   const tokenData = window.localStorage.getItem("token");
   const user = window.localStorage.getItem("userId");
   const userId = window.localStorage.getItem("userId");
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -73,7 +82,7 @@ function TrackingForm() {
         setSnackbarState(true);
 
         setTimeout(() => {
-          window.location.href = "/list";
+          window.location.href = `/product/${params.id}`;
         }, 1500);
       });
     setLoading(false);
@@ -119,15 +128,32 @@ function TrackingForm() {
             <label>
               Tracking progress <b>(*)</b>
             </label>
-            <TextField
-              variant="outlined"
-              placeholder="Tracking progress"
-              type="text"
+            <Autocomplete
+              disablePortal
               value={name}
-                // error={errors.name}
-                // helperText={errors.name}
-              onChange={(e) => setName(e.target.value)}
-              sx={{ width: 500, borderRadius: "20%" }}
+              onChange={(e, newValue) => {
+                setName(newValue);
+                console.log(newValue);
+              }}
+              id="combo-box-demo"
+              options={optionsTracking}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField
+                  required
+                  value={name}
+                  onChange={(e, newValue) => {
+                    setName(newValue);
+                    console.log(name);
+                  }}
+                  variant="outlined"
+                  name="name"
+                  placeholder="Product's name"
+                  sx={{ minWidth: 600, borderRadius: "20%" }}
+                  {...params}
+                  // label="Movie"
+                />
+              )}
             />
           </Box>
           <Box
@@ -141,7 +167,7 @@ function TrackingForm() {
               type="date"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              sx={{ width: 500, borderRadius: "20%" }}
+              sx={{ minWidth: 600, borderRadius: "20%" }}
             />
           </Box>
           <Box
@@ -156,7 +182,7 @@ function TrackingForm() {
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              sx={{ width: 500, borderRadius: "20%" }}
+              sx={{ minWidth: 500, borderRadius: "20%" }}
             />
           </Box>
           <Box

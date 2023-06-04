@@ -151,7 +151,7 @@ export default function ProductTracking(props) {
                           return <img src={image} height={200} />;
                         })}
                     </Box>
-                    <Typography>
+                    <Typography sx={{maxWidth: 500}}>
                       {" "}
                       Description:{" "}
                       <ReactReadMoreReadLess
