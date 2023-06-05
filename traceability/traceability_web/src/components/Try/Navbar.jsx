@@ -156,28 +156,6 @@ export default function PersistentDrawerLeft() {
     getUser();
   }, []);
 
-
-  // const [isConnected, setIsConnected] = useState(true);
-  // const [ethBalance, setEthBalance] = useState("");
-
-  // const onConnect = async () => {
-  //   try {
-  //     const currentProvider = detectCurrentProvider();
-  //     if(currentProvider) {
-  //       await currentProvider.request({method: 'eth_requestAccounts'})
-  //       const web3 = new Web3(currentProvider);
-  //       const userAccount = await web3.eth.getAccounts();
-  //       const account = userAccount[0];
-  //       let ethBalance = await web3.eth.getBalance(account);
-  //       let value = web3.utils.fromWei(ethBalance, 'ether');
-  //       setEthBalance(value);
-  //       setIsConnected(true);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
   const onDisconnected = () => {
     setIsConnected(false);
   }

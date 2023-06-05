@@ -1,8 +1,6 @@
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 import React, { useState } from "react";
 import "./App.css";
-import SignIn from "./authen/SignIn/SignIn";
-import SignUp from "./authen/SignUp/SignUp";
 import Home from "./pages/farmer/Home/Home";
 import List from "./pages/farmer/List/List";
 import Process from "./pages/farmer/Process/Process";
@@ -23,12 +21,13 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ProductTracking from "./pages/farmer/ProductTracking/ProductTracking";
 import TrackingForm from "./pages/farmer/TrackingForm/TrackingForm";
+import CreateForm from "./components/Try/CreateForm";
 
 function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
 
   return (
-    // <CreateQR />
+    // <CreateForm />
 
     <div className="App">
       <BrowserRouter>

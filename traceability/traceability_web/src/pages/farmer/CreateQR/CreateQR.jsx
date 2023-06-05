@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./CreateQR.css";
 import { uploadImage } from "../../../components/MultiUpload";
 import {
-  Autocomplete,
   Box,
   Button,
   Container,
@@ -16,21 +15,9 @@ import {
 import Loading from "../../../components/Loading";
 import { useForm, Form } from "../../../components/Try/useForm";
 import MuiAlert from "@mui/material/Alert";
-
-
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
-
-const topFruit = [
-  "Táo",
-  "Quýt Hồng",
-  "Cam Sành",
-  "Quýt Đường",
-  "Bưởi Da Xanh",
-  "Xoài Cát",
-  "Sầu Riêng"
-];
 
 function CreateQR() {
   const [images, setImages] = useState([]);
@@ -46,6 +33,9 @@ function CreateQR() {
 
   const tokenData = window.localStorage.getItem("token");
   const userId = window.localStorage.getItem("userId");
+
+  const [value, setValue] = useState(null);
+  const [open, toggleOpen] = useState(false);
 
   const upload = async (e) => {
     setLoading(true);
@@ -65,6 +55,26 @@ function CreateQR() {
       console.log(error);
     }
     setLoading(false);
+  };
+
+  const handleClose = () => {
+    setDialogValue({
+      name: "",
+    });
+    toggleOpen(false);
+  };
+
+  const [dialogValue, setDialogValue] = useState({
+    name: "",
+  });
+
+  const handleSubmitDialog = (event) => {
+    event.preventDefault();
+    setValue({
+      title: dialogValue.title,
+      year: parseInt(dialogValue.year, 10),
+    });
+    handleClose();
   };
 
   const handleSubmit = async (e) => {
@@ -98,7 +108,7 @@ function CreateQR() {
         setSnackbarState(true);
 
         setTimeout(() => {
-          window.location.href = "/list";
+          // window.location.href = "/list";
         }, 1500);
       });
   };
@@ -138,29 +148,17 @@ function CreateQR() {
                 <label>
                   Product's name <b>(*)</b>
                 </label>
-                <Autocomplete
-                  disablePortal
+                <TextField
+                  required
                   value={name}
-                  onChange={(e, newValue) => {setName(newValue); console.log(newValue);}}
-                  id="combo-box-demo"
-                  options={topFruit}
-                  sx={{ width: 300 }}
-                  renderInput={(params) => (  
-                    <TextField
-                      required
-                      value={name}
-                      onChange={(e, newValue) => {
-                        setName(newValue);
-                        console.log(name);
-                      }}
-                      variant="outlined"
-                      name="name"
-                      placeholder="Product's name"
-                      sx={{ minWidth: 500, borderRadius: "20%" }}
-                      {...params}
-                      // label="Movie"
-                    />
-                  )}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    console.log(name);
+                  }}
+                  variant="outlined"
+                  name="name"
+                  placeholder="Product's name"
+                  sx={{ minWidth: 500, borderRadius: "20%" }}
                 />
               </Box>
               <Box
@@ -247,7 +245,7 @@ function CreateQR() {
                   Upload
                 </Button>
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
@@ -285,7 +283,7 @@ function CreateQR() {
                 >
                   Upload
                 </Button>
-              </Box>
+              </Box> */}
             </Box>
 
             <Box
