@@ -17,7 +17,7 @@ const Sidebar = () => {
   const userType = window.localStorage.getItem("userType");
 
   return (
-    <Box flex={1} p={2} sx={{ display: { xs: "none", sm: "block" } }}>
+    <Box flex={1} p={2} sx={{ display: { xs: "block", sm: "block" } }}>
       <Box>
         <List>
           <ListItem disablePadding>

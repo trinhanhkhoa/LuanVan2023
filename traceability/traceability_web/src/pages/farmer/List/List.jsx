@@ -107,12 +107,15 @@ function List() {
     const getTracking = async () => {
       setLoading(true);
 
-      await fetch(`https://backend.teamluanvan.software/tracking/get-tracking/${id}`, {
-        method: "GET",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      })
+      await fetch(
+        `https://backend.teamluanvan.software/tracking/get-tracking/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        }
+      )
         .then((res) => res.json())
         .then((res) => {
           console.log(res.data);
@@ -211,11 +214,18 @@ function List() {
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3">LIST OF PRODUCTS</Typography>
+        <Typography variant="h3" sx={{ fontSize: { xs: "18px" } }}>
+          LIST OF PRODUCTS
+        </Typography>
         <Button
           variant="contained"
           color="success"
-          sx={{ borderRadius: "10px" }}
+          sx={{
+            borderRadius: "10px",
+            width: { xs: "120px" },
+            height: { xs: "30px" },
+            fontSize: { xs: "12px" },
+          }}
           onClick={() => {
             window.location.href = "/createqr";
           }}
@@ -228,10 +238,12 @@ function List() {
           <TextField
             variant="outlined"
             label="Search product"
-            // name={name}
-            // value={value}
             onChange={handleSearch}
-            sx={{ width: "20%", marginBottom: "20px", marginLeft: "0" }}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

@@ -6,17 +6,24 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import hcmuslogo from "../../asserts/hcmus-logo.png";
 import logo from "../../asserts/logo.png";
+import { Grid, ImageList } from "@mui/material";
 
 function Copyright() {
   return (
-    <Box
-      
-    >
+    <Box>
       <Container>
-        <Typography variant="body1" color="white">
+        <Typography
+          sx={{ fontSize: { xs: "12px", md: "14px" } }}
+          variant="body1"
+          color="white"
+        >
           Traceability agriculture
         </Typography>
-        <Typography variant="body2" color="white">
+        <Typography
+          sx={{ fontSize: { xs: "12px", md: "14px" } }}
+          variant="body2"
+          color="white"
+        >
           {"Copyright © "}
           <Link color="inherit" href="https://mui.com/">
             Traceability agriculture
@@ -33,7 +40,7 @@ export default function StickyFooter() {
   const userType = window.localStorage.getItem("userType");
 
   return (
-    <Box>
+    <Box className="footer">
       <CssBaseline />
       <Box
         component="footer"
@@ -51,13 +58,18 @@ export default function StickyFooter() {
               }
         }
       >
-        <Container sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-          <Box sx={{ display: "flex", flexDirection: "row" }}>
-            <img src={logo} alt="" width={100} height={100} />
-            <img src={hcmuslogo} alt="" width={200} height={100} />
-          </Box>
+        <Grid
+          container
+          direction="row"
+          justifyContent="center"
+          alignItems="center"
+        >
+          <Grid>
+            <img src={logo} width={100} height={100} />
+            <img src={hcmuslogo} width={200} height={100} />
+          </Grid>
           <Copyright />
-        </Container>
+        </Grid>
       </Box>
     </Box>
   );

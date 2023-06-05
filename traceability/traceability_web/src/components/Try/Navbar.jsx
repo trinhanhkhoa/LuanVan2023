@@ -19,7 +19,7 @@ import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import avatarImg from "../../asserts/logo.png";
 import { Outlet } from "react-router-dom";
 
-const drawerWidth = 270;
+const drawerWidth = 200;
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   ({ theme, open }) => ({

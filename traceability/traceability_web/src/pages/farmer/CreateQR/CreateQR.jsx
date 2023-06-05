@@ -130,11 +130,11 @@ function CreateQR() {
         >
           <Loading loading={loading} />
 
-          <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", marginLeft: {xs: 0, md: 5} }}>
             <Box
               sx={{
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: { xs: "column", md: "row" },
                 justifyContent: "space-between",
               }}
             >
@@ -158,7 +158,7 @@ function CreateQR() {
                   variant="outlined"
                   name="name"
                   placeholder="Product's name"
-                  sx={{ minWidth: 500, borderRadius: "20%" }}
+                  sx={{ width: { xs: 400, md: 600 }, borderRadius: "20%" }}
                 />
               </Box>
               <Box
@@ -166,6 +166,7 @@ function CreateQR() {
                   display: "flex",
                   flexDirection: "column",
                   marginBottom: 2,
+                  marginLeft: { md:2}
                 }}
               >
                 <label>
@@ -178,7 +179,7 @@ function CreateQR() {
                   name="time"
                   value={time}
                   onChange={(e) => setTime(e.target.value)}
-                  sx={{ minWidth: 400, borderRadius: "20%" }}
+                  sx={{ width: { xs: 400, md: 400 }, borderRadius: "20%" }}
                 />
               </Box>
             </Box>
@@ -199,7 +200,7 @@ function CreateQR() {
                 onChange={(e) => setAddress(e.target.value)}
                 // error={errors.address}
                 // helperText={errors.address}
-                sx={{ width: 1000, borderRadius: "20%" }}
+                sx={{ width: { xs: 400, md: "100%" }, borderRadius: "20%" }}
               />
             </Box>
 
@@ -299,9 +300,6 @@ function CreateQR() {
                 multiline
                 name="description"
                 value={description}
-                // error={errors.description}
-                // helperText={errors.description}
-
                 onChange={(e) => setDescription(e.target.value)}
                 style={{ width: "100%", minHeight: "100px" }}
               />
@@ -309,10 +307,12 @@ function CreateQR() {
           </Box>
         </Box>
         <Box
-          m={1} //margin
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="flex-end"
+          m={2} //margin
+          sx={{
+            display: "flex",
+            justifyContent: { xs: "flex-start", md: "flex-end" },
+            alignItems:  { xs: "flex-start", md: "flex-end" },
+          }}
         >
           <Button
             type="submit"
