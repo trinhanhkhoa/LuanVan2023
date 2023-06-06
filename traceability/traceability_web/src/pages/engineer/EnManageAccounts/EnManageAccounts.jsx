@@ -91,7 +91,6 @@ function EnManageAccounts() {
         console.log(data.data, "userRegister");
         setData(data.data);
         setLoading(false);
-
       });
   };
   useEffect(() => {
@@ -178,17 +177,21 @@ function EnManageAccounts() {
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3">LIST OF USERS</Typography>
+        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
+          LIST OF USERS
+        </Typography>
       </Box>
       <Box>
         <Toolbar>
           <TextField
             variant="outlined"
             label="Search user"
-            // name={name}
-            // value={value}
             onChange={handleSearch}
-            sx={{ width: "20%", marginBottom: "20px", marginLeft: "0" }}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -202,6 +205,11 @@ function EnManageAccounts() {
           <TableHead>
             {headCell.map((item) => (
               <StyledTableCell
+                sx={
+                  item.label == "Role"
+                    ? { display: { xs: "none", md: "table-cell" } }
+                    : null
+                }
                 key={item.id}
                 sortDirection={orderBy === item.id ? order : false}
               >
@@ -220,28 +228,34 @@ function EnManageAccounts() {
             ))}
           </TableHead>
           <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) => (
-              item.userType === 'User' || item.userType === 'user' || item.userType === 'Farmer' ? 
-              <StyledTableRow key={index + 1}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{item.name}</StyledTableCell>
-                <StyledTableCell>{item.userType}</StyledTableCell>
-                <StyledTableCell>{item.email}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      color="info"
-                      onClick={() => {
-                        window.location.href = `/enuseraccount/${item._id}`;
-                      }}
-                    >
-                      Detail
-                    </Button>
-                  </ButtonGroup>
-                </StyledTableCell>
-              </StyledTableRow>
-              : null
-            ))}
+            {recordsAfterPagingAndSorting().map((item, index) =>
+              item.userType === "User" ||
+              item.userType === "user" ||
+              item.userType === "Farmer" ? (
+                <StyledTableRow key={index + 1}>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>{item.name}</StyledTableCell>
+                  <StyledTableCell
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    {item.userType}
+                  </StyledTableCell>
+                  <StyledTableCell>{item.email}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <ButtonGroup variant="contained">
+                      <Button
+                        color="info"
+                        onClick={() => {
+                          window.location.href = `/enuseraccount/${item._id}`;
+                        }}
+                      >
+                        Detail
+                      </Button>
+                    </ButtonGroup>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ) : null
+            )}
           </TableBody>
         </Table>
         <TablePagination

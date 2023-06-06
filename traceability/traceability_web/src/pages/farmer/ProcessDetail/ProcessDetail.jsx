@@ -134,7 +134,6 @@ function ProcessDetail() {
       maxWidth={false}
       sx={{
         display: "flex",
-        // flexDirection: {md: "column"},
         justifyContent: "center",
         alignItems: "center",
         minHeight: 800,

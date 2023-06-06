@@ -20,8 +20,6 @@ import QRCode from "react-qr-code";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import Popup from "../../../components/Popup";
 import TrackingForm from "../TrackingForm/TrackingForm";
-import { useTheme } from "@mui/material/styles";
-import { useMediaQuery } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ProductTracking from "../ProductTracking/ProductTracking";
 import Loading from "../../../components/Loading";
@@ -29,7 +27,6 @@ import * as GiIcons from "react-icons/gi";
 import * as HiIcons from "react-icons/hi";
 import * as GrIcons from "react-icons/gr";
 import { Carousel } from "react-carousel-minimal";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
 
 const ProductDetailWrapper = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -210,7 +207,6 @@ function Product() {
       sx={{
         display: "flex",
         justifyContent: "center",
-        // flexDirection: 'row',
         alignItems: "center",
         minHeight: 720,
       }}
@@ -238,8 +234,6 @@ function Product() {
                 pauseIconSize="40px"
                 slideBackgroundColor="darkgrey"
                 slideImageFit="cover"
-                // thumbnails={true}
-                // thumbnailWidth="100px"
               />
             )}
           </ProductDetail>

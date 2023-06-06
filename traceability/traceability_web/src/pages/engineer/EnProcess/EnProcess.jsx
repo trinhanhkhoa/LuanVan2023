@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import { Carousel } from "react-responsive-carousel";
+import { Carousel } from "react-carousel-minimal";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 
@@ -26,7 +26,6 @@ export const ProductDetail = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   alignItems: "left",
   flexDirection: "column",
-  width: 1000,
   [theme.breakpoints.up("md")]: {
     position: "relative",
   },
@@ -59,9 +58,21 @@ function EnProcess() {
   const [images, setImages] = useState([]);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [img, setImg] = useState([]);
 
   const tokenData = window.localStorage.getItem("token");
+  const prepareImages = async (images) => {
+    if (images) {
+      const mappingImages = await Promise.all([
+        images.map((i) => {
+          return { image: i };
+        }),
+      ]);
 
+      return mappingImages;
+    }
+    return null;
+  };
   const tokenIsValid = () => {
     fetch("https://backend.teamluanvan.software/tokenIsValid", {
       method: "POST",
@@ -78,21 +89,30 @@ function EnProcess() {
       });
   };
 
-  const getInfoProcess = () => {
-    fetch(`https://backend.teamluanvan.software/process/get-process/${params.id}`, {
-      method: "GET",
-      headers: {
-        "x-auth-token": tokenData,
-      },
-    })
+  const getInfoProcess = async () => {
+    const data = await fetch(
+      `https://backend.teamluanvan.software/process/get-process/${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      }
+    )
       .then((res) => res.json())
-      .then((data) => {
-        setName(data.data.name);
-        setAddress(data.data.address);
-        setDescription(data.data.description);
-        setImages(data.data.images);
-        console.log(data.data);
-      });
+      .then((res) => res.data);
+    console.log(data);
+    setName(data.name);
+    setAddress(data.address);
+    setDescription(data.description);
+    setTime(data.time);
+    setImages(data.images);
+
+    console.log(data.data);
+
+    const mappingImages = await prepareImages(data.images);
+
+    if (mappingImages) setImg([...mappingImages[0]]);
   };
 
   const deleteProcess = (id) => {
@@ -111,44 +131,94 @@ function EnProcess() {
     getInfoProcess();
   }, []);
 
+  const captionStyle = {
+    fontSize: "2em",
+    fontWeight: "bold",
+  };
+  const slideNumberStyle = {
+    fontSize: "20px",
+    fontWeight: "bold",
+  };
+
   return (
     <Container
       maxWidth={false}
       sx={{
         display: "flex",
-        flexDirection: "column",
+        // flexDirection: {md: "column"},
         justifyContent: "center",
         alignItems: "center",
         minHeight: 800,
       }}
     >
-      <ProductDetailWrapper
-        display={"flex"}
-        flexDirection={matches ? "column" : "row"}
-      >
-        <ProductDetailInfoWrapper>
-          <Box display={"flex"} flexDirection={"row"} justifyContent={'left'}>
+      <ProductDetailWrapper>
+        <ProductDetailInfoWrapper
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", md: "column" },
+          }}
+        >
+          <Box display={"flex"} flexDirection={"row"}>
             <ProductDetail sx={{ mr: 4 }}>
-              <Carousel className="main-slide-enprocess">
-                {images &&
-                  images.map((item, index) => {
-                    return <img src={item} />;
-                  })}
-              </Carousel>
+              {img && img.length > 0 && (
+                <Carousel
+                  data={img}
+                  time={2000}
+                  width="850px"
+                  height="600px"
+                  captionStyle={captionStyle}
+                  radius="10px"
+                  slideNumber={true}
+                  slideNumberStyle={slideNumberStyle}
+                  automatic={true}
+                  dots={true}
+                  pauseIconColor="white"
+                  pauseIconSize="40px"
+                  slideBackgroundColor="darkgrey"
+                  slideImageFit="cover"
+                  // thumbnails={true}
+                  // thumbnailWidth="100px"
+                />
+              )}
             </ProductDetail>
-            <Box>
-              <Typography variant="h4" sx={{ mb: 3 }}>
-                Name: {name}
-              </Typography>
-              <Typography sx={{ lineHeight: 3 }} variant="h5">
-                Address: {address}
-              </Typography>
-            </Box>
+          </Box>
+          <Box sx={{ mt: 4 }}>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ borderRadius: "10px", width: { xs: 150, md: 200}, mr: 2 }}
+              onClick={() => {
+                window.location.href = `/enupdateprocess/${params.id}`;
+              }}
+            >
+              Update
+            </Button>
+            <Button
+              variant="contained"
+              color="error"
+              sx={{ borderRadius: "10px", width: { xs: 150, md: 200}, mr: 2 }}
+              onClick={() => deleteProcess(params.id)}
+            >
+              Delete
+            </Button>
+          </Box>
+          <Divider sx={{ mt: 2, mb: 2 }} />
+          <Box>
+            <Typography variant="h4" sx={{ mb: 1, fontSize: {xs: "25px", md: "35px"} }}>
+              Name: {name}
+            </Typography>
+            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Typography variant="body" sx={{ mb: 1, fontSize: {xs: "12px", md: "15px"} }}>
+              Created Time: {time}
+            </Typography>
+            <Typography sx={{ lineHeight: 3, fontSize: {xs: "12px", md: "15px"} }} variant="h5">
+              Address: {address}
+            </Typography>
           </Box>
           <Divider sx={{ mt: 2, mb: 2 }} />
           <Typography
             variant="body"
-            sx={{ lineHeight: 2, whiteSpace: "pre-line" }}
+            sx={{ lineHeight: 2, whiteSpace: "pre-line", maxWidth: 700 }}
           >
             {" "}
             <ReactReadMoreReadLess
@@ -161,26 +231,6 @@ function EnProcess() {
               {description}
             </ReactReadMoreReadLess>
           </Typography>
-          <Box sx={{ mt: 4 }}>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ borderRadius: "10px", width: 200, mr: 2 }}
-              onClick={() => {
-                window.location.href = `/enupdateprocess/${params.id}`;
-              }}
-            >
-              Update
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ borderRadius: "10px", width: 200, mr: 2 }}
-              onClick={() => deleteProcess(params.id)}
-            >
-              Delete
-            </Button>
-          </Box>
         </ProductDetailInfoWrapper>
       </ProductDetailWrapper>
     </Container>
@@ -188,3 +238,6 @@ function EnProcess() {
 }
 
 export default EnProcess;
+
+
+
