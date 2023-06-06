@@ -7,6 +7,7 @@ import {
   Button,
   ButtonGroup,
   Container,
+  IconButton,
   Input,
   InputAdornment,
   Table,
@@ -18,6 +19,7 @@ import {
   TableSortLabel,
   TextField,
   Toolbar,
+  Tooltip,
   Typography,
   tableCellClasses,
 } from "@mui/material";
@@ -206,7 +208,7 @@ function EnManageAccounts() {
             {headCell.map((item) => (
               <StyledTableCell
                 sx={
-                  item.label == "Role"
+                  item.label == "Role" || item.label == "No"
                     ? { display: { xs: "none", md: "table-cell" } }
                     : null
                 }
@@ -233,7 +235,11 @@ function EnManageAccounts() {
               item.userType === "user" ||
               item.userType === "Farmer" ? (
                 <StyledTableRow key={index + 1}>
-                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    {index + 1}
+                  </StyledTableCell>
                   <StyledTableCell>{item.name}</StyledTableCell>
                   <StyledTableCell
                     sx={{ display: { xs: "none", md: "table-cell" } }}
@@ -242,16 +248,29 @@ function EnManageAccounts() {
                   </StyledTableCell>
                   <StyledTableCell>{item.email}</StyledTableCell>
                   <StyledTableCell align="center">
-                    <ButtonGroup variant="contained">
-                      <Button
+                    <Button
+                      sx={{ display: { xs: "none", md: "block" } }}
+                      variant="contained"
+                      color="info"
+                      onClick={() => {
+                        window.location.href = `/enuseraccount/${item._id}`;
+                      }}
+                    >
+                      Detail
+                    </Button>
+                    <Tooltip
+                      title="Detail"
+                      sx={{ display: { xs: "block", md: "none" } }}
+                    >
+                      <IconButton
                         color="info"
                         onClick={() => {
                           window.location.href = `/enuseraccount/${item._id}`;
                         }}
                       >
-                        Detail
-                      </Button>
-                    </ButtonGroup>
+                        <SearchRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
                   </StyledTableCell>
                 </StyledTableRow>
               ) : null
