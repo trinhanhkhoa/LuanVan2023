@@ -4,9 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import { Box, Button, Container, Divider, Typography } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactReadMoreReadLess from "react-read-more-read-less";
+import { Carousel } from "react-carousel-minimal";
 
 const ProductDetailWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -25,7 +25,6 @@ export const ProductDetail = styled(Box)(({ theme }) => ({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  width: 1000,
   flexDirection: "column",
   [theme.breakpoints.up("md")]: {
     position: "relative",
@@ -61,6 +60,20 @@ function ProcessDetail() {
   const tokenData = window.localStorage.getItem("token");
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
+  const [img, setImg] = useState([]);
+
+  const prepareImages = async (images) => {
+    if (images) {
+      const mappingImages = await Promise.all([
+        images.map((i) => {
+          return { image: i };
+        }),
+      ]);
+
+      return mappingImages;
+    }
+    return null;
+  };
 
   const tokenIsValid = () => {
     fetch("https://backend.teamluanvan.software/tokenIsValid", {
@@ -78,8 +91,8 @@ function ProcessDetail() {
       });
   };
 
-  const getInfoProcess = () => {
-    fetch(
+  const getInfoProcess = async () => {
+    const data = await fetch(
       `https://backend.teamluanvan.software/process/get-process/${params.id}`,
       {
         method: "GET",
@@ -89,13 +102,26 @@ function ProcessDetail() {
       }
     )
       .then((res) => res.json())
-      .then((data) => {
-        setName(data.data.name);
-        setAddress(data.data.address);
-        setDescription(data.data.description);
-        setImages(data.data.images);
-        console.log(data.data);
-      });
+      .then((res) => res.data);
+    console.log(data);
+
+    setName(data.name);
+    setAddress(data.address);
+    setDescription(data.description);
+    setImages(data.images);
+
+    const mappingImages = await prepareImages(data.images);
+
+    if (mappingImages) setImg([...mappingImages[0]]);
+  };
+
+  const captionStyle = {
+    fontSize: "2em",
+    fontWeight: "bold",
+  };
+  const slideNumberStyle = {
+    fontSize: "20px",
+    fontWeight: "bold",
   };
 
   useEffect(() => {
@@ -108,25 +134,38 @@ function ProcessDetail() {
       maxWidth={false}
       sx={{
         display: "flex",
-        flexDirection: "column",
+        // flexDirection: {md: "column"},
         justifyContent: "center",
         alignItems: "center",
         minHeight: 800,
       }}
     >
-      <ProductDetailWrapper
-        display={"flex"}
-        flexDirection={matches ? "column" : "row"}
-      >
-        <ProductDetailInfoWrapper>
+      <ProductDetailWrapper>
+        <ProductDetailInfoWrapper
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "column" } }}
+        >
           <Box display={"flex"} flexDirection={"row"}>
             <ProductDetail sx={{ mr: 4 }}>
-              <Carousel className="main-slide-process" showThumbs={false}>
-                {images &&
-                  images.map((item, index) => {
-                    return <img src={item} />;
-                  })}
-              </Carousel>
+              {img && img.length > 0 && (
+                <Carousel
+                  data={img}
+                  time={2000}
+                  width="850px"
+                  height="600px"
+                  captionStyle={captionStyle}
+                  radius="10px"
+                  slideNumber={true}
+                  slideNumberStyle={slideNumberStyle}
+                  automatic={true}
+                  dots={true}
+                  pauseIconColor="white"
+                  pauseIconSize="40px"
+                  slideBackgroundColor="darkgrey"
+                  slideImageFit="cover"
+                  // thumbnails={true}
+                  // thumbnailWidth="100px"
+                />
+              )}
             </ProductDetail>
           </Box>
           <Divider sx={{ mt: 2, mb: 2 }} />
@@ -140,7 +179,7 @@ function ProcessDetail() {
           </Box>
           <Typography
             variant="body"
-            sx={{ lineHeight: 2, whiteSpace: "pre-line" }}
+            sx={{ lineHeight: 2, whiteSpace: "pre-line",  maxWidth: 700 }}
           >
             {" "}
             <ReactReadMoreReadLess

@@ -87,7 +87,7 @@ function Process() {
       });
   };
 
-  const getProcesses= () => {
+  const getProcesses = () => {
     fetch(`https://backend.teamluanvan.software/process/get-processes`, {
       method: "GET",
       headers: {
@@ -184,7 +184,9 @@ function Process() {
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3">LIST OF PROCESSES</Typography>
+        <Typography variant="h3" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
+          LIST OF PROCESSES
+        </Typography>
       </Box>
       <Box>
         <Toolbar>
@@ -194,7 +196,11 @@ function Process() {
             // name={name}
             // value={value}
             onChange={handleSearch}
-            sx={{ width: "20%", marginBottom: "20px", marginLeft: "0" }}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">

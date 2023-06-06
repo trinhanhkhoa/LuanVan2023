@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import Loading from "../../../components/Loading";
+import Popup from "../../../components/Popup";
 
 function UpdateProduct() {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +34,7 @@ function UpdateProduct() {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
+  const [openQrCode, setOpenQrCode] = useState(false);
 
   const upload = async (e) => {
     e.preventDefault();
@@ -142,34 +144,91 @@ function UpdateProduct() {
       <Loading loading={loading} />
 
       <Box sx={{ marginBottom: "10px" }}>
-        <Typography variant="h3">Update product</Typography>
-        <Typography variant="h6">Product introduction information</Typography>
+        <Typography
+          variant="h3"
+          sx={{
+            fontSize: { xs: "30px", md: "48px" },
+            fontWeight: 700,
+          }}
+        >
+          Update information product
+        </Typography>
+        <Typography variant="h6" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
+          Product introduction information
+        </Typography>
       </Box>
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          margin: "20px",
-          maxWidth: "100%",
+          flexDirection: { xs: "column", md: "row" },
+          margin: { xs: "0", md: "20px" },
         }}
       >
         <Box sx={{ display: "flex", flexDirection: "column" }}>
-          <QRCode
-            value={`${params.id}`}
-            size={200}
-          />
-          <Button
-            variant="contained"
-            color="success"
-            sx={{ borderRadius: "10px", marginTop: "20px", width: "200px" }}
-            onClick={() => {
-              window.location.href = `/product/${params.id}`;
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            Watch product
-          </Button>
+            <QRCode value={`${params.id}`} size={200} />
+          </Box>
+          <Box
+            sx={{
+              display: { xs: "flex", md: "block" },
+              flexDirection: { xs: "row", md: "column" },
+              alignItems: "center",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{
+                display: { xs: "block", md: "none" },
+                borderRadius: "10px",
+                width: 150,
+                lineHeight: 2,
+                m: 2,
+              }}
+              onClick={() => {
+                setOpenQrCode(true);
+              }}
+            >
+              QR Code
+            </Button>
+            <Popup
+              title="Qr Code"
+              openPopup={openQrCode}
+              setOpenPopup={setOpenQrCode}
+            >
+              <QRCode value={`${params.id}`} size={180} />
+            </Popup>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{
+                borderRadius: "10px",
+                marginTop: "20px",
+                lineHeight: 2,
+                width: 200,
+                m: 2,
+              }}
+              onClick={() => {
+                window.location.href = `/product/${params.id}`;
+              }}
+            >
+              Watch product
+            </Button>
+          </Box>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            marginLeft: { xs: 0, md: 5 },
+          }}
+        >
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
@@ -177,12 +236,13 @@ function UpdateProduct() {
               Product's name <b>(*)</b>
             </label>
             <TextField
+              required
               variant="outlined"
               placeholder="Product's name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              sx={{ width: 800, borderRadius: "20%" }}
+              sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
             />
           </Box>
           <Box
@@ -192,11 +252,12 @@ function UpdateProduct() {
               Time <b>(*)</b>
             </label>
             <TextField
+              required
               variant="outlined"
               type="date"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              sx={{ width: 800, borderRadius: "20%" }}
+              sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
             />
           </Box>
           <Box
@@ -206,12 +267,13 @@ function UpdateProduct() {
               Address <b>(*)</b>
             </label>
             <TextField
+              required
               variant="outlined"
               placeholder="Address"
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              sx={{ width: 800, borderRadius: "20%" }}
+              sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
             />
           </Box>
           <Box
@@ -221,6 +283,7 @@ function UpdateProduct() {
               Image <b>(*)</b>
             </label>
             <input
+              required
               type="file"
               // className="image-field"
               multiple
@@ -228,7 +291,7 @@ function UpdateProduct() {
               onChange={(e) => setImages(e.target.files)}
             />
             <ImageList
-              sx={{ width: 600, height: 200 }}
+              sx={{ width: { xs: 400, md: 400 }, height: 200 }}
               cols={3}
               rowHeight={164}
             >
@@ -247,13 +310,16 @@ function UpdateProduct() {
             <label>
               Describe information <b>(*)</b>
             </label>
-            <TextareaAutosize
-              maxRows={20}
-              aria-label="maximum height"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              style={{ width: "100%", minHeight: "100px" }}
-            />
+            <Box sx={{ width: { xs: 400, md: "100%" } }}>
+              <TextareaAutosize
+                required
+                maxRows={20}
+                aria-label="maximum height"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                style={{ width: "100%", minHeight: "100px" }}
+              />
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -264,6 +330,7 @@ function UpdateProduct() {
         alignItems="flex-end"
       >
         <Button
+          type="submit"
           variant="contained"
           color="warning"
           sx={{ borderRadius: "10px" }}

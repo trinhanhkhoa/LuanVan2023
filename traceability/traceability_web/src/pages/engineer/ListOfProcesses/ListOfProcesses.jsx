@@ -197,11 +197,18 @@ function ListOfProcesses() {
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3">LIST OF PROCESSES</Typography>
+        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
+          LIST OF PROCESSES
+        </Typography>
         <Button
           variant="contained"
           color="warning"
-          sx={{ borderRadius: "10px" }}
+          sx={{
+            borderRadius: "10px",
+            width: { xs: "120px", md: "180px" },
+            height: { xs: "40px", md: "50px" },
+            fontSize: { xs: "12px", md: "16px" },
+          }}
           onClick={() => {
             window.location.href = "/encreateprocess";
           }}
@@ -214,10 +221,8 @@ function ListOfProcesses() {
           <TextField
             variant="outlined"
             label="Search process"
-            // name={name}
-            // value={value}
             onChange={handleSearch}
-            sx={{ width: "20%", marginBottom: "20px", marginLeft: "0" }}
+            sx={{  width: { xs: "100%", md: "30%" }, marginBottom: "20px", marginLeft: "0" }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -256,7 +261,7 @@ function ListOfProcesses() {
                 <StyledTableCell>{item.time}</StyledTableCell>
                 <StyledTableCell align="center">
                   <Box>
-                  <Tooltip title="Detail">
+                    <Tooltip title="Detail">
                       <IconButton
                         color="info"
                         onClick={() => {

@@ -137,7 +137,7 @@ function TrackingForm() {
               }}
               id="combo-box-demo"
               options={optionsTracking}
-              sx={{ width: 300 }}
+              sx={{ width: { xs: 350, md: 600 } }}
               renderInput={(params) => (
                 <TextField
                   required
@@ -149,7 +149,7 @@ function TrackingForm() {
                   variant="outlined"
                   name="name"
                   placeholder="Product's name"
-                  sx={{ minWidth: 600, borderRadius: "20%" }}
+                  sx={{ width: { xs: 350, md: 600 }, borderRadius: "20%" }}
                   {...params}
                   // label="Movie"
                 />
@@ -167,7 +167,7 @@ function TrackingForm() {
               type="date"
               value={time}
               onChange={(e) => setTime(e.target.value)}
-              sx={{ minWidth: 600, borderRadius: "20%" }}
+              sx={{ width: { xs: 350, md: 600 }, borderRadius: "20%" }}
             />
           </Box>
           <Box
@@ -182,7 +182,7 @@ function TrackingForm() {
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              sx={{ minWidth: 500, borderRadius: "20%" }}
+              sx={{ width: { xs: 350, md: 600 }, borderRadius: "20%" }}
             />
           </Box>
           <Box
@@ -198,7 +198,7 @@ function TrackingForm() {
               onChange={(e) => setImages(e.target.files)}
             />
             <ImageList
-              sx={{ width: 600, height: 200 }}
+              sx={{ width: { xs: 350, md: 600 }, height: 200 }}
               cols={3}
               rowHeight={164}
             >
@@ -206,7 +206,7 @@ function TrackingForm() {
                 links.map((item, index) => {
                   return (
                     <ImageListItem key={index}>
-                      <img src={item} width={200} height={200} />
+                      <img src={item} width={100} height={100} />
                     </ImageListItem>
                   );
                 })}
@@ -226,31 +226,28 @@ function TrackingForm() {
             <label>
               Describe information <b>(*)</b>
             </label>
-            <TextareaAutosize
-              maxRows={20}
-              aria-label="maximum height"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              style={{ width: "100%", minHeight: "100px" }}
-            />
+            <Box sx={{ width: { xs: 350, md: 600 } }}>
+              <TextareaAutosize
+                maxRows={20}
+                aria-label="maximum height"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                style={{ width: "100%", minHeight: "100px" }}
+              />
+            </Box>
+          </Box>
+          <Box>
+            <Button
+              type="submit"
+              variant="contained"
+              color="warning"
+              sx={{ borderRadius: "10px" }}
+            >
+              Confirm
+            </Button>
           </Box>
         </Box>
-        <Box
-          m={1} //margin
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
-          <Button
-            type="submit"
-            variant="contained"
-            color="warning"
-            sx={{ borderRadius: "10px" }}
-            // onClick={collectInfo}
-          >
-            Confirm
-          </Button>
-        </Box>
+
         <Snackbar open={snackbarState} autoHideDuration={1000}>
           <Alert severity="success" sx={{ width: "100%" }}>
             Product is deleted

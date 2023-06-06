@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./Product.css";
 import cam from "../../../asserts/cam.jpg";
 import * as TbIcons from "react-icons/tb";
-// import Popup from "../../../components/Popup/Popup";
 import { Link, useParams } from "react-router-dom";
 import Data from "../../../Data.json";
-// import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Box,
@@ -122,6 +120,7 @@ function Product() {
   };
 
   const [openPopup, setOpenPopup] = useState(false);
+  const [openQrCode, setOpenQrCode] = useState(false);
   const [openPopupTracking, setOpenPopupTracking] = useState(false);
 
   const prepareImages = async (images) => {
@@ -213,14 +212,14 @@ function Product() {
         justifyContent: "center",
         // flexDirection: 'row',
         alignItems: "center",
-        minHeight: 900,
+        minHeight: 720,
       }}
     >
       <Loading loading={loading} />
 
       <ProductDetailWrapper>
         <ProductDetailInfoWrapper
-          sx={{ display: "flex", flexDirection: "row" }}
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
         >
           <ProductDetail sx={{ mr: 4 }}>
             {img && img.length > 0 && (
@@ -245,45 +244,92 @@ function Product() {
             )}
           </ProductDetail>
           <Box sx={{ display: "flex", flexDirection: "column" }}>
-            <Box display={"flex"} flexDirection={"row"}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
               <Box
                 sx={{
-                  display: "flex",
+                  display: { xs: "none", md: "flex" },
                   flexDirection: "column",
                   alignItems: "center",
                 }}
               >
-                <QRCode
-                  value={`${params.id}`}
-                  size={200}
-                />
+                <QRCode value={`${params.id}`} size={200} />
               </Box>
-              <Box display={"flex"} flexDirection={"column"} sx={{ ml: 5 }}>
-                <Typography variant="h4" sx={{ lineHeight: 2 }}>
-                  <GiIcons.GiFruiting /> Name: {name}
+              <Box
+                display={"flex"}
+                flexDirection={"column"}
+                sx={{ ml: { xs: 0, md: 5 } }}
+              >
+                <Typography
+                  variant="h4"
+                  sx={{ lineHeight: 2, fontSize: { xs: "20px", md: "30px" } }}
+                >
+                  <GiIcons.GiFruiting style={{ marginRight: 13 }} /> Name:{" "}
+                  {name}
                 </Typography>
-                <Typography variant="h5" sx={{ lineHeight: 2 }}>
+                <Typography
+                  variant="h5"
+                  sx={{ lineHeight: 2, fontSize: { xs: "20px", md: "25px" } }}
+                >
                   <GrIcons.GrStatusGood style={{ marginRight: 13 }} /> Product
                   Status: CREATED
                 </Typography>
-                <Typography sx={{ lineHeight: 2 }} variant="h5">
+                <Typography
+                  sx={{ lineHeight: 2, fontSize: { xs: "20px", md: "25px" } }}
+                  variant="h5"
+                >
                   <HiIcons.HiLocationMarker style={{ marginRight: 13 }} />{" "}
                   Address: {address}
                 </Typography>
-                <Button
-                  variant="contained"
+                <Box
                   sx={{
-                    borderRadius: "10px",
-                    width: 150,
-                    lineHeight: 2,
-                    mt: 2,
-                  }}
-                  onClick={() => {
-                    window.location.href = `${url}`;
+                    display: {xs: "flex", md: "block"},
+                    flexDirection: { xs: "row", md: "column"},
+                    alignItems: "center",
                   }}
                 >
-                  Check product
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    sx={{
+                      display: { xs: "block", md: "none" },
+                      borderRadius: "10px",
+                      width: 150,
+                      lineHeight: 2,
+                      m: 2,
+                    }}
+                    onClick={() => {
+                      setOpenQrCode(true);
+                    }}
+                  >
+                    QR Code
+                  </Button>
+                  <Popup
+                    title="Qr Code"
+                    openPopup={openQrCode}
+                    setOpenPopup={setOpenQrCode}
+                  >
+                    <QRCode value={`${params.id}`} size={180} />
+                  </Popup>
+                  <Button
+                    variant="contained"
+                    sx={{
+                      borderRadius: "10px",
+                      width: 150,
+                      lineHeight: 2,
+                      m: 2,
+                    }}
+                    onClick={() => {
+                      window.location.href = `${url}`;
+                    }}
+                  >
+                    Check product
+                  </Button>
+                </Box>
               </Box>
             </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
@@ -301,10 +347,12 @@ function Product() {
             </Box>
 
             <Divider sx={{ mt: 2, mb: 2 }} />
-            <Box sx={{ display: "flex", flexDirection: "column", maxWidth: 600 }}>
+            <Box
+              sx={{ display: "flex", flexDirection: "column" }}
+            >
               <Typography
                 variant="body"
-                sx={{ lineHeight: 2, whiteSpace: "pre-line" }}
+                sx={{ lineHeight: 2, whiteSpace: "pre-line", width: {xs: 300, md: 800} }}
               >
                 {" "}
                 <ReactReadMoreReadLess
@@ -321,7 +369,11 @@ function Product() {
                 <Button
                   variant="contained"
                   color="success"
-                  sx={{ borderRadius: "10px", width: 200, mr: 2 }}
+                  sx={{
+                    borderRadius: "10px",
+                    width: { xs: 100, md: 200 },
+                    mr: 2,
+                  }}
                   onClick={() => {
                     setOpenPopup(true);
                   }}
@@ -338,7 +390,11 @@ function Product() {
                 <Button
                   variant="contained"
                   color="error"
-                  sx={{ borderRadius: "10px", width: 200, mr: 2 }}
+                  sx={{
+                    borderRadius: "10px",
+                    width: { xs: 100, md: 200 },
+                    mr: 2,
+                  }}
                   onClick={() => deleteProduct(params.id)}
                 >
                   Delete Product
@@ -346,7 +402,7 @@ function Product() {
                 <Button
                   variant="contained"
                   color="warning"
-                  sx={{ borderRadius: "10px" }}
+                  sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
                   onClick={() => {
                     setOpenPopupTracking(true);
                   }}
@@ -358,7 +414,10 @@ function Product() {
                   openPopup={openPopupTracking}
                   setOpenPopup={setOpenPopupTracking}
                 >
-                  <ProductTracking id={params.id} trackingLength={tracking.length} />
+                  <ProductTracking
+                    id={params.id}
+                    trackingLength={tracking.length}
+                  />
                 </Popup>
               </Box>
             </Box>

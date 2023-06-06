@@ -15,6 +15,7 @@ import {
 import Loading from "../../../components/Loading";
 import { useForm, Form } from "../../../components/Try/useForm";
 import MuiAlert from "@mui/material/Alert";
+
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
@@ -116,21 +117,39 @@ function CreateQR() {
   return (
     <Container fixed sx={{ justifyContent: "center", alignItems: "center" }}>
       <Form onSubmit={handleSubmit}>
-        <Box sx={{ marginBottom: "10px" }}>
-          <Typography variant="h3">Describe a product</Typography>
-          <Typography variant="h6">Product introduction information</Typography>
+        <Box sx={{ marginBottom: "10px", textAlign: "center" }}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontSize: { xs: "30px", md: "48px" },
+              fontWeight: 700,
+            }}
+          >
+            Describe a product
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{ fontSize: { xs: "18px", md: "30px" } }}
+          >
+            Product introduction information
+          </Typography>
         </Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
-            margin: "20px",
             maxWidth: "100%",
           }}
         >
           <Loading loading={loading} />
 
-          <Box sx={{ display: "flex", flexDirection: "column", marginLeft: {xs: 0, md: 5} }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginLeft: { xs: 0, md: 5 },
+            }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -166,7 +185,7 @@ function CreateQR() {
                   display: "flex",
                   flexDirection: "column",
                   marginBottom: 2,
-                  marginLeft: { md:2}
+                  marginLeft: { md: 2 },
                 }}
               >
                 <label>
@@ -224,7 +243,7 @@ function CreateQR() {
                   onChange={(e) => setImages(e.target.files)}
                 />
                 <ImageList
-                  sx={{ width: 500, height: 200 }}
+                  sx={{ width: { xs: 400, md: 400 }, height: 200 }}
                   cols={3}
                   rowHeight={164}
                 >
@@ -232,7 +251,7 @@ function CreateQR() {
                     links.map((item, index) => {
                       return (
                         <ImageListItem key={index}>
-                          <img src={item} width={200} height={200} />
+                          <img src={item} width={100} height={100} />
                         </ImageListItem>
                       );
                     })}
@@ -293,27 +312,23 @@ function CreateQR() {
               <label>
                 Describe information <b>(*)</b>
               </label>
-              <TextareaAutosize
-                required
-                maxRows={20}
-                aria-label="maximum height"
-                multiline
-                name="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                style={{ width: "100%", minHeight: "100px" }}
-              />
+
+              <Box sx={{ width: { xs: 400, md: "100%" } }}>
+                <TextareaAutosize
+                  required
+                  maxRows={20}
+                  aria-label="maximum height"
+                  multiline
+                  name="description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  style={{ width: "100%", minHeight: "100px" }}
+                />
+              </Box>
             </Box>
           </Box>
         </Box>
-        <Box
-          m={2} //margin
-          sx={{
-            display: "flex",
-            justifyContent: { xs: "flex-start", md: "flex-end" },
-            alignItems:  { xs: "flex-start", md: "flex-end" },
-          }}
-        >
+        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button
             type="submit"
             variant="contained"
@@ -323,6 +338,7 @@ function CreateQR() {
             Confirm
           </Button>
         </Box>
+
         <Snackbar open={snackbarState} autoHideDuration={1000}>
           <Alert severity="success" sx={{ width: "100%" }}>
             Create product successfull !

@@ -8,6 +8,8 @@ import BarChart from "../../../components/BarChart";
 import LineChart from "../../../components/LineChart";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
+import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 
 import {
   Box,
@@ -175,27 +177,39 @@ export default function EnHome() {
   };
 
   return admin ? (
-    <div className="en-home">
-      <Carousel class="carousel-enhome" showThumbs={false}>
-        <div className="news_img">
-          <img src={news_img} />
-        </div>
-        <div className="news_img">
-          <img src={news_img} />
-        </div>
-      </Carousel>
+    <Box className="en-home">
+      <Box
+        sx={{ display: { xs: "none", md: "block" }, marginTop: { xs: "0" } }}
+      >
+        <Carousel class="carousel-enhome" showThumbs={false}>
+          <div className="news_img">
+            <img src={news_img} />
+          </div>
+          <div className="news_img">
+            <img src={news_img} />
+          </div>
+        </Carousel>
+      </Box>
+
       <Loading loading={loading} />
 
-      <div className="en-home-content">
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Button
           sx={{
             borderRadius: "20px",
-            margin: "3rem",
+            margin: { xs: "10px", md: "3rem" },
             border: "1px solid #000",
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: "52rem",
-            minHeight: "20rem",
+            minWidth: { xs: "25rem", md: "52rem" },
+            minHeight: { xs: "10rem", md: "20rem" },
             color: "black",
             borderRadius: "20px",
             backgroundColor: "transparent",
@@ -209,20 +223,22 @@ export default function EnHome() {
           }}
         >
           <CardContent>
-            <TbIcons.TbQrcode className="qr-icon-home" />
-            <Typography>Create product</Typography>
+            <QrCode2RoundedIcon
+              sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
+            />
+            <Typography>Create Process</Typography>
           </CardContent>
         </Button>
         <Button
           variant="contained"
           sx={{
             borderRadius: "20px",
-            margin: "3rem",
+            margin: { xs: "10px", md: "3rem" },
             border: "1px solid #000",
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: "52rem",
-            minHeight: "20rem",
+            minWidth: { xs: "25rem", md: "52rem" },
+            minHeight: { xs: "10rem", md: "20rem" },
             color: "black",
             borderRadius: "20px",
             backgroundColor: "transparent",
@@ -236,21 +252,28 @@ export default function EnHome() {
           }}
         >
           <CardContent>
-            <MdIcons.MdChangeCircle className="process-icon" />
-            <Typography>Watch process</Typography>
+            <AutorenewRoundedIcon
+              sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
+            />
+            <Typography>Process information</Typography>
           </CardContent>
         </Button>
-      </div>
+      </Box>
       {/* <Box sx={{display:'flex', margin: '10px'}} height="50vh">
         <BarChart />
         <LineChart />
       </Box> */}
-      <Box sx={{ width: "95%", borderRadius: "10px" }}>
+      <Box sx={{ width: { xs: "90%", md: "95%" }, borderRadius: "10px" }}>
         <Table>
           <TableHead>
             {headCell.map((item) => (
               <StyleTableCell
                 key={item.id}
+                sx={
+                  item.label == "Product ID" || item.label == "User ID"
+                    ? { display: { xs: "none", md: "table-cell" } }
+                    : null
+                }
                 sortDirection={orderBy === item.id ? order : false}
               >
                 {item.disableSorting ? (
@@ -272,10 +295,10 @@ export default function EnHome() {
               <StyledTableRow key={index + 1}>
                 <StyleTableCell>{index + 1}</StyleTableCell>
                 <StyleTableCell>{item.name}</StyleTableCell>
-                <StyleTableCell>
+                <StyleTableCell sx={{ display: { xs: "none", md: "table-cell"} }}>
                   {item.pid}
                 </StyleTableCell>
-                <StyleTableCell>
+                <StyleTableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
                   {item.uid}
                 </StyleTableCell>
                 <StyleTableCell>{item.address}</StyleTableCell>
@@ -304,7 +327,7 @@ export default function EnHome() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Box>
-    </div>
+    </Box>
   ) : (
     <Home />
   );

@@ -214,7 +214,7 @@ function List() {
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3" sx={{ fontSize: { xs: "18px" } }}>
+        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
           LIST OF PRODUCTS
         </Typography>
         <Button
@@ -222,9 +222,9 @@ function List() {
           color="success"
           sx={{
             borderRadius: "10px",
-            width: { xs: "120px" },
-            height: { xs: "30px" },
-            fontSize: { xs: "12px" },
+            width: { xs: "120px", md: "180px" },
+            height: { xs: "30px", md: "50px" },
+            fontSize: { xs: "12px", md: "16px" },
           }}
           onClick={() => {
             window.location.href = "/createqr";

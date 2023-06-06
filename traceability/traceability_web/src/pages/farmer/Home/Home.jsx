@@ -23,6 +23,8 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import Loading from "../../../components/Loading";
+import QrCode2RoundedIcon from '@mui/icons-material/QrCode2Rounded';
+import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -167,25 +169,36 @@ export default function Home() {
     });
   };
   return (
-    <div className="home">
-      <Carousel class="carousel-home" showThumbs={false}>
-        <div className="news_img">
-          <img src={news_img} />
-        </div>
-        <div className="news_img">
-          <img src={news_img} />
-        </div>
-      </Carousel>
-      <div className="home-content">
+    <Box>
+      <Box sx={{ display: { xs: "none", md: "block" }, marginTop: { xs: "0"}}}>
+        {/* <Carousel class="carousel-home" showThumbs={false}>
+          <div className="news_img">
+            <img src={news_img} />
+          </div>
+          <div className="news_img">
+            <img src={news_img} />
+          </div>
+        </Carousel> */}
+        <Typography variant="h3" sx={{marginLeft: "3rem"}}>Welcome to Traceability Agriculture </Typography>
+      </Box>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: { xs: "column", md: "row" },
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <Button
           sx={{
             borderRadius: "20px",
-            margin: "3rem",
+            margin: { xs: "10px", md: "3rem" },
             border: "1px solid #000",
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: "52rem",
-            minHeight: "20rem",
+            minWidth: { xs: "25rem", md: "52rem" },
+            minHeight: { xs: "10rem", md: "20rem" },
             color: "black",
             borderRadius: "20px",
             backgroundColor: "transparent",
@@ -199,7 +212,7 @@ export default function Home() {
           }}
         >
           <CardContent>
-            <TbIcons.TbQrcode className="qr-icon-home" />
+            <QrCode2RoundedIcon sx={{ fontSize: {xs: "5rem", md: "10rem"}}}/>
             <Typography>Create product</Typography>
           </CardContent>
         </Button>
@@ -207,12 +220,12 @@ export default function Home() {
           variant="contained"
           sx={{
             borderRadius: "20px",
-            margin: "3rem",
+            margin: { xs: "10px", md: "3rem" },
             border: "1px solid #000",
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: "52rem",
-            minHeight: "20rem",
+            minWidth: { xs: "25rem", md: "52rem" },
+            minHeight: { xs: "10rem", md: "20rem" },
             color: "black",
             borderRadius: "20px",
             backgroundColor: "transparent",
@@ -226,14 +239,14 @@ export default function Home() {
           }}
         >
           <CardContent>
-            <MdIcons.MdChangeCircle className="process-icon" />
+            <AutorenewRoundedIcon sx={{ fontSize: {xs: "5rem", md: "10rem"}}} />
             <Typography>Process information</Typography>
           </CardContent>
         </Button>
-      </div>
+      </Box>
       <Loading loading={loading} />
 
-      <Box sx={{ width: "95%", borderRadius: "10px" }}>
+      <Box sx={{ width: { xs: "90%", md: "95%"}, borderRadius: "10px", marginLeft: { xs: "1.5rem", md: "3rem"}}}>
         <Table>
           <TableHead>
             {headCell.map((item) => (
@@ -256,16 +269,14 @@ export default function Home() {
             ))}
           </TableHead>
           <TableBody>
-            {
-              recordsAfterPagingAndSorting().map((item, index) => (
-                <StyledTableRow key={index + 1}>
-                  <StyledTableCell>{index + 1}</StyledTableCell>
-                  <StyledTableCell>{item.name}</StyledTableCell>
-                  {/* <StyledTableCell>{item.status}</StyledTableCell> */}
-                  <StyledTableCell>{item.time}</StyledTableCell>
-                </StyledTableRow>
-              ))
-            }
+            {recordsAfterPagingAndSorting().map((item, index) => (
+              <StyledTableRow key={index + 1}>
+                <StyledTableCell>{index + 1}</StyledTableCell>
+                <StyledTableCell>{item.name}</StyledTableCell>
+                {/* <StyledTableCell>{item.status}</StyledTableCell> */}
+                <StyledTableCell>{item.time}</StyledTableCell>
+              </StyledTableRow>
+            ))}
           </TableBody>
         </Table>
         <TablePagination
@@ -278,6 +289,6 @@ export default function Home() {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </Box>
-    </div>
+    </Box>
   );
 }

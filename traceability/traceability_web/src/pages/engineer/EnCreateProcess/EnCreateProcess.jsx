@@ -25,7 +25,7 @@ function EnCreateProcess() {
   const [name, setName] = useState("");
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
-
+  const [address, setAddress] = useState("");
   const [images, setImages] = useState([]);
   const [links, setLinks] = useState([]);
   const [img, setImg] = useState([]);
@@ -59,6 +59,7 @@ function EnCreateProcess() {
         userId,
         name,
         images: img,
+        address,
         time: value,
         description,
       }),
@@ -99,7 +100,6 @@ function EnCreateProcess() {
       fixed
       sx={{
         display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
         minHeight: 700,
@@ -108,55 +108,90 @@ function EnCreateProcess() {
       <Form onSubmit={handleSubmit}>
         <Loading loading={loading} />
 
-        <Box sx={{ marginBottom: "10px" }}>
-          <Typography variant="h3">Describe a process</Typography>
-          <Typography variant="h6">Process introduction information</Typography>
+        <Box sx={{ marginBottom: "10px", textAlign: "center" }}>
+          <Typography
+            variant="h3"
+            sx={{
+              fontSize: { xs: "30px", md: "48px" },
+              fontWeight: 700,
+            }}
+          >
+            Describe a process
+          </Typography>
+          <Typography
+            variant="h6"
+            sx={{ fontSize: { xs: "18px", md: "30px" } }}
+          >
+            Process introduction information
+          </Typography>
         </Box>
         <Box
           sx={{
             display: "flex",
             flexDirection: "row",
-            margin: "20px",
+            margin: { xs: "0", md: "20px" },
             maxWidth: "100%",
           }}
         >
-          <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 5 }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginLeft: { xs: 0, md: 5 },
+            }}
+          >
             <Box
-              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+              sx={{
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+                justifyContent: "space-between",
+              }}
             >
-              <label>
-                Process's name <b>(*)</b>
-              </label>
-              <TextField
-                required
-                variant="outlined"
-                name="name"
-                placeholder="Process's name"
-                type="text"
-                value={name}
-                // error={errors.name}
-                // helperText={errors.name}
-                onChange={(e) => setName(e.target.value)}
-                sx={{ width: 1000, borderRadius: "20%" }}
-              />
-            </Box>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-            >
-              <label>
-                Time <b>(*)</b>
-              </label>
-              <TextField
-                required
-                variant="outlined"
-                type="date"
-                name="time"
-                value={time}
-                format="DD/MM/YYYY"
-                onChange={(e) => setTime(e.target.value)}
-                sx={{ width: 1000, borderRadius: "20%" }}
-              />
-              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: 2,
+                }}
+              >
+                <label>
+                  Process's name <b>(*)</b>
+                </label>
+                <TextField
+                  required
+                  variant="outlined"
+                  name="name"
+                  placeholder="Process's name"
+                  type="text"
+                  value={name}
+                  // error={errors.name}
+                  // helperText={errors.name}
+                  onChange={(e) => setName(e.target.value)}
+                  sx={{ width: { xs: 400, md: 600 }, borderRadius: "20%" }}
+                />
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginBottom: 2,
+                  marginLeft: {xs: "0", md: "20px"}
+                }}
+              >
+                <label>
+                  Time <b>(*)</b>
+                </label>
+                <TextField
+                  required
+                  variant="outlined"
+                  type="date"
+                  name="time"
+                  value={time}
+                  format="DD/MM/YYYY"
+                  onChange={(e) => setTime(e.target.value)}
+                  sx={{ width: { xs: 400, md: 400 }, borderRadius: "20%" }}
+                />
+                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DemoContainer components={["DatePicker"]}>
                 <DatePicker
                   label="Controlled picker"
@@ -171,6 +206,24 @@ function EnCreateProcess() {
                 />
               </DemoContainer>
             </LocalizationProvider> */}
+              </Box>
+            </Box>
+            <Box
+              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+            >
+              <label>
+                Address <b>(*)</b>
+              </label>
+              <TextField
+                required
+                variant="outlined"
+                placeholder="Address"
+                type="text"
+                name="address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                sx={{ width: { xs: 400, md: "100%" }, borderRadius: "20%" }}
+              />
             </Box>
             <Box
               sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
@@ -186,7 +239,7 @@ function EnCreateProcess() {
                 onChange={(e) => setImages(e.target.files)}
               />
               <ImageList
-                sx={{ width: 600, height: 200 }}
+                sx={{ width: { xs: 400, md: 400 }, height: 200 }}
                 cols={3}
                 rowHeight={164}
               >
