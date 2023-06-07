@@ -17,7 +17,7 @@ const ProductDetailWrapper = styled(Box)(({ theme }) => ({
 const ProductDetailInfoWrapper = styled(Box)(() => ({
   display: "flex",
   flexDirection: "column",
-  maxWidth: 1600,
+  maxWidth: 1800,
   lineHeight: 1.5,
 }));
 
@@ -155,15 +155,20 @@ function EnProcess() {
         <ProductDetailInfoWrapper
           sx={{
             display: "flex",
-            flexDirection: { xs: "column", md: "column" },
+            flexDirection: { xs: "column", md: "row" },
           }}
         >
-          <Box display={"flex"} flexDirection={"row"}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <ProductDetail sx={{ mr: 4 }}>
               {img && img.length > 0 && (
                 <Carousel
                   data={img}
-                  time={2000}
+                  time={3000}
                   width="850px"
                   height="600px"
                   captionStyle={captionStyle}
@@ -181,56 +186,77 @@ function EnProcess() {
                 />
               )}
             </ProductDetail>
+            <Box sx={{ mt: 4, 
+              display: "flex",
+              justifyContent: "center"
+            }}>
+              <Button
+                variant="contained"
+                color="success"
+                sx={{
+                  borderRadius: "10px",
+                  width: { xs: 150, md: 200 },
+                  mr: 2,
+                }}
+                onClick={() => {
+                  window.location.href = `/enupdateprocess/${params.id}`;
+                }}
+              >
+                Update
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                sx={{
+                  borderRadius: "10px",
+                  width: { xs: 150, md: 200 },
+                  mr: 2,
+                }}
+                onClick={() => deleteProcess(params.id)}
+              >
+                Delete
+              </Button>
+            </Box>
           </Box>
-          <Box sx={{ mt: 4 }}>
-            <Button
-              variant="contained"
-              color="success"
-              sx={{ borderRadius: "10px", width: { xs: 150, md: 200}, mr: 2 }}
-              onClick={() => {
-                window.location.href = `/enupdateprocess/${params.id}`;
-              }}
-            >
-              Update
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              sx={{ borderRadius: "10px", width: { xs: 150, md: 200}, mr: 2 }}
-              onClick={() => deleteProcess(params.id)}
-            >
-              Delete
-            </Button>
-          </Box>
+
           <Divider sx={{ mt: 2, mb: 2 }} />
-          <Box>
-            <Typography variant="h4" sx={{ mb: 1, fontSize: {xs: "25px", md: "35px"} }}>
+          <Box sx={{ lineHeight: 2, whiteSpace: "pre-line", width: { xs: 400, md: 700} }}>
+            <Typography
+              variant="h4"
+              sx={{ mb: 1, fontSize: { xs: "25px", md: "35px" } }}
+            >
               Name: {name}
             </Typography>
             <Divider sx={{ mt: 2, mb: 2 }} />
-            <Typography variant="body" sx={{ mb: 1, fontSize: {xs: "12px", md: "15px"} }}>
+            <Typography
+              variant="body"
+              sx={{ mb: 1, fontSize: { xs: "12px", md: "15px" } }}
+            >
               Created Time: {time}
             </Typography>
-            <Typography sx={{ lineHeight: 3, fontSize: {xs: "12px", md: "15px"} }} variant="h5">
+            <Typography
+              sx={{ lineHeight: 3, fontSize: { xs: "12px", md: "15px" } }}
+              variant="h5"
+            >
               Address: {address}
             </Typography>
-          </Box>
-          <Divider sx={{ mt: 2, mb: 2 }} />
-          <Typography
-            variant="body"
-            sx={{ lineHeight: 2, whiteSpace: "pre-line", maxWidth: 700 }}
-          >
-            {" "}
-            <ReactReadMoreReadLess
-              readMoreClassName="readMoreClassName"
-              readLessClassName="readMoreClassName"
-              charLimit={200}
-              readMoreText="Read more"
-              readLessText="Read less"
+            <Divider sx={{ mt: 2, mb: 2 }} />
+            <Typography
+              variant="body"
+              sx={{ lineHeight: 2, whiteSpace: "pre-line"}}
             >
-              {description}
-            </ReactReadMoreReadLess>
-          </Typography>
+              {" "}
+              <ReactReadMoreReadLess
+                readMoreClassName="readMoreProcessClassName"
+                readLessClassName="readMoreProcessClassName"
+                charLimit={600}
+                readMoreText="Read more"
+                readLessText="Read less"
+              >
+                {description}
+              </ReactReadMoreReadLess>
+            </Typography>
+          </Box>
         </ProductDetailInfoWrapper>
       </ProductDetailWrapper>
     </Container>
@@ -238,6 +264,3 @@ function EnProcess() {
 }
 
 export default EnProcess;
-
-
-
