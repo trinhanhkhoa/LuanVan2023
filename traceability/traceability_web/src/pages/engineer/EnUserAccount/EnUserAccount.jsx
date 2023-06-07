@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Card,
   Container,
   Input,
   InputAdornment,
@@ -56,6 +57,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function EnUserAccount() {
   const [data, setData] = useState([]);
+  const [dataUser, setDataUser] = useState([]);
 
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
@@ -76,10 +78,25 @@ function EnUserAccount() {
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
 
-  useEffect(() => {
-    const getUsers = async () => {
-      setLoading(true);
+  const getUserInfo = async () => {
+    const data = await fetch(
+      `https://backend.teamluanvan.software/admin/${params.id}`,
+      {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => res.data);
+    setDataUser(data);
+    console.log(data);
+  };
 
+  useEffect(() => {
+    const getUserProduct = async () => {
+      setLoading(true);
       await fetch(`https://backend.teamluanvan.software/product/get-product`, {
         method: "GET",
         headers: {
@@ -88,7 +105,7 @@ function EnUserAccount() {
       })
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res.data);
+          console.log(res.data);
           let data = res.data;
 
           data = data.filter((p) => p.userId == params.id);
@@ -99,7 +116,8 @@ function EnUserAccount() {
       setLoading(false);
     };
 
-    getUsers();
+    getUserInfo();
+    getUserProduct();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -178,21 +196,39 @@ function EnUserAccount() {
       <Box
         sx={{
           display: "flex",
+          flexDirection: {xs: "column", md: "row"},
+          alignItems: {xs: "flex-start",md: "flex-end"},
           justifyContent: "space-between",
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3">USER'S PRODUCTS</Typography>
+        <Typography variant="h3" sx={{ fontSize: { xs: "25px", md: "35px" }}}>
+          USER'S PRODUCTS
+        </Typography>
+        <Card
+          sx={{
+            backgroundColor: "rgba(71, 167, 162, 0.12)",
+            padding: "1%",
+            mt: {xs: 2, md: 0}
+          }}
+        >
+          <Typography>Username: {dataUser.name}</Typography>
+          <Typography>Email: {dataUser.email}</Typography>
+          <Typography>ID: {dataUser._id}</Typography>
+          <Typography>Role: {dataUser.userType}</Typography>
+        </Card>
       </Box>
       <Box>
         <Toolbar>
           <TextField
             variant="outlined"
             label="Search product"
-            // name={name}
-            // value={value}
             onChange={handleSearch}
-            sx={{ width: "20%", marginBottom: "20px", marginLeft: "0" }}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
