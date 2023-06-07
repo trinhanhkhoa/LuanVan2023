@@ -23,8 +23,8 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import Loading from "../../../components/Loading";
-import QrCode2RoundedIcon from '@mui/icons-material/QrCode2Rounded';
-import AutorenewRoundedIcon from '@mui/icons-material/AutorenewRounded';
+import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
+import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -169,8 +169,14 @@ export default function Home() {
     });
   };
   return (
-    <Box>
-      <Box sx={{ display: { xs: "none", md: "block" }, marginTop: { xs: "0"}}}>
+    <Box
+      sx={{
+        minHeight: 900,
+      }}
+    >
+      <Box
+        sx={{ display: { xs: "none", md: "block" }, marginTop: { xs: "0" } }}
+      >
         {/* <Carousel class="carousel-home" showThumbs={false}>
           <div className="news_img">
             <img src={news_img} />
@@ -179,7 +185,9 @@ export default function Home() {
             <img src={news_img} />
           </div>
         </Carousel> */}
-        <Typography variant="h3" sx={{marginLeft: "3rem"}}>Welcome to Traceability Agriculture </Typography>
+        <Typography variant="h3" sx={{ marginLeft: "3rem" }}>
+          Welcome to Traceability Agriculture{" "}
+        </Typography>
       </Box>
 
       <Box
@@ -212,7 +220,9 @@ export default function Home() {
           }}
         >
           <CardContent>
-            <QrCode2RoundedIcon sx={{ fontSize: {xs: "5rem", md: "10rem"}}}/>
+            <QrCode2RoundedIcon
+              sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
+            />
             <Typography>Create product</Typography>
           </CardContent>
         </Button>
@@ -239,14 +249,22 @@ export default function Home() {
           }}
         >
           <CardContent>
-            <AutorenewRoundedIcon sx={{ fontSize: {xs: "5rem", md: "10rem"}}} />
+            <AutorenewRoundedIcon
+              sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
+            />
             <Typography>Process information</Typography>
           </CardContent>
         </Button>
       </Box>
       <Loading loading={loading} />
 
-      <Box sx={{ width: { xs: "90%", md: "95%"}, borderRadius: "10px", marginLeft: { xs: "1.5rem", md: "3rem"}}}>
+      <Box
+        sx={{
+          width: { xs: "90%", md: "95%" },
+          borderRadius: "10px",
+          marginLeft: { xs: "1.5rem", md: "3rem" },
+        }}
+      >
         <Table>
           <TableHead>
             {headCell.map((item) => (

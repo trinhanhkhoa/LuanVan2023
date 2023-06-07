@@ -153,9 +153,9 @@ function UpdateProduct() {
         >
           Update information product
         </Typography>
-        <Typography variant="h6" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
+        {/* <Typography variant="h6" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
           Product introduction information
-        </Typography>
+        </Typography> */}
       </Box>
       <Box
         sx={{

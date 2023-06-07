@@ -136,14 +136,19 @@ function ProcessDetail() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: 800,
+        minHeight: 900,
       }}
     >
       <ProductDetailWrapper>
         <ProductDetailInfoWrapper
-          sx={{ display: "flex", flexDirection: { xs: "column", md: "column" } }}
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
         >
-          <Box display={"flex"} flexDirection={"row"}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <ProductDetail sx={{ mr: 4 }}>
               {img && img.length > 0 && (
                 <Carousel
@@ -166,31 +171,42 @@ function ProcessDetail() {
                 />
               )}
             </ProductDetail>
+            <Box sx={{ mt: 4, 
+              display: "flex",
+              justifyContent: "center"
+            }}>
+            </Box>
           </Box>
           <Divider sx={{ mt: 2, mb: 2 }} />
-          <Box>
+          <Box
+            sx={{
+              lineHeight: 2,
+              whiteSpace: "pre-line",
+              width: { xs: 400, md: 700 },
+            }}
+          >
             <Typography variant="h4" sx={{ mb: 3 }}>
               Name: {name}
             </Typography>
             <Typography sx={{ lineHeight: 3 }} variant="h5">
               Address: {address}
             </Typography>
-          </Box>
-          <Typography
-            variant="body"
-            sx={{ lineHeight: 2, whiteSpace: "pre-line",  maxWidth: 700 }}
-          >
-            {" "}
-            <ReactReadMoreReadLess
-              readMoreClassName="readMoreClassName"
-              readLessClassName="readMoreClassName"
-              charLimit={200}
-              readMoreText="Read more"
-              readLessText="Read less"
+            <Typography
+              variant="body"
+              sx={{ lineHeight: 2, whiteSpace: "pre-line", maxWidth: 700 }}
             >
-              {description}
-            </ReactReadMoreReadLess>
-          </Typography>
+              {" "}
+              <ReactReadMoreReadLess
+                readMoreClassName="readMoreClassName"
+                readLessClassName="readMoreClassName"
+                charLimit={200}
+                readMoreText="Read more"
+                readLessText="Read less"
+              >
+                {description}
+              </ReactReadMoreReadLess>
+            </Typography>
+          </Box>
         </ProductDetailInfoWrapper>
       </ProductDetailWrapper>
     </Container>

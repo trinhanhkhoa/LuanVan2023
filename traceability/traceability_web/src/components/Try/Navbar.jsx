@@ -190,7 +190,8 @@ export default function PersistentDrawerLeft() {
           </IconButton>
           <Typography
             variant="h6"
-            sx={{ display: { xs: "none", sm: "block" } }}
+            sx={{ display: { xs: "none", sm: "block" }, cursor: "pointer" }}
+            onClick={() => { userType == "User" || userType == "Farmer" || userType == "user" ? window.location.href = "/home" : window.location.href = "/enhome"}}
           >
             TRACEABILITY AGRICULTURE
           </Typography>
@@ -202,13 +203,13 @@ export default function PersistentDrawerLeft() {
               <NotificationsRoundedIcon />
             </Badge>
             <AvatarBox onClick={(e) => setOpen(true)}>
-              <Avatar sx={{ width: 30, height: 30 }} src={avatarImg} />
-              <Typography variant="span">{data.name}</Typography>
+              <Avatar sx={{ width: 30, height: 30, cursor: "pointer" }} src={avatarImg} />
+              <Typography variant="span"  sx={{ cursor: "pointer" }}>{data.name}</Typography>
             </AvatarBox>
           </Icons>
           <UserBox onClick={(e) => setOpen(true)}>
-            <Avatar sx={{ width: 30, height: 30 }} src={avatarImg} />
-            <Typography variant="span">{data.name}</Typography>
+            <Avatar sx={{ width: 30, height: 30, cursor: "pointer" }} src={avatarImg} />
+            <Typography variant="span"  sx={{ cursor: "pointer" }}>{data.name}</Typography>
           </UserBox>
         </StyledToolbar>
         <Menu

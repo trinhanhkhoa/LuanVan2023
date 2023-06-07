@@ -128,11 +128,11 @@ function EnUpdateProcess() {
             fontWeight: 700,
           }}
         >
-          Update product
+          Update process information
         </Typography>
-        <Typography variant="h6" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
+        {/* <Typography variant="h6" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
           Product introduction information
-        </Typography>
+        </Typography> */}
       </Box>
       <Box
         sx={{

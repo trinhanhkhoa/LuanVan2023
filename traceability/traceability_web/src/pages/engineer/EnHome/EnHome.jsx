@@ -177,7 +177,11 @@ export default function EnHome() {
   };
 
   return admin ? (
-    <Box className="en-home">
+    <Box
+      sx={{
+        minHeight: 900,
+      }}
+    >
       <Box
         sx={{ display: { xs: "none", md: "block" }, marginTop: { xs: "0" } }}
       >
@@ -295,10 +299,14 @@ export default function EnHome() {
               <StyledTableRow key={index + 1}>
                 <StyleTableCell>{index + 1}</StyleTableCell>
                 <StyleTableCell>{item.name}</StyleTableCell>
-                <StyleTableCell sx={{ display: { xs: "none", md: "table-cell"} }}>
+                <StyleTableCell
+                  sx={{ display: { xs: "none", md: "table-cell" } }}
+                >
                   {item.pid}
                 </StyleTableCell>
-                <StyleTableCell sx={{ display: { xs: "none", md: "table-cell" } }}>
+                <StyleTableCell
+                  sx={{ display: { xs: "none", md: "table-cell" } }}
+                >
                   {item.uid}
                 </StyleTableCell>
                 <StyleTableCell>{item.address}</StyleTableCell>
