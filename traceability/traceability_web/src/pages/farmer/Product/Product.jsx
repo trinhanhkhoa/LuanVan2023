@@ -262,21 +262,18 @@ function Product() {
                   variant="h4"
                   sx={{ lineHeight: 2, fontSize: { xs: "20px", md: "30px" } }}
                 >
-                  <GiIcons.GiFruiting style={{ marginRight: 13 }} /> Name:{" "}
                   {name}
                 </Typography>
                 <Typography
-                  variant="h5"
-                  sx={{ lineHeight: 2, fontSize: { xs: "20px", md: "25px" } }}
+                  variant="body"
+                  sx={{ lineHeight: 2,fontSize: { xs: "15px", md: "15px" } }}
                 >
-                  <GrIcons.GrStatusGood style={{ marginRight: 13 }} /> Product
                   Status: CREATED
                 </Typography>
                 <Typography
-                  sx={{ lineHeight: 2, fontSize: { xs: "20px", md: "25px" } }}
-                  variant="h5"
+                  sx={{ lineHeight: 2,fontSize: { xs: "15px", md: "15px" } }}
+                  variant="body"
                 >
-                  <HiIcons.HiLocationMarker style={{ marginRight: 13 }} />{" "}
                   Address: {address}
                 </Typography>
                 <Box
@@ -315,7 +312,8 @@ function Product() {
                       borderRadius: "10px",
                       width: 150,
                       lineHeight: 2,
-                      m: 2,
+                      m: {xs: 2, md: 0},
+                      mt: {xs: 0, md: 2}
                     }}
                     onClick={() => {
                       window.location.href = `${url}`;
@@ -381,7 +379,7 @@ function Product() {
                 >
                   <TrackingForm />
                 </Popup>
-                <Button
+                {/* <Button
                   variant="contained"
                   color="error"
                   sx={{
@@ -392,7 +390,7 @@ function Product() {
                   onClick={() => deleteProduct(params.id)}
                 >
                   Delete Product
-                </Button>
+                </Button> */}
                 <Button
                   variant="contained"
                   color="warning"

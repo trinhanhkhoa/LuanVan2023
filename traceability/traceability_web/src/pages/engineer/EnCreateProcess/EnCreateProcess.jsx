@@ -58,7 +58,7 @@ function EnCreateProcess() {
       body: JSON.stringify({
         userId,
         name,
-        images: img,
+        images: links,
         address,
         time: value,
         description,
@@ -76,23 +76,6 @@ function EnCreateProcess() {
           window.location.href = "/listofprocesses";
         }, 1500);
       });
-  };
-
-  const upload = async (e) => {
-    e.preventDefault();
-    try {
-      let arr = [];
-      let imgArr = [];
-      for (let i = 0; i < images.length; i++) {
-        const data = await uploadImage(images[i]);
-        arr.push(data);
-        imgArr.push(data.url);
-      }
-      setLinks(arr);
-      setImg(imgArr);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   return (
@@ -191,21 +174,6 @@ function EnCreateProcess() {
                   onChange={(e) => setTime(e.target.value)}
                   sx={{ width: { xs: 400, md: 400 }, borderRadius: "20%" }}
                 />
-                {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={["DatePicker"]}>
-                <DatePicker
-                  label="Controlled picker"
-                  value={value}
-                  format="DD/MM/YYYY"
-                  onChange={(newValue) => {
-                    let newDate = moment.utc(newValue).format("DD-MM-YYYY");
-                    console.log("converted date", newDate); // 09/23/21
-                    setValue(newDate);
-                    // console.log(newValue);
-                  }}
-                />
-              </DemoContainer>
-            </LocalizationProvider> */}
               </Box>
             </Box>
             <Box
@@ -231,35 +199,79 @@ function EnCreateProcess() {
               <label>
                 Image <b>(*)</b>
               </label>
-              <input
-                required
-                type="file"
-                multiple
-                // hidden
-                onChange={(e) => setImages(e.target.files)}
-              />
-              <ImageList
-                sx={{ width: { xs: 400, md: 400 }, height: 200 }}
-                cols={3}
-                rowHeight={164}
-              >
-                {links &&
-                  links.map((item, index) => {
-                    return (
-                      <ImageListItem key={index}>
-                        <img src={item} width={200} height={200} />
-                      </ImageListItem>
-                    );
-                  })}
-              </ImageList>
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ borderRadius: "10px", marginTop: 2, width: 100 }}
-                onClick={upload}
-              >
-                Upload
-              </Button>
+              <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "2px dashed #1475cf",
+                    borderRadius: "10px",
+                    height: "200px",
+                    width: "450px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    document.querySelector(".input-field").click();
+                  }}
+                >
+                  <input
+                    className="input-field"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    hidden
+                    onChange={async (e) => {
+                      e.preventDefault();
+
+                      const MAX_LENGTH = 3;
+                      if (Array.from(e.target.files).length > MAX_LENGTH) {
+                        e.preventDefault();
+                        alert(`Cannot upload files more than ${MAX_LENGTH}`);
+                        return;
+                      }
+
+                      setImages(e.target.files);
+                      console.log(e.target.files);
+                      setLoading(true);
+
+                      try {
+                        let arr = [];
+                        for (let i = 0; i < e.target.files.length; i++) {
+                          const data = await uploadImage(e.target.files[i]);
+                          arr.push(data.url);
+                        }
+                        setLinks(arr);
+                      } catch (error) {
+                        console.log(error);
+                      }
+                      setLoading(false);
+                    }}
+                  />
+                  <ImageList
+                    sx={{ width: { xs: 400, md: 400 }, height: 200, display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center" }}
+                    cols={3}
+                    rowHeight={164}
+                  >
+                    {links &&
+                      links.map((item) => {
+                        return (
+                          <ImageListItem
+                            key={item}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <img src={item} width={100} height={100} className="image-link" />
+                          </ImageListItem>
+                        );
+                      })}
+                  </ImageList>
+                </Box>
             </Box>
             <Box
               sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}

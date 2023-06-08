@@ -11,8 +11,16 @@ import "./ProductTracking.css";
 
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import Loading from "../../../components/Loading";
-import { Button, InputAdornment, TextField, Toolbar } from "@mui/material";
+import {
+  Button,
+  InputAdornment,
+  StepContent,
+  TextField,
+  Toolbar,
+} from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import "rsuite/dist/rsuite.min.css";
+import Steps from "rsuite/Steps";
 
 export default function ProductTracking(props) {
   const [data, setData] = useState([]);
@@ -116,23 +124,29 @@ export default function ProductTracking(props) {
             <Button
               variant="contained"
               color="warning"
-              sx={{ borderRadius: "5px", marginLeft: "10px", marginBottom: "20px", padding: "15px" }}
-              onClick={() => { }} // tắt nút update tracking
+              sx={{
+                borderRadius: "5px",
+                marginLeft: "10px",
+                marginBottom: "20px",
+                padding: "15px",
+              }}
+              onClick={() => {}} // tắt nút update tracking
             >
               {" "}
               Deliveried{" "}
             </Button>
           )}
         </Toolbar>
-        <Stepper orientation="vertical">
+        <Steps current={filterSearching().length  + 1} vertical>
+          {/* filterSearching().length != 0 ? ( */}
           {filterSearching().length != 0 ? (
             filterSearching().map((item, index) => (
-              <Step key={index}>
-                <Box>
-                  <StepLabel>Name: {item.name}</StepLabel>
+              <Steps.Item
+                // status='process' 
+                title={item.name}
+                description={
                   <Box>
                     <Typography>Time: {item.time}</Typography>
-                    <Typography>Address: {item.address}</Typography>
                     <Typography>
                       Check tracking:{" "}
                       <Link
@@ -141,17 +155,16 @@ export default function ProductTracking(props) {
                           window.location.href = `${item.url}`;
                         }}
                       >
-                        Click me
+                        Information was verified on Blockchain
                       </Link>{" "}
                     </Typography>
-
                     <Box>
                       {item.images &&
                         item.images.map((image, idx) => {
                           return <img src={image} height={200} />;
                         })}
                     </Box>
-                    <Typography sx={{maxWidth: 500}}>
+                    <Typography sx={{ maxWidth: 500 }}>
                       {" "}
                       Description:{" "}
                       <ReactReadMoreReadLess
@@ -165,13 +178,13 @@ export default function ProductTracking(props) {
                       </ReactReadMoreReadLess>{" "}
                     </Typography>
                   </Box>
-                </Box>
-              </Step>
+                }
+              />
             ))
           ) : (
             <Typography> Have not updated any tracking yet! </Typography>
           )}
-        </Stepper>
+        </Steps>
       </Box>
 
       {/* : <Typography> null </Typography>} */}

@@ -267,7 +267,13 @@ export default function EnHome() {
         <BarChart />
         <LineChart />
       </Box> */}
-      <Box sx={{ width: { xs: "90%", md: "95%" }, borderRadius: "10px" }}>
+      <Box
+        sx={{
+          width: { xs: "90%", md: "95%" },
+          borderRadius: "10px",
+          marginLeft: { xs: "1.5rem", md: "3rem" },
+        }}
+      >
         <Table>
           <TableHead>
             {headCell.map((item) => (

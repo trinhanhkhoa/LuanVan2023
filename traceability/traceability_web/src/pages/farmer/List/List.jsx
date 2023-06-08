@@ -101,9 +101,10 @@ function List() {
 
       setLoading(false);
     };
-
     getProducts();
+  }, []);
 
+  useEffect(() => {
     const getTracking = async () => {
       setLoading(true);
 
@@ -275,7 +276,7 @@ function List() {
             ))}
           </TableHead>
           <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) => (
+            {recordsAfterPagingAndSorting() && recordsAfterPagingAndSorting().map((item, index) => (
               <StyledTableRow key={index + 1}>
                 <StyledTableCell>{index + 1}</StyledTableCell>
                 <StyledTableCell>{item.name}</StyledTableCell>

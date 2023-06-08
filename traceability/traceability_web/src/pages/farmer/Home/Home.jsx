@@ -199,20 +199,20 @@ export default function Home() {
         }}
       >
         <Button
+          variant="contained"
           sx={{
             borderRadius: "20px",
             margin: { xs: "10px", md: "3rem" },
-            border: "1px solid #000",
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
             minWidth: { xs: "25rem", md: "52rem" },
             minHeight: { xs: "10rem", md: "20rem" },
             color: "black",
             borderRadius: "20px",
-            backgroundColor: "transparent",
+            backgroundColor: "#D0F5BE", 
             ":hover": {
-              backgroundColor: "#2ECC71",
-              color: "#fff",
+              backgroundColor: "#B6E2A1",
+              color: "black",
             },
           }}
           onClick={() => {
@@ -228,20 +228,20 @@ export default function Home() {
         </Button>
         <Button
           variant="contained"
+          // color="success"
           sx={{
             borderRadius: "20px",
             margin: { xs: "10px", md: "3rem" },
-            border: "1px solid #000",
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
             minWidth: { xs: "25rem", md: "52rem" },
             minHeight: { xs: "10rem", md: "20rem" },
             color: "black",
             borderRadius: "20px",
-            backgroundColor: "transparent",
+            backgroundColor: "#D0F5BE", 
             ":hover": {
-              backgroundColor: "#2ECC71",
-              color: "#fff",
+              backgroundColor: "#B6E2A1",
+              color: "black",
             },
           }}
           onClick={() => {

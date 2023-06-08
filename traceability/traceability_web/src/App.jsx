@@ -23,11 +23,11 @@ import ProductTracking from "./pages/farmer/ProductTracking/ProductTracking";
 import TrackingForm from "./pages/farmer/TrackingForm/TrackingForm";
 import CreateForm from "./components/Try/CreateForm";
 
+
 function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
 
   return (
-    // <CreateForm />
 
     <div className="App">
       <BrowserRouter>
@@ -50,7 +50,6 @@ function App() {
             <Route path="/process" element={<Process />} />
             <Route path="/processdetail/:id" element={<ProcessDetail />} />
             <Route path="/producttracking/:id" element={<ProductTracking />} />
-            {/* <Route path="/updatetracking" element={<UpdateTracking />} /> */}
 
             <Route path="/encreateprocess" element={<EnCreateProcess />} />
             <Route path="/listofprocesses" element={<ListOfProcesses />} />

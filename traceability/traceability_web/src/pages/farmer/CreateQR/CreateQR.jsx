@@ -15,6 +15,7 @@ import {
 import Loading from "../../../components/Loading";
 import { useForm, Form } from "../../../components/Try/useForm";
 import MuiAlert from "@mui/material/Alert";
+import Dropzone from "react-dropzone";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -38,25 +39,25 @@ function CreateQR() {
   const [value, setValue] = useState(null);
   const [open, toggleOpen] = useState(false);
 
-  const upload = async (e) => {
-    setLoading(true);
+  // const upload = async (e) => {
+  //   setLoading(true);
 
-    e.preventDefault();
-    try {
-      let arr = [];
-      let imgArr = [];
-      for (let i = 0; i < images.length; i++) {
-        const data = await uploadImage(images[i]);
-        arr.push(data);
-        imgArr.push(data.url);
-      }
-      setLinks(arr);
-      setImg(imgArr);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
+  //   e.preventDefault();
+  //   try {
+  //     let arr = [];
+  //     let imgArr = [];
+  //     for (let i = 0; i < images.length; i++) {
+  //       const data = await uploadImage(images[i]);
+  //       arr.push(data);
+  //       imgArr.push(data.url);
+  //     }
+  //     setLinks(arr);
+  //     setImg(imgArr);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   setLoading(false);
+  // };
 
   const handleClose = () => {
     setDialogValue({
@@ -96,14 +97,14 @@ function CreateQR() {
         name,
         address,
         time,
-        images: img,
+        images: links,
         description,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log("data", data);
-        console.log("upload img", img);
+        // console.log("upload img", img);
         setLoading(false);
 
         setSnackbarState(true);
@@ -236,74 +237,81 @@ function CreateQR() {
                 <label>
                   Image product<b>(*)</b>
                 </label>
-                <input
-                  type="file"
-                  multiple
-                  // hidden
-                  onChange={(e) => setImages(e.target.files)}
-                />
-                <ImageList
-                  sx={{ width: { xs: 400, md: 400 }, height: 200 }}
-                  cols={3}
-                  rowHeight={164}
+
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    border: "2px dashed #1475cf",
+                    borderRadius: "10px",
+                    height: "200px",
+                    width: "450px",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    document.querySelector(".input-field").click();
+                  }}
                 >
-                  {links &&
-                    links.map((item, index) => {
-                      return (
-                        <ImageListItem key={index}>
-                          <img src={item} width={100} height={100} />
-                        </ImageListItem>
-                      );
-                    })}
-                </ImageList>
-                <Button
-                  variant="contained"
-                  color="success"
-                  sx={{ borderRadius: "10px", marginTop: 2, width: 100 }}
-                  onClick={upload}
-                >
-                  Upload
-                </Button>
+                  <input
+                    className="input-field"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    hidden
+                    onChange={async (e) => {
+                      e.preventDefault();
+
+                      const MAX_LENGTH = 3;
+                      if (Array.from(e.target.files).length > MAX_LENGTH) {
+                        e.preventDefault();
+                        alert(`Cannot upload files more than ${MAX_LENGTH}`);
+                        return;
+                      }
+
+                      setImages(e.target.files);
+                      console.log(e.target.files);
+                      setLoading(true);
+
+                      try {
+                        let arr = [];
+                        for (let i = 0; i < e.target.files.length; i++) {
+                          const data = await uploadImage(e.target.files[i]);
+                          arr.push(data.url);
+                        }
+                        setLinks(arr);
+                      } catch (error) {
+                        console.log(error);
+                      }
+                      setLoading(false);
+                    }}
+                  />
+                  <ImageList
+                    sx={{ width: { xs: 400, md: 400 }, height: 200, display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center" }}
+                    cols={3}
+                    rowHeight={164}
+                  >
+                    {links &&
+                      links.map((item) => {
+                        return (
+                          <ImageListItem
+                            key={item}
+                            sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                          >
+                            <img src={item} width={100} height={100} className="image-link" />
+                          </ImageListItem>
+                        );
+                      })}
+                  </ImageList>
+                </Box>
               </Box>
-              {/* <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  marginBottom: 2,
-                }}
-              >
-                <label>
-                  Image certificates<b>(*)</b>
-                </label>
-                <input
-                  type="file"
-                  multiple
-                  // hidden
-                  onChange={(e) => setImages(e.target.files)}
-                />
-                <ImageList
-                  sx={{ width: 500, height: 200 }}
-                  cols={3}
-                  rowHeight={164}
-                >
-                  {links &&
-                    links.map((item, index) => {
-                      return (
-                        <ImageListItem key={index}>
-                          <img src={item} width={200} height={200} />
-                        </ImageListItem>
-                      );
-                    })}
-                </ImageList>
-                <Button
-                  variant="contained"
-                  color="success"
-                  sx={{ borderRadius: "10px", marginTop: 2, width: 100 }}
-                  onClick={upload}
-                >
-                  Upload
-                </Button>
-              </Box> */}
             </Box>
 
             <Box
@@ -318,7 +326,7 @@ function CreateQR() {
                   required
                   maxRows={20}
                   aria-label="maximum height"
-                  multiline
+                  multiline="true"
                   name="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
