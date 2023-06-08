@@ -86,7 +86,9 @@ function ConfirmNotice(props) {
             color="warning"
             sx={{ borderRadius: "10px", ml: 4 }}
             onClick={() => {
-              window.location.href = `/list`;
+              userType === "Admin" || userType === "admin" 
+              ? window.location.href = `/listofprocesses`
+              : window.location.href = `/list`
             }}
           >
             Cancel
