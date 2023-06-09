@@ -15,14 +15,14 @@ function Copyright() {
         <Typography
           sx={{ fontSize: { xs: "12px", md: "14px" } }}
           variant="body1"
-          color="white"
+          color="black"
         >
           Traceability agriculture
         </Typography>
         <Typography
           sx={{ fontSize: { xs: "12px", md: "14px" } }}
           variant="body2"
-          color="white"
+          color="black"
         >
           {"Copyright © "}
           <Link color="inherit" href="https://mui.com/">
@@ -49,12 +49,12 @@ export default function StickyFooter() {
             ? {
                 py: 2,
                 px: 2,
-                backgroundColor: (theme) => theme.palette.warning.light,
+                backgroundColor: "#fff59d",
               }
             : {
                 py: 2,
                 px: 2,
-                backgroundColor: (theme) => theme.palette.success.light,
+                backgroundColor: "#aed581",
               }
         }
       >

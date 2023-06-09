@@ -14,6 +14,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -32,6 +33,8 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
+import { Card } from "reactstrap";
+import AddIcon from '@mui/icons-material/Add';
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -42,8 +45,8 @@ const headCell = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.common.white,
+    backgroundColor: "#fff9c4",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -202,119 +205,136 @@ function ListOfProcesses() {
         </Typography>
         <Button
           variant="contained"
-          color="warning"
           sx={{
-            borderRadius: "10px",
-            width: { xs: "120px", md: "180px" },
-            height: { xs: "40px", md: "50px" },
+            borderRadius: "5px",
+            width: { xs: "100px", md: "180px" },
+            height: { xs: "35px", md: "50px" },
             fontSize: { xs: "12px", md: "16px" },
+            justifyContent: "center",
+            backgroundColor: "#fff176",
+            color: "black",
+            ":hover": {
+              backgroundColor: "#ffd54f",
+            },
           }}
           onClick={() => {
             window.location.href = "/encreateprocess";
           }}
         >
-          Add process
+          <AddIcon /> Create
         </Button>
       </Box>
-      <Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            label="Search process"
-            onChange={handleSearch}
-            sx={{  width: { xs: "100%", md: "30%" }, marginBottom: "20px", marginLeft: "0" }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
-        <Table>
-          <TableHead>
-            {headCell.map((item) => (
-              <StyledTableCell
-                key={item.id}
-                sortDirection={orderBy === item.id ? order : false}
-              >
-                {item.disableSorting ? (
-                  item.label
-                ) : (
-                  <TableSortLabel
-                    active={orderBy === item.id}
-                    direction={orderBy === item.id ? order : "asc"}
-                    onClick={() => handleSordRequest(item.id)}
-                  >
-                    {item.label}
-                  </TableSortLabel>
-                )}
-              </StyledTableCell>
-            ))}
-          </TableHead>
-          <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) => (
-              <StyledTableRow key={index + 1}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{item.name}</StyledTableCell>
-                <StyledTableCell>{item.time}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <Box>
-                    <Tooltip title="Detail">
-                      <IconButton
-                        color="info"
-                        onClick={() => {
-                          window.location.href = `/enprocess/${item._id}`;
-                        }}
-                      >
-                        <SearchIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Edit">
-                      <IconButton
-                        color="success"
-                        onClick={() => {
-                          window.location.href = `/enupdateprocess/${item._id}`;
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete">
-                      <IconButton
-                        color="error"
-                        onClick={() => {
-                          setOpenPopup(true);
-                          setIdPopup(item._id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Popup
-                      title="Confirm Delete"
-                      openPopup={openPopup}
-                      setOpenPopup={setOpenPopup}
+      <Card>
+        <TableContainer
+          sx={{
+            width: "100%",
+            borderRadius: "5px",
+          }}
+        >
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Search process"
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "30%" },
+                marginBottom: "20px",
+                marginTop: "20px",
+                marginLeft: "0",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
+          <Table>
+            <TableHead>
+              {headCell.map((item) => (
+                <StyledTableCell
+                  key={item.id}
+                  sortDirection={orderBy === item.id ? order : false}
+                >
+                  {item.disableSorting ? (
+                    item.label
+                  ) : (
+                    <TableSortLabel
+                      active={orderBy === item.id}
+                      direction={orderBy === item.id ? order : "asc"}
+                      onClick={() => handleSordRequest(item.id)}
                     >
-                      <ConfirmNotice id={IdPopup} />
-                    </Popup>
-                  </Box>
+                      {item.label}
+                    </TableSortLabel>
+                  )}
                 </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          page={page}
-          rowsPerPageOptions={pages}
-          rowsPerPage={rowsPerPage}
-          count={data.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Box>
+              ))}
+            </TableHead>
+            <TableBody>
+              {recordsAfterPagingAndSorting().map((item, index) => (
+                <StyledTableRow key={index + 1}>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>{item.name}</StyledTableCell>
+                  <StyledTableCell>{item.time}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <Box>
+                      <Tooltip title="Detail">
+                        <IconButton
+                          color="info"
+                          onClick={() => {
+                            window.location.href = `/enprocess/${item._id}`;
+                          }}
+                        >
+                          <SearchIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Edit">
+                        <IconButton
+                          color="success"
+                          onClick={() => {
+                            window.location.href = `/enupdateprocess/${item._id}`;
+                          }}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Delete">
+                        <IconButton
+                          color="error"
+                          onClick={() => {
+                            setOpenPopup(true);
+                            setIdPopup(item._id);
+                          }}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Popup
+                        title="Confirm Delete"
+                        openPopup={openPopup}
+                        setOpenPopup={setOpenPopup}
+                      >
+                        <ConfirmNotice id={IdPopup} />
+                      </Popup>
+                    </Box>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <TablePagination
+            component="div"
+            page={page}
+            rowsPerPageOptions={pages}
+            rowsPerPage={rowsPerPage}
+            count={data.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>{" "}
+      </Card>
     </Container>
   );
 }

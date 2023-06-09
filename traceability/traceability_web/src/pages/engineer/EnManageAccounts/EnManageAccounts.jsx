@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   ButtonGroup,
+  Card,
   Container,
   IconButton,
   Input,
@@ -13,6 +14,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -37,8 +39,8 @@ const headCell = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.common.white,
+    backgroundColor: "#fff9c4",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -184,108 +186,118 @@ function EnManageAccounts() {
         </Typography>
       </Box>
       <Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            label="Search user"
-            onChange={handleSearch}
+        <Card>
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Search user"
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "30%" },
+                marginBottom: "20px",
+                marginTop: "20px",
+                marginLeft: "0",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
+          <TableContainer
             sx={{
-              width: { xs: "100%", md: "30%" },
-              marginBottom: "20px",
-              marginLeft: "0",
+              width: "100%",
+              borderRadius: "5px",
             }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
-        <Table>
-          <TableHead>
-            {headCell.map((item) => (
-              <StyledTableCell
-                sx={
-                  item.label == "Role" || item.label == "No"
-                    ? { display: { xs: "none", md: "table-cell" } }
-                    : null
-                }
-                key={item.id}
-                sortDirection={orderBy === item.id ? order : false}
-              >
-                {item.disableSorting ? (
-                  item.label
-                ) : (
-                  <TableSortLabel
-                    active={orderBy === item.id}
-                    direction={orderBy === item.id ? order : "asc"}
-                    onClick={() => handleSordRequest(item.id)}
-                  >
-                    {item.label}
-                  </TableSortLabel>
-                )}
-              </StyledTableCell>
-            ))}
-          </TableHead>
-          <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) =>
-              item.userType === "User" ||
-              item.userType === "user" ||
-              item.userType === "Farmer" ? (
-                <StyledTableRow key={index + 1}>
+          >
+            <Table>
+              <TableHead>
+                {headCell.map((item) => (
                   <StyledTableCell
-                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                    sx={
+                      item.label == "Role" || item.label == "No"
+                        ? { display: { xs: "none", md: "table-cell" } }
+                        : null
+                    }
+                    key={item.id}
+                    sortDirection={orderBy === item.id ? order : false}
                   >
-                    {index + 1}
-                  </StyledTableCell>
-                  <StyledTableCell>{item.name}</StyledTableCell>
-                  <StyledTableCell
-                    sx={{ display: { xs: "none", md: "table-cell" } }}
-                  >
-                    {item.userType}
-                  </StyledTableCell>
-                  <StyledTableCell>{item.email}</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <Button
-                      sx={{ display: { xs: "none", md: "block" } }}
-                      variant="contained"
-                      color="info"
-                      onClick={() => {
-                        window.location.href = `/enuseraccount/${item._id}`;
-                      }}
-                    >
-                      Detail
-                    </Button>
-                    <Tooltip
-                      title="Detail"
-                      sx={{ display: { xs: "block", md: "none" } }}
-                    >
-                      <IconButton
-                        color="info"
-                        onClick={() => {
-                          window.location.href = `/enuseraccount/${item._id}`;
-                        }}
+                    {item.disableSorting ? (
+                      item.label
+                    ) : (
+                      <TableSortLabel
+                        active={orderBy === item.id}
+                        direction={orderBy === item.id ? order : "asc"}
+                        onClick={() => handleSordRequest(item.id)}
                       >
-                        <SearchRoundedIcon />
-                      </IconButton>
-                    </Tooltip>
+                        {item.label}
+                      </TableSortLabel>
+                    )}
                   </StyledTableCell>
-                </StyledTableRow>
-              ) : null
-            )}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          page={page}
-          rowsPerPageOptions={pages}
-          rowsPerPage={rowsPerPage}
-          count={data.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+                ))}
+              </TableHead>
+              <TableBody>
+                {recordsAfterPagingAndSorting().map((item, index) =>
+                  item.userType === "User" ||
+                  item.userType === "user" ||
+                  item.userType === "Farmer" ? (
+                    <StyledTableRow key={index + 1}>
+                      <StyledTableCell
+                        sx={{ display: { xs: "none", md: "table-cell" } }}
+                      >
+                        {index + 1}
+                      </StyledTableCell>
+                      <StyledTableCell>{item.name}</StyledTableCell>
+                      <StyledTableCell
+                        sx={{ display: { xs: "none", md: "table-cell" } }}
+                      >
+                        {item.userType}
+                      </StyledTableCell>
+                      <StyledTableCell>{item.email}</StyledTableCell>
+                      <StyledTableCell align="center">
+                        <Button
+                          sx={{ display: { xs: "none", md: "block" } }}
+                          variant="contained"
+                          color="info"
+                          onClick={() => {
+                            window.location.href = `/enuseraccount/${item._id}`;
+                          }}
+                        >
+                          Detail
+                        </Button>
+                        <Tooltip
+                          title="Detail"
+                          sx={{ display: { xs: "block", md: "none" } }}
+                        >
+                          <IconButton
+                            color="info"
+                            onClick={() => {
+                              window.location.href = `/enuseraccount/${item._id}`;
+                            }}
+                          >
+                            <SearchRoundedIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ) : null
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            component="div"
+            page={page}
+            rowsPerPageOptions={pages}
+            rowsPerPage={rowsPerPage}
+            count={data.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Card>
       </Box>
     </Container>
   );

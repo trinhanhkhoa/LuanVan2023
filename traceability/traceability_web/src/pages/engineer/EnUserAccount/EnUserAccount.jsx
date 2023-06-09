@@ -13,6 +13,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -37,8 +38,8 @@ const headCell = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.warning.light,
-    color: theme.palette.common.white,
+    backgroundColor: "#fff9c4",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -196,20 +197,20 @@ function EnUserAccount() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: {xs: "column", md: "row"},
-          alignItems: {xs: "flex-start",md: "flex-end"},
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "flex-start", md: "flex-end" },
           justifyContent: "space-between",
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3" sx={{ fontSize: { xs: "25px", md: "35px" }}}>
+        <Typography variant="h3" sx={{ fontSize: { xs: "25px", md: "35px" } }}>
           USER'S PRODUCTS
         </Typography>
         <Card
           sx={{
             backgroundColor: "rgba(71, 167, 162, 0.12)",
             padding: "1%",
-            mt: {xs: 2, md: 0}
+            mt: { xs: 2, md: 0 },
           }}
         >
           <Typography>Username: {dataUser.name}</Typography>
@@ -218,86 +219,94 @@ function EnUserAccount() {
           <Typography>Role: {dataUser.userType}</Typography>
         </Card>
       </Box>
-      <Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            label="Search product"
-            onChange={handleSearch}
-            sx={{
-              width: { xs: "100%", md: "30%" },
-              marginBottom: "20px",
-              marginLeft: "0",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
-        <Table>
-          <TableHead>
-            {headCell.map((item) => (
-              <StyledTableCell
-                key={item.id}
-                sortDirection={orderBy === item.id ? order : false}
-              >
-                {item.disableSorting ? (
-                  item.label
-                ) : (
-                  <TableSortLabel
-                    active={orderBy === item.id}
-                    direction={orderBy === item.id ? order : "asc"}
-                    onClick={() => handleSordRequest(item.id)}
-                  >
-                    {item.label}
-                  </TableSortLabel>
-                )}
-              </StyledTableCell>
-            ))}
-          </TableHead>
-          <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) => (
-              <StyledTableRow key={index + 1}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{item.name}</StyledTableCell>
-                <StyledTableCell>{item.tracking.length}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      color="info"
-                      onClick={() => {
-                        setOpenPopupTracking(true);
-                      }}
+      <Card>
+        <TableContainer
+          sx={{
+            width: "100%",
+            borderRadius: "5px",
+          }}
+        >
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Search product"
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "30%" },
+                marginTop: "20px",
+                marginBottom: "20px",
+                marginLeft: "0",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
+          <Table>
+            <TableHead>
+              {headCell.map((item) => (
+                <StyledTableCell
+                  key={item.id}
+                  sortDirection={orderBy === item.id ? order : false}
+                >
+                  {item.disableSorting ? (
+                    item.label
+                  ) : (
+                    <TableSortLabel
+                      active={orderBy === item.id}
+                      direction={orderBy === item.id ? order : "asc"}
+                      onClick={() => handleSordRequest(item.id)}
                     >
-                      Detail
-                    </Button>
-                    <Popup
-                      title="Tracking"
-                      openPopup={openPopupTracking}
-                      setOpenPopup={setOpenPopupTracking}
-                    >
-                      <ProductTracking id={item._id} />
-                    </Popup>
-                  </ButtonGroup>
+                      {item.label}
+                    </TableSortLabel>
+                  )}
                 </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          page={page}
-          rowsPerPageOptions={pages}
-          rowsPerPage={rowsPerPage}
-          count={data.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Box>
+              ))}
+            </TableHead>
+            <TableBody>
+              {recordsAfterPagingAndSorting().map((item, index) => (
+                <StyledTableRow key={index + 1}>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>{item.name}</StyledTableCell>
+                  <StyledTableCell>{item.tracking.length}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <ButtonGroup variant="contained">
+                      <Button
+                        color="info"
+                        onClick={() => {
+                          setOpenPopupTracking(true);
+                        }}
+                      >
+                        Detail
+                      </Button>
+                      <Popup
+                        title="Tracking"
+                        openPopup={openPopupTracking}
+                        setOpenPopup={setOpenPopupTracking}
+                      >
+                        <ProductTracking id={item._id} />
+                      </Popup>
+                    </ButtonGroup>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <TablePagination
+            component="div"
+            page={page}
+            rowsPerPageOptions={pages}
+            rowsPerPage={rowsPerPage}
+            count={data.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>{" "}
+      </Card>
     </Container>
   );
 }

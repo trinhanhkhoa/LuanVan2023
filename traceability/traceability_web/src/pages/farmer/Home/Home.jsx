@@ -26,9 +26,9 @@ import { styled, useTheme } from "@mui/material/styles";
 import Loading from "../../../components/Loading";
 import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
 import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
-import { Grid } from "rsuite";
+import { Grid } from "@mui/material";
 import AppWidgetSummary from "../../../components/HeaderCard/HeaderCard";
-import { Card, Container } from "reactstrap";
+import { Card } from "reactstrap";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -39,8 +39,8 @@ const headCell = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.common.white,
+    backgroundColor: "#aed581",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -90,15 +90,15 @@ export default function Home() {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           let data = res.data;
 
           data = data.filter((p) => p.userId == id);
-          console.log(`product has user id: `, data);
+          // console.log(`product has user id: `, data);
 
           let tracking = data;
           tracking = tracking.filter((t) => t.tracking.length != 0);
-          console.log(`tracking: `, tracking);
+          // console.log(`tracking: `, tracking);
 
           setTracking(tracking);
           setData(data);
@@ -106,7 +106,7 @@ export default function Home() {
           tracking.forEach((track, index) => {
             temp += tracking[index].tracking.length;
           });
-          console.log("temp", temp);
+          // console.log("temp", temp);
 
           setLength(temp);
         });
@@ -116,12 +116,6 @@ export default function Home() {
 
     getProduct();
   }, []);
-
-  const totalTracking = () => {
-    for (let i = 0; tracking.length; i++) length += tracking[i].tracking.length;
-    console.log("length: ", length);
-    return length;
-  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -194,7 +188,7 @@ export default function Home() {
   return (
     <Box
       sx={{
-        minHeight: 800,
+        minHeight: 900,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -203,21 +197,22 @@ export default function Home() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
+          flexDirection: "row",
           justifyContent: "right",
           alignItems: "center",
           marginTop: { xs: "10px", md: "10px" },
-          marginBottom: { xs: "10px", md: "10px" },
+          marginBottom: { xs: "10px", md: 3 },
         }}
       >
+        <Loading loading={loading} />
+
         <Button
-          variant="contained"
           sx={{
             marginRight: { xs: "10px", md: "10px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "10rem", md: "5rem" },
-            minHeight: { xs: "10rem", md: "2rem" },
+            minWidth: { xs: "5rem", md: "5rem" },
+            minHeight: { xs: "2rem", md: "2rem" },
             color: "black",
             borderRadius: "10px",
             backgroundColor: "#D0F5BE",
@@ -242,8 +237,8 @@ export default function Home() {
             marginLeft: { xs: "10px", md: "10px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "10rem", md: "5rem" },
-            minHeight: { xs: "10rem", md: "2rem" },
+            minWidth: { xs: "5rem", md: "5rem" },
+            minHeight: { xs: "2rem", md: "2rem" },
             color: "black",
             backgroundColor: "#D0F5BE",
             ":hover": {
@@ -263,66 +258,71 @@ export default function Home() {
           </CardContent>
         </Button>
       </Box>
-      <Box
+      <Grid
+        container
+        spacing={3}
         sx={{
-          display: { xs: "block", md: "flex" },
-          justifyContent: "space-between",
-          // border: "1px solid",
-          marginBottom: 3,
+          marginBottom: 4,
           marginTop: 2,
         }}
       >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            color: "#000",
-            fontSize: "10px",
-            boxShadow:
-              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            backgroundColor: "#D0F5BE",
-            width: "50rem",
-            borderRadius: "10px",
-            marginRight: "20px",
-          }}
-        >
-          <Typography variant="h4">
-            Hi, welcome to Traceability Agriculture
-          </Typography>
-        </Box>
-        <AppWidgetSummary
-          title="Total of products"
-          total={data.length}
-          color="success"
-          icon={"ant-design:android-filled"}
-          sx={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            backgroundColor: "#D0F5BE",
-            width: "29rem",
-            borderRadius: "10px",
-            marginRight: "10px",
-          }}
-        />
+        <Grid item xs={12} sm={6} md={6}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "#000",
+              fontSize: "10px",
+              boxShadow:
+                "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+              backgroundColor: "#D0F5BE",
+              minWidth: { xs: "5rem", md: "50rem" },
+              minHeight: { xs: "5rem", md: "16rem" },
+              borderRadius: "10px",
+              marginRight: '10px'
+            }}
+          >
+            <Typography
+              variant="h4"
+              sx={{ fontSize: { xs: "18px", md: "30px" } }}
+            >
+              Hi, welcome to Traceability Agriculture
+            </Typography>
+          </Box>
+        </Grid>
 
-        <AppWidgetSummary
-          title="Total trackings"
-          total={length}
-          color="success"
-          icon={"ant-design:apple-filled"}
-          sx={{
-            boxShadow:
-              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            backgroundColor: "#D0F5BE",
-            width: "29rem",
-            borderRadius: "10px",
-            marginLeft: "10px",
-          }}
-        />
-      </Box>
-
-      <Loading loading={loading} />
+        <Grid item xs={12} sm={6} md={3}>
+          <AppWidgetSummary
+            title="Total of products"
+            total={data.length}
+            color="success"
+            icon={"ant-design:android-filled"}
+            sx={{
+              boxShadow:
+                "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+              backgroundColor: "#D0F5BE",
+              width: { xs: "28rem", sm: "20rem", md: "28rem" },
+              borderRadius: "10px",
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={3}>
+          <AppWidgetSummary
+            title="Total trackings"
+            total={length}
+            color="success"
+            icon={"ant-design:apple-filled"}
+            sx={{
+              boxShadow:
+                "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+              backgroundColor: "#D0F5BE",
+              width: { xs: "28rem", sm: "20rem", md: "28rem" },
+              borderRadius: "10px",
+            }}
+          />
+        </Grid>
+      </Grid>
 
       <Card>
         <TableContainer

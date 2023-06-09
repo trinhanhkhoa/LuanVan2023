@@ -176,7 +176,8 @@ export default function PersistentDrawerLeft() {
       <AppBar
         position="fixed"
         open={openMenu}
-        color={userType == "admin" ? "warning" : "success"}
+        // color={userType == "admin" ? "#90caf9" : "success"}
+        sx={userType == "admin" ? {backgroundColor: "#fff59d", color: "#000"} : {backgroundColor: "#aed581", color: "#000"}}
       >
         <StyledToolbar>
           <IconButton
