@@ -14,6 +14,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -25,6 +26,9 @@ import { styled, useTheme } from "@mui/material/styles";
 import Loading from "../../../components/Loading";
 import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
 import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
+import { Grid } from "rsuite";
+import AppWidgetSummary from "../../../components/HeaderCard/HeaderCard";
+import { Card, Container } from "reactstrap";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -55,7 +59,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 export default function Home() {
   const [data, setData] = useState([]);
-
+  const [tracking, setTracking] = useState([]);
+  let temp = 0;
+  const [length, setLength] = useState(0);
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
@@ -90,7 +96,19 @@ export default function Home() {
           data = data.filter((p) => p.userId == id);
           console.log(`product has user id: `, data);
 
+          let tracking = data;
+          tracking = tracking.filter((t) => t.tracking.length != 0);
+          console.log(`tracking: `, tracking);
+
+          setTracking(tracking);
           setData(data);
+
+          tracking.forEach((track, index) => {
+            temp += tracking[index].tracking.length;
+          });
+          console.log("temp", temp);
+
+          setLength(temp);
         });
 
       setLoading(false);
@@ -98,6 +116,12 @@ export default function Home() {
 
     getProduct();
   }, []);
+
+  const totalTracking = () => {
+    for (let i = 0; tracking.length; i++) length += tracking[i].tracking.length;
+    console.log("length: ", length);
+    return length;
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -146,7 +170,6 @@ export default function Home() {
       getComparator(order, orderBy)
     ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
 
-    console.log(`sroted `, sorted);
     return sorted;
   };
 
@@ -171,45 +194,33 @@ export default function Home() {
   return (
     <Box
       sx={{
-        minHeight: 900,
+        minHeight: 800,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
       }}
     >
-      <Box
-        sx={{ display: { xs: "none", md: "block" }, marginTop: { xs: "0" } }}
-      >
-        {/* <Carousel class="carousel-home" showThumbs={false}>
-          <div className="news_img">
-            <img src={news_img} />
-          </div>
-          <div className="news_img">
-            <img src={news_img} />
-          </div>
-        </Carousel> */}
-        <Typography variant="h3" sx={{ marginLeft: "3rem" }}>
-          Welcome to Traceability Agriculture{" "}
-        </Typography>
-      </Box>
-
       <Box
         sx={{
           display: "flex",
           flexDirection: { xs: "column", md: "row" },
-          justifyContent: "center",
+          justifyContent: "right",
           alignItems: "center",
+          marginTop: { xs: "10px", md: "10px" },
+          marginBottom: { xs: "10px", md: "10px" },
         }}
       >
         <Button
           variant="contained"
           sx={{
-            borderRadius: "20px",
-            margin: { xs: "10px", md: "3rem" },
+            marginRight: { xs: "10px", md: "10px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "25rem", md: "52rem" },
-            minHeight: { xs: "10rem", md: "20rem" },
+            minWidth: { xs: "10rem", md: "5rem" },
+            minHeight: { xs: "10rem", md: "2rem" },
             color: "black",
-            borderRadius: "20px",
-            backgroundColor: "#D0F5BE", 
+            borderRadius: "10px",
+            backgroundColor: "#D0F5BE",
             ":hover": {
               backgroundColor: "#B6E2A1",
               color: "black",
@@ -220,25 +231,21 @@ export default function Home() {
           }}
         >
           <CardContent>
-            <QrCode2RoundedIcon
-              sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
-            />
-            <Typography>Create product</Typography>
+            {/* <QrCode2RoundedIcon sx={{ fontSize: { xs: "1rem", md: "4rem", margin: 5 } }} /> */}
+            <Typography> Create product</Typography>
           </CardContent>
         </Button>
         <Button
           variant="contained"
-          // color="success"
           sx={{
-            borderRadius: "20px",
-            margin: { xs: "10px", md: "3rem" },
+            borderRadius: "10px",
+            marginLeft: { xs: "10px", md: "10px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "25rem", md: "52rem" },
-            minHeight: { xs: "10rem", md: "20rem" },
+            minWidth: { xs: "10rem", md: "5rem" },
+            minHeight: { xs: "10rem", md: "2rem" },
             color: "black",
-            borderRadius: "20px",
-            backgroundColor: "#D0F5BE", 
+            backgroundColor: "#D0F5BE",
             ":hover": {
               backgroundColor: "#B6E2A1",
               color: "black",
@@ -249,64 +256,124 @@ export default function Home() {
           }}
         >
           <CardContent>
-            <AutorenewRoundedIcon
-              sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
-            />
-            <Typography>Process information</Typography>
+            {/* <AutorenewRoundedIcon
+              sx={{ fontSize: { xs: "1rem", md: "4rem", margin: 5 } }}
+            /> */}
+            <Typography> Process information</Typography>
           </CardContent>
         </Button>
       </Box>
-      <Loading loading={loading} />
-
       <Box
         sx={{
-          width: { xs: "90%", md: "95%" },
-          borderRadius: "10px",
-          marginLeft: { xs: "1.5rem", md: "3rem" },
+          display: { xs: "block", md: "flex" },
+          justifyContent: "space-between",
+          // border: "1px solid",
+          marginBottom: 3,
+          marginTop: 2,
         }}
       >
-        <Table>
-          <TableHead>
-            {headCell.map((item) => (
-              <StyledTableCell
-                key={item.id}
-                sortDirection={orderBy === item.id ? order : false}
-              >
-                {item.disableSorting ? (
-                  item.label
-                ) : (
-                  <TableSortLabel
-                    active={orderBy === item.id}
-                    direction={orderBy === item.id ? order : "asc"}
-                    onClick={() => handleSordRequest(item.id)}
-                  >
-                    {item.label}
-                  </TableSortLabel>
-                )}
-              </StyledTableCell>
-            ))}
-          </TableHead>
-          <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) => (
-              <StyledTableRow key={index + 1}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{item.name}</StyledTableCell>
-                {/* <StyledTableCell>{item.status}</StyledTableCell> */}
-                <StyledTableCell>{item.time}</StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          page={page}
-          rowsPerPageOptions={pages}
-          rowsPerPage={rowsPerPage}
-          count={data.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            color: "#000",
+            fontSize: "10px",
+            boxShadow:
+              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+            backgroundColor: "#D0F5BE",
+            width: "50rem",
+            borderRadius: "10px",
+            marginRight: "20px",
+          }}
+        >
+          <Typography variant="h4">
+            Hi, welcome to Traceability Agriculture
+          </Typography>
+        </Box>
+        <AppWidgetSummary
+          title="Total of products"
+          total={data.length}
+          color="success"
+          icon={"ant-design:android-filled"}
+          sx={{
+            boxShadow:
+              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+            backgroundColor: "#D0F5BE",
+            width: "29rem",
+            borderRadius: "10px",
+            marginRight: "10px",
+          }}
+        />
+
+        <AppWidgetSummary
+          title="Total trackings"
+          total={length}
+          color="success"
+          icon={"ant-design:apple-filled"}
+          sx={{
+            boxShadow:
+              "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+            backgroundColor: "#D0F5BE",
+            width: "29rem",
+            borderRadius: "10px",
+            marginLeft: "10px",
+          }}
         />
       </Box>
+
+      <Loading loading={loading} />
+
+      <Card>
+        <TableContainer
+          sx={{
+            width: "100%",
+            borderRadius: "5px",
+          }}
+        >
+          <Table>
+            <TableHead>
+              {headCell.map((item) => (
+                <StyledTableCell
+                  key={item.id}
+                  sortDirection={orderBy === item.id ? order : false}
+                >
+                  {item.disableSorting ? (
+                    item.label
+                  ) : (
+                    <TableSortLabel
+                      active={orderBy === item.id}
+                      direction={orderBy === item.id ? order : "asc"}
+                      onClick={() => handleSordRequest(item.id)}
+                    >
+                      {item.label}
+                    </TableSortLabel>
+                  )}
+                </StyledTableCell>
+              ))}
+            </TableHead>
+            <TableBody>
+              {recordsAfterPagingAndSorting().map((item, index) => (
+                <StyledTableRow key={index + 1}>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>{item.name}</StyledTableCell>
+                  {/* <StyledTableCell>{item.status}</StyledTableCell> */}
+                  <StyledTableCell>{item.time}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <TablePagination
+            component="div"
+            page={page}
+            rowsPerPageOptions={pages}
+            rowsPerPage={rowsPerPage}
+            count={data.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>
+      </Card>
     </Box>
   );
 }

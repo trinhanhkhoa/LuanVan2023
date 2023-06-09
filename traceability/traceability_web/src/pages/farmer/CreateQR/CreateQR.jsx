@@ -39,26 +39,6 @@ function CreateQR() {
   const [value, setValue] = useState(null);
   const [open, toggleOpen] = useState(false);
 
-  // const upload = async (e) => {
-  //   setLoading(true);
-
-  //   e.preventDefault();
-  //   try {
-  //     let arr = [];
-  //     let imgArr = [];
-  //     for (let i = 0; i < images.length; i++) {
-  //       const data = await uploadImage(images[i]);
-  //       arr.push(data);
-  //       imgArr.push(data.url);
-  //     }
-  //     setLinks(arr);
-  //     setImg(imgArr);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   setLoading(false);
-  // };
-
   const handleClose = () => {
     setDialogValue({
       name: "",
@@ -118,7 +98,7 @@ function CreateQR() {
   return (
     <Container fixed sx={{ justifyContent: "center", alignItems: "center" }}>
       <Form onSubmit={handleSubmit}>
-        <Box sx={{ marginBottom: "10px", textAlign: "center" }}>
+        <Box sx={{ marginBottom: "10px", textAlign: "left" }}>
           <Typography
             variant="h3"
             sx={{

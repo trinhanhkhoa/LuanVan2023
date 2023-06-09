@@ -12,6 +12,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -30,6 +31,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
+import { Card } from "reactstrap";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -234,14 +236,23 @@ function List() {
           Add product
         </Button>
       </Box>
-      <Box>
+      <Card
+        sx={{ border: 0 }}
+      >
+        <TableContainer
+          sx={{
+            width: "100%",
+            borderRadius: "5px",
+          }}
+        > 
         <Toolbar>
           <TextField
             variant="outlined"
-            label="Search product"
+            placeholder="Search product"
             onChange={handleSearch}
             sx={{
               width: { xs: "100%", md: "30%" },
+              marginTop: "20px",
               marginBottom: "20px",
               marginLeft: "0",
             }}
@@ -338,7 +349,7 @@ function List() {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </Box>
+        </TableContainer> </Card>
     </Container>
   );
 }

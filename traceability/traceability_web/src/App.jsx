@@ -22,12 +22,14 @@ import Register from "./components/Register";
 import ProductTracking from "./pages/farmer/ProductTracking/ProductTracking";
 import TrackingForm from "./pages/farmer/TrackingForm/TrackingForm";
 import CreateForm from "./components/Try/CreateForm";
+import UserPage from "./pages/farmer/TrackingForm/UploadImages";
 
 
 function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
 
   return (
+    // <UserPage/>
 
     <div className="App">
       <BrowserRouter>
