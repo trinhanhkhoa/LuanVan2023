@@ -29,42 +29,42 @@ function App() {
   const isSignedIn = window.localStorage.getItem("signedIn");
 
   return (
-    <Home/>
+    // <Home/>
     // <EnHome/>
 
 
-    // <div className="App">
-    //   <BrowserRouter>
-    //     <Routes>
-    //       <Route
-    //         path="/"
-    //         element={isSignedIn == true ? <EnHome /> : <Login />}
-    //       />
-    //       <Route path="/signup" element={<Register />} />
-    //       <Route element={<WithNav />}>
-    //         <Route path="/home" element={<Home />} />
-    //         <Route path="/enhome" element={<EnHome />} />
-    //         <Route path="/list" element={<List />} />
-    //         <Route path="/profile" element={<UserInfo />} />
+    <div className="App">
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={isSignedIn == true ? <EnHome /> : <Login />}
+          />
+          <Route path="/signup" element={<Register />} />
+          <Route element={<WithNav />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/enhome" element={<EnHome />} />
+            <Route path="/list" element={<List />} />
+            <Route path="/profile" element={<UserInfo />} />
 
-    //         <Route path="/product/:id" element={<Product />} />
-    //         <Route path="/createqr" element={<CreateQR />} />
-    //         <Route path="/updateproduct/:id" element={<UpdateProduct />} />
+            <Route path="/product/:id" element={<Product />} />
+            <Route path="/createqr" element={<CreateQR />} />
+            <Route path="/updateproduct/:id" element={<UpdateProduct />} />
 
-    //         <Route path="/process" element={<Process />} />
-    //         <Route path="/processdetail/:id" element={<ProcessDetail />} />
-    //         <Route path="/producttracking/:id" element={<ProductTracking />} />
+            <Route path="/process" element={<Process />} />
+            <Route path="/processdetail/:id" element={<ProcessDetail />} />
+            <Route path="/producttracking/:id" element={<ProductTracking />} />
 
-    //         <Route path="/encreateprocess" element={<EnCreateProcess />} />
-    //         <Route path="/listofprocesses" element={<ListOfProcesses />} />
-    //         <Route path="/enprocess/:id" element={<EnProcess />} />
-    //         <Route path="/enupdateprocess/:id" element={<EnUpdateProcess />} />
-    //         <Route path="/enmanageaccounts" element={<EnManageAccounts />} />
-    //         <Route path="/enuseraccount/:id" element={<EnUserAccount />} />
-    //       </Route>
-    //     </Routes>
-    //   </BrowserRouter>
-    // </div>
+            <Route path="/encreateprocess" element={<EnCreateProcess />} />
+            <Route path="/listofprocesses" element={<ListOfProcesses />} />
+            <Route path="/enprocess/:id" element={<EnProcess />} />
+            <Route path="/enupdateprocess/:id" element={<EnUpdateProcess />} />
+            <Route path="/enmanageaccounts" element={<EnManageAccounts />} />
+            <Route path="/enuseraccount/:id" element={<EnUserAccount />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </div>
   
   );
 }

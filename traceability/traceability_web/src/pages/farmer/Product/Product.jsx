@@ -313,7 +313,7 @@ function Product() {
                       width: 150,
                       lineHeight: 2,
                       m: {xs: 2, md: 0},
-                      mt: {xs: 0, md: 2}
+                      mt: {xs: 2, md: 2}
                     }}
                     onClick={() => {
                       window.location.href = `${url}`;

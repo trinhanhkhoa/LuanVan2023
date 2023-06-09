@@ -43,8 +43,8 @@ const headCell = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.common.white,
+    backgroundColor: "#aed581",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
