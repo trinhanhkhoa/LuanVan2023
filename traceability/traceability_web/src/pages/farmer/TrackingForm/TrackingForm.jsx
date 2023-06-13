@@ -36,26 +36,26 @@ function TrackingForm() {
   const [img, setImg] = useState([]);
 
   const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
   const [amountOfWater, setAmountOfWater] = useState("");
   const [amountOfFertilizer, setAmountOfFertilizer] = useState("");
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
+  const [isDeliveried, setIsDeliveried] = useState(false);
 
   const params = useParams();
 
   const tokenData = window.localStorage.getItem("token");
-  const user = window.localStorage.getItem("userId");
-  const userId = window.localStorage.getItem("userId");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
+    console.log("SUBMITING!!!");
 
     await fetch(
+      // `http://localhost:5000/tracking/add-tracking/${params.id}`,
       `https://backend.teamluanvan.software/tracking/add-tracking/${params.id}`,
       {
         method: "POST",
@@ -67,11 +67,8 @@ function TrackingForm() {
           "Access-Control-Allow-Origin": "*",
         },
         body: JSON.stringify({
-          userId,
-          user,
           name,
           time,
-          address: name,
           images: links,
           description,
         }),
@@ -86,31 +83,52 @@ function TrackingForm() {
         else setSnackbarState(false);
 
         setTimeout(() => {
-          // window.location.href = `/product/${params.id}`;
+          window.location.href = `/product/${params.id}`;
         }, 1500);
       });
     setLoading(false);
   };
 
-  const upload = async (e) => {
-    setLoading(true);
-
+  const handleDelivery = async (e) => {
     e.preventDefault();
-    try {
-      let arr = [];
-      let imgArr = [];
-      for (let i = 0; i < images.length; i++) {
-        const data = await uploadImage(images[i]);
-        arr.push(data);
-        imgArr.push(data.url);
+
+    setLoading(true);
+    console.log("DELIVERING!!!", JSON.stringify(optionsTracking[5]));
+
+    await fetch(
+      `https://backend.teamluanvan.software/tracking/deliveried/${params.id}`,
+      // `http://localhost:5000/tracking/deliveried/${params.id}`,
+
+      {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "x-auth-token": tokenData,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+          name,
+          time,
+          images: links,
+          description,
+        }),
       }
-      setLinks(arr);
-      setImg(imgArr);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
+    )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("data", data);
+
+      if (data.success == true) setSnackbarState(true);
+      else setSnackbarState(false);
+
+      setTimeout(() => {
+        window.location.href = `/product/${params.id}`;
+      }, 1500);
+    });
+  setLoading(false);
+};
 
   return (
     <Container fixed sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -121,7 +139,7 @@ function TrackingForm() {
           maxWidth: "100%",
         }}
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={name !== optionsTracking[5] ? handleSubmit : handleDelivery}
       >
         <Loading loading={loading} />
 
@@ -313,14 +331,27 @@ function TrackingForm() {
             </Box>
           </Box>
           <Box>
-            <Button
-              type="submit"
-              variant="contained"
-              color="warning"
-              sx={{ borderRadius: "10px" }}
-            >
-              Confirm
-            </Button>
+            {name !== optionsTracking[5]
+              ?  (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="warning"
+                    sx={{ borderRadius: "10px" }}
+                  >
+                    Confirm
+                  </Button>
+                )
+              : (
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="warning"
+                    sx={{ borderRadius: "10px" }}
+                  >
+                    Delivery
+                  </Button>
+                )}
           </Box>
         </Box>
 

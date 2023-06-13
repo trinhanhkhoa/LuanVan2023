@@ -5,31 +5,32 @@ import {
   Box,
   Button,
   Container,
-  ImageList,
-  ImageListItem,
-  Snackbar,
-  TextField,
-  TextareaAutosize,
+  Step,
+  Stepper,
+  StepLabel,
+  Paper,
   Typography,
+  CssBaseline,
 } from "@mui/material";
 import { uploadImage } from "../../../components/MultiUpload";
 import dayjs from "dayjs";
 import Loading from "../../../components/Loading";
-import { useForm, Form } from "../../../components/Try/useForm";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import StageProcess from "../Stages/StageProcess";
+import StagePlantSeeds from "../Stages/StagePlantSeeds";
+import StagePlantCare from "../Stages/StagePlantCare";
+import StageBloom from "../Stages/StageBloom";
+import StageCover from "../Stages/StageCover";
+import StageHarvest from "../Stages/StageHarvest";
+import StageSell from "../Stages/StageSell";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function EnCreateProcess() {
-  const [name, setName] = useState("");
-  const [time, setTime] = useState("");
-  const [description, setDescription] = useState("");
-  const [address, setAddress] = useState("");
-  const [images, setImages] = useState([]);
-  const [links, setLinks] = useState([]);
-  const [img, setImg] = useState([]);
+const defaultTheme = createTheme();
 
+function EnCreateProcess() {
   const tokenData = window.localStorage.getItem("token");
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
@@ -40,13 +41,30 @@ function EnCreateProcess() {
   }/${current.getFullYear()}`;
   const [value, setValue] = useState(dayjs(date));
 
+  const [activeStep, setActiveStep] = useState(0);
+  const [data, setData] = useState({
+    stageProcess: {
+      name: "",
+      description: "",
+      images: [],
+      timeCreate: "",
+    },
+    stagePlantSeeds: { name: "", description: "" },
+    stagePlantCare: { name: "", description: "", water: "", fertilizer: "" },
+    stageBloom: { name: "", description: "" },
+    stageCover: { name: "", description: "" },
+    stageHarvest: { name: "", description: "", quantity: "" },
+    stageSell: { name: "", description: "", purchasingUnit: "" },
+  });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userId = JSON.parse(window.localStorage.getItem("user"))._id;
     setLoading(true);
 
-    await fetch("https://localhost:5000/process/add-process", {
+    // await fetch("https://backend.teamluanvan.software/process/add-process", {
+    await fetch("http://localhost:5000/process/add-process", {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -57,17 +75,46 @@ function EnCreateProcess() {
       },
       body: JSON.stringify({
         userId,
-        name,
-        images: links,
-        address,
-        time: value,
-        description,
+        stageProcess: {
+          name: data.stageProcess.name,
+          description: data.stageProcess.description,
+          images: data.stageProcess.images,
+          timeCreate: data.stageProcess.timeCreate,
+        },
+        stagePlantSeeds: {
+          name: data.stagePlantSeeds.name,
+          description: data.stagePlantSeeds.description,
+        },
+        stagePlantCare: {
+          name: data.stagePlantCare.name,
+          description: data.stagePlantCare.description,
+          water: data.stagePlantCare.water,
+          fertilizer: data.stagePlantCare.fertilizer,
+        },
+        stageBloom: {
+          name: data.stageBloom.name,
+          description: data.stageBloom.description,
+        },
+        stageCover: {
+          name: data.stageCover.name,
+          description: data.stageCover.description,
+        },
+        stageHarvest: {
+          name: data.stageHarvest.name,
+          description: data.stageHarvest.description,
+          quantity: data.stageHarvest.quantity,
+        },
+        stageSell: {
+          name: data.stageSell.name,
+          description: data.stageSell.description,
+          purchasingUnit: data.stageSell.purchasingUnit,
+        },
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
-        console.log(time);
+        console.log("BE", data);
+        // console.log(time);
         setLoading(false);
 
         setSnackbarState(true);
@@ -78,240 +125,124 @@ function EnCreateProcess() {
       });
   };
 
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+    console.log("data", data);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+  const steps = [
+    "Create process",
+    "Plant seeds",
+    "Plant care",
+    "Bloom",
+    "Cover",
+    "Harvest",
+    "Sell",
+  ];
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <StageProcess data={data} setData={setData} />;
+      case 1:
+        return <StagePlantSeeds data={data} setData={setData} />;
+      case 2:
+        return <StagePlantCare data={data} setData={setData} />;
+      case 3:
+        return <StageBloom data={data} setData={setData} />;
+      case 4:
+        return <StageCover data={data} setData={setData} />;
+      case 5:
+        return <StageHarvest data={data} setData={setData} />;
+      case 6:
+        return <StageSell data={data} setData={setData} />;
+      default:
+        throw new Error("Unknown step");
+    }
+  };
+
   return (
-    <Container
-      fixed
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: 700,
-      }}
-    >
-      <Form onSubmit={handleSubmit}>
-        <Loading loading={loading} />
-
-        <Box sx={{ marginBottom: "10px", textAlign: "center" }}>
-          <Typography
-            variant="h3"
-            sx={{
-              fontSize: { xs: "30px", md: "48px" },
-              fontWeight: 700,
-            }}
+    <Container sx={{ minHeight: 700 }}>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+        <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+          <Paper
+            variant="outlined"
+            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
           >
-            Describe a process
-          </Typography>
-          <Typography
-            variant="h6"
-            sx={{ fontSize: { xs: "18px", md: "30px" } }}
-          >
-            Process introduction information
-          </Typography>
-        </Box>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "row",
-            margin: { xs: "0", md: "20px" },
-            maxWidth: "100%",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              marginLeft: { xs: 0, md: 5 },
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: { xs: "column", md: "row" },
-                justifyContent: "space-between",
-              }}
-            >
-              <Box
+            <Box sx={{ marginBottom: "10px", textAlign: "left" }}>
+              <Typography
+                variant="h3"
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  marginBottom: 2,
+                  fontSize: { xs: "30px", md: "48px" },
+                  fontWeight: 700,
                 }}
               >
-                <label>
-                  Process's name <b>(*)</b>
-                </label>
-                <TextField
-                  required
-                  variant="outlined"
-                  name="name"
-                  placeholder="Process's name"
-                  type="text"
-                  value={name}
-                  // error={errors.name}
-                  // helperText={errors.name}
-                  onChange={(e) => setName(e.target.value)}
-                  sx={{ width: { xs: 400, md: 600 }, borderRadius: "20%" }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  marginBottom: 2,
-                  marginLeft: {xs: "0", md: "20px"}
-                }}
+                Describe a process
+              </Typography>
+              <Typography
+                variant="h6"
+                sx={{ fontSize: { xs: "18px", md: "30px" } }}
               >
-                <label>
-                  Time <b>(*)</b>
-                </label>
-                <TextField
-                  required
-                  variant="outlined"
-                  type="date"
-                  name="time"
-                  value={time}
-                  format="DD/MM/YYYY"
-                  onChange={(e) => setTime(e.target.value)}
-                  sx={{ width: { xs: 400, md: 400 }, borderRadius: "20%" }}
-                />
-              </Box>
+                Process introduction information
+              </Typography>
             </Box>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-            >
-              <label>
-                Address <b>(*)</b>
-              </label>
-              <TextField
-                required
-                variant="outlined"
-                placeholder="Address"
-                type="text"
-                name="address"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
-                sx={{ width: { xs: 400, md: "100%" }, borderRadius: "20%" }}
-              />
-            </Box>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-            >
-              <label>
-                Image <b>(*)</b>
-              </label>
-              <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    border: "2px dashed #1475cf",
-                    borderRadius: "10px",
-                    height: "200px",
-                    width: "450px",
-                    cursor: "pointer",
-                  }}
-                  onClick={() => {
-                    document.querySelector(".input-field").click();
-                  }}
-                >
-                  <input
-                    className="input-field"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    hidden
-                    onChange={async (e) => {
-                      e.preventDefault();
+            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h5" gutterBottom>
+                  Thank you for your order.
+                </Typography>
+                <Typography variant="subtitle1">
+                  Your order number is #2001539. We have emailed your order
+                  confirmation, and will send you an update when your order has
+                  shipped.
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                      Back
+                    </Button>
+                  )}
 
-                      const MAX_LENGTH = 3;
-                      if (Array.from(e.target.files).length > MAX_LENGTH) {
-                        e.preventDefault();
-                        alert(`Cannot upload files more than ${MAX_LENGTH}`);
-                        return;
-                      }
-
-                      setImages(e.target.files);
-                      console.log(e.target.files);
-                      setLoading(true);
-
-                      try {
-                        let arr = [];
-                        for (let i = 0; i < e.target.files.length; i++) {
-                          const data = await uploadImage(e.target.files[i]);
-                          arr.push(data.url);
-                        }
-                        setLinks(arr);
-                      } catch (error) {
-                        console.log(error);
-                      }
-                      setLoading(false);
-                    }}
-                  />
-                  <ImageList
-                    sx={{ width: { xs: 400, md: 400 }, height: 200, display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center" }}
-                    cols={3}
-                    rowHeight={164}
-                  >
-                    {links &&
-                      links.map((item) => {
-                        return (
-                          <ImageListItem
-                            key={item}
-                            sx={{
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                            }}
-                          >
-                            <img src={item} width={100} height={100} className="image-link" />
-                          </ImageListItem>
-                        );
-                      })}
-                  </ImageList>
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      type="Submit"
+                      variant="contained"
+                      onClick={handleSubmit}
+                      sx={{ mt: 3, ml: 1 }}
+                    >
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 3, ml: 1 }}
+                    >
+                      Next
+                    </Button>
+                  )}
                 </Box>
-            </Box>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-            >
-              <label>
-                Describe information <b>(*)</b>
-              </label>
-              <TextareaAutosize
-                required
-                maxRows={20}
-                aria-label="maximum height"
-                name="description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                style={{ width: "100%", minHeight: "100px" }}
-              />
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          m={1} //margin
-          display="flex"
-          justifyContent="flex-end"
-          alignItems="flex-end"
-        >
-          <Button
-            type="submit"
-            variant="contained"
-            color="warning"
-            sx={{ borderRadius: "10px" }}
-          >
-            Confirm
-          </Button>
-        </Box>
-        <Snackbar open={snackbarState} autoHideDuration={1000}>
-          <Alert severity="success" sx={{ width: "100%" }}>
-            Product is deleted
-          </Alert>
-        </Snackbar>
-      </Form>
+              </React.Fragment>
+            )}
+          </Paper>
+        </Container>
+      </ThemeProvider>
     </Container>
   );
 }

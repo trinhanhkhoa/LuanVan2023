@@ -8,11 +8,13 @@ import {
   Button,
   ButtonGroup,
   Container,
+  Card,
   Input,
   InputAdornment,
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TablePagination,
   TableRow,
@@ -34,8 +36,8 @@ const headCell = [
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.success.light,
-    color: theme.palette.common.white,
+    backgroundColor: "#aed581",
+    color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 14,
@@ -69,23 +71,6 @@ function Process() {
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
   const params = useParams();
-  // console.log(params.id);
-
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
 
   const getProcesses = () => {
     fetch(`https://backend.teamluanvan.software/process/get-processes`, {
@@ -102,7 +87,6 @@ function Process() {
   };
 
   useEffect(() => {
-    tokenIsValid();
     getProcesses();
   }, []);
 
@@ -188,81 +172,88 @@ function Process() {
           LIST OF PROCESSES
         </Typography>
       </Box>
-      <Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            label="Search process"
-            // name={name}
-            // value={value}
-            onChange={handleSearch}
-            sx={{
-              width: { xs: "100%", md: "30%" },
-              marginBottom: "20px",
-              marginLeft: "0",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
-        <Table>
-          <TableHead>
-            {headCell.map((item) => (
-              <StyledTableCell
-                key={item.id}
-                sortDirection={orderBy === item.id ? order : false}
-              >
-                {item.disableSorting ? (
-                  item.label
-                ) : (
-                  <TableSortLabel
-                    active={orderBy === item.id}
-                    direction={orderBy === item.id ? order : "asc"}
-                    onClick={() => handleSordRequest(item.id)}
-                  >
-                    {item.label}
-                  </TableSortLabel>
-                )}
-              </StyledTableCell>
-            ))}
-          </TableHead>
-          <TableBody>
-            {recordsAfterPagingAndSorting().map((item, index) => (
-              <StyledTableRow key={index + 1}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{item.name}</StyledTableCell>
-                <StyledTableCell>{item.time}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      color="info"
-                      onClick={() => {
-                        window.location.href = `/processdetail/${item._id}`;
-                      }}
+      <Card>
+        <TableContainer
+          sx={{
+            width: "100%",
+            borderRadius: "5px",
+          }}
+        >
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Search process"
+              // name={name}
+              // value={value}
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "30%" },
+                marginBottom: "20px",
+                marginLeft: "0",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
+          <Table>
+            <TableHead>
+              {headCell.map((item) => (
+                <StyledTableCell
+                  key={item.id}
+                  sortDirection={orderBy === item.id ? order : false}
+                >
+                  {item.disableSorting ? (
+                    item.label
+                  ) : (
+                    <TableSortLabel
+                      active={orderBy === item.id}
+                      direction={orderBy === item.id ? order : "asc"}
+                      onClick={() => handleSordRequest(item.id)}
                     >
-                      Detail
-                    </Button>
-                  </ButtonGroup>
+                      {item.label}
+                    </TableSortLabel>
+                  )}
                 </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          page={page}
-          rowsPerPageOptions={pages}
-          rowsPerPage={rowsPerPage}
-          count={data.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Box>
+              ))}
+            </TableHead>
+            <TableBody>
+              {recordsAfterPagingAndSorting().map((item, index) => (
+                <StyledTableRow key={index + 1}>
+                  <StyledTableCell>{index + 1}</StyledTableCell>
+                  <StyledTableCell>{item.stageProcess.name}</StyledTableCell>
+                  <StyledTableCell>{item.stageProcess.timeCreate}</StyledTableCell>
+                  <StyledTableCell align="center">
+                    <ButtonGroup variant="contained">
+                      <Button
+                        color="info"
+                        onClick={() => {
+                          window.location.href = `/processdetail/${item._id}`;
+                        }}
+                      >
+                        Detail
+                      </Button>
+                    </ButtonGroup>
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <TablePagination
+            component="div"
+            page={page}
+            rowsPerPageOptions={pages}
+            rowsPerPage={rowsPerPage}
+            count={data.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>{" "}
+      </Card>
     </Container>
   );
 }

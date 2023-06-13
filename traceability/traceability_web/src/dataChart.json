@@ -1,272 +1,37 @@
 [
   {
-    "id": "japan",
-    "color": "hsl(282, 70%, 50%)",
-    "data": [
-      {
-        "x": "plane",
-        "y": 69
-      },
-      {
-        "x": "helicopter",
-        "y": 196
-      },
-      {
-        "x": "boat",
-        "y": 103
-      },
-      {
-        "x": "train",
-        "y": 40
-      },
-      {
-        "x": "subway",
-        "y": 112
-      },
-      {
-        "x": "bus",
-        "y": 48
-      },
-      {
-        "x": "car",
-        "y": 87
-      },
-      {
-        "x": "moto",
-        "y": 4
-      },
-      {
-        "x": "bicycle",
-        "y": 189
-      },
-      {
-        "x": "horse",
-        "y": 277
-      },
-      {
-        "x": "skateboard",
-        "y": 265
-      },
-      {
-        "x": "others",
-        "y": 157
-      }
-    ]
-  },
-  {
-    "id": "france",
-    "color": "hsl(131, 70%, 50%)",
-    "data": [
-      {
-        "x": "plane",
-        "y": 138
-      },
-      {
-        "x": "helicopter",
-        "y": 222
-      },
-      {
-        "x": "boat",
-        "y": 86
-      },
-      {
-        "x": "train",
-        "y": 15
-      },
-      {
-        "x": "subway",
-        "y": 7
-      },
-      {
-        "x": "bus",
-        "y": 102
-      },
-      {
-        "x": "car",
-        "y": 170
-      },
-      {
-        "x": "moto",
-        "y": 278
-      },
-      {
-        "x": "bicycle",
-        "y": 262
-      },
-      {
-        "x": "horse",
-        "y": 19
-      },
-      {
-        "x": "skateboard",
-        "y": 61
-      },
-      {
-        "x": "others",
-        "y": 76
-      }
-    ]
-  },
-  {
-    "id": "us",
-    "color": "hsl(143, 70%, 50%)",
-    "data": [
-      {
-        "x": "plane",
-        "y": 299
-      },
-      {
-        "x": "helicopter",
-        "y": 208
-      },
-      {
-        "x": "boat",
-        "y": 33
-      },
-      {
-        "x": "train",
-        "y": 173
-      },
-      {
-        "x": "subway",
-        "y": 2
-      },
-      {
-        "x": "bus",
-        "y": 158
-      },
-      {
-        "x": "car",
-        "y": 262
-      },
-      {
-        "x": "moto",
-        "y": 198
-      },
-      {
-        "x": "bicycle",
-        "y": 78
-      },
-      {
-        "x": "horse",
-        "y": 177
-      },
-      {
-        "x": "skateboard",
-        "y": 32
-      },
-      {
-        "x": "others",
-        "y": 175
-      }
-    ]
-  },
-  {
-    "id": "germany",
-    "color": "hsl(97, 70%, 50%)",
-    "data": [
-      {
-        "x": "plane",
-        "y": 281
-      },
-      {
-        "x": "helicopter",
-        "y": 104
-      },
-      {
-        "x": "boat",
-        "y": 275
-      },
-      {
-        "x": "train",
-        "y": 129
-      },
-      {
-        "x": "subway",
-        "y": 43
-      },
-      {
-        "x": "bus",
-        "y": 139
-      },
-      {
-        "x": "car",
-        "y": 133
-      },
-      {
-        "x": "moto",
-        "y": 23
-      },
-      {
-        "x": "bicycle",
-        "y": 210
-      },
-      {
-        "x": "horse",
-        "y": 27
-      },
-      {
-        "x": "skateboard",
-        "y": 278
-      },
-      {
-        "x": "others",
-        "y": 279
-      }
-    ]
-  },
-  {
-    "id": "norway",
-    "color": "hsl(19, 70%, 50%)",
-    "data": [
-      {
-        "x": "plane",
-        "y": 249
-      },
-      {
-        "x": "helicopter",
-        "y": 25
-      },
-      {
-        "x": "boat",
-        "y": 277
-      },
-      {
-        "x": "train",
-        "y": 113
-      },
-      {
-        "x": "subway",
-        "y": 62
-      },
-      {
-        "x": "bus",
-        "y": 121
-      },
-      {
-        "x": "car",
-        "y": 125
-      },
-      {
-        "x": "moto",
-        "y": 189
-      },
-      {
-        "x": "bicycle",
-        "y": 8
-      },
-      {
-        "x": "horse",
-        "y": 170
-      },
-      {
-        "x": "skateboard",
-        "y": 91
-      },
-      {
-        "x": "others",
-        "y": 167
-      }
-    ]
+    "stageProcess": {
+      "images": []
+    },
+    "stagePlantSeeds": {
+      "name": "Gieo hạt",
+      "description": "2"
+    },
+    "stagePlantCare": {
+      "name": "Chăm sóc",
+      "description": "3",
+      "water": "10 phút",
+      "fertilizer": "100 gram"
+    },
+    "stageBloom": {
+      "name": "Ra hoa",
+      "description": "4"
+    },
+    "stageCover": {
+      "name": "Đậy trái",
+      "description": "5"
+    },
+    "stageHarvest": {
+      "name": "Thu hoạch",
+      "description": "6",
+      "quantity": "10 tấn"
+    },
+    "stageSell": {
+      "name": "Thu mua",
+      "description": "BÁN",
+      "purchasingUnit": "HCMUS"
+    },
+    "_id": "648816337ffc410572017d65",
+    "__v": 0
   }
 ]

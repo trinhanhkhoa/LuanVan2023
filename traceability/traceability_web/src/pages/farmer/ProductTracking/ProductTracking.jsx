@@ -8,11 +8,11 @@ import { Link, useParams } from "react-router-dom";
 import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import "./ProductTracking.css";
-
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import Loading from "../../../components/Loading";
 import {
   Button,
+  Grid,
   InputAdornment,
   StepContent,
   TextField,
@@ -21,6 +21,9 @@ import {
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "rsuite/dist/rsuite.min.css";
 import Steps from "rsuite/Steps";
+
+import AppOrderTimeline from "../../../components/AppOrderTimeLine";
+import { fDateTime } from "../../../utils/formatTime";
 
 export default function ProductTracking(props) {
   const [data, setData] = useState([]);
@@ -41,7 +44,9 @@ export default function ProductTracking(props) {
       setLoading(true);
 
       await fetch(
+        // `http://localhost:5000/tracking/get-tracking/${id}`,
         `https://backend.teamluanvan.software/tracking/get-tracking/${id}`,
+
         {
           method: "GET",
           headers: {
@@ -51,10 +56,10 @@ export default function ProductTracking(props) {
       )
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           let data = res.data;
 
-          data = data.filter((p) => p.productID == id);
+          data = data.filter((p) => p.productId == id);
           // console.log(`product has user id: `, data);
 
           setData(data);
@@ -73,6 +78,7 @@ export default function ProductTracking(props) {
   });
 
   const filterSearching = () => {
+    console.log(data);
     return filterFn.fn(data);
   };
 
@@ -89,6 +95,24 @@ export default function ProductTracking(props) {
       },
     });
   };
+
+  // return (
+  //   <Grid item xs={12} md={6} lg={4}>
+  //     <AppOrderTimeline
+  //       // title="Order Timeline"
+  //       list={filterSearching().map((item, index) => ({
+  //         id: `${item.id}`,
+  //         title: `${item.name}`,
+  //         userId: `${item.userId}`,
+  //         type: `order${index + 1}`,
+  //         description: `${item.description}`,
+  //         url: `${item.url}`,
+  //         images: `${item.images}`,
+  //         time: `${item.time}`,
+  //       }))}
+  //     />
+  //   </Grid>
+  // );
 
   return (
     <Box
@@ -118,7 +142,7 @@ export default function ProductTracking(props) {
               ),
             }}
           />
-          {trackingLength < 0 ? (
+          {/* {trackingLength < 0 ? (
             ""
           ) : (
             <Button
@@ -135,18 +159,18 @@ export default function ProductTracking(props) {
               {" "}
               Deliveried{" "}
             </Button>
-          )}
+          )} */}
         </Toolbar>
         <Steps current={filterSearching().length  + 1} vertical>
           {/* filterSearching().length != 0 ? ( */}
           {filterSearching().length != 0 ? (
             filterSearching().map((item, index) => (
               <Steps.Item
-                // status='process' 
+                // status='process'
                 title={item.name}
                 description={
                   <Box>
-                    <Typography>Time: {item.time}</Typography>
+                    <Typography>Time: {fDateTime(item.time)}</Typography>
                     <Typography>
                       Check tracking:{" "}
                       <Link

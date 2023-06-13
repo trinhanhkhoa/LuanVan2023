@@ -50,7 +50,8 @@ function ProcessDetail() {
   };
 
   const params = useParams();
-  console.log(params);
+  // console.log(params);
+  const [data, setData] = useState([]);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -75,22 +76,6 @@ function ProcessDetail() {
     return null;
   };
 
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
-
   const getInfoProcess = async () => {
     const data = await fetch(
       `https://backend.teamluanvan.software/process/get-process/${params.id}`,
@@ -105,12 +90,12 @@ function ProcessDetail() {
       .then((res) => res.data);
     console.log(data);
 
-    setName(data.name);
-    setAddress(data.address);
-    setDescription(data.description);
-    setImages(data.images);
+    setData(data);
+    setName(data.stageProcess.name);
+    setTime(data.stageProcess.timeCreate);
+    setDescription(data.stageProcess.description);
 
-    const mappingImages = await prepareImages(data.images);
+    const mappingImages = await prepareImages(data.stageProcess.images);
 
     if (mappingImages) setImg([...mappingImages[0]]);
   };
@@ -125,7 +110,6 @@ function ProcessDetail() {
   };
 
   useEffect(() => {
-    tokenIsValid();
     getInfoProcess();
   }, []);
 
@@ -188,9 +172,13 @@ function ProcessDetail() {
             <Typography variant="h4" sx={{ mb: 3 }}>
               Name: {name}
             </Typography>
-            <Typography sx={{ lineHeight: 3 }} variant="h5">
-              Address: {address}
+            <Typography
+              variant="body"
+              sx={{ mb: 1, fontSize: { xs: "12px", md: "15px" } }}
+            >
+              Created Time: {time}
             </Typography>
+            <Divider sx={{ mt: 2, mb: 2 }} />
             <Typography
               variant="body"
               sx={{ lineHeight: 2, whiteSpace: "pre-line", maxWidth: 700 }}

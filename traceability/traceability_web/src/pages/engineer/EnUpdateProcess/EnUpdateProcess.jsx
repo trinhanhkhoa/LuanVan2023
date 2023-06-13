@@ -6,12 +6,12 @@ import {
   Box,
   Button,
   Container,
-  Grid,
-  ImageList,
-  ImageListItem,
-  TextField,
-  TextareaAutosize,
+  Step,
+  Stepper,
+  StepLabel,
+  Paper,
   Typography,
+  CssBaseline,
 } from "@mui/material";
 import dayjs from "dayjs";
 import moment from "moment";
@@ -19,14 +19,55 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import StageProcess from "../Stages/StageProcess";
+import StagePlantSeeds from "../Stages/StagePlantSeeds";
+import StagePlantCare from "../Stages/StagePlantCare";
+import StageBloom from "../Stages/StageBloom";
+import StageCover from "../Stages/StageCover";
+import StageHarvest from "../Stages/StageHarvest";
+import StageSell from "../Stages/StageSell";
+
+const defaultTheme = createTheme();
 
 function EnUpdateProcess() {
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [time, setTime] = useState("");
-  const [description, setDescription] = useState("");
-  const [address, setAddress] = useState("");
-  const [images, setImages] = useState([]);
+  const [getData, setGetData] = useState({
+    stageProcess: {
+      name: "",
+      description: "",
+      images: [],
+      timeCreate: "",
+    },
+    stagePlantSeeds: { name: "", description: "" },
+    stagePlantCare: { name: "", description: "", water: "", fertilizer: "" },
+    stageBloom: { name: "", description: "" },
+    stageCover: { name: "", description: "" },
+    stageHarvest: { name: "", description: "", quantity: "" },
+    stageSell: { name: "", description: "", purchasingUnit: "" },
+  });
+  // const [stageProcess, setStateProcess] = useState({
+  //   name: "",
+  //   description: "",
+  //   images: [],
+  //   timeCreate: "",
+  // });
+
+  const [activeStep, setActiveStep] = useState(0);
+  const [data, setData] = useState({
+    stageProcess: {
+      name: "",
+      description: "",
+      images: [],
+      timeCreate: "",
+    },
+    stagePlantSeeds: { name: "", description: "" },
+    stagePlantCare: { name: "", description: "", water: "", fertilizer: "" },
+    stageBloom: { name: "", description: "" },
+    stageCover: { name: "", description: "" },
+    stageHarvest: { name: "", description: "", quantity: "" },
+    stageSell: { name: "", description: "", purchasingUnit: "" },
+  });
 
   const params = useParams();
 
@@ -39,24 +80,8 @@ function EnUpdateProcess() {
   }/${current.getFullYear()}`;
   const [value, setValue] = useState(dayjs(date));
 
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
-
-  const getInfoProcess = () => {
-    fetch(
+  const getInfoProcess = async () => {
+    const data = await fetch(
       `https://backend.teamluanvan.software/process/get-process/${params.id}`,
       {
         method: "GET",
@@ -66,20 +91,20 @@ function EnUpdateProcess() {
       }
     )
       .then((res) => res.json())
-      .then((data) => {
-        setName(data.data.name);
-        setDescription(data.data.description);
-        setTime(data.data.time);
-        setAddress(data.data.address);
-        setImages(data.data.images);
-
-        console.log(data.data);
-      });
+      .then((res) => res.data);
+    console.log(data);
+    setData(data);
+    // setName(data.stageProcess.name);
+    // setDescription(data.stageProcess.description);
+    // setTime(data.stageProcess.time);
+    // setAddress(data.data.address);
+    // setImages(data.data.images);
   };
 
-  const putInfoProcess = () => {
-    fetch(
-      `https://backend.teamluanvan.software/process/update-process/${params.id}`,
+  const handleUpdate = async () => {
+    await fetch(
+      // `https://backend.teamluanvan.software/process/update-process/${params.id}`,
+      `http://localhost:5000/process/update-process/${params.id}`,
       {
         method: "PUT",
         crossDomain: true,
@@ -91,176 +116,166 @@ function EnUpdateProcess() {
         },
         body: JSON.stringify({
           userId,
-          name,
-          time: value,
-          description,
+          stageProcess: {
+            name: data.stageProcess.name,
+            description: data.stageProcess.description,
+            images: data.stageProcess.images,
+            timeCreate: data.stageProcess.timeCreate,
+          },
+          stagePlantSeeds: {
+            name: data.stagePlantSeeds.name,
+            description: data.stagePlantSeeds.description,
+          },
+          stagePlantCare: {
+            name: data.stagePlantCare.name,
+            description: data.stagePlantCare.description,
+            water: data.stagePlantCare.water,
+            fertilizer: data.stagePlantCare.fertilizer,
+          },
+          stageBloom: {
+            name: data.stageBloom.name,
+            description: data.stageBloom.description,
+          },
+          stageCover: {
+            name: data.stageCover.name,
+            description: data.stageCover.description,
+          },
+          stageHarvest: {
+            name: data.stageHarvest.name,
+            description: data.stageHarvest.description,
+            quantity: data.stageHarvest.quantity,
+          },
+          stageSell: {
+            name: data.stageSell.name,
+            description: data.stageSell.description,
+            purchasingUnit: data.stageSell.purchasingUnit,
+          },
         }),
       }
     )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        window.location.href = "/listofprocesses";
+        // window.location.href = "/listofprocesses";
       });
   };
 
   useEffect(() => {
-    tokenIsValid();
     getInfoProcess();
   }, []);
 
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+    console.log("data", data);
+  };
+
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+  };
+
+  const steps = [
+    "Create process",
+    "Plant seeds",
+    "Plant care",
+    "Bloom",
+    "Cover",
+    "Harvest",
+    "Sell",
+  ];
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <StageProcess data={data} setData={setData} />;
+      case 1:
+        return <StagePlantSeeds data={data} setData={setData} />;
+      case 2:
+        return <StagePlantCare data={data} setData={setData} />;
+      case 3:
+        return <StageBloom data={data} setData={setData} />;
+      case 4:
+        return <StageCover data={data} setData={setData} />;
+      case 5:
+        return <StageHarvest data={data} setData={setData} />;
+      case 6:
+        return <StageSell data={data} setData={setData} />;
+      default:
+        throw new Error("Unknown step");
+    }
+  };
+
   return (
-    <Container
-      fixed
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: 800,
-      }}
-    >
-      <Box sx={{ marginBottom: "10px" }} onSubmit={putInfoProcess}>
-        <Typography
-          variant="h3"
-          sx={{
-            fontSize: { xs: "30px", md: "48px" },
-            fontWeight: 700,
-          }}
-        >
-          Update process information
-        </Typography>
-        {/* <Typography variant="h6" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
-          Product introduction information
-        </Typography> */}
-      </Box>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          margin: { xs: "0", md: "20px" },
-        }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            marginLeft: { xs: 0, md: 5 },
-          }}
-        >
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+    <Container sx={{ minHeight: 700 }}>
+      <ThemeProvider theme={defaultTheme}>
+        <CssBaseline />
+        <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>
+          <Paper
+            variant="outlined"
+            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
           >
-            <label>
-              Product's name <b>(*)</b>
-            </label>
-            <TextField
-              required
-              variant="outlined"
-              placeholder="Product's name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
-            />
-          </Box>
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Time <b>(*)</b>
-            </label>
-            <TextField
-              required
-              variant="outlined"
-              type="date"
-              value={time}
-              format="DD/MM/YYYY"
-              onChange={(e) => setTime(e.target.value)}
-              sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
-            />
-          </Box>
-
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Address <b>(*)</b>
-            </label>
-            <TextField
-              required
-              variant="outlined"
-              placeholder="Address"
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
-            />
-          </Box>
-
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Image <b>(*)</b>
-            </label>
-            <input
-              required
-              type="file"
-              // className="image-field"
-              multiple
-              hidden
-              onChange={(e) => setImages(e.target.files)}
-            />
-            <ImageList
-              sx={{ width: { xs: 400, md: 400 }, height: 200 }}
-              cols={3}
-              rowHeight={164}
-            >
-              {images.map((item, index) => {
-                return (
-                  <ImageListItem key={index}>
-                    <img src={item} width={200} height={200} />
-                  </ImageListItem>
-                );
-              })}
-            </ImageList>
-          </Box>
-          <Box
-            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-          >
-            <label>
-              Describe information <b>(*)</b>
-            </label>
-            <Box sx={{ width: { xs: 400, md: "100%" } }}>
-              <TextareaAutosize
-                required
-                maxRows={20}
-                aria-label="maximum height"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                style={{ width: "100%", minHeight: "100px" }}
-              />
+            <Box sx={{ marginBottom: "10px", textAlign: "left" }}>
+              <Typography
+                variant="h3"
+                sx={{
+                  fontSize: { xs: "30px", md: "40px" },
+                  fontWeight: 500,
+                }}
+              >
+                Update process {name}
+              </Typography>
             </Box>
-          </Box>
-        </Box>
-      </Box>
-      <Box
-        m={1} //margin
-        display="flex"
-        justifyContent="flex-end"
-        alignItems="flex-end"
-      >
-        <Button
-          type="submit"
-          variant="contained"
-          color="warning"
-          sx={{ borderRadius: "10px" }}
-          onClick={putInfoProcess}
-        >
-          Confirm
-        </Button>
-      </Box>
+            <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+              {steps.map((label) => (
+                <Step key={label}>
+                  <StepLabel>{label}</StepLabel>
+                </Step>
+              ))}
+            </Stepper>
+            {activeStep === steps.length ? (
+              <React.Fragment>
+                <Typography variant="h5" gutterBottom>
+                  Thank you for your order.
+                </Typography>
+                <Typography variant="subtitle1">
+                  Your order number is #2001539. We have emailed your order
+                  confirmation, and will send you an update when your order has
+                  shipped.
+                </Typography>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {getStepContent(activeStep)}
+                <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+                  {activeStep !== 0 && (
+                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                      Back
+                    </Button>
+                  )}
+
+                  {activeStep === steps.length - 1 ? (
+                    <Button
+                      type="Submit"
+                      variant="contained"
+                      onClick={handleUpdate}
+                      sx={{ mt: 3, ml: 1 }}
+                    >
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ mt: 3, ml: 1 }}
+                    >
+                      Next
+                    </Button>
+                  )}
+                </Box>
+              </React.Fragment>
+            )}
+          </Paper>
+        </Container>
+      </ThemeProvider>
     </Container>
   );
 }

@@ -51,6 +51,8 @@ function EnProcess() {
   const params = useParams();
   console.log("params", params);
 
+  const [data, setData] = useState([]);
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
@@ -73,21 +75,6 @@ function EnProcess() {
     }
     return null;
   };
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
 
   const getInfoProcess = async () => {
     const data = await fetch(
@@ -101,16 +88,12 @@ function EnProcess() {
     )
       .then((res) => res.json())
       .then((res) => res.data);
-    console.log(data);
-    setName(data.name);
-    setAddress(data.address);
-    setDescription(data.description);
-    setTime(data.time);
-    setImages(data.images);
-
-    console.log(data.data);
-
-    const mappingImages = await prepareImages(data.images);
+    console.log("data",data.stageProcess);
+    setData(data);
+    setName(data.stageProcess.name);
+    setTime(data.stageProcess.timeCreate);
+    setDescription(data.stageProcess.description);
+    const mappingImages = await prepareImages(data.stageProcess.images);
 
     if (mappingImages) setImg([...mappingImages[0]]);
   };
@@ -127,7 +110,6 @@ function EnProcess() {
   };
 
   useEffect(() => {
-    tokenIsValid();
     getInfoProcess();
   }, []);
 
@@ -233,12 +215,6 @@ function EnProcess() {
               sx={{ mb: 1, fontSize: { xs: "12px", md: "15px" } }}
             >
               Created Time: {time}
-            </Typography>
-            <Typography
-              sx={{ lineHeight: 3, fontSize: { xs: "12px", md: "15px" } }}
-              variant="h5"
-            >
-              Address: {address}
             </Typography>
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Typography

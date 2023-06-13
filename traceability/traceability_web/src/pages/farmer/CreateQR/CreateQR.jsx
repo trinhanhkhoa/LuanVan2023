@@ -15,7 +15,6 @@ import {
 import Loading from "../../../components/Loading";
 import { useForm, Form } from "../../../components/Try/useForm";
 import MuiAlert from "@mui/material/Alert";
-import Dropzone from "react-dropzone";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -64,6 +63,8 @@ function CreateQR() {
 
     setLoading(true);
     await fetch("https://backend.teamluanvan.software/product/add-product", {
+    // await fetch("http://localhost:5000/product/add-product", {
+
       method: "POST",
       crossDomain: true,
       headers: {

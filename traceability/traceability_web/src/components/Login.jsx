@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, THEME_ID, ThemeProvider } from "@mui/material/styles";
 import {
   Card,
   FormControl,
@@ -20,6 +20,7 @@ import {
   InputAdornment,
   InputLabel,
   Snackbar,
+  Paper,
 } from "@mui/material";
 import Register from "./Register";
 import login_background from "../asserts/login_bg.jpg";
@@ -29,10 +30,13 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import avatarImg from "../asserts/logo.png";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+
+const defaultTheme = createTheme();
 
 function Copyright(props) {
   return (
@@ -129,156 +133,136 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        style={{
-          backgroundImage: `url(${login_background})`,
-          backgroundSize: "cover",
-          height: "100vh",
-        }}
-      >
-        <Loading loading={loading} />
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
 
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
+              my: 8,
+              mx: 4,
               display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Card
-              sx={{
-                marginTop: "50%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "rgba(255, 255, 255, .4)",
-                padding: "30px",
-                borderRadius: "10px",
-              }}
-            >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5" color="black">
-                Welcome to website!
-              </Typography>
-              <Typography
-                component="h3"
-                variant="h5"
-                fontStyle={"italic"}
-                fontSize={"15px"}
-                color="black"
-              >
-                Please enter your account
-              </Typography>
-              <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
-                {/* <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                  <AlternateEmailRoundedIcon
-                    sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                  />
+            <Avatar
+              sx={{ width: 100, height: 100, m: 2, bgcolor: "secondary.main" }}
+              src={avatarImg}
+            />
+            {/* <LockOutlinedIcon /> */}
+            {/* </Avatar> */}
+            <Typography component="h1" variant="h5">
+              Sign in
+            </Typography>
+            <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
                   <TextField
                     margin="normal"
                     required
                     fullWidth
-                    variant="standard"
+                    placeholder="Email Address"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <AccountCircle />
+                        </InputAdornment>
+                      ),
+                    }}
                   />
-                </Box> */}
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  value={email}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <AccountCircle />
-                      </InputAdornment>
-                    ),
-                  }}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  // type="password"
-                  value={password}
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">
-                        <KeyRoundedIcon />
-                      </InputAdornment>
-                    ),
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  type={showPassword ? "text" : "password"}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-
-                {/* <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label={
-                    <InputLabel style={{ color: "#000" }}>
-                      Remember me
-                    </InputLabel>
-                  }
-                /> */}
-                <Button
-                  type="button"
-                  fullWidth
-                  variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  onClick={handleSubmit}
-                >
-                  Sign In
-                  {/* <Link href='/' underline="none" color="white">Sign In</Link> */}
-                </Button>
-                <Grid container>
-                  <Grid item xs>
-                    <Link href="#" variant="body2">
-                      Forgot password?
-                    </Link>
-                  </Grid>
-                  <Grid item>
-                    <Link href="/signup" variant="body2">
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
+                </Grid>{" "}
+                <Grid item xs={12}>
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="password"
+                    placeholder="Password"
+                    value={password}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <KeyRoundedIcon />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    type={showPassword ? "text" : "password"}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
                 </Grid>
-              </Box>
-            </Card>
+              </Grid>
+
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick={handleSubmit}
+              >
+                Sign In
+              </Button>
+              <Grid container>
+                <Grid item>
+                  <Link href="/signup" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </Grid>
+              </Grid>
+              <Copyright sx={{ mt: 5 }} />
+            </Box>
           </Box>
-          <Snackbar
-            open={snackbarState}
-            autoHideDuration={1000}
-            // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-          >
-            {isValid == true ? (
-              <Alert severity="success" sx={{ width: "100%" }}>
-                Login successfull !!!
-              </Alert>
-            ) : (
-              <Alert severity="error" sx={{ width: "100%" }}>
-                Incorrect email or password !!!
-              </Alert>
-            )}
-          </Snackbar>
-          <Copyright sx={{ mt: 8, mb: 4 }} />
-        </Container>
-      </Box>
+        </Grid>
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage:
+              "url(https://source.unsplash.com/random?wallpapers)",
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+      </Grid>
+      <Snackbar
+        open={snackbarState}
+        autoHideDuration={1000}
+        // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+      >
+        {isValid == true ? (
+          <Alert severity="success" sx={{ width: "100%" }}>
+            Login successfull !!!
+          </Alert>
+        ) : (
+          <Alert severity="error" sx={{ width: "100%" }}>
+            Incorrect email or password !!!
+          </Alert>
+        )}
+      </Snackbar>
     </ThemeProvider>
   );
 }

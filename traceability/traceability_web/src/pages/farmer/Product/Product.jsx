@@ -52,25 +52,6 @@ export const ProductDetail = styled(Box)(({ theme }) => ({
   },
 }));
 
-const test = [
-  {
-    image:
-      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
-  },
-  {
-    image:
-      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
-  },
-  {
-    image:
-      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
-  },
-  {
-    image:
-      "https://res.cloudinary.com/ds6usv4r6/image/upload/v1685856548/xgljjs5dnai4qohxllv1.jpg",
-  },
-];
-
 export const ProductImage = styled("img")(({ src, theme }) => ({
   src: `url(${src})`,
   width: "100%",
@@ -154,33 +135,34 @@ function Product() {
 
       const data = await fetch(
         `https://backend.teamluanvan.software/product/get-product/${params.id}`,
+        // `http://localhost:5000/product/get-product/${params.id}`,
         {
           method: "GET",
           headers: {
             "x-auth-token": tokenData,
           },
         }
-      )
-        .then((res) => res.json())
-        //   // if(data.dataBC[6] == 0)
-        //   //   setStatus("CREATED");
-        //   // else if(data.dataBD[6] === "")
-        //   // console.log(data.data.images);
-        //   // console.log(test);
-        .then((res) => res.data);
+      ).then((res) => res.json());
+
+      // .then((res) => res.data);
       console.log(data);
-      setName(data.name);
-      setAddress(data.address);
-      setDescription(data.description);
-      setTime(data.time);
-      setTracking(data.tracking);
-      setUrl(data.url);
-      setImages(data.images);
+      setName(data.data.name);
+      setAddress(data.data.address);
+      setDescription(data.data.description);
+      setTime(data.data.time);
+      setTracking(data.data.tracking);
+      setUrl(data.data.url);
+      setImages(data.data.images);
+
+      if (data.dataBC[6] == 0) setStatus("CREATED");
+      else if (data.dataBC[6] == 1) setStatus("UPDATED");
+      else if (data.dataBC[6] == 2) setStatus("DELETED");
+      else if (data.dataBC[6] == 3) setStatus("DELIVERIED");
 
       setLoading(false);
 
       // mapping
-      const mappingImages = await prepareImages(data.images);
+      const mappingImages = await prepareImages(data.data.images);
 
       if (mappingImages) setImg([...mappingImages[0]]);
     };
@@ -266,20 +248,20 @@ function Product() {
                 </Typography>
                 <Typography
                   variant="body"
-                  sx={{ lineHeight: 2,fontSize: { xs: "15px", md: "15px" } }}
+                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" } }}
                 >
-                  Status: CREATED
+                  Status: {status}
                 </Typography>
                 <Typography
-                  sx={{ lineHeight: 2,fontSize: { xs: "15px", md: "15px" } }}
+                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" } }}
                   variant="body"
                 >
                   Address: {address}
                 </Typography>
                 <Box
                   sx={{
-                    display: {xs: "flex", md: "block"},
-                    flexDirection: { xs: "row", md: "column"},
+                    display: { xs: "flex", md: "block" },
+                    flexDirection: { xs: "row", md: "column" },
                     alignItems: "center",
                   }}
                 >
@@ -312,8 +294,8 @@ function Product() {
                       borderRadius: "10px",
                       width: 150,
                       lineHeight: 2,
-                      m: {xs: 2, md: 0},
-                      mt: {xs: 2, md: 2}
+                      m: { xs: 2, md: 0 },
+                      mt: { xs: 2, md: 2 },
                     }}
                     onClick={() => {
                       window.location.href = `${url}`;
@@ -339,12 +321,14 @@ function Product() {
             </Box>
 
             <Divider sx={{ mt: 2, mb: 2 }} />
-            <Box
-              sx={{ display: "flex", flexDirection: "column" }}
-            >
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
               <Typography
                 variant="body"
-                sx={{ lineHeight: 2, whiteSpace: "pre-line", width: {xs: 300, md: 800} }}
+                sx={{
+                  lineHeight: 2,
+                  whiteSpace: "pre-line",
+                  width: { xs: 300, md: 800 },
+                }}
               >
                 {" "}
                 <ReactReadMoreReadLess
@@ -361,11 +345,21 @@ function Product() {
                 <Button
                   variant="contained"
                   color="success"
-                  sx={{
-                    borderRadius: "10px",
-                    width: { xs: 100, md: 200 },
-                    mr: 2,
-                  }}
+                  sx={
+                    status === "DELETED" || status === "DELIVERIED"
+                      ? {
+                          display: "none",
+                          borderRadius: "10px",
+                          width: { xs: 100, md: 200 },
+                          mr: 2,
+                        }
+                      : {
+                          display: "block",
+                          borderRadius: "10px",
+                          width: { xs: 100, md: 200 },
+                          mr: 2,
+                        }
+                  }
                   onClick={() => {
                     setOpenPopup(true);
                   }}
@@ -379,18 +373,6 @@ function Product() {
                 >
                   <TrackingForm />
                 </Popup>
-                {/* <Button
-                  variant="contained"
-                  color="error"
-                  sx={{
-                    borderRadius: "10px",
-                    width: { xs: 100, md: 200 },
-                    mr: 2,
-                  }}
-                  onClick={() => deleteProduct(params.id)}
-                >
-                  Delete Product
-                </Button> */}
                 <Button
                   variant="contained"
                   color="warning"

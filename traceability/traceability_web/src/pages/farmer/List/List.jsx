@@ -6,6 +6,7 @@ import {
   Button,
   ButtonGroup,
   Container,
+  Card,
   IconButton,
   Input,
   InputAdornment,
@@ -31,13 +32,14 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
-import { Card } from "reactstrap";
+import AddIcon from '@mui/icons-material/Add';
+
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
   { id: "length", label: "Tracking" },
-  { id: "time", label: "End time" },
+  { id: "time", label: "Time Create" },
   { id: "button", label: "" },
 ];
 
@@ -63,6 +65,9 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function List() {
   const [data, setData] = useState([]);
+  const [name, setName] = useState([]);
+  const [trackingLength, setTrackingLength] = useState([]);
+  const [timeCreate, setTimeCreate] = useState([]);
 
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
@@ -84,34 +89,8 @@ function List() {
     const getProducts = async () => {
       setLoading(true);
 
-      await fetch(`https://backend.teamluanvan.software/product/get-product`, {
-        method: "GET",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          // console.log(res.data);
-          let data = res.data;
-
-          data = data.filter((p) => p.userId == id);
-          console.log(`product has user id: `, data);
-
-          setData(data);
-        });
-
-      setLoading(false);
-    };
-    getProducts();
-  }, []);
-
-  useEffect(() => {
-    const getTracking = async () => {
-      setLoading(true);
-
-      await fetch(
-        `https://backend.teamluanvan.software/tracking/get-tracking/${id}`,
+      let data = await fetch(
+        `https://backend.teamluanvan.software/product/get-product`,
         {
           method: "GET",
           headers: {
@@ -120,20 +99,16 @@ function List() {
         }
       )
         .then((res) => res.json())
-        .then((res) => {
-          console.log(res.data);
-          let data = res.data;
+        .then((res) => res.data);
 
-          data = data.filter((p) => p.productID == id);
-          // console.log(`product has user id: `, data);
+      data = data.filter((p) => p.userId == id);
+      console.log(`product has user id: `, data);
 
-          setData(data);
-        });
+      setData(data);
 
       setLoading(false);
     };
-
-    getTracking();
+    getProducts();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -225,131 +200,136 @@ function List() {
           color="success"
           sx={{
             borderRadius: "10px",
-            width: { xs: "120px", md: "180px" },
-            height: { xs: "30px", md: "50px" },
+            width: { xs: "140px", md: "140px" },
+            height: { xs: "40px", md: "40px" },
             fontSize: { xs: "12px", md: "16px" },
+            backgroundColor: "#D0F5BE",
+            color: "black",
+            ":hover": {
+              backgroundColor: "#B6E2A1",
+            },
           }}
           onClick={() => {
             window.location.href = "/createqr";
           }}
         >
-          Add product
+          <AddIcon /> Create
         </Button>
       </Box>
-      <Card
-        sx={{ border: 0 }}
-      >
+      <Card>
         <TableContainer
           sx={{
             width: "100%",
             borderRadius: "5px",
           }}
-        > 
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            placeholder="Search product"
-            onChange={handleSearch}
-            sx={{
-              width: { xs: "100%", md: "30%" },
-              marginTop: "20px",
-              marginBottom: "20px",
-              marginLeft: "0",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
-        <Table>
-          <TableHead>
-            {headCell.map((item) => (
-              <StyledTableCell
-                key={item.id}
-                sortDirection={orderBy === item.id ? order : false}
-              >
-                {item.disableSorting ? (
-                  item.label
-                ) : (
-                  <TableSortLabel
-                    active={orderBy === item.id}
-                    direction={orderBy === item.id ? order : "asc"}
-                    onClick={() => handleSordRequest(item.id)}
-                  >
-                    {item.label}
-                  </TableSortLabel>
-                )}
-              </StyledTableCell>
-            ))}
-          </TableHead>
-          <TableBody>
-            {recordsAfterPagingAndSorting() && recordsAfterPagingAndSorting().map((item, index) => (
-              <StyledTableRow key={index + 1}>
-                <StyledTableCell>{index + 1}</StyledTableCell>
-                <StyledTableCell>{item.name}</StyledTableCell>
-                <StyledTableCell>{item.tracking.length}</StyledTableCell>
-                <StyledTableCell>{item.time}</StyledTableCell>
-                <StyledTableCell align="center">
-                  <Box>
-                    <Tooltip title="Detail">
-                      <IconButton
-                        color="info"
-                        onClick={() => {
-                          window.location.href = `/product/${item._id}`;
-                        }}
-                      >
-                        <SearchIcon />
-                      </IconButton>
-                    </Tooltip>
-
-                    <Tooltip title="Edit">
-                      <IconButton
-                        color="success"
-                        onClick={() => {
-                          window.location.href = `/updateproduct/${item._id}`;
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Tooltip title="Delete">
-                      <IconButton
-                        color="error"
-                        onClick={() => {
-                          setOpenPopup(true);
-                          setIdPopup(item._id);
-                        }}
-                      >
-                        <DeleteIcon />
-                      </IconButton>
-                    </Tooltip>
-                    <Popup
-                      title="Confirm Delete"
-                      openPopup={openPopup}
-                      setOpenPopup={setOpenPopup}
+        >
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Search product"
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "30%" },
+                marginTop: "20px",
+                marginBottom: "20px",
+                marginLeft: "0",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
+          <Table>
+            <TableHead>
+              {headCell.map((item) => (
+                <StyledTableCell
+                  key={item.id}
+                  sortDirection={orderBy === item.id ? order : false}
+                >
+                  {item.disableSorting ? (
+                    item.label
+                  ) : (
+                    <TableSortLabel
+                      active={orderBy === item.id}
+                      direction={orderBy === item.id ? order : "asc"}
+                      onClick={() => handleSordRequest(item.id)}
                     >
-                      <ConfirmNotice id={IdPopup} />
-                    </Popup>
-                  </Box>
+                      {item.label}
+                    </TableSortLabel>
+                  )}
                 </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <TablePagination
-          component="div"
-          page={page}
-          rowsPerPageOptions={pages}
-          rowsPerPage={rowsPerPage}
-          count={data.length}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-        </TableContainer> </Card>
+              ))}
+            </TableHead>
+            <TableBody>
+              {recordsAfterPagingAndSorting() &&
+                recordsAfterPagingAndSorting().map((item, index) => (
+                  <StyledTableRow key={index + 1}>
+                    <StyledTableCell>{index + 1}</StyledTableCell>
+                    <StyledTableCell>{item.name}</StyledTableCell>
+                    <StyledTableCell>{item.tracking.length}</StyledTableCell>
+                    <StyledTableCell>{item.time}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Box>
+                        <Tooltip title="Detail">
+                          <IconButton
+                            color="info"
+                            onClick={() => {
+                              window.location.href = `/product/${item._id}`;
+                            }}
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </Tooltip>
+
+                        <Tooltip title="Edit">
+                          <IconButton
+                            color="success"
+                            onClick={() => {
+                              window.location.href = `/updateproduct/${item._id}`;
+                            }}
+                          >
+                            <EditIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                          <IconButton
+                            color="error"
+                            onClick={() => {
+                              setOpenPopup(true);
+                              setIdPopup(item._id);
+                            }}
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Popup
+                          title="Confirm Delete"
+                          openPopup={openPopup}
+                          setOpenPopup={setOpenPopup}
+                        >
+                          <ConfirmNotice id={IdPopup} />
+                        </Popup>
+                      </Box>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
+            </TableBody>
+          </Table>
+          <TablePagination
+            component="div"
+            page={page}
+            rowsPerPageOptions={pages}
+            rowsPerPage={rowsPerPage}
+            count={data.length}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </TableContainer>{" "}
+      </Card>
     </Container>
   );
 }

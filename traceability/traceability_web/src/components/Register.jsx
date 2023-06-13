@@ -21,14 +21,17 @@ import {
   Radio,
   RadioGroup,
   Snackbar,
+  Paper,
 } from "@mui/material";
 import login_background from "../asserts/login_bg.jpg";
 import { useForm, Form } from "./Try/useForm";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 import KeyRoundedIcon from "@mui/icons-material/KeyRounded";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import PermIdentityRoundedIcon from '@mui/icons-material/PermIdentityRounded';
-import MailRoundedIcon from '@mui/icons-material/MailRounded';
+import PermIdentityRoundedIcon from "@mui/icons-material/PermIdentityRounded";
+import MailRoundedIcon from "@mui/icons-material/MailRounded";
+import avatarImg from "../asserts/logo.png";
 
 function Copyright(props) {
   return (
@@ -56,11 +59,12 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [userType, setUserType] = useState("");
   const [secretKey, setSecretKey] = useState("");
+  const [isValid, setIsValid] = useState(false);
+  const [snackbarState, setSnackbarState] = useState(false);
 
   const tokenData = window.localStorage.getItem("token");
   const [showPassword, setShowPassword] = useState(false);
   const [showKey, setShowKey] = useState(false);
-
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const handleClickShowKey = () => setShowKey((show) => !show);
@@ -117,209 +121,367 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        style={{
-          backgroundImage: `url(${login_background})`,
-          backgroundSize: "cover",
-          height: "100vh",
-        }}
-      >
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
+      <Grid container component="main" sx={{ height: "100vh" }}>
+        <CssBaseline />
+        <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage:
+              "url(https://source.unsplash.com/random?wallpapers)",
+            backgroundRepeat: "no-repeat",
+            backgroundColor: (t) =>
+              t.palette.mode === "light"
+                ? t.palette.grey[50]
+                : t.palette.grey[900],
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
+              my: 8,
+              mx: 4,
               display: "flex",
-              width: "500px",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <Card
-              sx={{
-                marginTop: "35%",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "rgba(255, 255, 255, .4)",
-                borderRadius: "10px",
-              }}
-            >
-              <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
-                <LockOutlinedIcon />
-              </Avatar>
-              <Typography component="h1" variant="h5" color="black">
-                Sign up
-              </Typography>
-
-              <Box sx={{ m: 5 }}>
-                <Form onSubmit={handleSubmit}>
-                  <Grid container spacing={2}>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                      sx={{ ml: 2 }}
-                      defaultValue={"Farmer"}
-                    >
-                      <FormControlLabel
-                        value="Farmer"
-                        control={<Radio />}
-                        onChange={(e) => setUserType(e.target.value)}
-                        label="Farmer"
-                      />
-                      <FormControlLabel
-                        value="Admin"
-                        control={<Radio />}
-                        onChange={(e) => setUserType(e.target.value)}
-                        label="Admin"
-                      />
-                    </RadioGroup>
-                    {userType == "Admin" ? (
-                      <Grid item xs={12}>
-                        <TextField
-                          required
-                          name="secretKey"
-                          value={secretKey}
-                          type={showKey ? "text" : "password"}
-
-                          // error={errors.secretKey}
-                          // helperText={errors.secretKey}
-                          fullWidth
-                          InputProps={{
-                            startAdornment: (
-                              <InputAdornment position="start">
-                                <KeyRoundedIcon />
-                              </InputAdornment>
-                            ),
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton
-                                  aria-label="toggle password visibility"
-                                  onClick={handleClickShowKey}
-                                  onMouseDown={handleMouseDownKey}
-                                >
-                                  {showKey ? (
-                                    <VisibilityOff />
-                                  ) : (
-                                    <Visibility />
-                                  )}
-                                </IconButton>
-                              </InputAdornment>
-                            ),
-                          }}
-                          onChange={(e) => setSecretKey(e.target.value)}
-                          autoComplete="off"
-                        />
-                      </Grid>
-                    ) : null}
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        name="name"
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <PermIdentityRoundedIcon/>
-                            </InputAdornment>
-                          ),
-                        }}
-                        value={name}
-                        // error={errors.name}
-                        // helperText={errors.name}
-                        onChange={(e) => setName(e.target.value)}
-                        autoComplete="off"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        // error={isError}
-                        fullWidth
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <MailRoundedIcon/>
-                            </InputAdornment>
-                          ),
-                        }}
-                        name="email"
-                        value={email}
-                        // error={errors.email}
-                        // helperText={errors.email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        autoComplete="off"
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        required
-                        fullWidth
-                        type={showPassword ? "text" : "password"}
-                        name="password"
-                        value={password}
-                        // error={errors.password}
-                        // helperText={errors.password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        InputProps={{
-                          startAdornment: (
-                            <InputAdornment position="start">
-                              <KeyRoundedIcon />
-                            </InputAdornment>
-                          ),
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                              >
-                                {showPassword ? (
-                                  <VisibilityOff />
-                                ) : (
-                                  <Visibility />
-                                )}
-                              </IconButton>
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </Grid>
-                    {/* <Grid item xs={12}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox value="allowExtraEmails" color="primary" />
-                      }
-                      label={
-                        <InputLabel style={{ color: "#000" }}>
-                          I agree with Terms and Conditions
-                        </InputLabel>
-                      }
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} src={avatarImg}/>
+            <Typography component="h1" variant="h5">
+              Sign Up
+            </Typography>
+            <Form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  sx={{ ml: 2 }}
+                  defaultValue={"Farmer"}
+                >
+                  <FormControlLabel
+                    value="Farmer"
+                    control={<Radio />}
+                    onChange={(e) => setUserType(e.target.value)}
+                    label="Farmer"
+                  />
+                  <FormControlLabel
+                    value="Admin"
+                    control={<Radio />}
+                    onChange={(e) => setUserType(e.target.value)}
+                    label="Admin"
+                  />
+                </RadioGroup>
+                {userType == "Admin" ? (
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      name="secretKey"
+                      placeholder="Secret Key"
+                      value={secretKey}
+                      type={showKey ? "text" : "password"}
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <KeyRoundedIcon />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowKey}
+                              onMouseDown={handleMouseDownKey}
+                            >
+                              {showKey ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      onChange={(e) => setSecretKey(e.target.value)}
+                      autoComplete="off"
                     />
-                  </Grid> */}
                   </Grid>
-                  <Button
-                    type="submit"
+                ) : null}
+                <Grid item xs={12}>
+                  <TextField
+                    required
                     fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign Up
-                  </Button>
-                </Form>
+                    name="name"
+                    placeholder="Fullname"
 
-                <Grid container justifyContent="flex-end">
-                  <Grid item>
-                    <Link href="/" variant="body2">
-                      Already have an account? Sign in
-                    </Link>
-                  </Grid>
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PermIdentityRoundedIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    autoComplete="off"
+                  />
                 </Grid>
-              </Box>
-            </Card>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    placeholder="Email"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <MailRoundedIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    name="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    placeholder="Password"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <KeyRoundedIcon />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+            </Form>
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
           <Copyright sx={{ mt: 5 }} />
-        </Container>
-      </Box>
+        </Grid>
+      </Grid>
     </ThemeProvider>
   );
+}
+
+{
+  /* <ThemeProvider theme={theme}>
+  <Box
+    style={{
+      backgroundImage: `url(${login_background})`,
+      backgroundSize: "cover",
+      height: "100vh",
+    }}
+  >
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          display: "flex",
+          width: "500px",
+        }}
+      >
+        <Card
+          sx={{
+            marginTop: "35%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(255, 255, 255, .4)",
+            borderRadius: "10px",
+          }}
+        >
+          <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5" color="black">
+            Sign up
+          </Typography>
+
+          <Box sx={{ m: 5 }}>
+            <Form onSubmit={handleSubmit}>
+              <Grid container spacing={2}>
+                <RadioGroup
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                  sx={{ ml: 2 }}
+                  defaultValue={"Farmer"}
+                >
+                  <FormControlLabel
+                    value="Farmer"
+                    control={<Radio />}
+                    onChange={(e) => setUserType(e.target.value)}
+                    label="Farmer"
+                  />
+                  <FormControlLabel
+                    value="Admin"
+                    control={<Radio />}
+                    onChange={(e) => setUserType(e.target.value)}
+                    label="Admin"
+                  />
+                </RadioGroup>
+                {userType == "Admin" ? (
+                  <Grid item xs={12}>
+                    <TextField
+                      required
+                      name="secretKey"
+                      value={secretKey}
+                      type={showKey ? "text" : "password"}
+                      // error={errors.secretKey}
+                      // helperText={errors.secretKey}
+                      fullWidth
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <KeyRoundedIcon />
+                          </InputAdornment>
+                        ),
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <IconButton
+                              aria-label="toggle password visibility"
+                              onClick={handleClickShowKey}
+                              onMouseDown={handleMouseDownKey}
+                            >
+                              {showKey ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      onChange={(e) => setSecretKey(e.target.value)}
+                      autoComplete="off"
+                    />
+                  </Grid>
+                ) : null}
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    name="name"
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <PermIdentityRoundedIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    value={name}
+                    // error={errors.name}
+                    // helperText={errors.name}
+                    onChange={(e) => setName(e.target.value)}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    // error={isError}
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <MailRoundedIcon />
+                        </InputAdornment>
+                      ),
+                    }}
+                    name="email"
+                    value={email}
+                    // error={errors.email}
+                    // helperText={errors.email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    autoComplete="off"
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    required
+                    fullWidth
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={password}
+                    // error={errors.password}
+                    // helperText={errors.password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <KeyRoundedIcon />
+                        </InputAdornment>
+                      ),
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                          >
+                            {showPassword ? <VisibilityOff /> : <Visibility />}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Grid>
+              </Grid>
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
+            </Form>
+
+            <Grid container justifyContent="flex-end">
+              <Grid item>
+                <Link href="/" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Card>
+      </Box>
+      <Copyright sx={{ mt: 5 }} />
+    </Container>
+  </Box>
+</ThemeProvider>; */
 }

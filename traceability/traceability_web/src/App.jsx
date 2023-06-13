@@ -21,8 +21,8 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ProductTracking from "./pages/farmer/ProductTracking/ProductTracking";
 import TrackingForm from "./pages/farmer/TrackingForm/TrackingForm";
-import CreateForm from "./components/Try/CreateForm";
-import UserPage from "./pages/farmer/TrackingForm/UploadImages";
+import MultiStepForm from "./components/test";
+
 
 
 function App() {
@@ -30,7 +30,7 @@ function App() {
 
   return (
     // <Home/>
-    // <EnHome/>
+    // <MultiStepForm/>
 
 
     <div className="App">

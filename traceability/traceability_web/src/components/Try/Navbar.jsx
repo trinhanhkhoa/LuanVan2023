@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
@@ -72,7 +72,6 @@ export default function PersistentDrawerLeft() {
   const [openMenu, setOpenMenu] = React.useState(false);
   const userType = window.localStorage.getItem("userType");
   const [data, setData] = useState([]);
-
 
   const handleDrawerOpen = () => {
     setOpenMenu(true);
@@ -158,7 +157,7 @@ export default function PersistentDrawerLeft() {
 
   const onDisconnected = () => {
     setIsConnected(false);
-  }
+  };
 
   const logout = () => {
     window.localStorage.clear();
@@ -169,15 +168,18 @@ export default function PersistentDrawerLeft() {
     window.location.href = "/profile";
   };
 
-
   return (
-    <Box sx={{ display: "flex" }} >
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         open={openMenu}
         // color={userType == "admin" ? "#90caf9" : "success"}
-        sx={userType == "admin" ? {backgroundColor: "#fff59d", color: "#000"} : {backgroundColor: "#aed581", color: "#000"}}
+        sx={
+          userType == "admin"
+            ? { backgroundColor: "#fff59d", color: "#000" }
+            : { backgroundColor: "#aed581", color: "#000" }
+        }
       >
         <StyledToolbar>
           <IconButton
@@ -192,25 +194,37 @@ export default function PersistentDrawerLeft() {
           <Typography
             variant="h6"
             sx={{ display: { xs: "none", sm: "block" }, cursor: "pointer" }}
-            onClick={() => { userType == "User" || userType == "Farmer" || userType == "user" ? window.location.href = "/home" : window.location.href = "/enhome"}}
+            onClick={() => {
+              userType == "User" || userType == "Farmer" || userType == "user"
+                ? (window.location.href = "/home")
+                : (window.location.href = "/enhome");
+            }}
           >
             TRACEABILITY AGRICULTURE
           </Typography>
-          <Search>
-            {/* <InputBase placeholder="search..." /> */}
-          </Search>
+          <Search>{/* <InputBase placeholder="search..." /> */}</Search>
           <Icons>
             <Badge badgeContent={4} color="error">
               <NotificationsRoundedIcon />
             </Badge>
             <AvatarBox onClick={(e) => setOpen(true)}>
-              <Avatar sx={{ width: 30, height: 30, cursor: "pointer" }} src={avatarImg} />
-              <Typography variant="span"  sx={{ cursor: "pointer" }}>{data.name}</Typography>
+              <Avatar
+                sx={{ width: 30, height: 30, cursor: "pointer" }}
+                src={avatarImg}
+              />
+              <Typography variant="span" sx={{ cursor: "pointer" }}>
+                {data.name}
+              </Typography>
             </AvatarBox>
           </Icons>
           <UserBox onClick={(e) => setOpen(true)}>
-            <Avatar sx={{ width: 30, height: 30, cursor: "pointer" }} src={avatarImg} />
-            <Typography variant="span"  sx={{ cursor: "pointer" }}>{data.name}</Typography>
+            <Avatar
+              sx={{ width: 30, height: 30, cursor: "pointer" }}
+              src={avatarImg}
+            />
+            <Typography variant="span" sx={{ cursor: "pointer" }}>
+              {data.name}
+            </Typography>
           </UserBox>
         </StyledToolbar>
         <Menu

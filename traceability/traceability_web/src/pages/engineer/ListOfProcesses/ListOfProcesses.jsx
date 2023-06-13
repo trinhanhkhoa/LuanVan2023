@@ -35,6 +35,7 @@ import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
 import { Card } from "reactstrap";
 import AddIcon from '@mui/icons-material/Add';
+import { fDateTime } from "../../../utils/formatTime";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
@@ -207,8 +208,8 @@ function ListOfProcesses() {
           variant="contained"
           sx={{
             borderRadius: "5px",
-            width: { xs: "100px", md: "180px" },
-            height: { xs: "35px", md: "50px" },
+            width: { xs: "140px", md: "140px" },
+            height: { xs: "40px", md: "40px" },
             fontSize: { xs: "12px", md: "16px" },
             justifyContent: "center",
             backgroundColor: "#fff176",
@@ -276,8 +277,8 @@ function ListOfProcesses() {
               {recordsAfterPagingAndSorting().map((item, index) => (
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
-                  <StyledTableCell>{item.name}</StyledTableCell>
-                  <StyledTableCell>{item.time}</StyledTableCell>
+                  <StyledTableCell>{item.stageProcess.name}</StyledTableCell>
+                  <StyledTableCell>{(item.stageProcess.timeCreate)}</StyledTableCell>
                   <StyledTableCell align="center">
                     <Box>
                       <Tooltip title="Detail">
