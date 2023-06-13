@@ -27,7 +27,6 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import { Card } from "reactstrap";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
