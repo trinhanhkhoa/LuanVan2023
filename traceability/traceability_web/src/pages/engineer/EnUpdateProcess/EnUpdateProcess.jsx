@@ -103,8 +103,8 @@ function EnUpdateProcess() {
 
   const handleUpdate = async () => {
     await fetch(
-      // `https://backend.teamluanvan.software/process/update-process/${params.id}`,
-      `http://localhost:5000/process/update-process/${params.id}`,
+      `https://backend.teamluanvan.software/process/update-process/${params.id}`,
+      // `http://localhost:5000/process/update-process/${params.id}`,
       {
         method: "PUT",
         crossDomain: true,

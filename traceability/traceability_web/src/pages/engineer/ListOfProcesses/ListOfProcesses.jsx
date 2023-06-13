@@ -82,22 +82,6 @@ function ListOfProcesses() {
   const [IdPopup, setIdPopup] = useState("");
   const tokenData = window.localStorage.getItem("token");
 
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
-
   const getProcesses = async () => {
     setLoading(true);
 
@@ -117,7 +101,6 @@ function ListOfProcesses() {
   };
 
   useEffect(() => {
-    tokenIsValid();
     getProcesses();
   }, []);
 
