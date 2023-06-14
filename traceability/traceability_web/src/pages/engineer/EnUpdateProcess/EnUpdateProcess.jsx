@@ -156,7 +156,7 @@ function EnUpdateProcess() {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        // window.location.href = "/listofprocesses";
+        window.location.href = "/listofprocesses";
       });
   };
 

@@ -30,7 +30,8 @@ const optionsTracking = [
   "Chuyển khâu thu mua",
 ];
 
-function TrackingForm() {
+function TrackingForm(props) {
+  const { processId } = props;
   const [images, setImages] = useState([]);
   const [links, setLinks] = useState([]);
   const [img, setImg] = useState([]);
@@ -38,15 +39,98 @@ function TrackingForm() {
   const [name, setName] = useState("");
   const [amountOfWater, setAmountOfWater] = useState("");
   const [amountOfFertilizer, setAmountOfFertilizer] = useState("");
+  const [unit, setUnit] = useState("");
+  const [quantity, setQuantity] = useState("");
   const [time, setTime] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
-  const [isDeliveried, setIsDeliveried] = useState(false);
+  const [process, setProcess] = useState({
+    stageProcess: {
+      name: "",
+      description: "",
+      images: [],
+      timeCreate: "",
+    },
+    stagePlantSeeds: { name: "", description: "" },
+    stagePlantCare: { name: "", description: "", water: "", fertilizer: "" },
+    stageBloom: { name: "", description: "" },
+    stageCover: { name: "", description: "" },
+    stageHarvest: { name: "", description: "", quantity: "" },
+    stageSell: { name: "", description: "", purchasingUnit: "" },
+  });
+  const [step, setStep] = useState([]);
 
   const params = useParams();
 
   const tokenData = window.localStorage.getItem("token");
+
+  const getProcess = async () => {
+    setLoading(true);
+    const data = await fetch(
+      `https://backend.teamluanvan.software/process/get-process/${processId}`,
+      {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((res) => res.data);
+    // console.log("process", data);
+    setProcess({
+      stageProcess: {
+        name: data.stageProcess.name,
+        description: data.stageProcess.description,
+        images: data.stageProcess.images,
+        timeCreate: data.stageProcess.timeCreate,
+      },
+      stagePlantSeeds: {
+        name: data.stagePlantSeeds.name,
+        description: data.stagePlantSeeds.description,
+      },
+      stagePlantCare: {
+        name: data.stagePlantCare.name,
+        description: data.stagePlantCare.description,
+        water: data.stagePlantCare.water,
+        fertilizer: data.stagePlantCare.fertilizer,
+      },
+      stageBloom: {
+        name: data.stageBloom.name,
+        description: data.stageBloom.description,
+      },
+      stageCover: {
+        name: data.stageCover.name,
+        description: data.stageCover.description,
+      },
+      stageHarvest: {
+        name: data.stageHarvest.name,
+        description: data.stageHarvest.description,
+        quantity: data.stageHarvest.quantity,
+      },
+      stageSell: {
+        name: data.stageSell.name,
+        description: data.stageSell.description,
+        purchasingUnit: data.stageSell.purchasingUnit,
+      },
+    });
+
+    setStep([
+      data.stagePlantSeeds.name,
+      data.stagePlantCare.name,
+      data.stageBloom.name,
+      data.stageCover.name,
+      data.stageHarvest.name,
+      data.stageSell.name,
+    ]);
+
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    getProcess();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -116,19 +200,19 @@ function TrackingForm() {
         }),
       }
     )
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("data", data);
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("data", data);
 
-      if (data.success == true) setSnackbarState(true);
-      else setSnackbarState(false);
+        if (data.success == true) setSnackbarState(true);
+        else setSnackbarState(false);
 
-      setTimeout(() => {
-        window.location.href = `/product/${params.id}`;
-      }, 1500);
-    });
-  setLoading(false);
-};
+        setTimeout(() => {
+          window.location.href = `/product/${params.id}`;
+        }, 1500);
+      });
+    setLoading(false);
+  };
 
   return (
     <Container fixed sx={{ justifyContent: "center", alignItems: "center" }}>
@@ -142,7 +226,7 @@ function TrackingForm() {
         onSubmit={name !== optionsTracking[5] ? handleSubmit : handleDelivery}
       >
         <Loading loading={loading} />
-
+        {console.log("step", step)}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
@@ -158,7 +242,7 @@ function TrackingForm() {
                 console.log(newValue);
               }}
               id="combo-box-demo"
-              options={optionsTracking}
+              options={step}
               sx={{ width: { xs: 350, md: 600 } }}
               renderInput={(params) => (
                 <TextField
@@ -180,7 +264,51 @@ function TrackingForm() {
                 />
               )}
             />
-            {name === optionsTracking[1] ? (
+            {name === step[4] ? (
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <label htmlFor="">
+                  Quantity
+                </label>
+                <TextField
+                  required
+                  value={unit}
+                  onChange={(e, newValue) => {
+                    setQuantity(newValue);
+                    console.log(quantity);
+                  }}
+                  variant="outlined"
+                  placeholder={process.stageHarvest.quantity}
+                  sx={{
+                    width: { xs: 350, md: 600 },
+                    borderRadius: "20%",
+                    mb: 2,
+                  }}
+                />
+              </Box>
+            ) : null}
+             {name === step[5] ? (
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <label htmlFor="">
+                  Purchasing unit
+                </label>
+                <TextField
+                  required
+                  value={unit}
+                  onChange={(e, newValue) => {
+                    setUnit(newValue);
+                    console.log(unit);
+                  }}
+                  variant="outlined"
+                  placeholder={process.stageSell.name}
+                  sx={{
+                    width: { xs: 350, md: 600 },
+                    borderRadius: "20%",
+                    mb: 2,
+                  }}
+                />
+              </Box>
+            ) : null}
+            {name === step[1] ? (
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <TextField
                   required
@@ -331,27 +459,25 @@ function TrackingForm() {
             </Box>
           </Box>
           <Box>
-            {name !== optionsTracking[5]
-              ?  (
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="warning"
-                    sx={{ borderRadius: "10px" }}
-                  >
-                    Confirm
-                  </Button>
-                )
-              : (
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    color="warning"
-                    sx={{ borderRadius: "10px" }}
-                  >
-                    Delivery
-                  </Button>
-                )}
+            {name !== step[5] ? (
+              <Button
+                type="submit"
+                variant="contained"
+                color="warning"
+                sx={{ borderRadius: "10px" }}
+              >
+                Confirm
+              </Button>
+            ) : (
+              <Button
+                type="submit"
+                variant="contained"
+                color="warning"
+                sx={{ borderRadius: "10px" }}
+              >
+                Delivery
+              </Button>
+            )}
           </Box>
         </Box>
 

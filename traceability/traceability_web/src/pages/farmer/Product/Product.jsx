@@ -11,6 +11,7 @@ import {
   Card,
   Container,
   Divider,
+  Grid,
   ImageListItem,
   Slide,
   Typography,
@@ -83,6 +84,7 @@ function Product() {
   const [tracking, setTracking] = useState([]);
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
+  const [processId, setProcessId] = useState("");
 
   const [img, setImg] = useState([]);
 
@@ -153,6 +155,7 @@ function Product() {
       setTracking(data.data.tracking);
       setUrl(data.data.url);
       setImages(data.data.images);
+      setProcessId(data.data.processId);
 
       if (data.dataBC[6] == 0) setStatus("CREATED");
       else if (data.dataBC[6] == 1) setStatus("UPDATED");
@@ -312,7 +315,7 @@ function Product() {
                 <HiIcons.HiUser style={{ marginRight: 10, fontSize: 25 }} />{" "}
                 Farmer: {user.name}
               </Typography>
-              <Typography variant="text" sx={{}}>
+              <Typography variant="text" >
                 <HiIcons.HiOutlineMail
                   style={{ marginRight: 10, fontSize: 25 }}
                 />{" "}
@@ -341,59 +344,63 @@ function Product() {
                   {description}
                 </ReactReadMoreReadLess>
               </Typography>
-              <Box sx={{ mt: 4 }}>
-                <Button
-                  variant="contained"
-                  color="success"
-                  sx={
-                    status === "DELETED" || status === "DELIVERIED"
-                      ? {
-                          display: "none",
-                          borderRadius: "10px",
-                          width: { xs: 100, md: 200 },
-                          mr: 2,
-                        }
-                      : {
-                          display: "block",
-                          borderRadius: "10px",
-                          width: { xs: 100, md: 200 },
-                          mr: 2,
-                        }
-                  }
-                  onClick={() => {
-                    setOpenPopup(true);
-                  }}
-                >
-                  Update Tracking
-                </Button>
-                <Popup
-                  title="Update Tracking"
-                  openPopup={openPopup}
-                  setOpenPopup={setOpenPopup}
-                >
-                  <TrackingForm />
-                </Popup>
-                <Button
-                  variant="contained"
-                  color="warning"
-                  sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
-                  onClick={() => {
-                    setOpenPopupTracking(true);
-                  }}
-                >
-                  Tracking
-                </Button>
-                <Popup
-                  title="Tracking"
-                  openPopup={openPopupTracking}
-                  setOpenPopup={setOpenPopupTracking}
-                >
-                  <ProductTracking
-                    id={params.id}
-                    trackingLength={tracking.length}
-                  />
-                </Popup>
-              </Box>
+              <Grid container xs={11} sx={{ mt: 4 }}>
+                <Grid item xs={4}>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    sx={
+                      status === "DELETED" || status === "DELIVERIED"
+                        ? {
+                            display: "none",
+                            borderRadius: "10px",
+                            width: { xs: 100, md: 200 },
+                            mr: 2,
+                          }
+                        : {
+                            display: "block",
+                            borderRadius: "10px",
+                            width: { xs: 100, md: 200 },
+                            mr: 2,
+                          }
+                    }
+                    onClick={() => {
+                      setOpenPopup(true);
+                    }}
+                  >
+                    Update Tracking
+                  </Button>
+                  <Popup
+                    title="Update Tracking"
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                  >
+                    <TrackingForm processId={processId}/>
+                  </Popup>
+                </Grid>
+                <Grid item xs={3}>
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
+                    onClick={() => {
+                      setOpenPopupTracking(true);
+                    }}
+                  >
+                    Tracking
+                  </Button>
+                  <Popup
+                    title="Tracking"
+                    openPopup={openPopupTracking}
+                    setOpenPopup={setOpenPopupTracking}
+                  >
+                    <ProductTracking
+                      id={params.id}
+                      trackingLength={tracking.length}
+                    />
+                  </Popup>
+                </Grid>
+              </Grid>
             </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
             <Typography sx={{ mt: 2, fontSize: 15 }} variant="h5">

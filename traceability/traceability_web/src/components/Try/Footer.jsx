@@ -40,7 +40,7 @@ export default function StickyFooter() {
   const userType = window.localStorage.getItem("userType");
 
   return (
-    <Box className="footer">
+    <Box>
       <CssBaseline />
       <Box
         component="footer"
@@ -50,11 +50,13 @@ export default function StickyFooter() {
                 py: 2,
                 px: 2,
                 backgroundColor: "#fff59d",
+                width: "100%"
               }
             : {
                 py: 2,
-                px: 2,
+                // px: 2,
                 backgroundColor: "#aed581",
+                width: "100%"
               }
         }
       >
