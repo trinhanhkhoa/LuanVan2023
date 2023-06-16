@@ -84,7 +84,7 @@ function EnManageAccounts() {
   const getUsers = async () => {
     setLoading(true);
 
-    await fetch("https://backend.teamluanvan.software/", {
+    await fetch(`${process.env.REACT_APP_API}/`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,

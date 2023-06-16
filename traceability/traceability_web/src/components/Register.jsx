@@ -93,7 +93,7 @@ export default function SignUp() {
       alert("Invalid secret key !!!");
     } else {
       console.log(name, email, password);
-      fetch("https://backend.teamluanvan.software/signup", {
+      fetch(`${process.env.REACT_APP_API}/signup`, {
         method: "POST",
         crossDomain: true,
         headers: {
@@ -150,7 +150,7 @@ export default function SignUp() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} src={avatarImg}/>
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} src={avatarImg} />
             <Typography component="h1" variant="h5">
               Sign Up
             </Typography>
@@ -214,7 +214,6 @@ export default function SignUp() {
                     fullWidth
                     name="name"
                     placeholder="Fullname"
-
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -297,191 +296,4 @@ export default function SignUp() {
       </Grid>
     </ThemeProvider>
   );
-}
-
-{
-  /* <ThemeProvider theme={theme}>
-  <Box
-    style={{
-      backgroundImage: `url(${login_background})`,
-      backgroundSize: "cover",
-      height: "100vh",
-    }}
-  >
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          display: "flex",
-          width: "500px",
-        }}
-      >
-        <Card
-          sx={{
-            marginTop: "35%",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(255, 255, 255, .4)",
-            borderRadius: "10px",
-          }}
-        >
-          <Avatar sx={{ m: 2, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" color="black">
-            Sign up
-          </Typography>
-
-          <Box sx={{ m: 5 }}>
-            <Form onSubmit={handleSubmit}>
-              <Grid container spacing={2}>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                  sx={{ ml: 2 }}
-                  defaultValue={"Farmer"}
-                >
-                  <FormControlLabel
-                    value="Farmer"
-                    control={<Radio />}
-                    onChange={(e) => setUserType(e.target.value)}
-                    label="Farmer"
-                  />
-                  <FormControlLabel
-                    value="Admin"
-                    control={<Radio />}
-                    onChange={(e) => setUserType(e.target.value)}
-                    label="Admin"
-                  />
-                </RadioGroup>
-                {userType == "Admin" ? (
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      name="secretKey"
-                      value={secretKey}
-                      type={showKey ? "text" : "password"}
-                      // error={errors.secretKey}
-                      // helperText={errors.secretKey}
-                      fullWidth
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <KeyRoundedIcon />
-                          </InputAdornment>
-                        ),
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <IconButton
-                              aria-label="toggle password visibility"
-                              onClick={handleClickShowKey}
-                              onMouseDown={handleMouseDownKey}
-                            >
-                              {showKey ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      onChange={(e) => setSecretKey(e.target.value)}
-                      autoComplete="off"
-                    />
-                  </Grid>
-                ) : null}
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    name="name"
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <PermIdentityRoundedIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    value={name}
-                    // error={errors.name}
-                    // helperText={errors.name}
-                    onChange={(e) => setName(e.target.value)}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    // error={isError}
-                    fullWidth
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <MailRoundedIcon />
-                        </InputAdornment>
-                      ),
-                    }}
-                    name="email"
-                    value={email}
-                    // error={errors.email}
-                    // helperText={errors.email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    autoComplete="off"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    required
-                    fullWidth
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={password}
-                    // error={errors.password}
-                    // helperText={errors.password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <KeyRoundedIcon />
-                        </InputAdornment>
-                      ),
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {showPassword ? <VisibilityOff /> : <Visibility />}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Sign Up
-              </Button>
-            </Form>
-
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Card>
-      </Box>
-      <Copyright sx={{ mt: 5 }} />
-    </Container>
-  </Box>
-</ThemeProvider>; */
 }

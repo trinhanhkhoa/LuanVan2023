@@ -46,12 +46,6 @@ function EnUpdateProcess() {
     stageHarvest: { name: "", description: "", quantity: "" },
     stageSell: { name: "", description: "", purchasingUnit: "" },
   });
-  // const [stageProcess, setStateProcess] = useState({
-  //   name: "",
-  //   description: "",
-  //   images: [],
-  //   timeCreate: "",
-  // });
 
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState({
@@ -82,7 +76,7 @@ function EnUpdateProcess() {
 
   const getInfoProcess = async () => {
     const data = await fetch(
-      `https://backend.teamluanvan.software/process/get-process/${params.id}`,
+      `${process.env.REACT_APP_API}/process/get-process/${params.id}`,
       {
         method: "GET",
         headers: {
@@ -103,7 +97,7 @@ function EnUpdateProcess() {
 
   const handleUpdate = async () => {
     await fetch(
-      `https://backend.teamluanvan.software/process/update-process/${params.id}`,
+      `${process.env.REACT_APP_API}/process/update-process/${params.id}`,
       // `http://localhost:5000/process/update-process/${params.id}`,
       {
         method: "PUT",

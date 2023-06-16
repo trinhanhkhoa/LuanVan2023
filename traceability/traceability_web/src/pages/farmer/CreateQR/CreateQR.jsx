@@ -68,9 +68,8 @@ function CreateQR() {
     e.preventDefault();
 
     setLoading(true);
-    // await fetch("https://backend.teamluanvan.software/product/add-product", {
-      await fetch("http://localhost:5000/product/add-product", {
-
+    // await fetch(`${process.env.REACT_APP_API}/product/add-product`, {
+    await fetch(`${process.env.REACT_APP_API}/product/add-product`, {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -86,7 +85,7 @@ function CreateQR() {
         time,
         images: links,
         description,
-        processId
+        processId,
       }),
     })
       .then((res) => res.json())
@@ -104,7 +103,7 @@ function CreateQR() {
   const getProcesses = async () => {
     setLoading(true);
 
-    await fetch("https://backend.teamluanvan.software/process/get-processes", {
+    await fetch(`${process.env.REACT_APP_API}/process/get-processes`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -193,7 +192,10 @@ function CreateQR() {
                   id: "uncontrolled-native",
                 }}
                 value={processId}
-                onChange={(e) => {setProcessId(e.target.value)}}
+                onChange={(e) => {
+                  setProcessId(e.target.value);
+                  console.log(e.target.value);
+                }}
               >
                 {data &&
                   data.map((item, index) => {

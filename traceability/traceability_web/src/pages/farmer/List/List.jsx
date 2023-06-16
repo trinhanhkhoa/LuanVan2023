@@ -32,14 +32,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
-import AddIcon from '@mui/icons-material/Add';
-
+import AddIcon from "@mui/icons-material/Add";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
   { id: "length", label: "Tracking" },
-  { id: "time", label: "Time Create" },
+  { id: "time", label: "Create at" },
   { id: "button", label: "" },
 ];
 
@@ -90,7 +89,7 @@ function List() {
       setLoading(true);
 
       let data = await fetch(
-        `https://backend.teamluanvan.software/product/get-product`,
+        `${process.env.REACT_APP_API}/product/get-product`,
         {
           method: "GET",
           headers: {
@@ -102,7 +101,8 @@ function List() {
         .then((res) => res.data);
 
       data = data.filter((p) => p.userId == id);
-      console.log(`product has user id: `, data);
+
+      // console.l  og(`product has user id: `, data);
 
       setData(data);
 

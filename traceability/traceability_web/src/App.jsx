@@ -22,6 +22,7 @@ import Register from "./components/Register";
 import ProductTracking from "./pages/farmer/ProductTracking/ProductTracking";
 import TrackingForm from "./pages/farmer/TrackingForm/TrackingForm";
 import MultiStepForm from "./components/test";
+import History from "./pages/farmer/History/History";
 
 
 
@@ -50,6 +51,7 @@ function App() {
             <Route path="/product/:id" element={<Product />} />
             <Route path="/createqr" element={<CreateQR />} />
             <Route path="/updateproduct/:id" element={<UpdateProduct />} />
+            <Route path="/history" element={<History />} />
 
             <Route path="/process" element={<Process />} />
             <Route path="/processdetail/:id" element={<ProcessDetail />} />

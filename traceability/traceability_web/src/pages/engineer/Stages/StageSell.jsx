@@ -8,16 +8,6 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 
 export default function StageSell({ data, setData }) {
-  let ID = 0;
-  const [inputField, setInputField] = useState([
-    { name: "", description: "", id: ID },
-  ]);
-
-  const addRow = () => {
-    let _row = [...inputField];
-    _row.push({ name: "", description: "", id: ID++ });
-    setInputField(_row);
-  };
 
   return (
     <Box>

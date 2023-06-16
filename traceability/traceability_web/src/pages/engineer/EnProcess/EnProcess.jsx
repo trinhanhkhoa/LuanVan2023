@@ -1,7 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import "./EnProcess.css";
 import { Link, useParams } from "react-router-dom";
-import { Box, Button, Container, Divider, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Typography,
+  Tabs,
+  Tab,
+  Grid,
+} from "@mui/material";
+import PropTypes from "prop-types";
+
 import { styled, useTheme } from "@mui/material/styles";
 import { useMediaQuery } from "@mui/material";
 import { Carousel } from "react-carousel-minimal";
@@ -31,6 +42,39 @@ export const ProductDetail = styled(Box)(({ theme }) => ({
   },
 }));
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+
 export const ProductImage = styled("img")(({ src, theme }) => ({
   src: `url(${src})`,
   width: "100%",
@@ -52,17 +96,32 @@ function EnProcess() {
   console.log("params", params);
 
   const [data, setData] = useState([]);
+  let id = "";
+  const [dataUser, setDataUser] = useState();
+  const [userName, setUserName] = useState("");
+  const [userType, setUserType] = useState("");
+  const [userEmail, setUserEmail] = useState("");
 
+  const [stagePlantSeeds, setStagePlantSeeds] = useState([]);
+  const [stagePlantCare, setStagePlantCare] = useState([]);
+  const [stageBloom, setStageBloom] = useState([]);
+  const [stageCover, setStageCover] = useState([]);
+  const [stageHarvest, setStageHarvest] = useState([]);
+  const [stageSell, setStageSell] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [time, setTime] = useState("");
-  const [address, setAddress] = useState("");
-  const [images, setImages] = useState([]);
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down("md"));
   const [img, setImg] = useState([]);
 
   const tokenData = window.localStorage.getItem("token");
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const prepareImages = async (images) => {
     if (images) {
       const mappingImages = await Promise.all([
@@ -76,41 +135,62 @@ function EnProcess() {
     return null;
   };
 
-  const getInfoProcess = async () => {
-    const data = await fetch(
-      `https://backend.teamluanvan.software/process/get-process/${params.id}`,
-      {
+  useEffect(() => {
+    const getInfoProcess = async () => {
+      const data = await fetch(
+        `${process.env.REACT_APP_API}/process/get-process/${params.id}`,
+        {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => res.data);
+      // console.log(data.userId);
+
+      setData(data);
+      id = data.userId;
+      // console.log(id);
+      setName(data.stageProcess.name);
+      setTime(data.stageProcess.timeCreate);
+      setDescription(data.stageProcess.description);
+      setStagePlantSeeds(data.stagePlantSeeds);
+      setStagePlantCare(data.stagePlantCare);
+      setStageBloom(data.stageBloom);
+      setStageCover(data.stageCover);
+      setStageHarvest(data.stageHarvest);
+      setStageSell(data.stageSell);
+
+      const mappingImages = await prepareImages(data.stageProcess.images);
+
+      if (mappingImages) setImg([...mappingImages[0]]);
+    };
+    getInfoProcess();
+  }, []);
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      await fetch(`${process.env.REACT_APP_API}/`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
         },
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => res.data);
-    console.log("data",data.stageProcess);
-    setData(data);
-    setName(data.stageProcess.name);
-    setTime(data.stageProcess.timeCreate);
-    setDescription(data.stageProcess.description);
-    const mappingImages = await prepareImages(data.stageProcess.images);
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          let user = res.data;
+          // console.log(user);
 
-    if (mappingImages) setImg([...mappingImages[0]]);
-  };
-
-  const deleteProcess = (id) => {
-    fetch(`https://backend.teamluanvan.software/process/delete-process/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("Product is deleted");
-        window.location.href = "/listofprocesses";
-      });
-  };
-
-  useEffect(() => {
-    getInfoProcess();
+          user = user.filter((u) => u._id == id);
+          console.log(user[0]);
+          setUserName(user[0].name);
+          setUserType(user[0].userType);
+          setUserEmail(user[0].email);
+        });
+    };
+    getUserInfo();
   }, []);
 
   const captionStyle = {
@@ -168,10 +248,7 @@ function EnProcess() {
                 />
               )}
             </ProductDetail>
-            <Box sx={{ mt: 4, 
-              display: "flex",
-              justifyContent: "center"
-            }}>
+            <Box sx={{ mt: 4, display: "flex", justifyContent: "center" }}>
               <Button
                 variant="contained"
                 color="success"
@@ -202,36 +279,131 @@ function EnProcess() {
           </Box>
 
           <Divider sx={{ mt: 2, mb: 2 }} />
-          <Box sx={{ lineHeight: 2, whiteSpace: "pre-line", width: { xs: 400, md: 700} }}>
-            <Typography
-              variant="h4"
-              sx={{ mb: 1, fontSize: { xs: "25px", md: "35px" } }}
-            >
-              Name: {name}
-            </Typography>
-            <Divider sx={{ mt: 2, mb: 2 }} />
-            <Typography
-              variant="body"
-              sx={{ mb: 1, fontSize: { xs: "12px", md: "15px" } }}
-            >
-              Created Time: {time}
-            </Typography>
-            <Divider sx={{ mt: 2, mb: 2 }} />
-            <Typography
-              variant="body"
-              sx={{ lineHeight: 2, whiteSpace: "pre-line"}}
-            >
-              {" "}
-              <ReactReadMoreReadLess
-                readMoreClassName="readMoreProcessClassName"
-                readLessClassName="readMoreProcessClassName"
-                charLimit={600}
-                readMoreText="Read more"
-                readLessText="Read less"
+          <Box
+            sx={{
+              lineHeight: 2,
+              whiteSpace: "pre-line",
+              width: { xs: 400, md: 800 },
+            }}
+          >
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
               >
-                {description}
-              </ReactReadMoreReadLess>
-            </Typography>
+                <Tab label="Product information" {...a11yProps(0)} />
+                <Tab label="Production log" {...a11yProps(1)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+              <Typography variant="h4" sx={{ mb: 2 }}>
+                {name}
+              </Typography>
+              <Grid>
+                <Typography
+                  variant="body"
+                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                >
+                  Created by: {userName} - Role: {userType}
+                </Typography>
+              </Grid>
+              <Grid>
+                <Typography
+                  variant="body"
+                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                >
+                  Email: {userEmail}
+                </Typography>
+              </Grid>
+              <Grid>
+                <Typography
+                  variant="body"
+                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                >
+                  Created Time: {time}
+                </Typography>
+              </Grid>
+              <Divider />
+              <Typography
+                variant="body"
+                sx={{ lineHeight: 2, whiteSpace: "pre-line", maxWidth: 700 }}
+              >
+                {" "}
+                <Typography variant="h5" sx={{ mt: 2 }}>
+                  Description
+                </Typography>
+                <ReactReadMoreReadLess
+                  readMoreClassName="readMoreClassName"
+                  readLessClassName="readMoreClassName"
+                  charLimit={600}
+                  readMoreText="Read more"
+                  readLessText="Read less"
+                >
+                  {description}
+                  {/* dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+                  minim veniam, quis nostrud exercitation ullamco laboris nisi
+                  ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                  nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id
+                  est laborum. dolor sit amet, consectetur adipisicing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                  cupidatat non proident, sunt in culpa qui officia deserunt
+                  mollit anim id est laborum. dolor sit amet, consectetur */}
+                </ReactReadMoreReadLess>
+              </Typography>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Box>
+                <Fragment>
+                  <h2>Product traceability</h2>
+                  <Typography variant="body2" marginBottom={3}>
+                    Information is written by {}
+                  </Typography>
+                  <div className="timeline-admin">
+                    <p>
+                      <h4>{stagePlantSeeds.name}</h4>
+                      Description: {stagePlantSeeds.description}
+                    </p>
+                    <p>
+                      <h4>{stagePlantCare.name}</h4>
+                      Description: {stagePlantCare.description}
+                      <ul>
+                        <li>
+                          Watering time: {stagePlantCare.descriptionWater}
+                        </li>
+                        <li>
+                          Amount of fertilizer:{" "}
+                          {stagePlantCare.descriptionFertilizer}
+                        </li>
+                      </ul>
+                    </p>
+                    <p>
+                      <h4>{stageBloom.name}</h4>
+                      Description: {stageBloom.description}
+                    </p>
+                    <p>
+                      <h4>{stageCover.name}</h4>
+                      Description: {stageCover.description}
+                    </p>
+                    <p>
+                      <h4>{stageHarvest.name}</h4>
+                      Description: {stageHarvest.description}
+                      Notes:{" "}
+                      <ul>
+                        <li>Quantity: {stageHarvest.descriptionQuantity}</li>
+                      </ul>
+                    </p>
+                  </div>
+                </Fragment>
+              </Box>
+            </TabPanel>
           </Box>
         </ProductDetailInfoWrapper>
       </ProductDetailWrapper>

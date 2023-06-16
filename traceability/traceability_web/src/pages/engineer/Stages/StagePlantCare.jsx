@@ -8,27 +8,6 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 
 export default function StagePlantCare({ data, setData }) {
-  const [inputList, setInputList] = useState([{ name: "", description: "" }]);
-
-  // handle input change
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...inputList];
-    list[index][name] = value;
-    setInputList(list);
-  };
-
-  // handle click event of the Remove button
-  const handleRemoveClick = (index) => {
-    const list = [...inputList];
-    list.splice(index, 1);
-    setInputList(list);
-  };
-
-  // handle click event of the Add button
-  const handleAddClick = () => {
-    setInputList([...inputList, { name: "", description: "" }]);
-  };
 
   return (
     <Box>
@@ -80,11 +59,11 @@ export default function StagePlantCare({ data, setData }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <label>
-            Amount of Water <b>(*)</b>
+            Watering time <b>(*)</b>
           </label>
           <TextField
             required
-            placeholder="Amount of Water"
+            placeholder="Watering time"
             fullWidth
             variant="outlined"
             onChange={(e) =>

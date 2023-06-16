@@ -12,6 +12,7 @@ import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
 import GroupIcon from '@mui/icons-material/Group';
 import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
 
 const Sidebar = () => {
   const userType = window.localStorage.getItem("userType");
@@ -48,6 +49,26 @@ const Sidebar = () => {
               />
             </ListItemButton>
           </ListItem>
+          {userType != "admin" ? (
+            <ListItem disablePadding>
+              <ListItemButton LinkComponent="a" href="/process">
+                <ListItemIcon>
+                  <CachedRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Processes" />
+              </ListItemButton>
+            </ListItem>
+          ) : null}
+          {userType != "admin" ? (
+            <ListItem disablePadding>
+              <ListItemButton LinkComponent="a" href="/history">
+                <ListItemIcon>
+                  <ManageSearchIcon />
+                </ListItemIcon>
+                <ListItemText primary="History" />
+              </ListItemButton>
+            </ListItem>
+          ) : null}
           {userType == "admin" ? (
             <ListItem disablePadding>
               <ListItemButton LinkComponent="a" href="/enmanageaccounts">

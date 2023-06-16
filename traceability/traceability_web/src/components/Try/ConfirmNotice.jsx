@@ -16,7 +16,7 @@ function ConfirmNotice(props) {
   const userType = window.localStorage.getItem("userType");
 
   const deleteProduct = (id) => {
-    fetch(`https://backend.teamluanvan.software/product/delete-product/${id}`, {
+    fetch(`${process.env.REACT_APP_API}/product/delete-product/${id}`, {
       method: "DELETE",
       headers: {
         "x-auth-token": tokenData,
@@ -33,15 +33,12 @@ function ConfirmNotice(props) {
   };
 
   const deleteProcess = async (id) => {
-    await fetch(
-      `https://backend.teamluanvan.software/process/delete-process/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      }
-    )
+    await fetch(`${process.env.REACT_APP_API}/process/delete-process/${id}`, {
+      method: "DELETE",
+      headers: {
+        "x-auth-token": tokenData,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setSnackbarState(true);
@@ -86,9 +83,9 @@ function ConfirmNotice(props) {
             color="warning"
             sx={{ borderRadius: "10px", ml: 4 }}
             onClick={() => {
-              userType === "Admin" || userType === "admin" 
-              ? window.location.href = `/listofprocesses`
-              : window.location.href = `/list`
+              userType === "Admin" || userType === "admin"
+                ? (window.location.href = `/listofprocesses`)
+                : (window.location.href = `/list`);
             }}
           >
             Cancel

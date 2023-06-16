@@ -7,9 +7,11 @@ import {
   Box,
   Button,
   Container,
+  FormControl,
   Grid,
   ImageList,
   ImageListItem,
+  Select,
   TextField,
   TextareaAutosize,
   Typography,
@@ -35,6 +37,8 @@ function UpdateProduct() {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [openQrCode, setOpenQrCode] = useState(false);
+  const [processId, setProcessId] = useState("");
+  const [processName, setProcessName] = useState([]);
 
   const upload = async (e) => {
     e.preventDefault();
@@ -59,27 +63,12 @@ function UpdateProduct() {
   const user = window.localStorage.getItem("userId");
   const userId = window.localStorage.getItem("userId");
 
-  const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-  };
-
   const getInfoProduct = async () => {
     setLoading(true);
 
     await fetch(
-      `https://backend.teamluanvan.software/product/get-product/${params.id}`,
+      `${process.env.REACT_APP_API}/product/get-product/${params.id}`,
+      // `http://localhost:5000/product/get-product/${params.id}`,
       {
         method: "GET",
         headers: {
@@ -94,17 +83,36 @@ function UpdateProduct() {
         setAddress(data.data.address);
         setDescription(data.data.description);
         setTime(data.data.time);
+        setProcessId(data.data.processId);
         console.log("img", data.data.image);
         console.log(data);
       });
     setLoading(false);
   };
 
+  const getProcesses = async () => {
+    setLoading(true);
+
+    await fetch(`${process.env.REACT_APP_API}/process/get-processes`, {
+      method: "GET",
+      headers: {
+        "x-auth-token": tokenData,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data.data);
+        setLoading(false);
+
+        setProcessName(data.data);
+      });
+  };
+
   const putInfoProduct = async () => {
     setLoading(true);
 
     await fetch(
-      `https://backend.teamluanvan.software/product/update-product/${params.id}`,
+      `${process.env.REACT_APP_API}/product/update-product/${params.id}`,
       {
         method: "PUT",
         crossDomain: true,
@@ -135,7 +143,7 @@ function UpdateProduct() {
   };
 
   useEffect(() => {
-    tokenIsValid();
+    getProcesses();
     getInfoProduct();
   }, []);
 
@@ -260,6 +268,37 @@ function UpdateProduct() {
               sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
             />
           </Box>
+          <Grid item xs={11}>
+            <label>
+              Choose process <b>(*)</b>
+            </label>
+            <FormControl fullWidth>
+              <Select
+                native
+                fullWidth
+                variant="outlined"
+                defaultValue={30}
+                inputProps={{
+                  name: "age",
+                  id: "uncontrolled-native",
+                }}
+                value={processId}
+                onChange={(e) => {
+                  setProcessId(e.target.value);
+                  console.log(e.target.value);
+                }}
+              >
+                {processName &&
+                  processName.map((item, index) => {
+                    return (
+                      <option key={index} value={item._id}>
+                        {item.stageProcess.name}
+                      </option>
+                    );
+                  })}
+              </Select>
+            </FormControl>
+          </Grid>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >

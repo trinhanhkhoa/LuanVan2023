@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import "./EnUserAccount.css";
-import * as RiIcons from "react-icons/ri";
 import {
   Box,
   Button,
   ButtonGroup,
-  Card,
   Container,
+  Card,
+  IconButton,
   Input,
   InputAdornment,
   Table,
@@ -20,25 +19,28 @@ import {
   TableSortLabel,
   TextField,
   Toolbar,
+  Tooltip,
   Typography,
   tableCellClasses,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Loading from "../../../components/Loading";
+import SearchIcon from "@mui/icons-material/Search";
 import Popup from "../../../components/Popup";
-import ProductTracking from "../../farmer/ProductTracking/ProductTracking";
+import ConfirmNotice from "../../../components/Try/ConfirmNotice";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
   { id: "length", label: "Tracking" },
+  { id: "time", label: "Create at" },
   { id: "button", label: "" },
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
-    backgroundColor: "#fff9c4",
+    backgroundColor: "#aed581",
     color: "black",
   },
   [`&.${tableCellClasses.body}`]: {
@@ -56,10 +58,16 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function EnUserAccount() {
+function History() {
   const [data, setData] = useState([]);
-  const [dataUser, setDataUser] = useState([]);
-
+  const [name, setName] = useState([]);
+  const [trackingLength, setTrackingLength] = useState([]);
+  const [timeCreate, setTimeCreate] = useState([]);
+  const [dataSC, setDataSC] = useState([]);
+  const [dataFilter, setDataFilter] = useState([]);
+  const [tracking, setTracking] = useState([]);
+  let temp = 0;
+  const [length, setLength] = useState(0);
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
@@ -70,34 +78,16 @@ function EnUserAccount() {
       return items;
     },
   });
-  const [openPopupTracking, setOpenPopupTracking] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const params = useParams();
-  // console.log(params);
-
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
-
-  const getUserInfo = async () => {
-    const data = await fetch(
-      `${process.env.REACT_APP_API}/admin/${params.id}`,
-      {
-        method: "GET",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((res) => res.data);
-    setDataUser(data);
-    console.log(data);
-  };
+  const [loading, setLoading] = useState(false);
+  const [openPopup, setOpenPopup] = useState(false);
+  const [IdPopup, setIdPopup] = useState("");
 
   useEffect(() => {
-    const getUserProduct = async () => {
+    const getProducts = async () => {
       setLoading(true);
+
       await fetch(`${process.env.REACT_APP_API}/product/get-product`, {
         method: "GET",
         headers: {
@@ -106,19 +96,41 @@ function EnUserAccount() {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.data);
           let data = res.data;
+          let dataSC = res.dataSC;
+          dataSC = dataSC.filter((p) => p.status == 3);
 
-          data = data.filter((p) => p.userId == params.id);
-          console.log(`product has user id: `, data);
+          data = data.filter((p) => p.userId == id);
 
+          const filteredArray = data.filter((item1) =>
+            dataSC.some(
+              (item2) => item2.pid === item1._id && item2.status === 3
+            )
+          );
+
+          setDataSC(dataSC);
           setData(data);
+          setDataFilter(filteredArray);
+          // console.log("filteredArray", filteredArray);
+
+          let tracking = data;
+          tracking = tracking.filter(
+            (t) => t.tracking && t.tracking.length != 0
+          );
+          // console.log(`tracking: `, tracking);
+          setTracking(tracking);
+          tracking.forEach((track, index) => {
+            temp += tracking[index].tracking.length;
+          });
+
+          setLength(temp);
+          // setData(dataSC);
         });
+
       setLoading(false);
     };
 
-    getUserInfo();
-    getUserProduct();
+    getProducts();
   }, []);
 
   const handleChangePage = (event, newPage) => {
@@ -157,10 +169,10 @@ function EnUserAccount() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    return stableSort(filterFn.fn(data), getComparator(order, orderBy)).slice(
-      page * rowsPerPage,
-      (page + 1) * rowsPerPage
-    );
+    return stableSort(
+      filterFn.fn(dataFilter),
+      getComparator(order, orderBy)
+    ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   };
 
   const handleSordRequest = (id) => {
@@ -173,6 +185,7 @@ function EnUserAccount() {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
+        console.log(target);
         if (e.target.value == "") return items;
         else
           return items.filter((x) =>
@@ -197,27 +210,13 @@ function EnUserAccount() {
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: { xs: "flex-start", md: "flex-end" },
           justifyContent: "space-between",
           marginBottom: "20px",
         }}
       >
-        <Typography variant="h3" sx={{ fontSize: { xs: "25px", md: "35px" } }}>
-          USER'S PRODUCTS
+        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
+          HISTORY
         </Typography>
-        <Card
-          sx={{
-            backgroundColor: "rgba(71, 167, 162, 0.12)",
-            padding: "1%",
-            mt: { xs: 2, md: 0 },
-          }}
-        >
-          <Typography>Username: {dataUser.name}</Typography>
-          <Typography>Email: {dataUser.email}</Typography>
-          <Typography>ID: {dataUser._id}</Typography>
-          <Typography>Role: {dataUser.userType}</Typography>
-        </Card>
       </Box>
       <Card>
         <TableContainer
@@ -268,32 +267,36 @@ function EnUserAccount() {
               ))}
             </TableHead>
             <TableBody>
-              {recordsAfterPagingAndSorting().map((item, index) => (
-                <StyledTableRow key={index + 1}>
-                  <StyledTableCell>{index + 1}</StyledTableCell>
-                  <StyledTableCell>{item.name}</StyledTableCell>
-                  <StyledTableCell>{item.tracking.length}</StyledTableCell>
-                  <StyledTableCell align="center">
-                    <ButtonGroup variant="contained">
-                      <Button
-                        color="info"
-                        onClick={() => {
-                          setOpenPopupTracking(true);
-                        }}
-                      >
-                        Detail
-                      </Button>
-                      <Popup
-                        title="Tracking"
-                        openPopup={openPopupTracking}
-                        setOpenPopup={setOpenPopupTracking}
-                      >
-                        <ProductTracking id={item._id} />
-                      </Popup>
-                    </ButtonGroup>
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
+              {recordsAfterPagingAndSorting() &&
+                recordsAfterPagingAndSorting().map((item, index) => (
+                  <StyledTableRow key={index + 1}>
+                    <StyledTableCell>{index + 1}</StyledTableCell>
+                    <StyledTableCell>{item.name}</StyledTableCell>
+                    <StyledTableCell>{item.tracking.length}</StyledTableCell>
+                    <StyledTableCell>{item.time}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Box>
+                        <Tooltip title="Detail">
+                          <IconButton
+                            color="info"
+                            onClick={() => {
+                              window.location.href = `/product/${item._id}`;
+                            }}
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </Tooltip>
+                        <Popup
+                          title="Confirm Delete"
+                          openPopup={openPopup}
+                          setOpenPopup={setOpenPopup}
+                        >
+                          <ConfirmNotice id={IdPopup} />
+                        </Popup>
+                      </Box>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ))}
             </TableBody>
           </Table>
           <TablePagination
@@ -311,4 +314,4 @@ function EnUserAccount() {
   );
 }
 
-export default EnUserAccount;
+export default History;

@@ -21,6 +21,7 @@ import {
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "rsuite/dist/rsuite.min.css";
 import Steps from "rsuite/Steps";
+import { Timeline, Event } from "react-timeline-scribble";
 
 import AppOrderTimeline from "../../../components/AppOrderTimeLine";
 import { fDateTime } from "../../../utils/formatTime";
@@ -44,8 +45,8 @@ export default function ProductTracking(props) {
       setLoading(true);
 
       await fetch(
-        // `http://localhost:5000/tracking/get-tracking/${id}`,
-        `https://backend.teamluanvan.software/tracking/get-tracking/${id}`,
+        // `${process.env.REACT_APP_API}/tracking/get-tracking/${id}`,
+        `${process.env.REACT_APP_API}/tracking/get-tracking/${id}`,
 
         {
           method: "GET",
@@ -60,7 +61,7 @@ export default function ProductTracking(props) {
           let data = res.data;
 
           data = data.filter((p) => p.productId == id);
-          // console.log(`product has user id: `, data);
+          console.log(`product has user id: `, data);
 
           setData(data);
         });
@@ -96,24 +97,6 @@ export default function ProductTracking(props) {
     });
   };
 
-  // return (
-  //   <Grid item xs={12} md={6} lg={4}>
-  //     <AppOrderTimeline
-  //       // title="Order Timeline"
-  //       list={filterSearching().map((item, index) => ({
-  //         id: `${item.id}`,
-  //         title: `${item.name}`,
-  //         userId: `${item.userId}`,
-  //         type: `order${index + 1}`,
-  //         description: `${item.description}`,
-  //         url: `${item.url}`,
-  //         images: `${item.images}`,
-  //         time: `${item.time}`,
-  //       }))}
-  //     />
-  //   </Grid>
-  // );
-
   return (
     <Box
       className="product-tracking"
@@ -142,76 +125,32 @@ export default function ProductTracking(props) {
               ),
             }}
           />
-          {/* {trackingLength < 0 ? (
-            ""
-          ) : (
-            <Button
-              variant="contained"
-              color="warning"
-              sx={{
-                borderRadius: "5px",
-                marginLeft: "10px",
-                marginBottom: "20px",
-                padding: "15px",
-              }}
-              onClick={() => {}} // tắt nút update tracking
-            >
-              {" "}
-              Deliveried{" "}
-            </Button>
-          )} */}
         </Toolbar>
-        <Steps current={filterSearching().length  + 1} vertical>
-          {/* filterSearching().length != 0 ? ( */}
+        <Timeline>
           {filterSearching().length != 0 ? (
             filterSearching().map((item, index) => (
-              <Steps.Item
-                // status='process'
-                title={item.name}
-                description={
-                  <Box>
-                    <Typography>Time: {fDateTime(item.time)}</Typography>
-                    <Typography>
-                      Check tracking:{" "}
-                      <Link
-                        underline="hover"
-                        onClick={() => {
-                          window.location.href = `${item.url}`;
-                        }}
-                      >
-                        Information was verified on Blockchain
-                      </Link>{" "}
-                    </Typography>
-                    <Box>
-                      {item.images &&
-                        item.images.map((image, idx) => {
-                          return <img src={image} height={200} />;
-                        })}
-                    </Box>
-                    <Typography sx={{ maxWidth: 500 }}>
-                      {" "}
-                      Description:{" "}
-                      <ReactReadMoreReadLess
-                        readMoreClassName="readMoreClassName"
-                        readLessClassName="readMoreClassName"
-                        charLimit={50}
-                        readMoreText={<ExpandMoreRoundedIcon />}
-                        readLessText={<ExpandLessRoundedIcon />}
-                      >
-                        {item.description}
-                      </ReactReadMoreReadLess>{" "}
-                    </Typography>
-                  </Box>
-                }
-              />
+              <Event interval={item.name}>
+                <Typography>Description: {item.description}</Typography>
+                <Box>
+                  Details:
+                  {item.notes &&
+                    item.notes.map((note) => {
+                      return <Typography>{note}</Typography>;
+                    })}
+                </Box>
+                <Box>
+                  {item.images &&
+                    item.images.map((image, idx) => {
+                      return <img src={image} height={200} />;
+                    })}
+                </Box>
+              </Event>
             ))
           ) : (
             <Typography> Have not updated any tracking yet! </Typography>
           )}
-        </Steps>
+        </Timeline>
       </Box>
-
-      {/* : <Typography> null </Typography>} */}
     </Box>
   );
 }

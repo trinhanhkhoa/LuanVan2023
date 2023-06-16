@@ -76,7 +76,7 @@ export default function SignIn() {
   const handleSubmit = async () => {
     setLoading(true);
 
-    await fetch("https://backend.teamluanvan.software/signin", {
+    await fetch(`${process.env.REACT_APP_API}/signin`, {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -91,7 +91,6 @@ export default function SignIn() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.userType, "userRegister");
         setLoading(false);
 
         if (data.userType == "Admin" || data.userType == "admin") {

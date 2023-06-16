@@ -82,7 +82,7 @@ export default function Home() {
     const getProduct = async () => {
       setLoading(true);
 
-      await fetch(`https://backend.teamluanvan.software/product/get-product`, {
+      await fetch(`${process.env.REACT_APP_API}/product/get-product`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
@@ -188,7 +188,7 @@ export default function Home() {
   return (
     <Box
       sx={{
-        minHeight: 900,
+        minHeight: 800,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -280,7 +280,7 @@ export default function Home() {
               minWidth: { xs: "5rem", md: "50rem" },
               minHeight: { xs: "5rem", md: "16rem" },
               borderRadius: "10px",
-              marginRight: '10px'
+              marginRight: "10px",
             }}
           >
             <Typography

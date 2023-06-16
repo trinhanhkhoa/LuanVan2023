@@ -30,29 +30,10 @@ export default function UserInfo() {
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
 
-  const tokenIsValid = async () => {
-    setLoading(true);
-
-    await fetch("https://backend.teamluanvan.software/tokenIsValid", {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("token", data);
-      });
-    setLoading(false);
-  };
-
   const getProfile = async () => {
     setLoading(true);
 
-    await fetch(`https://backend.teamluanvan.software/getAnAuth`, {
+    await fetch(`${process.env.REACT_APP_API}/getAnAuth`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -69,27 +50,10 @@ export default function UserInfo() {
     setLoading(false);
   };
   useEffect(() => {
-    tokenIsValid();
     getProfile();
   }, []);
 
   return (
-    // <div className="userinfo">
-    //   <div className="userinfo-container">
-    //     <Loading loading={loading} />
-
-    //     <div className="userinfo-name">
-    //       <h1>Name</h1> <h2>{name}</h2>
-    //     </div>
-    //     <div className="userinfo-email">
-    //       <h1>Email</h1> <h2>{email}</h2>
-    //     </div>
-    //     <div className="userinfo-role">
-    //       <h1>Role</h1> <h2>{userType}</h2>
-    //     </div>
-    //   </div>
-    // </div>
-
     <ThemeProvider theme={theme}>
       <Box
         style={{
@@ -130,7 +94,9 @@ export default function UserInfo() {
                   margin="normal"
                   fullWidth
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">Name</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">Name</InputAdornment>
+                    ),
                     readOnly: true,
                   }}
                   value={data.name}
@@ -139,7 +105,9 @@ export default function UserInfo() {
                   margin="normal"
                   fullWidth
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">Email</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">Email</InputAdornment>
+                    ),
                     readOnly: true,
                   }}
                   value={data.email}
@@ -149,7 +117,9 @@ export default function UserInfo() {
                   margin="normal"
                   fullWidth
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">Role</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">Role</InputAdornment>
+                    ),
                     readOnly: true,
                   }}
                   value={data.userType}
@@ -158,7 +128,9 @@ export default function UserInfo() {
                   margin="normal"
                   fullWidth
                   InputProps={{
-                    startAdornment: <InputAdornment position="start">Products</InputAdornment>,
+                    startAdornment: (
+                      <InputAdornment position="start">Products</InputAdornment>
+                    ),
                     readOnly: true,
                   }}
                   value={data.products}

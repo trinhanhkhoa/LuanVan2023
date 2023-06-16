@@ -31,7 +31,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
-  { id: "time", label: "End time" },
+  { id: "time", label: "Create at" },
   { id: "button", label: "" },
 ];
 
@@ -57,6 +57,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function Process() {
   const [data, setData] = useState([]);
+  const [dataTable, setDataTable] = useState([]);
 
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
@@ -73,8 +74,8 @@ function Process() {
   const id = window.localStorage.getItem("userId");
   const params = useParams();
 
-  const getProcesses = () => {
-    fetch(`https://backend.teamluanvan.software/process/get-processes`, {
+  const getProcesses = async () => {
+    await fetch(`${process.env.REACT_APP_API}/process/get-processes`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -82,8 +83,19 @@ function Process() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
+
+        let arr = [];
+        let DATA = data.data;
+        DATA = data.data.forEach((item) => {
+          // arr.push(item.stageProcess);
+          arr.push({ id: item._id, stageProcess: item.stageProcess });
+
+          // console.log("arr", arr);
+        });
+        setDataTable(arr);
         setData(data.data);
+        // console.log(data);
       });
   };
 
@@ -127,10 +139,11 @@ function Process() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    return stableSort(filterFn.fn(data), getComparator(order, orderBy)).slice(
-      page * rowsPerPage,
-      (page + 1) * rowsPerPage
-    );
+    console.log(dataTable);
+    return stableSort(
+      filterFn.fn(dataTable),
+      getComparator(order, orderBy)
+    ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   };
 
   const handleSordRequest = (id) => {
@@ -143,6 +156,7 @@ function Process() {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
+        console.log(items);
         if (e.target.value == "") return items;
         else
           return items.filter((x) =>
@@ -227,13 +241,15 @@ function Process() {
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.stageProcess.name}</StyledTableCell>
-                  <StyledTableCell>{item.stageProcess.timeCreate}</StyledTableCell>
+                  <StyledTableCell>
+                    {item.stageProcess.timeCreate}
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     <ButtonGroup variant="contained">
                       <Button
                         color="info"
                         onClick={() => {
-                          window.location.href = `/processdetail/${item._id}`;
+                          window.location.href = `/processdetail/${item.id}`;
                         }}
                       >
                         Detail

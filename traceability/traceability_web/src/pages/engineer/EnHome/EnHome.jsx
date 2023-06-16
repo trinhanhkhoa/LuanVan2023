@@ -93,7 +93,7 @@ export default function EnHome() {
     const getUsers = async () => {
       setLoading(true);
 
-      await fetch("https://backend.teamluanvan.software/", {
+      await fetch(`${process.env.REACT_APP_API}/`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
@@ -133,7 +133,7 @@ export default function EnHome() {
     const getProducts = async () => {
       setLoading(true);
 
-      await fetch(`https://backend.teamluanvan.software/product/get-product`, {
+      await fetch(`${process.env.REACT_APP_API}/product/get-product`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,

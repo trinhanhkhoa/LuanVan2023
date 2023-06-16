@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
-import cam from "../../../asserts/cam.jpg";
 import * as TbIcons from "react-icons/tb";
 import { Link, useParams } from "react-router-dom";
-import Data from "../../../Data.json";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Box,
@@ -82,22 +80,13 @@ function Product() {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [tracking, setTracking] = useState([]);
+  const [trackingName, setTrackingName] = useState([]);
+
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [processId, setProcessId] = useState("");
 
   const [img, setImg] = useState([]);
-
-  const deleteProduct = (id) => {
-    fetch(`https://backend.teamluanvan.software/product/${id}`, {
-      method: "DELETE",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        alert("Product is deleted");
-        window.location.href = "/list";
-      });
-  };
 
   const [openPopup, setOpenPopup] = useState(false);
   const [openQrCode, setOpenQrCode] = useState(false);
@@ -118,7 +107,7 @@ function Product() {
 
   useEffect(() => {
     const getUser = async () => {
-      await fetch(`https://backend.teamluanvan.software/getAnAuth`, {
+      await fetch(`${process.env.REACT_APP_API}/getAnAuth`, {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
@@ -136,7 +125,7 @@ function Product() {
       setLoading(true);
 
       const data = await fetch(
-        `https://backend.teamluanvan.software/product/get-product/${params.id}`,
+        `${process.env.REACT_APP_API}/product/get-product/${params.id}`,
         // `http://localhost:5000/product/get-product/${params.id}`,
         {
           method: "GET",
@@ -157,10 +146,10 @@ function Product() {
       setImages(data.data.images);
       setProcessId(data.data.processId);
 
-      if (data.dataBC[6] == 0) setStatus("CREATED");
-      else if (data.dataBC[6] == 1) setStatus("UPDATED");
-      else if (data.dataBC[6] == 2) setStatus("DELETED");
-      else if (data.dataBC[6] == 3) setStatus("DELIVERIED");
+      if (data.dataBC[6] == 0) setStatus("Created");
+      else if (data.dataBC[6] == 1) setStatus("Updated");
+      else if (data.dataBC[6] == 2) setStatus("Deleted");
+      else if (data.dataBC[6] == 3) setStatus("Deliveried");
 
       setLoading(false);
 
@@ -169,7 +158,6 @@ function Product() {
 
       if (mappingImages) setImg([...mappingImages[0]]);
     };
-
     getInfoProduct();
   }, []);
 
@@ -251,7 +239,13 @@ function Product() {
                 </Typography>
                 <Typography
                   variant="body"
-                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" } }}
+                  sx={{
+                    lineHeight: 2,
+                    backgroundColor: "#64dd17",
+                    borderRadius: 2,
+                    textAlign: "center",
+                    fontSize: { xs: "15px", md: "15px" },
+                  }}
                 >
                   Status: {status}
                 </Typography>
@@ -315,7 +309,7 @@ function Product() {
                 <HiIcons.HiUser style={{ marginRight: 10, fontSize: 25 }} />{" "}
                 Farmer: {user.name}
               </Typography>
-              <Typography variant="text" >
+              <Typography variant="text">
                 <HiIcons.HiOutlineMail
                   style={{ marginRight: 10, fontSize: 25 }}
                 />{" "}
@@ -345,12 +339,34 @@ function Product() {
                 </ReactReadMoreReadLess>
               </Typography>
               <Grid container xs={11} sx={{ mt: 4 }}>
+                <Grid item xs={2}>
+                  <Button
+                    variant="contained"
+                    color="warning"
+                    sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
+                    onClick={() => {
+                      setOpenPopupTracking(true);
+                    }}
+                  >
+                    Tracking
+                  </Button>
+                  <Popup
+                    title="Tracking"
+                    openPopup={openPopupTracking}
+                    setOpenPopup={setOpenPopupTracking}
+                  >
+                    <ProductTracking
+                      id={params.id}
+                      trackingLength={tracking.length}
+                    />
+                  </Popup>
+                </Grid>
                 <Grid item xs={4}>
                   <Button
                     variant="contained"
                     color="success"
                     sx={
-                      status === "DELETED" || status === "DELIVERIED"
+                      status === "Deleted" || status === "Deliveried"
                         ? {
                             display: "none",
                             borderRadius: "10px",
@@ -375,29 +391,7 @@ function Product() {
                     openPopup={openPopup}
                     setOpenPopup={setOpenPopup}
                   >
-                    <TrackingForm processId={processId}/>
-                  </Popup>
-                </Grid>
-                <Grid item xs={3}>
-                  <Button
-                    variant="contained"
-                    color="warning"
-                    sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
-                    onClick={() => {
-                      setOpenPopupTracking(true);
-                    }}
-                  >
-                    Tracking
-                  </Button>
-                  <Popup
-                    title="Tracking"
-                    openPopup={openPopupTracking}
-                    setOpenPopup={setOpenPopupTracking}
-                  >
-                    <ProductTracking
-                      id={params.id}
-                      trackingLength={tracking.length}
-                    />
+                    <TrackingForm processId={processId} />
                   </Popup>
                 </Grid>
               </Grid>

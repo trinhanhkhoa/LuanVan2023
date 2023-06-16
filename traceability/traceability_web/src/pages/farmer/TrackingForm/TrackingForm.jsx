@@ -21,21 +21,13 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-const optionsTracking = [
-  "Gieo giống cây",
-  "Chăm sóc cây",
-  "Đậy trái",
-  "Ra hoa",
-  "Thu hoạch",
-  "Chuyển khâu thu mua",
-];
-
 function TrackingForm(props) {
-  const { processId } = props;
+  const id = props;
+  console.log("id", id.processId);
   const [images, setImages] = useState([]);
   const [links, setLinks] = useState([]);
   const [img, setImg] = useState([]);
-
+  const [notes, setNotes] = useState([]);
   const [name, setName] = useState("");
   const [amountOfWater, setAmountOfWater] = useState("");
   const [amountOfFertilizer, setAmountOfFertilizer] = useState("");
@@ -45,7 +37,7 @@ function TrackingForm(props) {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
-  const [process, setProcess] = useState({
+  const [processStage, setProcessStage] = useState({
     stageProcess: {
       name: "",
       description: "",
@@ -67,8 +59,8 @@ function TrackingForm(props) {
 
   const getProcess = async () => {
     setLoading(true);
-    const data = await fetch(
-      `https://backend.teamluanvan.software/process/get-process/${processId}`,
+    await fetch(
+      `${process.env.REACT_APP_API}/process/get-process/${id.processId}`,
       {
         method: "GET",
         headers: {
@@ -77,55 +69,55 @@ function TrackingForm(props) {
       }
     )
       .then((res) => res.json())
-      .then((res) => res.data);
-    // console.log("process", data);
-    setProcess({
-      stageProcess: {
-        name: data.stageProcess.name,
-        description: data.stageProcess.description,
-        images: data.stageProcess.images,
-        timeCreate: data.stageProcess.timeCreate,
-      },
-      stagePlantSeeds: {
-        name: data.stagePlantSeeds.name,
-        description: data.stagePlantSeeds.description,
-      },
-      stagePlantCare: {
-        name: data.stagePlantCare.name,
-        description: data.stagePlantCare.description,
-        water: data.stagePlantCare.water,
-        fertilizer: data.stagePlantCare.fertilizer,
-      },
-      stageBloom: {
-        name: data.stageBloom.name,
-        description: data.stageBloom.description,
-      },
-      stageCover: {
-        name: data.stageCover.name,
-        description: data.stageCover.description,
-      },
-      stageHarvest: {
-        name: data.stageHarvest.name,
-        description: data.stageHarvest.description,
-        quantity: data.stageHarvest.quantity,
-      },
-      stageSell: {
-        name: data.stageSell.name,
-        description: data.stageSell.description,
-        purchasingUnit: data.stageSell.purchasingUnit,
-      },
-    });
-
-    setStep([
-      data.stagePlantSeeds.name,
-      data.stagePlantCare.name,
-      data.stageBloom.name,
-      data.stageCover.name,
-      data.stageHarvest.name,
-      data.stageSell.name,
-    ]);
-
-    setLoading(false);
+      .then((res) => {
+        let data = res.data;
+        console.log("process", data);
+        setProcessStage({
+          stageProcess: {
+            name: data.stageProcess.name,
+            description: data.stageProcess.description,
+            images: data.stageProcess.images,
+            timeCreate: data.stageProcess.timeCreate,
+          },
+          stagePlantSeeds: {
+            name: data.stagePlantSeeds.name,
+            description: data.stagePlantSeeds.description,
+          },
+          stagePlantCare: {
+            name: data.stagePlantCare.name,
+            description: data.stagePlantCare.description,
+            water: data.stagePlantCare.water,
+            fertilizer: data.stagePlantCare.fertilizer,
+          },
+          stageBloom: {
+            name: data.stageBloom.name,
+            description: data.stageBloom.description,
+          },
+          stageCover: {
+            name: data.stageCover.name,
+            description: data.stageCover.description,
+          },
+          stageHarvest: {
+            name: data.stageHarvest.name,
+            description: data.stageHarvest.description,
+            quantity: data.stageHarvest.quantity,
+          },
+          stageSell: {
+            name: data.stageSell.name,
+            description: data.stageSell.description,
+            purchasingUnit: data.stageSell.purchasingUnit,
+          },
+        });
+        setStep([
+          data.stagePlantSeeds.name,
+          data.stagePlantCare.name,
+          data.stageBloom.name,
+          data.stageCover.name,
+          data.stageHarvest.name,
+          data.stageSell.name,
+        ]);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -139,8 +131,7 @@ function TrackingForm(props) {
     console.log("SUBMITING!!!");
 
     await fetch(
-      // `http://localhost:5000/tracking/add-tracking/${params.id}`,
-      `https://backend.teamluanvan.software/tracking/add-tracking/${params.id}`,
+      `${process.env.REACT_APP_API}/tracking/add-tracking/${params.id}`,
       {
         method: "POST",
         crossDomain: true,
@@ -155,14 +146,12 @@ function TrackingForm(props) {
           time,
           images: links,
           description,
+          notes,
         }),
       }
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("data", data);
-        console.log("upload img", img);
-
         if (data.success == true) setSnackbarState(true);
         else setSnackbarState(false);
 
@@ -180,9 +169,7 @@ function TrackingForm(props) {
     console.log("DELIVERING!!!", JSON.stringify(optionsTracking[5]));
 
     await fetch(
-      `https://backend.teamluanvan.software/tracking/deliveried/${params.id}`,
-      // `http://localhost:5000/tracking/deliveried/${params.id}`,
-
+      `${process.env.REACT_APP_API}/tracking/deliveried/${params.id}`,
       {
         method: "POST",
         crossDomain: true,
@@ -197,13 +184,12 @@ function TrackingForm(props) {
           time,
           images: links,
           description,
+          notes,
         }),
       }
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log("data", data);
-
         if (data.success == true) setSnackbarState(true);
         else setSnackbarState(false);
 
@@ -223,10 +209,10 @@ function TrackingForm(props) {
           maxWidth: "100%",
         }}
         component="form"
-        onSubmit={name !== optionsTracking[5] ? handleSubmit : handleDelivery}
+        onSubmit={name !== step[5] ? handleSubmit : handleDelivery}
       >
         <Loading loading={loading} />
-        {console.log("step", step)}
+        {console.log(step)}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
@@ -239,7 +225,6 @@ function TrackingForm(props) {
               value={name}
               onChange={(e, newValue) => {
                 setName(newValue);
-                console.log(newValue);
               }}
               id="combo-box-demo"
               options={step}
@@ -250,7 +235,6 @@ function TrackingForm(props) {
                   value={name}
                   onChange={(e, newValue) => {
                     setName(newValue);
-                    console.log(name);
                   }}
                   variant="outlined"
                   name="name"
@@ -266,18 +250,16 @@ function TrackingForm(props) {
             />
             {name === step[4] ? (
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <label htmlFor="">
-                  Quantity
-                </label>
+                <label htmlFor="">Quantity</label>
                 <TextField
                   required
-                  value={unit}
-                  onChange={(e, newValue) => {
-                    setQuantity(newValue);
-                    console.log(quantity);
+                  value={quantity}
+                  onChange={(e) => {
+                    setQuantity(e.target.value);
+                    setNotes("Quantity: " + quantity);
                   }}
                   variant="outlined"
-                  placeholder={process.stageHarvest.quantity}
+                  placeholder={processStage.stageHarvest.quantity}
                   sx={{
                     width: { xs: 350, md: 600 },
                     borderRadius: "20%",
@@ -286,20 +268,18 @@ function TrackingForm(props) {
                 />
               </Box>
             ) : null}
-             {name === step[5] ? (
+            {name === step[5] ? (
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <label htmlFor="">
-                  Purchasing unit
-                </label>
+                <label htmlFor="">Purchasing unit</label>
                 <TextField
                   required
                   value={unit}
-                  onChange={(e, newValue) => {
-                    setUnit(newValue);
-                    console.log(unit);
+                  onChange={(e) => {
+                    setUnit(e.target.value);
+                    setNotes("Purschasing unit" + unit);
                   }}
                   variant="outlined"
-                  placeholder={process.stageSell.name}
+                  placeholder={processStage.stageSell.name}
                   sx={{
                     width: { xs: 350, md: 600 },
                     borderRadius: "20%",
@@ -310,27 +290,37 @@ function TrackingForm(props) {
             ) : null}
             {name === step[1] ? (
               <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <label htmlFor="">Watering time</label>
                 <TextField
                   required
                   value={amountOfWater}
-                  onChange={(e, newValue) => {
-                    setAmountOfWater(newValue);
-                    console.log(amountOfWater);
+                  onChange={(e) => {
+                    setAmountOfWater(e.target.value);
+                    setNotes([
+                      "Amount of Fertilizer: " + amountOfFertilizer,
+                      "Watering Time: " + e.target.value,
+                    ]);
+                    console.log(notes);
                   }}
                   variant="outlined"
-                  placeholder="Amount of water"
+                  placeholder="Watering time"
                   sx={{
                     width: { xs: 350, md: 600 },
                     borderRadius: "20%",
                     mb: 2,
                   }}
                 />
+
+                <label htmlFor="">Amount of Fertilizer</label>
                 <TextField
                   required
                   value={amountOfFertilizer}
-                  onChange={(e, newValue) => {
-                    setAmountOfFertilizer(newValue);
-                    console.log(amountOfFertilizer);
+                  onChange={(e) => {
+                    setAmountOfFertilizer(e.target.value);
+                    setNotes([
+                      "Amount of Fertilizer: " + e.target.value,
+                      "Watering Time: " + amountOfWater,
+                    ]);
                   }}
                   variant="outlined"
                   placeholder="Amount of fertilizer"

@@ -34,7 +34,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
 import { Card } from "reactstrap";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 import { fDateTime } from "../../../utils/formatTime";
 
 const headCell = [
@@ -85,7 +85,7 @@ function ListOfProcesses() {
   const getProcesses = async () => {
     setLoading(true);
 
-    await fetch("https://backend.teamluanvan.software/process/get-processes", {
+    await fetch(`${process.env.REACT_APP_API}/process/get-processes`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -261,7 +261,9 @@ function ListOfProcesses() {
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.stageProcess.name}</StyledTableCell>
-                  <StyledTableCell>{(item.stageProcess.timeCreate)}</StyledTableCell>
+                  <StyledTableCell>
+                    {item.stageProcess.timeCreate}
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     <Box>
                       <Tooltip title="Detail">

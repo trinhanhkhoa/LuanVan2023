@@ -121,7 +121,7 @@ export default function PersistentDrawerLeft() {
   const id = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
-    fetch("https://backend.teamluanvan.software/tokenIsValid", {
+    fetch(`${process.env.REACT_APP_API}/tokenIsValid`, {
       method: "POST",
       crossDomain: true,
       headers: {
@@ -132,12 +132,12 @@ export default function PersistentDrawerLeft() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log("token", data);
+        // console.log("token", data);
       });
   };
 
   const getUser = () => {
-    fetch(`https://backend.teamluanvan.software/getAnAuth`, {
+    fetch(`${process.env.REACT_APP_API}/getAnAuth`, {
       method: "GET",
       headers: {
         "x-auth-token": tokenData,
@@ -145,7 +145,7 @@ export default function PersistentDrawerLeft() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data.name, "USER NAME");
+        // console.log(data.data.name, "USER NAME");
         setData(data.data);
       });
   };
