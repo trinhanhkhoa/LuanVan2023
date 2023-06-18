@@ -181,7 +181,7 @@ function Product() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: 700,
+        minHeight: "80vh",
       }}
     >
       <Loading loading={loading} />

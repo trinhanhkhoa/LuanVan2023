@@ -170,7 +170,7 @@ function Process() {
     <Container
       sx={{
         minWidth: "100%",
-        height: 650,
+        minHeight: "80vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

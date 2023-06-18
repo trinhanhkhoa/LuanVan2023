@@ -123,7 +123,7 @@ function CreateQR() {
   }, []);
 
   return (
-    <Container fixed sx={{ justifyContent: "center", alignItems: "center" }}>
+    <Container fixed sx={{ justifyContent: "center", alignItems: "center", minHeight: "80vh" }}>
       <Form onSubmit={handleSubmit}>
         <Box sx={{ marginBottom: "10px", textAlign: "left" }}>
           <Typography

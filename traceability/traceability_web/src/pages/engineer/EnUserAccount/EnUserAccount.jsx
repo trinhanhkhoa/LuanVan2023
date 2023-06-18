@@ -185,7 +185,7 @@ function EnUserAccount() {
     <Container
       sx={{
         minWidth: "100%",
-        minHeight: 650,
+        minHeight: "80vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

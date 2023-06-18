@@ -210,7 +210,7 @@ function EnProcess() {
         // flexDirection: {md: "column"},
         justifyContent: "center",
         alignItems: "center",
-        minHeight: 800,
+        minHeight: "80vh",
       }}
     >
       <ProductDetailWrapper>

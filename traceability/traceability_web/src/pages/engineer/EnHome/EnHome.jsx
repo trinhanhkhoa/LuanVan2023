@@ -235,7 +235,7 @@ export default function EnHome() {
   return admin ? (
     <Box
       sx={{
-        minHeight: 700,
+        minHeight: "80vh",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -323,7 +323,7 @@ export default function EnHome() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#fffde7",
-              maxWidth: { xs: "28rem", sm: "20rem", md: "26rem" },
+              maxWidth: { xs: "28rem", sm: "20rem", md: "28rem" },
               borderRadius: "10px",
               // marginRight: "5px",
             }}
@@ -340,7 +340,7 @@ export default function EnHome() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#fffde7",
-              maxWidth: { xs: "28rem", sm: "20rem", md: "26rem" },
+              maxWidth: { xs: "28rem", sm: "20rem", md: "28rem" },
               borderRadius: "10px",
               // marginRight: "5px",
             }}
@@ -355,7 +355,7 @@ export default function EnHome() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#fffde7",
-              maxWidth: { xs: "28rem", sm: "20rem", md: "26rem" },
+              maxWidth: { xs: "28rem", sm: "20rem", md: "28rem" },
               borderRadius: "10px",
             }}
           />

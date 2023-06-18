@@ -199,7 +199,7 @@ function EnUpdateProcess() {
   };
 
   return (
-    <Container sx={{ minHeight: 600 }}>
+    <Container sx={{ minHeight: "80vh",}}>
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>

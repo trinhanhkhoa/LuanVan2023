@@ -166,7 +166,7 @@ function EnCreateProcess() {
   };
 
   return (
-    <Container sx={{ minHeight: 900 }}>
+    <Container sx={{ minHeight: "80vh", }}>
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
