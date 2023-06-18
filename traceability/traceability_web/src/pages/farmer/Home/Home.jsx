@@ -188,7 +188,7 @@ export default function Home() {
   return (
     <Box
       sx={{
-        minHeight: 800,
+        minHeight: 700,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -200,8 +200,6 @@ export default function Home() {
           flexDirection: "row",
           justifyContent: "right",
           alignItems: "center",
-          marginTop: { xs: "10px", md: "10px" },
-          marginBottom: { xs: "10px", md: 3 },
         }}
       >
         <Loading loading={loading} />
@@ -263,7 +261,7 @@ export default function Home() {
         spacing={3}
         sx={{
           marginBottom: 4,
-          marginTop: 2,
+          marginTop: 1,
         }}
       >
         <Grid item xs={12} sm={6} md={6}>
@@ -277,10 +275,10 @@ export default function Home() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#D0F5BE",
-              minWidth: { xs: "5rem", md: "50rem" },
+              maxWidth: "52rem",
               minHeight: { xs: "5rem", md: "16rem" },
               borderRadius: "10px",
-              marginRight: "10px",
+              // marginRight: "10px",
             }}
           >
             <Typography
@@ -293,34 +291,38 @@ export default function Home() {
         </Grid>
 
         <Grid item xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title="Total of products"
-            total={data.length}
-            color="success"
-            icon={"ant-design:android-filled"}
-            sx={{
-              boxShadow:
-                "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-              backgroundColor: "#D0F5BE",
-              width: { xs: "28rem", sm: "20rem", md: "28rem" },
-              borderRadius: "10px",
-            }}
-          />
+          <Box>
+            <AppWidgetSummary
+              title="Total of products"
+              total={data.length}
+              color="success"
+              icon={"ant-design:android-filled"}
+              sx={{
+                boxShadow:
+                  "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+                backgroundColor: "#D0F5BE",
+                maxWidth: { xs: "28rem", sm: "20rem", md: "25rem" },
+                borderRadius: "10px",
+              }}
+            />
+          </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
-          <AppWidgetSummary
-            title="Total trackings"
-            total={length}
-            color="success"
-            icon={"ant-design:apple-filled"}
-            sx={{
-              boxShadow:
-                "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-              backgroundColor: "#D0F5BE",
-              width: { xs: "28rem", sm: "20rem", md: "28rem" },
-              borderRadius: "10px",
-            }}
-          />
+          <Box>
+            <AppWidgetSummary
+              title="Total trackings"
+              total={length}
+              color="success"
+              icon={"ant-design:apple-filled"}
+              sx={{
+                boxShadow:
+                  "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+                backgroundColor: "#D0F5BE",
+                maxWidth: { xs: "28rem", sm: "20rem", md: "25rem" },
+                borderRadius: "10px",
+              }}
+            />
+          </Box>
         </Grid>
       </Grid>
 

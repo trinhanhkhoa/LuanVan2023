@@ -163,10 +163,10 @@ function EnManageAccounts() {
   };
 
   return (
-    <Container
+    <Box
       sx={{
         minWidth: "100%",
-        minHeight: "80vh",
+        minHeight: 650,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -174,132 +174,122 @@ function EnManageAccounts() {
     >
       <Loading loading={loading} />
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "20px",
-        }}
-      >
+      <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
           LIST OF USERS
         </Typography>
-      </Box>
-      <Box>
-        <Card>
-          <Toolbar>
-            <TextField
-              variant="outlined"
-              placeholder="Search user"
-              onChange={handleSearch}
-              sx={{
-                width: { xs: "100%", md: "30%" },
-                marginBottom: "20px",
-                marginTop: "20px",
-                marginLeft: "0",
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchRoundedIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Toolbar>
-          <TableContainer
+        <Toolbar>
+          <TextField
+            variant="outlined"
+            placeholder="Search user"
+            onChange={handleSearch}
             sx={{
-              width: "100%",
-              borderRadius: "5px",
+              width: { xs: "100%", md: "30%" },
+              marginBottom: "20px",
+              marginTop: "20px",
+              marginLeft: "0",
             }}
-          >
-            <Table>
-              <TableHead>
-                {headCell.map((item) => (
-                  <StyledTableCell
-                    sx={
-                      item.label == "Role" || item.label == "No"
-                        ? { display: { xs: "none", md: "table-cell" } }
-                        : null
-                    }
-                    key={item.id}
-                    sortDirection={orderBy === item.id ? order : false}
-                  >
-                    {item.disableSorting ? (
-                      item.label
-                    ) : (
-                      <TableSortLabel
-                        active={orderBy === item.id}
-                        direction={orderBy === item.id ? order : "asc"}
-                        onClick={() => handleSordRequest(item.id)}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
+        <TableContainer
+          sx={{
+            width: "100%",
+            borderRadius: "10px",
+          }}
+        >
+          <Table>
+            <TableHead>
+              {headCell.map((item) => (
+                <StyledTableCell
+                  sx={
+                    item.label == "Role" || item.label == "No"
+                      ? { display: { xs: "none", md: "table-cell" } }
+                      : null
+                  }
+                  key={item.id}
+                  sortDirection={orderBy === item.id ? order : false}
+                >
+                  {item.disableSorting ? (
+                    item.label
+                  ) : (
+                    <TableSortLabel
+                      active={orderBy === item.id}
+                      direction={orderBy === item.id ? order : "asc"}
+                      onClick={() => handleSordRequest(item.id)}
+                    >
+                      {item.label}
+                    </TableSortLabel>
+                  )}
+                </StyledTableCell>
+              ))}
+            </TableHead>
+            <TableBody>
+              {recordsAfterPagingAndSorting().map((item, index) =>
+                item.userType === "User" ||
+                item.userType === "user" ||
+                item.userType === "Farmer" ? (
+                  <StyledTableRow key={index + 1}>
+                    <StyledTableCell
+                      sx={{ display: { xs: "none", md: "table-cell" } }}
+                    >
+                      {index + 1}
+                    </StyledTableCell>
+                    <StyledTableCell>{item.name}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{ display: { xs: "none", md: "table-cell" } }}
+                    >
+                      {item.userType}
+                    </StyledTableCell>
+                    <StyledTableCell>{item.email}</StyledTableCell>
+                    <StyledTableCell align="center">
+                      <Button
+                        sx={{ display: { xs: "none", md: "block" } }}
+                        variant="contained"
+                        color="info"
+                        onClick={() => {
+                          window.location.href = `/enuseraccount/${item._id}`;
+                        }}
                       >
-                        {item.label}
-                      </TableSortLabel>
-                    )}
-                  </StyledTableCell>
-                ))}
-              </TableHead>
-              <TableBody>
-                {recordsAfterPagingAndSorting().map((item, index) =>
-                  item.userType === "User" ||
-                  item.userType === "user" ||
-                  item.userType === "Farmer" ? (
-                    <StyledTableRow key={index + 1}>
-                      <StyledTableCell
-                        sx={{ display: { xs: "none", md: "table-cell" } }}
+                        Detail
+                      </Button>
+                      <Tooltip
+                        title="Detail"
+                        sx={{ display: { xs: "block", md: "none" } }}
                       >
-                        {index + 1}
-                      </StyledTableCell>
-                      <StyledTableCell>{item.name}</StyledTableCell>
-                      <StyledTableCell
-                        sx={{ display: { xs: "none", md: "table-cell" } }}
-                      >
-                        {item.userType}
-                      </StyledTableCell>
-                      <StyledTableCell>{item.email}</StyledTableCell>
-                      <StyledTableCell align="center">
-                        <Button
-                          sx={{ display: { xs: "none", md: "block" } }}
-                          variant="contained"
+                        <IconButton
                           color="info"
                           onClick={() => {
                             window.location.href = `/enuseraccount/${item._id}`;
                           }}
                         >
-                          Detail
-                        </Button>
-                        <Tooltip
-                          title="Detail"
-                          sx={{ display: { xs: "block", md: "none" } }}
-                        >
-                          <IconButton
-                            color="info"
-                            onClick={() => {
-                              window.location.href = `/enuseraccount/${item._id}`;
-                            }}
-                          >
-                            <SearchRoundedIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ) : null
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            component="div"
-            page={page}
-            rowsPerPageOptions={pages}
-            rowsPerPage={rowsPerPage}
-            count={data.length}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
-      </Box>
-    </Container>
+                          <SearchRoundedIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ) : null
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          component="div"
+          page={page}
+          rowsPerPageOptions={pages}
+          rowsPerPage={rowsPerPage}
+          count={data.length}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Card>
+    </Box>
   );
 }
 

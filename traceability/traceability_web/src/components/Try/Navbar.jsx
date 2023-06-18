@@ -18,6 +18,7 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import NotificationsRoundedIcon from "@mui/icons-material/NotificationsRounded";
 import avatarImg from "../../asserts/logo.png";
 import { Outlet } from "react-router-dom";
+import logo from "../../asserts/logo2-removebg-preview.png";
 
 const drawerWidth = 250;
 
@@ -68,8 +69,8 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const [openMenu, setOpenMenu] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const userType = window.localStorage.getItem("userType");
   const [data, setData] = useState([]);
 
@@ -90,7 +91,7 @@ export default function PersistentDrawerLeft() {
     backgroundColor: "white",
     padding: "0 10px",
     borderRadius: theme.shape.borderRadius,
-    width: "30%",
+    width: "65%",
   }));
 
   const Icons = styled(Box)(({ theme }) => ({
@@ -118,7 +119,6 @@ export default function PersistentDrawerLeft() {
   }));
 
   const tokenData = window.localStorage.getItem("token");
-  const id = window.localStorage.getItem("userId");
 
   const tokenIsValid = () => {
     fetch(`${process.env.REACT_APP_API}/tokenIsValid`, {
@@ -132,7 +132,6 @@ export default function PersistentDrawerLeft() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log("token", data);
       });
   };
 
@@ -145,7 +144,6 @@ export default function PersistentDrawerLeft() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.data.name, "USER NAME");
         setData(data.data);
       });
   };
@@ -154,10 +152,6 @@ export default function PersistentDrawerLeft() {
     tokenIsValid();
     getUser();
   }, []);
-
-  const onDisconnected = () => {
-    setIsConnected(false);
-  };
 
   const logout = () => {
     window.localStorage.clear();
@@ -191,22 +185,25 @@ export default function PersistentDrawerLeft() {
           >
             <MenuRoundedIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            sx={{ display: { xs: "none", sm: "block" }, cursor: "pointer" }}
+          <Box
+            sx={{ display: { xs: "none", sm: "flex" }, cursor: "pointer", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
             onClick={() => {
               userType == "User" || userType == "Farmer" || userType == "user"
                 ? (window.location.href = "/home")
                 : (window.location.href = "/enhome");
             }}
           >
-            TRACEABILITY AGRICULTURE
-          </Typography>
+            <img src={logo} width={80} height={80} />
+            <Typography variant="h6">TRACEABILITY AGRICULTURE</Typography>
+          </Box>
+
           <Search>{/* <InputBase placeholder="search..." /> */}</Search>
+          {/* <Search><InputBase placeholder="search..." /></Search> */}
+
           <Icons>
-            <Badge badgeContent={4} color="error">
+            {/* <Badge badgeContent={4} color="error">
               <NotificationsRoundedIcon />
-            </Badge>
+            </Badge> */}
             <AvatarBox onClick={(e) => setOpen(true)}>
               <Avatar
                 sx={{ width: 30, height: 30, cursor: "pointer" }}

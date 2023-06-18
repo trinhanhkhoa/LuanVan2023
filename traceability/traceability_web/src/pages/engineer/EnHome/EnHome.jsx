@@ -235,7 +235,7 @@ export default function EnHome() {
   return admin ? (
     <Box
       sx={{
-        minHeight: 900,
+        minHeight: 700,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -249,13 +249,13 @@ export default function EnHome() {
           flexDirection: { xs: "row", md: "row" },
           justifyContent: "right",
           alignItems: "center",
-          marginTop: { xs: "10px", md: "10px" },
-          marginBottom: { xs: "10px", md: 3 },
+          marginTop: { xs: "20px" },
+          marginBottom: { xs: "20px" },
         }}
       >
         <Button
           sx={{
-            marginRight: { xs: "10px", md: "10px" },
+            // marginRight: { xs: "10px"},
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
             minWidth: { xs: "5rem", md: "5rem" },
@@ -281,7 +281,7 @@ export default function EnHome() {
         <Button
           variant="contained"
           sx={{
-            marginLeft: { xs: "10px", md: "10px" },
+            marginLeft: { xs: "15px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
             minWidth: { xs: "5rem", md: "5rem" },
@@ -302,25 +302,15 @@ export default function EnHome() {
             {/* <AutorenewRoundedIcon
               sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
             /> */}
-            <Typography>Process information</Typography>
+            <Typography>List of Processes</Typography>
           </CardContent>
         </Button>
       </Box>
-      {/* <Box
-        sx={{
-          display: { xs: "block", md: "flex" },
-          flexDirection: { xs: "row", md: "row" },
-          justifyContent: "space-between",
-          marginBottom: 4,
-          marginTop: 2,
-        }}
-      > */}
       <Grid
         container
         spacing={3}
         sx={{
-          marginBottom: 4,
-          marginTop: 2,
+          marginBottom: 3,
         }}
       >
         <Grid item xs={12} sm={6} md={3}>
@@ -333,7 +323,7 @@ export default function EnHome() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#fffde7",
-              width: { xs: "28rem", sm: "20rem", md: "28rem" },
+              maxWidth: { xs: "28rem", sm: "20rem", md: "26rem" },
               borderRadius: "10px",
               // marginRight: "5px",
             }}
@@ -350,7 +340,7 @@ export default function EnHome() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#fffde7",
-              width: { xs: "28rem", sm: "20rem", md: "28rem" },
+              maxWidth: { xs: "28rem", sm: "20rem", md: "26rem" },
               borderRadius: "10px",
               // marginRight: "5px",
             }}
@@ -360,15 +350,13 @@ export default function EnHome() {
           <AppWidgetSummary
             title="Total of products"
             total={data.length}
-            // color="warning"
             icon={"ant-design:android-filled"}
             sx={{
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#fffde7",
-              width: { xs: "28rem", sm: "20rem", md: "28rem" },
+              maxWidth: { xs: "28rem", sm: "20rem", md: "26rem" },
               borderRadius: "10px",
-              // marginRight: "5px",
             }}
           />
         </Grid>
@@ -382,7 +370,7 @@ export default function EnHome() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#fffde7",
-              width: { xs: "28rem", sm: "20rem", md: "28rem" },
+              maxWidth: { xs: "28rem", sm: "20rem", md: "25.5rem" },
               borderRadius: "10px",
             }}
           />

@@ -4,7 +4,7 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Typography from "@mui/material/Typography";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ExpandLessRoundedIcon from "@mui/icons-material/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@mui/icons-material/ExpandMoreRounded";
 import "./ProductTracking.css";
@@ -17,6 +17,7 @@ import {
   StepContent,
   TextField,
   Toolbar,
+  Link
 } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "rsuite/dist/rsuite.min.css";
@@ -30,8 +31,7 @@ export default function ProductTracking(props) {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const { id, trackingLength } = props;
-  console.log("id: ", id, " length: ", trackingLength);
+  const id  = props;
 
   const params = useParams();
 
@@ -46,7 +46,7 @@ export default function ProductTracking(props) {
 
       await fetch(
         // `${process.env.REACT_APP_API}/tracking/get-tracking/${id}`,
-        `${process.env.REACT_APP_API}/tracking/get-tracking/${id}`,
+        `${process.env.REACT_APP_API}/tracking/get-tracking/${id.id}`,
 
         {
           method: "GET",
@@ -57,12 +57,10 @@ export default function ProductTracking(props) {
       )
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res.data);
           let data = res.data;
 
-          data = data.filter((p) => p.productId == id);
-          console.log(`product has user id: `, data);
-
+          data = data.filter((p) => p.productId == id.id);
+          console.log(data);
           setData(data);
         });
 
@@ -79,7 +77,6 @@ export default function ProductTracking(props) {
   });
 
   const filterSearching = () => {
-    console.log(data);
     return filterFn.fn(data);
   };
 
@@ -110,47 +107,47 @@ export default function ProductTracking(props) {
       }}
     >
       <Loading loading={loading} />
-      <Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            label="Search tracking"
-            onChange={handleSearch}
-            sx={{ width: "100%", marginBottom: "20px", marginLeft: "0" }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
-        <Timeline>
-          {filterSearching().length != 0 ? (
-            filterSearching().map((item, index) => (
-              <Event interval={item.name}>
-                <Typography>Description: {item.description}</Typography>
-                <Box>
-                  Details:
-                  {item.notes &&
-                    item.notes.map((note) => {
-                      return <Typography>{note}</Typography>;
-                    })}
-                </Box>
-                <Box>
-                  {item.images &&
-                    item.images.map((image, idx) => {
-                      return <img src={image} height={200} />;
-                    })}
-                </Box>
-              </Event>
-            ))
-          ) : (
-            <Typography> Have not updated any tracking yet! </Typography>
-          )}
-        </Timeline>
-      </Box>
+      <Toolbar>
+        <TextField
+          variant="outlined"
+          label="Search tracking"
+          onChange={handleSearch}
+          sx={{ width: "100%", marginBottom: "20px", marginLeft: "0" }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchRoundedIcon />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Toolbar>
+      <Timeline>
+        {filterSearching().length != 0 ? (
+          filterSearching().map((item, index) => (
+            <Event interval={item.name}>
+              <Typography>Time: {item.time}</Typography>
+              <Typography>Verified Tracking: <Link href={item.url}>Check it here!</Link></Typography>
+              <Typography>Description: {item.description}</Typography>
+              <Box>
+                Details:
+                {item.notes &&
+                  item.notes.map((note) => {
+                    return <Typography>{note}</Typography>;
+                  })}
+              </Box>
+              <Box>
+                {item.images &&
+                  item.images.map((image, idx) => {
+                    return <img src={image} height={200} />;
+                  })}
+              </Box>
+            </Event>
+          ))
+        ) : (
+          <Typography> Have not updated any tracking yet! </Typography>
+        )}
+      </Timeline>
     </Box>
   );
 }

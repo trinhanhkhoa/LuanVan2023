@@ -169,7 +169,7 @@ function ListOfProcesses() {
     <Container
       sx={{
         minWidth: "100%",
-        minHeight: "80vh",
+        minHeight: 650,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

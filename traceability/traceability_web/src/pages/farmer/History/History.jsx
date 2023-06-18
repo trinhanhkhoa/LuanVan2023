@@ -206,23 +206,14 @@ function History() {
       }}
     >
       <Loading loading={loading} />
-
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "20px",
-        }}
-      >
+      <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
           HISTORY
         </Typography>
-      </Box>
-      <Card>
         <TableContainer
           sx={{
             width: "100%",
-            borderRadius: "5px",
+            borderRadius: "10px",
           }}
         >
           <Toolbar>

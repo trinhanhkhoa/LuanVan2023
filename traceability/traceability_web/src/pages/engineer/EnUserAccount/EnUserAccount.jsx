@@ -59,7 +59,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function EnUserAccount() {
   const [data, setData] = useState([]);
   const [dataUser, setDataUser] = useState([]);
-
+  const [idPopup, setIdPopup] = useState("");
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
@@ -92,7 +92,7 @@ function EnUserAccount() {
       .then((res) => res.json())
       .then((res) => res.data);
     setDataUser(data);
-    console.log(data);
+    // console.log(data);
   };
 
   useEffect(() => {
@@ -106,11 +106,10 @@ function EnUserAccount() {
       })
         .then((res) => res.json())
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
           let data = res.data;
 
           data = data.filter((p) => p.userId == params.id);
-          console.log(`product has user id: `, data);
 
           setData(data);
         });
@@ -186,7 +185,7 @@ function EnUserAccount() {
     <Container
       sx={{
         minWidth: "100%",
-        minHeight: "80vh",
+        minHeight: 650,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -269,7 +268,7 @@ function EnUserAccount() {
             </TableHead>
             <TableBody>
               {recordsAfterPagingAndSorting().map((item, index) => (
-                <StyledTableRow key={index + 1}>
+                <StyledTableRow key={index}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.name}</StyledTableCell>
                   <StyledTableCell>{item.tracking.length}</StyledTableCell>
@@ -279,6 +278,7 @@ function EnUserAccount() {
                         color="info"
                         onClick={() => {
                           setOpenPopupTracking(true);
+                          setIdPopup(item._id);
                         }}
                       >
                         Detail
@@ -288,7 +288,7 @@ function EnUserAccount() {
                         openPopup={openPopupTracking}
                         setOpenPopup={setOpenPopupTracking}
                       >
-                        <ProductTracking id={item._id} />
+                        <ProductTracking id={idPopup} />
                       </Popup>
                     </ButtonGroup>
                   </StyledTableCell>

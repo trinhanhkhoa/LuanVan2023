@@ -170,28 +170,23 @@ function Process() {
     <Container
       sx={{
         minWidth: "100%",
-        minHeight: "80vh",
+        height: 650,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "20px",
-        }}
-      >
-        <Typography variant="h3" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
+      <Card sx={{ p: 3, borderRadius: "10px" }}>
+        <Typography
+          variant="h3"
+          sx={{ fontSize: { xs: "18px", md: "30px", marginBottom: "10px" } }}
+        >
           LIST OF PROCESSES
         </Typography>
-      </Box>
-      <Card>
         <TableContainer
           sx={{
             width: "100%",
-            borderRadius: "5px",
+            borderRadius: "10px",
           }}
         >
           <Toolbar>

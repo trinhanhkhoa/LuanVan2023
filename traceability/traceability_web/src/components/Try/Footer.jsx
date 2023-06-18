@@ -4,8 +4,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
-import hcmuslogo from "../../asserts/hcmus-logo.png";
-import logo from "../../asserts/logo.png";
+import hcmuslogo from "../../asserts/fit-logo-kem-truong.png";
+import logo from "../../asserts/logo2-removebg-preview.png";
 import { Grid, ImageList } from "@mui/material";
 
 function Copyright() {
@@ -50,13 +50,16 @@ export default function StickyFooter() {
                 py: 2,
                 px: 2,
                 backgroundColor: "#fff59d",
-                width: "100%"
+                mt: "auto",
+                width: "100%",
               }
             : {
                 py: 2,
                 // px: 2,
+                mt: "auto",
+
                 backgroundColor: "#aed581",
-                width: "100%"
+                width: "100%",
               }
         }
       >
@@ -68,7 +71,7 @@ export default function StickyFooter() {
         >
           <Grid>
             <img src={logo} width={100} height={100} />
-            <img src={hcmuslogo} width={200} height={100} />
+            <img src={hcmuslogo} width={150} height={50} />
           </Grid>
           <Copyright />
         </Grid>
