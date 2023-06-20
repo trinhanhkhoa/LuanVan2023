@@ -261,7 +261,7 @@ function EnProcess() {
                   window.location.href = `/enupdateprocess/${params.id}`;
                 }}
               >
-                Update
+                Cập nhật
               </Button>
               <Button
                 variant="contained"
@@ -273,7 +273,7 @@ function EnProcess() {
                 }}
                 onClick={() => deleteProcess(params.id)}
               >
-                Delete
+                Xoá
               </Button>
             </Box>
           </Box>
@@ -305,7 +305,7 @@ function EnProcess() {
                   variant="body"
                   sx={{ fontSize: { xs: "12px", md: "15px" } }}
                 >
-                  Created by: {userName} - Role: {userType}
+                  Được tạo bởi: {userName} - Vai trò: {userType}
                 </Typography>
               </Grid>
               <Grid>
@@ -321,7 +321,7 @@ function EnProcess() {
                   variant="body"
                   sx={{ fontSize: { xs: "12px", md: "15px" } }}
                 >
-                  Created Time: {time}
+                  Ngày tạo: {time}
                 </Typography>
               </Grid>
               <Divider />
@@ -331,7 +331,7 @@ function EnProcess() {
               >
                 {" "}
                 <Typography variant="h5" sx={{ mt: 2 }}>
-                  Description
+                  Mô tả
                 </Typography>
                 <ReactReadMoreReadLess
                   readMoreClassName="readMoreClassName"
@@ -362,42 +362,42 @@ function EnProcess() {
             <TabPanel value={value} index={1}>
               <Box>
                 <Fragment>
-                  <h2>Product traceability</h2>
+                  <h2>Nhật ký sản phẩm</h2>
                   <Typography variant="body2" marginBottom={3}>
-                    Information is written by {}
+                    Thông tin được viết bởi {userName}
                   </Typography>
                   <div className="timeline-admin">
                     <p>
                       <h4>{stagePlantSeeds.name}</h4>
-                      Description: {stagePlantSeeds.description}
+                      Mô tả: {stagePlantSeeds.description}
                     </p>
                     <p>
                       <h4>{stagePlantCare.name}</h4>
-                      Description: {stagePlantCare.description}
+                        Mô tả: {stagePlantCare.description}
                       <ul>
                         <li>
-                          Watering time: {stagePlantCare.descriptionWater}
+                          Thời lượng tưới nước: {stagePlantCare.descriptionWater}
                         </li>
                         <li>
-                          Amount of fertilizer:{" "}
+                          Số lượng phân bón:{" "}
                           {stagePlantCare.descriptionFertilizer}
                         </li>
                       </ul>
                     </p>
                     <p>
                       <h4>{stageBloom.name}</h4>
-                      Description: {stageBloom.description}
+                      Mô tả: {stageBloom.description}
                     </p>
                     <p>
                       <h4>{stageCover.name}</h4>
-                      Description: {stageCover.description}
+                      Mô tả: {stageCover.description}
                     </p>
                     <p>
                       <h4>{stageHarvest.name}</h4>
-                      Description: {stageHarvest.description}
-                      Notes:{" "}
+                      Mô tả: {stageHarvest.description}
+                      Chi tiết:{" "}
                       <ul>
-                        <li>Quantity: {stageHarvest.descriptionQuantity}</li>
+                        <li>Sản lượng: {stageHarvest.descriptionQuantity}</li>
                       </ul>
                     </p>
                   </div>

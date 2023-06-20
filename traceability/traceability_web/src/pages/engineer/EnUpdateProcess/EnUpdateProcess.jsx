@@ -215,7 +215,7 @@ function EnUpdateProcess() {
                   fontWeight: 500,
                 }}
               >
-                Update process {name}
+                Cập nhật thông tin chung {name}
               </Typography>
             </Box>
             <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -230,11 +230,6 @@ function EnUpdateProcess() {
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
-                <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order
-                  confirmation, and will send you an update when your order has
-                  shipped.
-                </Typography>
               </React.Fragment>
             ) : (
               <React.Fragment>
@@ -242,7 +237,7 @@ function EnUpdateProcess() {
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                      Back
+                      Quay lại
                     </Button>
                   )}
 
@@ -253,7 +248,7 @@ function EnUpdateProcess() {
                       onClick={handleUpdate}
                       sx={{ mt: 3, ml: 1 }}
                     >
-                      Submit
+                      Xác nhận
                     </Button>
                   ) : (
                     <Button
@@ -261,7 +256,7 @@ function EnUpdateProcess() {
                       onClick={handleNext}
                       sx={{ mt: 3, ml: 1 }}
                     >
-                      Next
+                      Tiếp theo
                     </Button>
                   )}
                 </Box>

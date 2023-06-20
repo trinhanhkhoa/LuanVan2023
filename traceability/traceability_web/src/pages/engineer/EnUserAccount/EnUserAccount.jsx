@@ -30,9 +30,9 @@ import Popup from "../../../components/Popup";
 import ProductTracking from "../../farmer/ProductTracking/ProductTracking";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
-  { id: "length", label: "Tracking" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Sản phẩm" },
+  { id: "length", label: "Nhật ký" },
   { id: "button", label: "" },
 ];
 
@@ -207,7 +207,7 @@ function EnUserAccount() {
             variant="h3"
             sx={{ fontSize: { xs: "25px", md: "35px" } }}
           >
-            USER'S PRODUCTS
+            Danh sách sản phẩm của nông dân
           </Typography>
           <Card
             sx={{
@@ -216,16 +216,16 @@ function EnUserAccount() {
               mt: { xs: 2, md: 0 },
             }}
           >
-            <Typography>Username: {dataUser.name}</Typography>
+            <Typography>Tên nông dân: {dataUser.name}</Typography>
             <Typography>Email: {dataUser.email}</Typography>
             <Typography>ID: {dataUser._id}</Typography>
-            <Typography>Role: {dataUser.userType}</Typography>
+            <Typography>Vai trò: {dataUser.userType}</Typography>
           </Card>
         </Box>
         <Toolbar>
           <TextField
             variant="outlined"
-            placeholder="Search product"
+            placeholder="Tìm kiếm sản phẩm"
             onChange={handleSearch}
             sx={{
               width: { xs: "100%", md: "30%" },
@@ -284,10 +284,10 @@ function EnUserAccount() {
                           setIdPopup(item._id);
                         }}
                       >
-                        Detail
+                        Chi tiết
                       </Button>
                       <Popup
-                        title="Tracking"
+                        title="Nhật ký"
                         openPopup={openPopupTracking}
                         setOpenPopup={setOpenPopupTracking}
                       >

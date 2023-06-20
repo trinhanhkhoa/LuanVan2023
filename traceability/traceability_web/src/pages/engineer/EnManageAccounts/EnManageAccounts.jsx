@@ -30,9 +30,9 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Loading from "../../../components/Loading";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
-  { id: "userType", label: "Role" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Tên người dùng" },
+  { id: "userType", label: "Vai trò" },
   { id: "email", label: "Email" },
   { id: "button", label: "" },
 ];
@@ -176,12 +176,12 @@ function EnManageAccounts() {
 
       <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
-          LIST OF USERS
+          Danh sách người dùng
         </Typography>
         <Toolbar>
           <TextField
             variant="outlined"
-            placeholder="Search user"
+            placeholder="Tìm kiếm người dùng"
             onChange={handleSearch}
             sx={{
               width: { xs: "100%", md: "30%" },
@@ -257,7 +257,7 @@ function EnManageAccounts() {
                           window.location.href = `/enuseraccount/${item._id}`;
                         }}
                       >
-                        Detail
+                        Chi tiết
                       </Button>
                       <Tooltip
                         title="Detail"

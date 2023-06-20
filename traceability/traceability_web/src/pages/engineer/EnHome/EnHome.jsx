@@ -433,7 +433,7 @@ export default function EnHome() {
                   <StyleTableCell>
                     <Typography
                       sx={{
-                        width: 90,
+                        width: 120,
                         textAlign: "center",
                         borderRadius: 3,
                         p: 0.5,

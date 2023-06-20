@@ -35,9 +35,9 @@ import AddIcon from "@mui/icons-material/Add";
 import { fDateTime } from "../../../utils/formatTime";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
-  { id: "time", label: "Create at" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Tên sản phẩm" },
+  { id: "time", label: "Ngày tạo" },
   { id: "button", label: "" },
 ];
 
@@ -91,12 +91,12 @@ function ListOfProcesses() {
     })
       .then((res) => res.json())
       .then((data) => {
-        const updatedData = data.data.map(obj => ({
+        const updatedData = data.data.map((obj) => ({
           ...obj,
           stageProcess: {
             ...obj.stageProcess,
-            _id: obj._id
-          }
+            _id: obj._id,
+          },
         }));
 
         console.log("updatedData", updatedData);
@@ -202,7 +202,7 @@ function ListOfProcesses() {
             variant="h3"
             sx={{ fontSize: { xs: "20px", md: "35px" } }}
           >
-            LIST OF PROCESSES
+            Danh sách các quy trình
           </Typography>
           <Button
             variant="contained"
@@ -222,13 +222,13 @@ function ListOfProcesses() {
               window.location.href = "/encreateprocess";
             }}
           >
-            <AddIcon /> Create
+            <AddIcon /> Tạo
           </Button>
         </Box>
         <Toolbar>
           <TextField
             variant="outlined"
-            placeholder="Search process"
+            placeholder="Tìm kiếm quy trình"
             onChange={handleSearch}
             sx={{
               width: { xs: "100%", md: "30%" },
@@ -277,12 +277,10 @@ function ListOfProcesses() {
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.name}</StyledTableCell>
-                  <StyledTableCell>
-                    {item.timeCreate}
-                  </StyledTableCell>
+                  <StyledTableCell>{item.timeCreate}</StyledTableCell>
                   <StyledTableCell align="center">
                     <Box>
-                      <Tooltip title="Detail">
+                      <Tooltip title="Chi tiết">
                         <IconButton
                           color="info"
                           onClick={() => {
@@ -292,7 +290,7 @@ function ListOfProcesses() {
                           <SearchIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Edit">
+                      <Tooltip title="Chỉnh sửa">
                         <IconButton
                           color="success"
                           onClick={() => {
@@ -302,7 +300,7 @@ function ListOfProcesses() {
                           <EditIcon />
                         </IconButton>
                       </Tooltip>
-                      <Tooltip title="Delete">
+                      <Tooltip title="Xoá">
                         <IconButton
                           color="error"
                           onClick={() => {
@@ -314,7 +312,7 @@ function ListOfProcesses() {
                         </IconButton>
                       </Tooltip>
                       <Popup
-                        title="Confirm Delete"
+                        title="Xác nhận xoá sản phẩm"
                         openPopup={openPopup}
                         setOpenPopup={setOpenPopup}
                       >
