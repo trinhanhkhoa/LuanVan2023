@@ -318,7 +318,7 @@ export default function EnHome() {
             title="Total of users"
             total={user.length}
             // color="warning"
-            icon={"ant-design:android-filled"}
+            icon={"fluent-emoji:man-in-tuxedo-light"}
             sx={{
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -335,7 +335,7 @@ export default function EnHome() {
             title="Total of farmers"
             total={farmer.length}
             // color="warning"
-            icon={"ant-design:android-filled"}
+            icon={"fluent-emoji:farmer-light"}
             sx={{
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -350,7 +350,7 @@ export default function EnHome() {
           <AppWidgetSummary
             title="Total of products"
             total={data.length}
-            icon={"ant-design:android-filled"}
+            icon={"fluent-emoji:watermelon"}
             sx={{
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -365,7 +365,7 @@ export default function EnHome() {
             title="Total trackings"
             total={length}
             // color="warning"
-            icon={"ant-design:apple-filled"}
+            icon={"fluent-emoji:check-mark-button"}
             sx={{
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -431,15 +431,34 @@ export default function EnHome() {
                   </StyleTableCell>
                   <StyleTableCell>{item.address}</StyleTableCell>
                   <StyleTableCell>
-                    {item.status == 0
-                      ? "CREATED"
-                      : item.status == 1
-                      ? "UPDATED"
-                      : item.status == 2
-                      ? "DELETED"
-                      : item.status == 3
-                      ? "DELIVERIED"
-                      : "error"}
+                    <Typography
+                      sx={{
+                        width: 90,
+                        textAlign: "center",
+                        borderRadius: 3,
+                        p: 0.5,
+                        backgroundColor:
+                          item.status == 0
+                            ? "#8bc34a"
+                            : item.status == 1
+                            ? "#cddc39"
+                            : item.status == 2
+                            ? "#ff5722"
+                            : item.status == 3
+                            ? "#40c4ff"
+                            : "#ff3d00",
+                      }}
+                    >
+                      {item.status == 0
+                        ? "Created"
+                        : item.status == 1
+                        ? "Updated"
+                        : item.status == 2
+                        ? "Deleted"
+                        : item.status == 3
+                        ? "Deliveried"
+                        : "Error"}
+                    </Typography>
                   </StyleTableCell>
                 </StyledTableRow>
               ))}

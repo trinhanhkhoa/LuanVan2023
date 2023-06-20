@@ -51,7 +51,7 @@ export default function AppWidgetSummary({ title, total, icon, color = 'primary'
             )} 100%)`,
         }}
       >
-        <Iconify icon={icon} width={24} height={24} />
+        <Iconify icon={icon} width={36} height={36} />
       </StyledIcon>
 
       <Typography variant="h3">{total}</Typography>
