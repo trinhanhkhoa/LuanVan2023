@@ -16,15 +16,6 @@ import { styled, useTheme } from "@mui/material/styles";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import { Carousel } from "react-carousel-minimal";
-// --------------------------
-// import { Timeline } from "rsuite";
-// import CreditCardIcon from "@rsuite/icons/legacy/CreditCard";
-// import PlaneIcon from "@rsuite/icons/legacy/Plane";
-// import TruckIcon from "@rsuite/icons/legacy/Truck";
-// import UserIcon from "@rsuite/icons/legacy/User";
-// import CheckIcon from "@rsuite/icons/legacy/Check";
-import { Timeline, Event } from "react-timeline-scribble";
-// ------------------
 
 const ProductDetailWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
@@ -101,13 +92,11 @@ function ProcessDetail() {
   };
 
   const params = useParams();
-  // console.log(params);
   const [data, setData] = useState([]);
   const [userName, setUserName] = useState("");
   const [userType, setUserType] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
-  // const [userId, setUserId] = useState("");
   let id = "";
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

@@ -14,24 +14,27 @@ import {
   Button,
   Grid,
   InputAdornment,
-  StepContent,
   TextField,
   Toolbar,
-  Link
+  Link,
 } from "@mui/material";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "rsuite/dist/rsuite.min.css";
-import Steps from "rsuite/Steps";
-import { Timeline, Event } from "react-timeline-scribble";
+// import { Timeline, Event } from "react-timeline-scribble";
 
-import AppOrderTimeline from "../../../components/AppOrderTimeLine";
 import { fDateTime } from "../../../utils/formatTime";
+import Timeline from "@mui/lab/Timeline";
+import TimelineItem, { timelineItemClasses } from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
 
 export default function ProductTracking(props) {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
 
-  const id  = props;
+  const { id, processId } = props;
 
   const params = useParams();
 
@@ -39,14 +42,28 @@ export default function ProductTracking(props) {
   const user = window.localStorage.getItem("userId");
   const userId = window.localStorage.getItem("userId");
   const [loading, setLoading] = useState(false);
+  const [processStage, setProcessStage] = useState({
+    stageProcess: {
+      name: "",
+      description: "",
+      images: [],
+      timeCreate: "",
+    },
+    stagePlantSeeds: { name: "", description: "" },
+    stagePlantCare: { name: "", description: "", water: "", fertilizer: "" },
+    stageBloom: { name: "", description: "" },
+    stageCover: { name: "", description: "" },
+    stageHarvest: { name: "", description: "", quantity: "" },
+    stageSell: { name: "", description: "", purchasingUnit: "" },
+  });
+  const [step, setStep] = useState([]);
 
   useEffect(() => {
     const getTracking = async () => {
       setLoading(true);
 
       await fetch(
-        // `${process.env.REACT_APP_API}/tracking/get-tracking/${id}`,
-        `${process.env.REACT_APP_API}/tracking/get-tracking/${id.id}`,
+        `${process.env.REACT_APP_API}/tracking/get-tracking/${id}`,
 
         {
           method: "GET",
@@ -59,8 +76,7 @@ export default function ProductTracking(props) {
         .then((res) => {
           let data = res.data;
 
-          data = data.filter((p) => p.productId == id.id);
-          console.log(data);
+          data = data.filter((p) => p.productId == id);
           setData(data);
         });
 
@@ -68,6 +84,73 @@ export default function ProductTracking(props) {
     };
 
     getTracking();
+  }, []);
+
+  useEffect(() => {
+    const getProcess = async () => {
+      setLoading(true);
+      await fetch(
+        `${process.env.REACT_APP_API}/process/get-process/${processId}`,
+        {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          let data = res.data;
+          setProcessStage({
+            stageProcess: {
+              name: data.stageProcess.name,
+              description: data.stageProcess.description,
+              images: data.stageProcess.images,
+              timeCreate: data.stageProcess.timeCreate,
+            },
+            stagePlantSeeds: {
+              name: data.stagePlantSeeds.name,
+              description: data.stagePlantSeeds.description,
+            },
+            stagePlantCare: {
+              name: data.stagePlantCare.name,
+              description: data.stagePlantCare.description,
+              water: data.stagePlantCare.water,
+              fertilizer: data.stagePlantCare.fertilizer,
+            },
+            stageBloom: {
+              name: data.stageBloom.name,
+              description: data.stageBloom.description,
+            },
+            stageCover: {
+              name: data.stageCover.name,
+              description: data.stageCover.description,
+            },
+            stageHarvest: {
+              name: data.stageHarvest.name,
+              description: data.stageHarvest.description,
+              quantity: data.stageHarvest.quantity,
+            },
+            stageSell: {
+              name: data.stageSell.name,
+              description: data.stageSell.description,
+              purchasingUnit: data.stageSell.purchasingUnit,
+            },
+          });
+          setStep([
+            data.stagePlantSeeds.name,
+            data.stagePlantCare.name,
+            data.stageBloom.name,
+            data.stageCover.name,
+            data.stageHarvest.name,
+            data.stageSell.name,
+          ]);
+
+          setLoading(false);
+        });
+    };
+
+    getProcess();
   }, []);
 
   const [filterFn, setFilterFn] = useState({
@@ -84,7 +167,6 @@ export default function ProductTracking(props) {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
-        // console.log(target);
         if (e.target.value == "") return items;
         else
           return items.filter((x) =>
@@ -110,7 +192,7 @@ export default function ProductTracking(props) {
       <Toolbar>
         <TextField
           variant="outlined"
-          label="Search tracking"
+          label="Tìm kiếm nhật ký"
           onChange={handleSearch}
           sx={{ width: "100%", marginBottom: "20px", marginLeft: "0" }}
           InputProps={{
@@ -122,32 +204,97 @@ export default function ProductTracking(props) {
           }}
         />
       </Toolbar>
-      <Timeline>
-        {filterSearching().length != 0 ? (
-          filterSearching().map((item, index) => (
-            <Event interval={item.name}>
-              <Typography>Time: {item.time}</Typography>
-              <Typography>Verified Tracking: <Link href={item.url}>Check it here!</Link></Typography>
-              <Typography>Description: {item.description}</Typography>
-              <Box>
-                Details:
-                {item.notes &&
-                  item.notes.map((note) => {
-                    return <Typography>{note}</Typography>;
-                  })}
-              </Box>
-              <Box>
-                {item.images &&
-                  item.images.map((image, idx) => {
-                    return <img src={image} height={200} />;
-                  })}
-              </Box>
-            </Event>
-          ))
-        ) : (
-          <Typography> Have not updated any tracking yet! </Typography>
-        )}
-      </Timeline>
+
+      {filterSearching().length != 0 ? (
+        <Timeline
+          sx={{
+            [`& .${timelineItemClasses.root}:before`]: {
+              flex: 0,
+              padding: 0,
+            },
+          }}
+        >
+          {filterSearching().map((item, index) => (
+            <TimelineItem>
+              {
+                <TimelineSeparator>
+                  {item.name == step[0] ? (
+                    <TimelineDot sx={{ backgroundColor: "#82cd47" }} />
+                  ) : item.name == step[1] ? (
+                    <TimelineDot sx={{ backgroundColor: "#ffd740" }} />
+                  ) : item.name == step[2] ? (
+                    <TimelineDot sx={{ backgroundColor: "#47c4cd" }} />
+                  ) : item.name == step[3] ? (
+                    <TimelineDot sx={{ backgroundColor: "#2811d5" }} />
+                  ) : item.name == step[4] ? (
+                    <TimelineDot sx={{ backgroundColor: "#9640ff" }} />
+                  ) : item.name == step[5] ? (
+                    <TimelineDot sx={{ backgroundColor: "#ff4066" }} />
+                  ) : null}
+                  <TimelineConnector />
+                </TimelineSeparator>
+              }
+
+              <TimelineContent>
+                <Typography
+                  maxWidth={false}
+                  variant="h5"
+                  sx={{
+                    padding: 1,
+                    minWidth: 200,
+                    textAlign: "center",
+                    borderRadius: 2,
+                    backgroundColor:
+                      item.name == step[0]
+                        ? "#82cd47"
+                        : item.name == step[1]
+                        ? "#ffd740"
+                        : item.name == step[2]
+                        ? "#47c4cd"
+                        : item.name == step[3]
+                        ? "#2811d5"
+                        : item.name == step[4]
+                        ? "#9640ff"
+                        : item.name == step[5]
+                        ? "#ff4066"
+                        : null,
+                  }}
+                >
+                  {item.name}
+                </Typography>
+                <Typography sx={{ lineHeight: 2}}>Thời gian cập nhật: {item.time}</Typography>
+                <Typography sx={{ lineHeight: 2}}>
+                  Theo dõi đã xác thực: <Link href={item.url}>Xem tại đây!</Link>
+                </Typography>
+                <ReactReadMoreReadLess
+                  readMoreClassName="readMoreClassName"
+                  readLessClassName="readMoreClassName"
+                  charLimit={200}
+                  readMoreText="Xem thêm"
+                  readLessText="Thu lại"
+                >
+                  {item.description}
+                </ReactReadMoreReadLess>
+                <Box sx={{ lineHeight: 2}}>
+                  Chi tiết:
+                  {item.notes &&
+                    item.notes.map((note) => {
+                      return <Typography>{note}</Typography>;
+                    })}
+                </Box>
+                <Box>
+                  {item.images &&
+                    item.images.map((image, idx) => {
+                      return <img src={image} height={200} />;
+                    })}
+                </Box>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
+        </Timeline>
+      ) : (
+        <Typography> Have not updated any tracking yet! </Typography>
+      )}
     </Box>
   );
 }

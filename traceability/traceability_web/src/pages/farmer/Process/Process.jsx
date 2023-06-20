@@ -27,11 +27,12 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import Loading from "../../../components/Loading";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
-  { id: "time", label: "Create at" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Tên sản phẩm" },
+  { id: "time", label: "Ngày tạo" },
   { id: "button", label: "" },
 ];
 
@@ -58,6 +59,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 function Process() {
   const [data, setData] = useState([]);
   const [dataTable, setDataTable] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
@@ -75,6 +77,8 @@ function Process() {
   const params = useParams();
 
   const getProcesses = async () => {
+    setLoading(true);
+
     await fetch(`${process.env.REACT_APP_API}/process/get-processes`, {
       method: "GET",
       headers: {
@@ -83,19 +87,21 @@ function Process() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.data);
+        const updatedData = data.data.map((obj) => ({
+          ...obj,
+          stageProcess: {
+            ...obj.stageProcess,
+            _id: obj._id,
+          },
+        }));
 
         let arr = [];
-        let DATA = data.data;
-        DATA = data.data.forEach((item) => {
-          // arr.push(item.stageProcess);
-          arr.push({ id: item._id, stageProcess: item.stageProcess });
-
-          // console.log("arr", arr);
+        let DATA = updatedData;
+        DATA = updatedData.forEach((item) => {
+          arr.push(item.stageProcess);
         });
         setDataTable(arr);
-        setData(data.data);
-        // console.log(data);
+        setLoading(false);
       });
   };
 
@@ -139,7 +145,6 @@ function Process() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    console.log(dataTable);
     return stableSort(
       filterFn.fn(dataTable),
       getComparator(order, orderBy)
@@ -154,9 +159,9 @@ function Process() {
 
   const handleSearch = (e) => {
     let target = e.target;
+
     setFilterFn({
       fn: (items) => {
-        console.log(items);
         if (e.target.value == "") return items;
         else
           return items.filter((x) =>
@@ -176,40 +181,42 @@ function Process() {
         justifyContent: "center",
       }}
     >
+      <Loading loading={loading} />
+
       <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Typography
           variant="h3"
           sx={{ fontSize: { xs: "18px", md: "30px", marginBottom: "10px" } }}
         >
-          LIST OF PROCESSES
+          Danh sách các quy trình
         </Typography>
+        <Toolbar>
+          <TextField
+            variant="outlined"
+            placeholder="Tìm kiếm quy trình"
+            // name={name}
+            // value={value}
+            onChange={handleSearch}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",
-            borderRadius: "10px",
+            borderRadius: "5px",
           }}
         >
-          <Toolbar>
-            <TextField
-              variant="outlined"
-              placeholder="Search process"
-              // name={name}
-              // value={value}
-              onChange={handleSearch}
-              sx={{
-                width: { xs: "100%", md: "30%" },
-                marginBottom: "20px",
-                marginLeft: "0",
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchRoundedIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Toolbar>
           <Table>
             <TableHead>
               {headCell.map((item) => (
@@ -235,19 +242,17 @@ function Process() {
               {recordsAfterPagingAndSorting().map((item, index) => (
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
-                  <StyledTableCell>{item.stageProcess.name}</StyledTableCell>
-                  <StyledTableCell>
-                    {item.stageProcess.timeCreate}
-                  </StyledTableCell>
+                  <StyledTableCell>{item.name}</StyledTableCell>
+                  <StyledTableCell>{item.timeCreate}</StyledTableCell>
                   <StyledTableCell align="center">
                     <ButtonGroup variant="contained">
                       <Button
                         color="info"
                         onClick={() => {
-                          window.location.href = `/processdetail/${item.id}`;
+                          window.location.href = `/processdetail/${item._id}`;
                         }}
                       >
-                        Detail
+                        Chi tiết
                       </Button>
                     </ButtonGroup>
                   </StyledTableCell>

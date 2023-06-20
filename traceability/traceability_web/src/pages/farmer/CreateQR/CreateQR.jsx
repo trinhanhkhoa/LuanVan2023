@@ -123,7 +123,10 @@ function CreateQR() {
   }, []);
 
   return (
-    <Container fixed sx={{ justifyContent: "center", alignItems: "center", minHeight: "80vh" }}>
+    <Container
+      fixed
+      sx={{ justifyContent: "center", alignItems: "center", minHeight: "80vh" }}
+    >
       <Form onSubmit={handleSubmit}>
         <Box sx={{ marginBottom: "10px", textAlign: "left" }}>
           <Typography
@@ -133,13 +136,13 @@ function CreateQR() {
               fontWeight: 700,
             }}
           >
-            Describe a product
+            Tạo sản phẩm
           </Typography>
           <Typography
             variant="h6"
             sx={{ fontSize: { xs: "18px", md: "30px" } }}
           >
-            Product introduction information
+            Điền thông tin chung
           </Typography>
         </Box>
 
@@ -148,7 +151,7 @@ function CreateQR() {
         <Grid container spacing={3}>
           <Grid item xs={11} sm={6}>
             <label>
-              Product's name <b>(*)</b>
+              Tên sản phẩm <b>(*)</b>
             </label>
             <TextField
               required
@@ -160,12 +163,12 @@ function CreateQR() {
               }}
               variant="outlined"
               name="name"
-              placeholder="Product's name"
+              placeholder="Nhập tên sản phẩm"
             />
           </Grid>
           <Grid item xs={11} sm={5}>
             <label>
-              Time create <b>(*)</b>
+              Thời gian tạo <b>(*)</b>
             </label>
             <TextField
               required
@@ -179,7 +182,7 @@ function CreateQR() {
           </Grid>
           <Grid item xs={11}>
             <label>
-              Choose process <b>(*)</b>
+              Chọn quy trình trồng cây <b>(*)</b>
             </label>
             <FormControl fullWidth>
               <Select
@@ -210,7 +213,7 @@ function CreateQR() {
           </Grid>
           <Grid item xs={11} sx={{ display: "flex", flexDirection: "column" }}>
             <label>
-              Address <b>(*)</b>
+              Địa chỉ <b>(*)</b>
             </label>
             <TextField
               required
@@ -228,7 +231,7 @@ function CreateQR() {
           </Grid>
           <Grid item xs={11}>
             <label>
-              Image product<b>(*)</b>
+              Hình ảnh sản phẩm<b>(*)</b>
             </label>
 
             <Box
@@ -316,7 +319,7 @@ function CreateQR() {
           </Grid>
           <Grid item xs={11}>
             <label>
-              Describe information <b>(*)</b>
+              Mô tả <b>(*)</b>
             </label>
 
             <Box sx={{ width: { xs: 400, md: "100%" } }}>
@@ -340,13 +343,13 @@ function CreateQR() {
             color="warning"
             sx={{ borderRadius: "10px" }}
           >
-            Confirm
+            Xác nhận
           </Button>
         </Box>
 
         <Snackbar open={snackbarState} autoHideDuration={1000}>
           <Alert severity="success" sx={{ width: "100%" }}>
-            Create product successfull !
+            Tạo sản phẩm thành công !
           </Alert>
         </Snackbar>
       </Form>

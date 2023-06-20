@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./ListOfProcesses.css";
-import * as RiIcons from "react-icons/ri";
-import * as BiIcons from "react-icons/bi";
-import { Link, useParams } from "react-router-dom";
 import {
   Box,
   Button,
   ButtonGroup,
   Container,
+  Card,
   IconButton,
   Input,
   InputAdornment,
@@ -33,14 +31,13 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
-import { Card } from "reactstrap";
 import AddIcon from "@mui/icons-material/Add";
 import { fDateTime } from "../../../utils/formatTime";
 
 const headCell = [
   { id: "id", label: "No", disableSorting: true },
   { id: "name", label: "Name" },
-  { id: "time", label: "End time" },
+  { id: "time", label: "Create at" },
   { id: "button", label: "" },
 ];
 
@@ -66,6 +63,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function ListOfProcesses() {
   const [data, setData] = useState([]);
+  const [dataTable, setDataTable] = useState([]);
 
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
@@ -93,10 +91,25 @@ function ListOfProcesses() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
-        setLoading(false);
+        const updatedData = data.data.map(obj => ({
+          ...obj,
+          stageProcess: {
+            ...obj.stageProcess,
+            _id: obj._id
+          }
+        }));
 
-        setData(data.data);
+        console.log("updatedData", updatedData);
+
+        let arr = [];
+        let DATA = updatedData;
+        DATA = updatedData.forEach((item) => {
+          arr.push(item.stageProcess);
+          console.log("arr", arr);
+        });
+
+        setDataTable(arr);
+        setLoading(false);
       });
   };
 
@@ -140,10 +153,10 @@ function ListOfProcesses() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    return stableSort(filterFn.fn(data), getComparator(order, orderBy)).slice(
-      page * rowsPerPage,
-      (page + 1) * rowsPerPage
-    );
+    return stableSort(
+      filterFn.fn(dataTable),
+      getComparator(order, orderBy)
+    ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   };
 
   const handleSordRequest = (id) => {
@@ -177,64 +190,67 @@ function ListOfProcesses() {
     >
       <Loading loading={loading} />
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "20px",
-        }}
-      >
-        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
-          LIST OF PROCESSES
-        </Typography>
-        <Button
-          variant="contained"
+      <Card sx={{ p: 3, borderRadius: "10px" }}>
+        <Box
           sx={{
-            borderRadius: "5px",
-            width: { xs: "140px", md: "140px" },
-            height: { xs: "40px", md: "40px" },
-            fontSize: { xs: "12px", md: "16px" },
-            justifyContent: "center",
-            backgroundColor: "#fff176",
-            color: "black",
-            ":hover": {
-              backgroundColor: "#ffd54f",
-            },
-          }}
-          onClick={() => {
-            window.location.href = "/encreateprocess";
+            display: "flex",
+            justifyContent: "space-between",
+            marginBottom: "20px",
           }}
         >
-          <AddIcon /> Create
-        </Button>
-      </Box>
-      <Card>
+          <Typography
+            variant="h3"
+            sx={{ fontSize: { xs: "20px", md: "35px" } }}
+          >
+            LIST OF PROCESSES
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{
+              borderRadius: "5px",
+              width: { xs: "140px", md: "140px" },
+              height: { xs: "40px", md: "40px" },
+              fontSize: { xs: "12px", md: "16px" },
+              justifyContent: "center",
+              backgroundColor: "#fff176",
+              color: "black",
+              ":hover": {
+                backgroundColor: "#ffd54f",
+              },
+            }}
+            onClick={() => {
+              window.location.href = "/encreateprocess";
+            }}
+          >
+            <AddIcon /> Create
+          </Button>
+        </Box>
+        <Toolbar>
+          <TextField
+            variant="outlined"
+            placeholder="Search process"
+            onChange={handleSearch}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginBottom: "20px",
+              marginTop: "20px",
+              marginLeft: "0",
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",
             borderRadius: "5px",
           }}
         >
-          <Toolbar>
-            <TextField
-              variant="outlined"
-              placeholder="Search process"
-              onChange={handleSearch}
-              sx={{
-                width: { xs: "100%", md: "30%" },
-                marginBottom: "20px",
-                marginTop: "20px",
-                marginLeft: "0",
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchRoundedIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Toolbar>
           <Table>
             <TableHead>
               {headCell.map((item) => (
@@ -260,9 +276,9 @@ function ListOfProcesses() {
               {recordsAfterPagingAndSorting().map((item, index) => (
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
-                  <StyledTableCell>{item.stageProcess.name}</StyledTableCell>
+                  <StyledTableCell>{item.name}</StyledTableCell>
                   <StyledTableCell>
-                    {item.stageProcess.timeCreate}
+                    {item.timeCreate}
                   </StyledTableCell>
                   <StyledTableCell align="center">
                     <Box>
@@ -315,7 +331,7 @@ function ListOfProcesses() {
             page={page}
             rowsPerPageOptions={pages}
             rowsPerPage={rowsPerPage}
-            count={data.length}
+            count={dataTable.length}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />

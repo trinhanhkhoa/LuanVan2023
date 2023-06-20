@@ -71,7 +71,6 @@ function TrackingForm(props) {
       .then((res) => res.json())
       .then((res) => {
         let data = res.data;
-        console.log("process", data);
         setProcessStage({
           stageProcess: {
             name: data.stageProcess.name,
@@ -166,7 +165,7 @@ function TrackingForm(props) {
     e.preventDefault();
 
     setLoading(true);
-    console.log("DELIVERING!!!", JSON.stringify(optionsTracking[5]));
+    console.log("DELIVERING!!!");
 
     await fetch(
       `${process.env.REACT_APP_API}/tracking/deliveried/${params.id}`,
@@ -212,13 +211,12 @@ function TrackingForm(props) {
         onSubmit={name !== step[5] ? handleSubmit : handleDelivery}
       >
         <Loading loading={loading} />
-        {console.log(step)}
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Tracking progress <b>(*)</b>
+              Chọn giai đoạn <b>(*)</b>
             </label>
             <Autocomplete
               disablePortal
@@ -238,7 +236,7 @@ function TrackingForm(props) {
                   }}
                   variant="outlined"
                   name="name"
-                  placeholder="Product's name"
+                  placeholder="Tên giai đoạn"
                   sx={{
                     width: { xs: 350, md: 600 },
                     borderRadius: "20%",
@@ -250,13 +248,13 @@ function TrackingForm(props) {
             />
             {name === step[4] ? (
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <label htmlFor="">Quantity</label>
+                <label htmlFor="">Sản lượng</label>
                 <TextField
                   required
                   value={quantity}
                   onChange={(e) => {
                     setQuantity(e.target.value);
-                    setNotes("Quantity: " + quantity);
+                    setNotes(["Sản lượng: " + quantity]);
                   }}
                   variant="outlined"
                   placeholder={processStage.stageHarvest.quantity}
@@ -270,13 +268,13 @@ function TrackingForm(props) {
             ) : null}
             {name === step[5] ? (
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <label htmlFor="">Purchasing unit</label>
+                <label htmlFor="">Nơi thu mua</label>
                 <TextField
                   required
                   value={unit}
                   onChange={(e) => {
                     setUnit(e.target.value);
-                    setNotes("Purschasing unit" + unit);
+                    setNotes(["Nơi thu mua" + unit]);
                   }}
                   variant="outlined"
                   placeholder={processStage.stageSell.name}
@@ -290,20 +288,19 @@ function TrackingForm(props) {
             ) : null}
             {name === step[1] ? (
               <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <label htmlFor="">Watering time</label>
+                <label htmlFor="">Thời lượng tưới nước</label>
                 <TextField
                   required
                   value={amountOfWater}
                   onChange={(e) => {
                     setAmountOfWater(e.target.value);
                     setNotes([
-                      "Amount of Fertilizer: " + amountOfFertilizer,
-                      "Watering Time: " + e.target.value,
+                      "Lượng phân bón: " + amountOfFertilizer,
+                      "Thời lượng tưới nước: " + e.target.value,
                     ]);
-                    console.log(notes);
                   }}
                   variant="outlined"
-                  placeholder="Watering time"
+                  placeholder="Thời lượng tưới nước"
                   sx={{
                     width: { xs: 350, md: 600 },
                     borderRadius: "20%",
@@ -311,19 +308,19 @@ function TrackingForm(props) {
                   }}
                 />
 
-                <label htmlFor="">Amount of Fertilizer</label>
+                <label htmlFor="">Lượng phân bón</label>
                 <TextField
                   required
                   value={amountOfFertilizer}
                   onChange={(e) => {
                     setAmountOfFertilizer(e.target.value);
                     setNotes([
-                      "Amount of Fertilizer: " + e.target.value,
-                      "Watering Time: " + amountOfWater,
+                      "Lượng phân bón: " + e.target.value,
+                      "Thời lượng tưới nước: "+ amountOfWater,
                     ]);
                   }}
                   variant="outlined"
-                  placeholder="Amount of fertilizer"
+                  placeholder="Lượng phân bón"
                   sx={{ width: { xs: 350, md: 600 }, borderRadius: "20%" }}
                 />
               </Box>
@@ -333,7 +330,7 @@ function TrackingForm(props) {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Time <b>(*)</b>
+              Thời gian <b>(*)</b>
             </label>
             <TextField
               variant="outlined"
@@ -347,7 +344,7 @@ function TrackingForm(props) {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Image <b>(*)</b>
+              Hình ảnh <b>(*)</b>
             </label>
             <Box
               sx={{
@@ -382,7 +379,7 @@ function TrackingForm(props) {
                   }
 
                   setImages(e.target.files);
-                  console.log(e.target.files);
+                  // console.log(e.target.files);
                   setLoading(true);
 
                   try {
@@ -436,7 +433,7 @@ function TrackingForm(props) {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Describe information <b>(*)</b>
+              Mô tả <b>(*)</b>
             </label>
             <Box sx={{ width: { xs: 350, md: 600 } }}>
               <TextareaAutosize
@@ -456,7 +453,7 @@ function TrackingForm(props) {
                 color="warning"
                 sx={{ borderRadius: "10px" }}
               >
-                Confirm
+                Xác nhận
               </Button>
             ) : (
               <Button
@@ -465,7 +462,7 @@ function TrackingForm(props) {
                 color="warning"
                 sx={{ borderRadius: "10px" }}
               >
-                Delivery
+                Vận chuyển
               </Button>
             )}
           </Box>
@@ -473,7 +470,7 @@ function TrackingForm(props) {
 
         <Snackbar open={snackbarState} autoHideDuration={1000}>
           <Alert severity="success" sx={{ width: "100%" }}>
-            Update tracking successfull
+            Thêm nhật ký thành công
           </Alert>
         </Snackbar>
       </Box>

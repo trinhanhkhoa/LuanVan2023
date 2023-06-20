@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
-import * as TbIcons from "react-icons/tb";
 import { Link, useParams } from "react-router-dom";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
@@ -15,16 +14,14 @@ import {
   Typography,
   useStepContext,
 } from "@mui/material";
-import QRCode from "react-qr-code";
+import QRCode from "qrcode.react";
 import ReactReadMoreReadLess from "react-read-more-read-less";
 import Popup from "../../../components/Popup";
 import TrackingForm from "../TrackingForm/TrackingForm";
 import { styled } from "@mui/material/styles";
 import ProductTracking from "../ProductTracking/ProductTracking";
 import Loading from "../../../components/Loading";
-import * as GiIcons from "react-icons/gi";
 import * as HiIcons from "react-icons/hi";
-import * as GrIcons from "react-icons/gr";
 import { Carousel } from "react-carousel-minimal";
 
 const ProductDetailWrapper = styled(Card)(({ theme }) => ({
@@ -126,7 +123,6 @@ function Product() {
 
       const data = await fetch(
         `${process.env.REACT_APP_API}/product/get-product/${params.id}`,
-        // `http://localhost:5000/product/get-product/${params.id}`,
         {
           method: "GET",
           headers: {
@@ -136,7 +132,6 @@ function Product() {
       ).then((res) => res.json());
 
       // .then((res) => res.data);
-      console.log(data);
       setName(data.data.name);
       setAddress(data.data.address);
       setDescription(data.data.description);
@@ -146,10 +141,10 @@ function Product() {
       setImages(data.data.images);
       setProcessId(data.data.processId);
 
-      if (data.dataBC[6] == 0) setStatus("Created");
-      else if (data.dataBC[6] == 1) setStatus("Updated");
-      else if (data.dataBC[6] == 2) setStatus("Deleted");
-      else if (data.dataBC[6] == 3) setStatus("Deliveried");
+      if (data.dataBC[6] == 0) setStatus("Đã tạo");
+      else if (data.dataBC[6] == 1) setStatus("Đã cập nhật");
+      else if (data.dataBC[6] == 2) setStatus("Đã xóa");
+      else if (data.dataBC[6] == 3) setStatus("Đã vận chuyển");
 
       setLoading(false);
 
@@ -163,6 +158,20 @@ function Product() {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const downloadQRCode = () => {
+    // Generate download with use canvas and stream
+    const canvas = document.getElementById("qr-gen");
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = `QR-${name}.png`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
   };
 
   const captionStyle = {
@@ -224,7 +233,44 @@ function Product() {
                   alignItems: "center",
                 }}
               >
-                <QRCode value={`${params.id}`} size={200} />
+                <QRCode
+                  id="qr-gen"
+                  level={"H"}
+                  value={`${params.id}`}
+                  size={200}
+                  // includeMargin={true}
+                />
+                <Button
+                  variant="contained"
+                  sx={{
+                    display: { xs: "none", md: "block" },
+                    borderRadius: "10px",
+                    width: 180,
+                    lineHeight: 2,
+                    m: { xs: 2, md: 0 },
+                    mt: { xs: 2, md: 2 },
+                  }}
+                  onClick={() => {
+                    window.location.href = `${url}`;
+                  }}
+                >
+                  Kiểm tra sản phẩm
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    display: { xs: "none", md: "block" },
+                    borderRadius: "10px",
+                    width: 180,
+                    lineHeight: 2,
+                    m: { xs: 2, md: 0 },
+                    mt: { xs: 2, md: 2 },
+                  }}
+                  onClick={downloadQRCode}
+                >
+                  Tải mã QR
+                </Button>
               </Box>
               <Box
                 display={"flex"}
@@ -233,28 +279,56 @@ function Product() {
               >
                 <Typography
                   variant="h4"
-                  sx={{ lineHeight: 2, fontSize: { xs: "20px", md: "30px" } }}
+                  sx={{ fontSize: { xs: "20px", md: "30px" } }}
                 >
                   {name}
                 </Typography>
+
                 <Typography
+                  maxWidth={false}
                   variant="body"
                   sx={{
-                    lineHeight: 2,
-                    backgroundColor: "#64dd17",
+                    mt: 1,
+                    mb: 1,
+                    padding: 0.5,
+                    minWidth: 100,
+                    backgroundColor:
+                      status == "Đã tạo"
+                        ? "#76ff03"
+                        : status == "Đã cập nhật"
+                        ? "#ffff00"
+                        : status == "Đã xóa"
+                        ? "#ff5722"
+                        : status == "Đã vận chuyển"
+                        ? "#40c4ff"
+                        : "#ff3d00",
                     borderRadius: 2,
                     textAlign: "center",
                     fontSize: { xs: "15px", md: "15px" },
                   }}
                 >
-                  Status: {status}
+                  {" "}
+                  {status}{" "}
                 </Typography>
                 <Typography
                   sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" } }}
                   variant="body"
                 >
-                  Address: {address}
+                  Địa chỉ: {address}
                 </Typography>
+                <Divider sx={{ mt: 2, mb: 2 }} />
+                <Box display={"flex"} flexDirection={"column"}>
+                  <Typography variant="text" sx={{}}>
+                    <HiIcons.HiUser style={{ marginRight: 10, fontSize: 25 }} />{" "}
+                    Tên nông dân: {user.name}
+                  </Typography>
+                  <Typography variant="text">
+                    <HiIcons.HiOutlineMail
+                      style={{ marginRight: 10, fontSize: 25 }}
+                    />{" "}
+                    Email: {user.email}
+                  </Typography>
+                </Box>
                 <Box
                   sx={{
                     display: { xs: "flex", md: "block" },
@@ -276,7 +350,7 @@ function Product() {
                       setOpenQrCode(true);
                     }}
                   >
-                    QR Code
+                    Mã QR
                   </Button>
                   <Popup
                     title="Qr Code"
@@ -288,8 +362,9 @@ function Product() {
                   <Button
                     variant="contained"
                     sx={{
+                      display: { xs: "block", md: "none" },
                       borderRadius: "10px",
-                      width: 150,
+                      width: 180,
                       lineHeight: 2,
                       m: { xs: 2, md: 0 },
                       mt: { xs: 2, md: 2 },
@@ -298,23 +373,10 @@ function Product() {
                       window.location.href = `${url}`;
                     }}
                   >
-                    Check product
+                    Kiểm tra sản phẩm
                   </Button>
                 </Box>
               </Box>
-            </Box>
-            <Divider sx={{ mt: 2, mb: 2 }} />
-            <Box display={"flex"} flexDirection={"column"}>
-              <Typography variant="text" sx={{}}>
-                <HiIcons.HiUser style={{ marginRight: 10, fontSize: 25 }} />{" "}
-                Farmer: {user.name}
-              </Typography>
-              <Typography variant="text">
-                <HiIcons.HiOutlineMail
-                  style={{ marginRight: 10, fontSize: 25 }}
-                />{" "}
-                Email: {user.email}
-              </Typography>
             </Box>
 
             <Divider sx={{ mt: 2, mb: 2 }} />
@@ -348,17 +410,14 @@ function Product() {
                       setOpenPopupTracking(true);
                     }}
                   >
-                    Tracking
+                    Nhật ký
                   </Button>
                   <Popup
                     title="Tracking"
                     openPopup={openPopupTracking}
                     setOpenPopup={setOpenPopupTracking}
                   >
-                    <ProductTracking
-                      id={params.id}
-                      trackingLength={tracking.length}
-                    />
+                    <ProductTracking id={params.id} processId={processId} />
                   </Popup>
                 </Grid>
                 <Grid item xs={4}>
@@ -366,7 +425,7 @@ function Product() {
                     variant="contained"
                     color="success"
                     sx={
-                      status === "Deleted" || status === "Deliveried"
+                      status === "Đã xóa" || status === "Đã vận chuyển"
                         ? {
                             display: "none",
                             borderRadius: "10px",
@@ -384,7 +443,7 @@ function Product() {
                       setOpenPopup(true);
                     }}
                   >
-                    Update Tracking
+                    Thêm nhật ký
                   </Button>
                   <Popup
                     title="Update Tracking"
@@ -401,7 +460,7 @@ function Product() {
               <HiIcons.HiInformationCircle
                 style={{ marginRight: 10, fontSize: 20 }}
               />
-              Update tracking: {tracking.length} times
+              Đã thêm nhật ký: {tracking.length} lần
             </Typography>
           </Box>
         </ProductDetailInfoWrapper>

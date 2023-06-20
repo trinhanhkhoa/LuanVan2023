@@ -193,58 +193,61 @@ function EnUserAccount() {
     >
       <Loading loading={loading} />
 
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: { xs: "flex-start", md: "flex-end" },
-          justifyContent: "space-between",
-          marginBottom: "20px",
-        }}
-      >
-        <Typography variant="h3" sx={{ fontSize: { xs: "25px", md: "35px" } }}>
-          USER'S PRODUCTS
-        </Typography>
-        <Card
+      <Card sx={{ p: 3, borderRadius: "10px" }}>
+        <Box
           sx={{
-            backgroundColor: "rgba(71, 167, 162, 0.12)",
-            padding: "1%",
-            mt: { xs: 2, md: 0 },
+            display: "flex",
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: { xs: "flex-start", md: "flex-end" },
+            justifyContent: "space-between",
+            marginBottom: "20px",
           }}
         >
-          <Typography>Username: {dataUser.name}</Typography>
-          <Typography>Email: {dataUser.email}</Typography>
-          <Typography>ID: {dataUser._id}</Typography>
-          <Typography>Role: {dataUser.userType}</Typography>
-        </Card>
-      </Box>
-      <Card>
+          <Typography
+            variant="h3"
+            sx={{ fontSize: { xs: "25px", md: "35px" } }}
+          >
+            USER'S PRODUCTS
+          </Typography>
+          <Card
+            sx={{
+              backgroundColor: "rgba(71, 167, 162, 0.12)",
+              padding: "1%",
+              mt: { xs: 2, md: 0 },
+            }}
+          >
+            <Typography>Username: {dataUser.name}</Typography>
+            <Typography>Email: {dataUser.email}</Typography>
+            <Typography>ID: {dataUser._id}</Typography>
+            <Typography>Role: {dataUser.userType}</Typography>
+          </Card>
+        </Box>
+        <Toolbar>
+          <TextField
+            variant="outlined"
+            placeholder="Search product"
+            onChange={handleSearch}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginTop: "20px",
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",
             borderRadius: "5px",
           }}
         >
-          <Toolbar>
-            <TextField
-              variant="outlined"
-              placeholder="Search product"
-              onChange={handleSearch}
-              sx={{
-                width: { xs: "100%", md: "30%" },
-                marginTop: "20px",
-                marginBottom: "20px",
-                marginLeft: "0",
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchRoundedIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Toolbar>
           <Table>
             <TableHead>
               {headCell.map((item) => (

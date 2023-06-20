@@ -32,12 +32,12 @@ import AppWidgetSummary from "../../../components/HeaderCard/HeaderCard";
 import { Card } from "reactstrap";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
-  { id: "pid", label: "Product ID" },
-  { id: "uid", label: "User ID" },
-  { id: "address", label: "Address" },
-  { id: "status", label: "Status" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Tên sản phẩm" },
+  { id: "pid", label: "ID sản phẩm" },
+  { id: "uid", label: "ID người dùng" },
+  { id: "address", label: "Địa chỉ" },
+  { id: "status", label: "Trạng thái" },
 ];
 
 const StyleTableCell = styled(TableCell)(({ theme }) => ({
@@ -275,7 +275,7 @@ export default function EnHome() {
             {/* <QrCode2RoundedIcon
               sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
             /> */}
-            <Typography>Create Process</Typography>
+            <Typography>Tạo quy trình</Typography>
           </CardContent>
         </Button>
         <Button
@@ -302,7 +302,7 @@ export default function EnHome() {
             {/* <AutorenewRoundedIcon
               sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
             /> */}
-            <Typography>List of Processes</Typography>
+            <Typography>Danh sách quy trình</Typography>
           </CardContent>
         </Button>
       </Box>
@@ -315,7 +315,7 @@ export default function EnHome() {
       >
         <Grid item xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Total of users"
+            title="Tổng số người dùng"
             total={user.length}
             // color="warning"
             icon={"fluent-emoji:man-in-tuxedo-light"}
@@ -332,7 +332,7 @@ export default function EnHome() {
 
         <Grid item xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Total of farmers"
+            title="Tổng số nông dân"
             total={farmer.length}
             // color="warning"
             icon={"fluent-emoji:farmer-light"}
@@ -348,7 +348,7 @@ export default function EnHome() {
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Total of products"
+            title="Tổng số sản phẩm"
             total={data.length}
             icon={"fluent-emoji:watermelon"}
             sx={{
@@ -362,7 +362,7 @@ export default function EnHome() {
         </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <AppWidgetSummary
-            title="Total trackings"
+            title="Tổng số nhật ký"
             total={length}
             // color="warning"
             icon={"fluent-emoji:check-mark-button"}
@@ -394,7 +394,7 @@ export default function EnHome() {
                 <StyleTableCell
                   key={item.id}
                   sx={
-                    item.label == "Product ID" || item.label == "User ID"
+                    item.label == "ID sản phẩm" || item.label == "ID người dùng"
                       ? { display: { xs: "none", md: "table-cell" } }
                       : null
                   }
@@ -439,9 +439,9 @@ export default function EnHome() {
                         p: 0.5,
                         backgroundColor:
                           item.status == 0
-                            ? "#8bc34a"
+                            ? "#76ff03"
                             : item.status == 1
-                            ? "#cddc39"
+                            ? "#ffff00"
                             : item.status == 2
                             ? "#ff5722"
                             : item.status == 3
@@ -450,14 +450,14 @@ export default function EnHome() {
                       }}
                     >
                       {item.status == 0
-                        ? "Created"
+                        ? "Đã tạo"
                         : item.status == 1
-                        ? "Updated"
+                        ? "Đã cập nhật"
                         : item.status == 2
-                        ? "Deleted"
+                        ? "Đã xóa"
                         : item.status == 3
-                        ? "Deliveried"
-                        : "Error"}
+                        ? "Đã vận chuyển"
+                        : "Lỗi"}
                     </Typography>
                   </StyleTableCell>
                 </StyledTableRow>

@@ -10,6 +10,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Box,
   Button,
+  Card,
   CardContent,
   Table,
   TableBody,
@@ -24,17 +25,14 @@ import {
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import Loading from "../../../components/Loading";
-import QrCode2RoundedIcon from "@mui/icons-material/QrCode2Rounded";
-import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 import { Grid } from "@mui/material";
 import AppWidgetSummary from "../../../components/HeaderCard/HeaderCard";
-import { Card } from "reactstrap";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Tên sản phẩm" },
   // { id: "status", label: "Status (Is updated ?)" },
-  { id: "time", label: "Created At" },
+  { id: "time", label: "Ngày tạo" },
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -225,7 +223,7 @@ export default function Home() {
         >
           <CardContent>
             {/* <QrCode2RoundedIcon sx={{ fontSize: { xs: "1rem", md: "4rem", margin: 5 } }} /> */}
-            <Typography> Create product</Typography>
+            <Typography> Tạo sản phẩm</Typography>
           </CardContent>
         </Button>
         <Button
@@ -252,7 +250,7 @@ export default function Home() {
             {/* <AutorenewRoundedIcon
               sx={{ fontSize: { xs: "1rem", md: "4rem", margin: 5 } }}
             /> */}
-            <Typography> Process information</Typography>
+            <Typography> Danh sách quy trình</Typography>
           </CardContent>
         </Button>
       </Box>
@@ -285,7 +283,7 @@ export default function Home() {
               variant="h4"
               sx={{ fontSize: { xs: "18px", md: "30px" } }}
             >
-              Hi, welcome to Traceability Agriculture
+              Chào mừng bạn đã đến với Traceability Agriculture
             </Typography>
           </Box>
         </Grid>
@@ -293,7 +291,7 @@ export default function Home() {
         <Grid item xs={12} sm={6} md={3}>
           <Box>
             <AppWidgetSummary
-              title="Total of products"
+              title="Tổng số sản phẩm"
               total={data.length}
               color="success"
               icon={"ant-design:android-filled"}
@@ -310,7 +308,7 @@ export default function Home() {
         <Grid item xs={12} sm={6} md={3}>
           <Box>
             <AppWidgetSummary
-              title="Total trackings"
+              title="Tổng số nhật ký"
               total={length}
               color="success"
               icon={"ant-design:apple-filled"}

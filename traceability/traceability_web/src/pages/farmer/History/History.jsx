@@ -31,10 +31,10 @@ import Popup from "../../../components/Popup";
 import ConfirmNotice from "../../../components/Try/ConfirmNotice";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
-  { id: "length", label: "Tracking" },
-  { id: "time", label: "Create at" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Tên sản phẩm" },
+  { id: "length", label: "Số lượng nhật ký" },
+  { id: "time", label: "Ngày tạo" },
   { id: "button", label: "" },
 ];
 
@@ -111,20 +111,17 @@ function History() {
           setDataSC(dataSC);
           setData(data);
           setDataFilter(filteredArray);
-          // console.log("filteredArray", filteredArray);
 
           let tracking = data;
           tracking = tracking.filter(
             (t) => t.tracking && t.tracking.length != 0
           );
-          // console.log(`tracking: `, tracking);
           setTracking(tracking);
           tracking.forEach((track, index) => {
             temp += tracking[index].tracking.length;
           });
 
           setLength(temp);
-          // setData(dataSC);
         });
 
       setLoading(false);
@@ -208,34 +205,34 @@ function History() {
       <Loading loading={loading} />
       <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
-          HISTORY
+          Lịch sử
         </Typography>
+        <Toolbar>
+          <TextField
+            variant="outlined"
+            placeholder="Tìm kiếm sản phẩm"
+            onChange={handleSearch}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginTop: "20px",
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",
-            borderRadius: "10px",
+            borderRadius: "5px",
           }}
         >
-          <Toolbar>
-            <TextField
-              variant="outlined"
-              placeholder="Search product"
-              onChange={handleSearch}
-              sx={{
-                width: { xs: "100%", md: "30%" },
-                marginTop: "20px",
-                marginBottom: "20px",
-                marginLeft: "0",
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchRoundedIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Toolbar>
           <Table>
             <TableHead>
               {headCell.map((item) => (

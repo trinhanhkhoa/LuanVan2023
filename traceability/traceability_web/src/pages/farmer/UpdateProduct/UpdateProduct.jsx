@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./UpdateProduct.css";
 import { Link, useParams } from "react-router-dom";
-import QRCode from "react-qr-code";
+import QRCode from "qrcode.react";
 import { uploadImage } from "../../../components/MultiUpload";
 import {
   Box,
@@ -30,7 +30,7 @@ function UpdateProduct() {
 
   const [fileName, setFileName] = useState("No choosen file");
 
-  const [text, setText] = useState("");
+  const [tracking, setTracking] = useState(0);
   const [name, setName] = useState("");
   const [time, setTime] = useState("");
   const [address, setAddress] = useState("");
@@ -68,7 +68,6 @@ function UpdateProduct() {
 
     await fetch(
       `${process.env.REACT_APP_API}/product/get-product/${params.id}`,
-      // `http://localhost:5000/product/get-product/${params.id}`,
       {
         method: "GET",
         headers: {
@@ -84,8 +83,7 @@ function UpdateProduct() {
         setDescription(data.data.description);
         setTime(data.data.time);
         setProcessId(data.data.processId);
-        console.log("img", data.data.image);
-        console.log(data);
+        setTracking(data.data.tracking.length);
       });
     setLoading(false);
   };
@@ -101,7 +99,6 @@ function UpdateProduct() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
         setLoading(false);
 
         setProcessName(data.data);
@@ -135,7 +132,6 @@ function UpdateProduct() {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setLoading(false);
 
         window.location.href = "/list";
@@ -147,11 +143,28 @@ function UpdateProduct() {
     getInfoProduct();
   }, []);
 
+  const downloadQRCode = () => {
+    // Generate download with use canvas and stream
+    const canvas = document.getElementById("qr-gen");
+    const pngUrl = canvas
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    let downloadLink = document.createElement("a");
+    downloadLink.href = pngUrl;
+    downloadLink.download = `QR-${name}.png`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+  };
+
   return (
-    <Container fixed sx={{ justifyContent: "center", alignItems: "center", minHeight: "80vh", }}>
+    <Container
+      fixed
+      sx={{ justifyContent: "center", alignItems: "center", minHeight: "80vh" }}
+    >
       <Loading loading={loading} />
 
-      <Box sx={{ marginBottom: "10px" }}>
+      <Box sx={{ margin: "20px" }}>
         <Typography
           variant="h3"
           sx={{
@@ -159,11 +172,8 @@ function UpdateProduct() {
             fontWeight: 700,
           }}
         >
-          Update information product
+          Cập nhật thông tin chung
         </Typography>
-        {/* <Typography variant="h6" sx={{ fontSize: { xs: "18px", md: "30px" } }}>
-          Product introduction information
-        </Typography> */}
       </Box>
       <Box
         sx={{
@@ -178,9 +188,17 @@ function UpdateProduct() {
               display: { xs: "none", md: "flex" },
               flexDirection: "column",
               alignItems: "center",
+              justifyContent: "center",
+              // marginRight: 5
             }}
           >
-            <QRCode value={`${params.id}`} size={200} />
+            <QRCode
+              id="qr-gen"
+              level={"H"}
+              value={`${params.id}`}
+              size={180}
+              // includeMargin={true}
+            />
           </Box>
           <Box
             sx={{
@@ -203,14 +221,35 @@ function UpdateProduct() {
                 setOpenQrCode(true);
               }}
             >
-              QR Code
+              Mã QR
             </Button>
             <Popup
               title="Qr Code"
               openPopup={openQrCode}
               setOpenPopup={setOpenQrCode}
             >
-              <QRCode value={`${params.id}`} size={180} />
+              <QRCode
+                id="qr-gen"
+                level={"H"}
+                value={`${params.id}`}
+                size={240}
+                includeMargin={true}
+              />
+              <Button
+                variant="contained"
+                color="success"
+                sx={{
+                  display: { xs: "block", md: "none" },
+                  borderRadius: "10px",
+                  marginTop: "20px",
+                  lineHeight: 2,
+                  width: 200,
+                  m: 2,
+                }}
+                onClick={downloadQRCode}
+              >
+                Tải mã QR
+              </Button>
             </Popup>
             <Button
               variant="contained"
@@ -226,7 +265,22 @@ function UpdateProduct() {
                 window.location.href = `/product/${params.id}`;
               }}
             >
-              Watch product
+              Xem sản phẩm
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{
+                display: { xs: "none", md: "block" },
+                borderRadius: "10px",
+                marginTop: "20px",
+                lineHeight: 2,
+                width: 200,
+                m: 2,
+              }}
+              onClick={downloadQRCode}
+            >
+              Tải mã QR
             </Button>
           </Box>
         </Box>
@@ -241,12 +295,12 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Product's name <b>(*)</b>
+              Tên sản phẩm <b>(*)</b>
             </label>
             <TextField
               required
               variant="outlined"
-              placeholder="Product's name"
+              placeholder="Nhập tên sản phẩm"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -257,7 +311,7 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Time <b>(*)</b>
+              Thời gian tạo <b>(*)</b>
             </label>
             <TextField
               required
@@ -268,47 +322,76 @@ function UpdateProduct() {
               sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
             />
           </Box>
-          <Grid item xs={11}>
+          <Grid item xs={11} marginBottom={2}>
             <label>
-              Choose process <b>(*)</b>
+              Chọn quy trình trồng cây <b>(*)</b>
             </label>
-            <FormControl fullWidth>
-              <Select
-                native
-                fullWidth
-                variant="outlined"
-                defaultValue={30}
-                inputProps={{
-                  name: "age",
-                  id: "uncontrolled-native",
-                }}
-                value={processId}
-                onChange={(e) => {
-                  setProcessId(e.target.value);
-                  console.log(e.target.value);
-                }}
-              >
-                {processName &&
-                  processName.map((item, index) => {
-                    return (
-                      <option key={index} value={item._id}>
-                        {item.stageProcess.name}
-                      </option>
-                    );
-                  })}
-              </Select>
-            </FormControl>
+            {tracking < 1 ? (
+              <FormControl fullWidth>
+                <Select
+                  native
+                  fullWidth
+                  variant="outlined"
+                  defaultValue={30}
+                  inputProps={{
+                    name: "age",
+                    id: "uncontrolled-native",
+                  }}
+                  value={processId}
+                  onChange={(e) => {
+                    setProcessId(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                >
+                  {processName &&
+                    processName.map((item, index) => {
+                      return (
+                        <option key={index} value={item._id}>
+                          {item.stageProcess.name}
+                        </option>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+            ) : (
+              <FormControl disabled fullWidth>
+                <Select
+                  native
+                  fullWidth
+                  variant="outlined"
+                  defaultValue={30}
+                  inputProps={{
+                    name: "age",
+                    id: "uncontrolled-native",
+                  }}
+                  value={processId}
+                  onChange={(e) => {
+                    setProcessId(e.target.value);
+                    console.log(e.target.value);
+                  }}
+                >
+                  {processName &&
+                    processName.map((item, index) => {
+                      return (
+                        <option key={index} value={item._id}>
+                          {item.stageProcess.name}
+                        </option>
+                      );
+                    })}
+                </Select>
+              </FormControl>
+            )}
           </Grid>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Address <b>(*)</b>
+              Địa chỉ <b>(*)</b>
             </label>
             <TextField
               required
               variant="outlined"
-              placeholder="Address"
+              placeholder="Nhập địa chỉ"
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -319,7 +402,7 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Image <b>(*)</b>
+              Hình ảnh sản phẩm <b>(*)</b>
             </label>
             <input
               required
@@ -347,7 +430,7 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Describe information <b>(*)</b>
+              Mô tả <b>(*)</b>
             </label>
             <Box sx={{ width: { xs: 400, md: "100%" } }}>
               <TextareaAutosize
@@ -375,7 +458,7 @@ function UpdateProduct() {
           sx={{ borderRadius: "10px" }}
           onClick={putInfoProduct}
         >
-          Confirm
+          Xác nhận
         </Button>
       </Box>
     </Container>

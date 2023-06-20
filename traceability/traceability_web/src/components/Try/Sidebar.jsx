@@ -29,7 +29,7 @@ const Sidebar = () => {
               <ListItemIcon>
                 <HomeRoundedIcon />
               </ListItemIcon>
-              <ListItemText primary="Home" />
+              <ListItemText primary="Trang chủ" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -45,7 +45,7 @@ const Sidebar = () => {
                 )}
               </ListItemIcon>
               <ListItemText
-                primary={userType == "admin" ? "Processes" : "Products"}
+                primary={userType == "admin" ? "Quy trình" : "Sản phẩm"}
               />
             </ListItemButton>
           </ListItem>
@@ -55,7 +55,7 @@ const Sidebar = () => {
                 <ListItemIcon>
                   <CachedRoundedIcon />
                 </ListItemIcon>
-                <ListItemText primary="Processes" />
+                <ListItemText primary="Quy trình" />
               </ListItemButton>
             </ListItem>
           ) : null}
@@ -65,7 +65,7 @@ const Sidebar = () => {
                 <ListItemIcon>
                   <ManageSearchIcon />
                 </ListItemIcon>
-                <ListItemText primary="History" />
+                <ListItemText primary="Lịch sử" />
               </ListItemButton>
             </ListItem>
           ) : null}
@@ -75,7 +75,7 @@ const Sidebar = () => {
                 <ListItemIcon>
                   <GroupIcon />
                 </ListItemIcon>
-                <ListItemText primary="Manage Accounts" />
+                <ListItemText primary="Quản lý tài khoản" />
               </ListItemButton>
             </ListItem>
           ) : null}

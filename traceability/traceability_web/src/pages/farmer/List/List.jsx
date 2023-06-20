@@ -35,10 +35,10 @@ import ConfirmNotice from "../../../components/Try/ConfirmNotice";
 import AddIcon from "@mui/icons-material/Add";
 
 const headCell = [
-  { id: "id", label: "No", disableSorting: true },
-  { id: "name", label: "Name" },
-  { id: "length", label: "Tracking" },
-  { id: "time", label: "Create at" },
+  { id: "id", label: "STT", disableSorting: true },
+  { id: "name", label: "Tên sản phẩm" },
+  { id: "length", label: "Số lượng nhật ký" },
+  { id: "time", label: "Ngày tạo" },
   { id: "button", label: "" },
 ];
 
@@ -64,6 +64,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function List() {
   const [data, setData] = useState([]);
+  const [dataSC, setDataSC] = useState([]);
+  const [dataFilter, setDataFilter] = useState([]);
   const [name, setName] = useState([]);
   const [trackingLength, setTrackingLength] = useState([]);
   const [timeCreate, setTimeCreate] = useState([]);
@@ -98,13 +100,31 @@ function List() {
         }
       )
         .then((res) => res.json())
-        .then((res) => res.data);
+        .then((res) => {
+          let data = res.data;
+          let dataSC = res.dataSC;
+          dataSC = dataSC.filter((p) => p.status != 3);
 
-      data = data.filter((p) => p.userId == id);
+          data = data.filter((p) => p.userId == id);
 
-      // console.l  og(`product has user id: `, data);
+          const filteredArray = data.filter((item1) =>
+            dataSC.some(
+              (item2) => item2.pid === item1._id && item2.status !== 3
+            )
+          );
 
-      setData(data);
+          // console.log(filteredArray)
+
+          setDataSC(dataSC);
+          setData(data);
+          setDataFilter(filteredArray);
+        });
+
+      // data = data.filter((p) => p.userId == id);
+
+      // console.log(`product has user id: `, data);
+
+      // setData(data);
 
       setLoading(false);
     };
@@ -147,7 +167,7 @@ function List() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    return stableSort(filterFn.fn(data), getComparator(order, orderBy)).slice(
+    return stableSort(filterFn.fn(dataFilter), getComparator(order, orderBy)).slice(
       page * rowsPerPage,
       (page + 1) * rowsPerPage
     );
@@ -163,7 +183,7 @@ function List() {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
-        console.log(target);
+        console.log(items);
         if (e.target.value == "") return items;
         else
           return items.filter((x) =>
@@ -185,64 +205,67 @@ function List() {
     >
       <Loading loading={loading} />
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginBottom: "20px",
-        }}
-      >
-        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
-          LIST OF PRODUCTS
-        </Typography>
-        <Button
-          variant="contained"
-          color="success"
+      <Card sx={{ p: 3, borderRadius: "10px" }}>
+        <Box
           sx={{
-            borderRadius: "10px",
-            width: { xs: "140px", md: "140px" },
-            height: { xs: "40px", md: "40px" },
-            fontSize: { xs: "12px", md: "16px" },
-            backgroundColor: "#D0F5BE",
-            color: "black",
-            ":hover": {
-              backgroundColor: "#B6E2A1",
-            },
-          }}
-          onClick={() => {
-            window.location.href = "/createqr";
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
-          <AddIcon /> Create
-        </Button>
-      </Box>
-      <Card>
+          <Typography
+            variant="h3"
+            sx={{ fontSize: { xs: "20px", md: "35px" } }}
+          >
+            Danh sách các sản phẩm
+          </Typography>
+          <Button
+            variant="contained"
+            color="success"
+            sx={{
+              borderRadius: "10px",
+              width: { xs: "140px", md: "180px" },
+              height: { xs: "40px", md: "40px" },
+              fontSize: { xs: "12px", md: "16px" },
+              backgroundColor: "#D0F5BE",
+              color: "black",
+              ":hover": {
+                backgroundColor: "#B6E2A1",
+              },
+            }}
+            onClick={() => {
+              window.location.href = "/createqr";
+            }}
+          >
+            {/* <AddIcon/> Tạo */}
+            Thêm sản phẩm
+          </Button>
+        </Box>
+        <Toolbar>
+          <TextField
+            variant="outlined"
+            placeholder="Tìm kiếm sản phẩm"
+            onChange={handleSearch}
+            sx={{
+              width: { xs: "100%", md: "30%" },
+              marginTop: "20px",
+              marginBottom: "20px",
+              marginLeft: "0",
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",
             borderRadius: "5px",
           }}
         >
-          <Toolbar>
-            <TextField
-              variant="outlined"
-              placeholder="Search product"
-              onChange={handleSearch}
-              sx={{
-                width: { xs: "100%", md: "30%" },
-                marginTop: "20px",
-                marginBottom: "20px",
-                marginLeft: "0",
-              }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <SearchRoundedIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Toolbar>
           <Table>
             <TableHead>
               {headCell.map((item) => (
@@ -319,16 +342,16 @@ function List() {
                 ))}
             </TableBody>
           </Table>
-          <TablePagination
-            component="div"
-            page={page}
-            rowsPerPageOptions={pages}
-            rowsPerPage={rowsPerPage}
-            count={data.length}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
         </TableContainer>{" "}
+        <TablePagination
+          component="div"
+          page={page}
+          rowsPerPageOptions={pages}
+          rowsPerPage={rowsPerPage}
+          count={data.length}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
       </Card>
     </Container>
   );
