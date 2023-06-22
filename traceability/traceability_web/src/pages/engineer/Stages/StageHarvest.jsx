@@ -11,17 +11,17 @@ export default function StageHarvest({ data, setData }) {
 
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
-        Step 5
+      <Typography variant="h4" gutterBottom>
+        Giai đoạn 4
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <label>
-            Name stage <b>(*)</b>
+            Tên <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Name Stage"
+            placeholder="VD: Thu hoạch"
             fullWidth
             variant="outlined"
             onChange={(e) => setData({ ...data, stageHarvest: { ...data.stageHarvest, name: e.target.value } })}
@@ -30,11 +30,11 @@ export default function StageHarvest({ data, setData }) {
         </Grid>
         <Grid item xs={12}>
           <label>
-            Description <b>(*)</b>
+            Mô tả <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Description"
+            placeholder="Mô tả thêm về giai đoạn"
             fullWidth
             variant="outlined"
             onChange={(e) => setData({ ...data, stageHarvest: { ...data.stageHarvest, description: e.target.value } })}
@@ -43,11 +43,11 @@ export default function StageHarvest({ data, setData }) {
         </Grid>
         <Grid item xs={12}>
           <label>
-            Quantity <b>(*)</b>
+            Sản lượng <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Quantity"
+            placeholder="VD: 10 tấn"
             fullWidth
             variant="outlined"
             onChange={(e) => setData({ ...data, stageHarvest: { ...data.stageHarvest, quantity: e.target.value } })}

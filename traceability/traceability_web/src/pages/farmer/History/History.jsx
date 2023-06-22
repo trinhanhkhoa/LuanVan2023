@@ -166,6 +166,7 @@ function History() {
   }
 
   const recordsAfterPagingAndSorting = () => {
+    // console.log(`data filter`, dataFilter);
     return stableSort(
       filterFn.fn(dataFilter),
       getComparator(order, orderBy)
@@ -292,7 +293,7 @@ function History() {
             page={page}
             rowsPerPageOptions={pages}
             rowsPerPage={rowsPerPage}
-            count={data.length}
+            count={dataFilter.length}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />

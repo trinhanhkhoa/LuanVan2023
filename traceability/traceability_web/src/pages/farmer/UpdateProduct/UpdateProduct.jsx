@@ -11,6 +11,7 @@ import {
   Grid,
   ImageList,
   ImageListItem,
+  InputAdornment,
   Select,
   TextField,
   TextareaAutosize,
@@ -18,6 +19,10 @@ import {
 } from "@mui/material";
 import Loading from "../../../components/Loading";
 import Popup from "../../../components/Popup";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import { fDate } from "../../../utils/formatTime";
 
 function UpdateProduct() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,29 +37,16 @@ function UpdateProduct() {
 
   const [tracking, setTracking] = useState(0);
   const [name, setName] = useState("");
-  const [time, setTime] = useState("");
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [openQrCode, setOpenQrCode] = useState(false);
   const [processId, setProcessId] = useState("");
   const [processName, setProcessName] = useState([]);
+  const [time, setTime] = useState(null);
 
-  const upload = async (e) => {
-    e.preventDefault();
-    try {
-      let arr = [];
-      let imgArr = [];
-      for (let i = 0; i < images.length; i++) {
-        const data = await uploadImage(images[i]);
-        arr.push(data);
-        imgArr.push(data.url);
-      }
-      setLinks(arr);
-      setImg(imgArr);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleChange = (date) => {
+    setTime(date);
   };
 
   const params = useParams();
@@ -77,11 +69,15 @@ function UpdateProduct() {
     )
       .then((res) => res.json())
       .then((data) => {
+        let dateTime = parseDate(data.data.time);
+        // let dateTime = Date.parse(data.data.time);
+
+        console.log(`time`, (dateTime))
         setName(data.data.name);
         setImages(data.data.images);
         setAddress(data.data.address);
         setDescription(data.data.description);
-        setTime(data.data.time);
+        setTime(dateTime);
         setProcessId(data.data.processId);
         setTracking(data.data.tracking.length);
       });
@@ -125,7 +121,7 @@ function UpdateProduct() {
           name,
           address,
           images,
-          time,
+          time: time.toLocaleDateString("en-GB"),
           description,
         }),
       }
@@ -143,6 +139,21 @@ function UpdateProduct() {
     getInfoProduct();
   }, []);
 
+
+  const parseDate = (dateString) => {
+    const [day, month, year] = dateString.split('/');
+  
+    // Note: JavaScript uses zero-based indexing for months (0 - 11)
+    const parsedDate = new Date(year, month - 1, day);
+  
+    return parsedDate;
+  };
+  
+  // Usage example:
+  // const dateStr = '22/06/2023';
+  // const parsedDate = parseDate(dateStr);
+  // console.log(parsedDate);
+
   const downloadQRCode = () => {
     // Generate download with use canvas and stream
     const canvas = document.getElementById("qr-gen");
@@ -156,6 +167,26 @@ function UpdateProduct() {
     downloadLink.click();
     document.body.removeChild(downloadLink);
   };
+
+  const CustomInput = ({ value, onClick }) => (
+    <TextField
+      type="text"
+      fullWidth
+      required
+      value={value}
+      onClick={onClick}
+      className="custom-datepicker-input" // Apply your custom styles here
+      placeholder="Select a date"
+      readOnly
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="start">
+            <CalendarMonthRoundedIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
 
   return (
     <Container
@@ -295,7 +326,7 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Tên sản phẩm <b>(*)</b>
+              Tên sản phẩm <b className="requireDot">*</b>
             </label>
             <TextField
               required
@@ -311,20 +342,23 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Thời gian tạo <b>(*)</b>
+              Thời gian tạo <b className="requireDot">*</b>
             </label>
-            <TextField
+            <DatePicker
+              name="time"
               required
-              variant="outlined"
-              type="date"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              sx={{ width: { xs: 400, md: 800 }, borderRadius: "20%" }}
+              fullWidth
+              selected={time}
+              minDate={time}
+              onChange={handleChange}
+              customInput={<CustomInput />}
+              dateFormat="dd/MM/yyyy"
+              // placeholderText="Select a date"
             />
           </Box>
           <Grid item xs={11} marginBottom={2}>
             <label>
-              Chọn quy trình trồng cây <b>(*)</b>
+              Chọn quy trình trồng cây <b className="requireDot">*</b>
             </label>
             {tracking < 1 ? (
               <FormControl fullWidth>
@@ -386,7 +420,7 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Địa chỉ <b>(*)</b>
+              Địa chỉ <b className="requireDot">*</b>
             </label>
             <TextField
               required
@@ -402,7 +436,7 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Hình ảnh sản phẩm <b>(*)</b>
+              Hình ảnh sản phẩm <b className="requireDot">*</b>
             </label>
             <input
               required
@@ -413,14 +447,14 @@ function UpdateProduct() {
               onChange={(e) => setImages(e.target.files)}
             />
             <ImageList
-              sx={{ width: { xs: 400, md: 400 }, height: 200 }}
+              sx={{ width: { xs: 400 }, height: 200 }}
               cols={3}
               rowHeight={164}
             >
               {images.map((item, index) => {
                 return (
                   <ImageListItem key={index}>
-                    <img src={item} width={200} height={200} />
+                    <img src={item} />
                   </ImageListItem>
                 );
               })}
@@ -430,7 +464,7 @@ function UpdateProduct() {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Mô tả <b>(*)</b>
+              Mô tả <b className="requireDot">*</b>
             </label>
             <Box sx={{ width: { xs: 400, md: "100%" } }}>
               <TextareaAutosize

@@ -98,7 +98,6 @@ function EnUpdateProcess() {
   const handleUpdate = async () => {
     await fetch(
       `${process.env.REACT_APP_API}/process/update-process/${params.id}`,
-      // `http://localhost:5000/process/update-process/${params.id}`,
       {
         method: "PUT",
         crossDomain: true,
@@ -168,13 +167,13 @@ function EnUpdateProcess() {
   };
 
   const steps = [
-    "Create process",
-    "Plant seeds",
-    "Plant care",
-    "Bloom",
-    "Cover",
-    "Harvest",
-    "Sell",
+    "Thông tin chung",
+    "Giai đoạn 1",
+    "Giai đoạn chăm sóc",
+    "Giai đoạn 2",
+    "Giai đoạn 3",
+    "Giai đoạn 4",
+    "Giai đoạn 5",
   ];
 
   const getStepContent = (step) => {

@@ -258,8 +258,8 @@ export default function EnHome() {
             // marginRight: { xs: "10px"},
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "5rem", md: "5rem" },
-            minHeight: { xs: "2rem", md: "2rem" },
+            minWidth: { xs: "5rem", md: "10rem" },
+            minHeight: { xs: "2rem", md: "4rem" },
             color: "black",
             borderRadius: "10px",
             backgroundColor: "#ffdd72",
@@ -271,12 +271,10 @@ export default function EnHome() {
             window.location.href = "/encreateprocess";
           }}
         >
-          <CardContent>
             {/* <QrCode2RoundedIcon
               sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
             /> */}
             <Typography>Tạo quy trình</Typography>
-          </CardContent>
         </Button>
         <Button
           variant="contained"
@@ -284,8 +282,8 @@ export default function EnHome() {
             marginLeft: { xs: "15px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "5rem", md: "5rem" },
-            minHeight: { xs: "2rem", md: "2rem" },
+            minWidth: { xs: "4rem", md: "14rem" },
+            minHeight: { xs: "2rem", md: "4rem" },
             color: "black",
             borderRadius: "10px",
             backgroundColor: "#ffdd72",
@@ -298,12 +296,10 @@ export default function EnHome() {
             window.location.href = "/listofprocesses";
           }}
         >
-          <CardContent>
-            {/* <AutorenewRoundedIcon
+          {/* <AutorenewRoundedIcon
               sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
             /> */}
-            <Typography>Danh sách quy trình</Typography>
-          </CardContent>
+          <Typography>Danh sách quy trình</Typography>
         </Button>
       </Box>
       <Grid

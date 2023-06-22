@@ -135,13 +135,13 @@ function EnCreateProcess() {
   };
 
   const steps = [
-    "Create process",
-    "Plant seeds",
-    "Plant care",
-    "Bloom",
-    "Cover",
-    "Harvest",
-    "Sell",
+    "Thông tin chung",
+    "Giai đoạn 1",
+    "Giai đoạn chăm sóc",
+    "Giai đoạn 2",
+    "Giai đoạn 3",
+    "Giai đoạn 4",
+    "Giai đoạn 5",
   ];
 
   const getStepContent = (step) => {
@@ -169,27 +169,27 @@ function EnCreateProcess() {
     <Container sx={{ minHeight: "80vh", }}>
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
-        <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+        <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>
           <Paper
             variant="outlined"
-            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
+            sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, borderRadius: 2 }}
           >
             <Box sx={{ marginBottom: "10px", textAlign: "left" }}>
               <Typography
-                variant="h3"
+                variant="h4"
                 sx={{
                   fontSize: { xs: "30px", md: "48px" },
                   fontWeight: 700,
                 }}
               >
-                Describe a process
+                Mô tả thông tin quy trình
               </Typography>
-              <Typography
+              {/* <Typography
                 variant="h6"
-                sx={{ fontSize: { xs: "18px", md: "30px" } }}
+                sx={{ fontSize: { xs: "18px", md: "28px" } }}
               >
-                Process introduction information
-              </Typography>
+                Thông tin chung
+              </Typography> */}
             </Box>
             <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
               {steps.map((label) => (
@@ -215,7 +215,7 @@ function EnCreateProcess() {
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                      Back
+                      Quay lại
                     </Button>
                   )}
 
@@ -226,7 +226,7 @@ function EnCreateProcess() {
                       onClick={handleSubmit}
                       sx={{ mt: 3, ml: 1 }}
                     >
-                      Submit
+                      Xác nhận
                     </Button>
                   ) : (
                     <Button
@@ -234,7 +234,7 @@ function EnCreateProcess() {
                       onClick={handleNext}
                       sx={{ mt: 3, ml: 1 }}
                     >
-                      Next
+                      Tiếp theo
                     </Button>
                   )}
                 </Box>

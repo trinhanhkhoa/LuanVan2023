@@ -8,49 +8,66 @@ import Button from "@mui/material/Button";
 import { Box } from "@mui/material";
 
 export default function StageSell({ data, setData }) {
-
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
-        Step 6
+      <Typography variant="h4" gutterBottom>
+        Giai đoạn 5
       </Typography>
       <Grid container spacing={3}>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <label>
-            Name stage <b>(*)</b>
+            Tên <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Name Stage"
+            placeholder="VD: Thu mua"
             fullWidth
             variant="outlined"
-            onChange={(e) => setData({ ...data, stageSell: { ...data.stageSell, name: e.target.value } })}
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageSell: { ...data.stageSell, name: e.target.value },
+              })
+            }
             value={data.stageSell.name}
           />
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <label>
-            Description <b>(*)</b>
+            Mô tả <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Description"
+            placeholder="Mô tả thêm về giai đoạn"
             fullWidth
             variant="outlined"
-            onChange={(e) => setData({ ...data, stageSell: { ...data.stageSell, description: e.target.value } })}
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageSell: { ...data.stageSell, description: e.target.value },
+              })
+            }
             value={data.stageSell.description}
           />
         </Grid>
-        <Grid item xs={12} >
+        <Grid item xs={12}>
           <label>
-            Purchasing unit <b>(*)</b>
+            Đơn vị thu mua <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Purchasing unit"
+            placeholder="VD: Công ty TNHH Minh Yến"
             fullWidth
             variant="outlined"
-            onChange={(e) => setData({ ...data, stageSell: { ...data.stageSell, purchasingUnit: e.target.value } })}
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageSell: {
+                  ...data.stageSell,
+                  purchasingUnit: e.target.value,
+                },
+              })
+            }
             value={data.stageSell.purchasingUnit}
           />
         </Grid>

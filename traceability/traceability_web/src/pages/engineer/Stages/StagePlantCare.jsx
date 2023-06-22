@@ -12,16 +12,16 @@ export default function StagePlantCare({ data, setData }) {
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
-        Step 2
+        Giai đoạn chăm sóc
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <label>
-            Name stage <b>(*)</b>
+            Tên <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Name Stage"
+            placeholder="Nhập tên giai đoạn"
             fullWidth
             variant="outlined"
             onChange={(e) =>
@@ -38,11 +38,11 @@ export default function StagePlantCare({ data, setData }) {
         </Grid>
         <Grid item xs={12}>
           <label>
-            Description <b>(*)</b>
+            Mô tả <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Description"
+            placeholder="Mô tả thêm về giai đoạn"
             fullWidth
             variant="outlined"
             onChange={(e) =>
@@ -59,11 +59,11 @@ export default function StagePlantCare({ data, setData }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <label>
-            Watering time <b>(*)</b>
+            Thời lượng tưới nước <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Watering time"
+            placeholder="VD: 10 phút"
             fullWidth
             variant="outlined"
             onChange={(e) =>
@@ -80,11 +80,11 @@ export default function StagePlantCare({ data, setData }) {
         </Grid>
         <Grid item xs={12} sm={6}>
           <label>
-            Fertilizer <b>(*)</b>
+            Lượng phân bón <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Fertilizer"
+            placeholder="VD: 20kg"
             fullWidth
             variant="outlined"
             onChange={(e) =>

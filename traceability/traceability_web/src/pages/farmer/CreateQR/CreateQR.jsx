@@ -9,6 +9,7 @@ import {
   Grid,
   ImageList,
   ImageListItem,
+  InputAdornment,
   InputLabel,
   NativeSelect,
   Select,
@@ -20,6 +21,9 @@ import {
 import Loading from "../../../components/Loading";
 import { useForm, Form } from "../../../components/Try/useForm";
 import MuiAlert from "@mui/material/Alert";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,7 +37,7 @@ function CreateQR() {
   const [processId, setProcessId] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
-  const [time, setTime] = useState("");
+
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
@@ -43,6 +47,12 @@ function CreateQR() {
 
   const [value, setValue] = useState(null);
   const [open, toggleOpen] = useState(false);
+  const today = new Date();
+  const [time, setTime] = useState(today);
+
+  const handleChange = (date) => {
+    setTime(date);
+  };
 
   const handleClose = () => {
     setDialogValue({
@@ -82,7 +92,7 @@ function CreateQR() {
         userId,
         name,
         address,
-        time,
+        time: time.toLocaleDateString("en-GB"),
         images: links,
         description,
         processId,
@@ -118,9 +128,32 @@ function CreateQR() {
       });
   };
 
+  const CustomInput = ({ value, onClick }) => (
+    <TextField
+      type="text"
+      fullWidth
+      required
+      value={value}
+      onClick={onClick}
+      className="custom-datepicker-input" // Apply your custom styles here
+      placeholder="Select a date"
+      readOnly
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="start">
+            <CalendarMonthRoundedIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
+
   useEffect(() => {
     getProcesses();
   }, []);
+
+  // const tomorrow = new Date(today);
+  // tomorrow.setDate(tomorrow.getDate());
 
   return (
     <Container
@@ -151,7 +184,7 @@ function CreateQR() {
         <Grid container spacing={3}>
           <Grid item xs={11} sm={6}>
             <label>
-              Tên sản phẩm <b>(*)</b>
+              Tên sản phẩm <b className="requireDot">*</b>
             </label>
             <TextField
               required
@@ -168,21 +201,7 @@ function CreateQR() {
           </Grid>
           <Grid item xs={11} sm={5}>
             <label>
-              Thời gian tạo <b>(*)</b>
-            </label>
-            <TextField
-              required
-              fullWidth
-              variant="outlined"
-              type="date"
-              name="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            />
-          </Grid>
-          <Grid item xs={11}>
-            <label>
-              Chọn quy trình trồng cây <b>(*)</b>
+              Chọn quy trình trồng cây <b className="requireDot">*</b>
             </label>
             <FormControl fullWidth>
               <Select
@@ -211,9 +230,9 @@ function CreateQR() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={11} sx={{ display: "flex", flexDirection: "column" }}>
+          <Grid item xs={11} sm={8.3}>
             <label>
-              Địa chỉ <b>(*)</b>
+              Địa chỉ <b className="requireDot">*</b>
             </label>
             <TextField
               required
@@ -224,14 +243,36 @@ function CreateQR() {
               name="address"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              // error={errors.address}
-              // helperText={errors.address}
-              // sx={{ wid  th: { xs: 400, md: "100%" }, borderRadius: "20%" }}
+            />
+          </Grid>
+          <Grid item xs={11} sm={3}>
+            <label>
+              Thời gian tạo <b className="requireDot">*</b>
+            </label>
+            {/* <DatePicker
+              selected={time}
+              onChange={handleChange}
+              dateFormat="dd/MM/yyyy"
+              name="time"
+              required
+              className="form-control"
+              onClick={console.log(time)}
+            /> */}
+            <DatePicker
+              name="time"
+              required
+              fullWidth
+              selected={time}
+              minDate={today}
+              onChange={handleChange}
+              customInput={<CustomInput />}
+              dateFormat="dd/MM/yyyy"
+              // placeholderText="Select a date"
             />
           </Grid>
           <Grid item xs={11}>
             <label>
-              Hình ảnh sản phẩm<b>(*)</b>
+              Hình ảnh sản phẩm <b className="requireDot">*</b>
             </label>
 
             <Box
@@ -319,7 +360,7 @@ function CreateQR() {
           </Grid>
           <Grid item xs={11}>
             <label>
-              Mô tả <b>(*)</b>
+              Mô tả <b className="requireDot">*</b>
             </label>
 
             <Box sx={{ width: { xs: 400, md: "100%" } }}>

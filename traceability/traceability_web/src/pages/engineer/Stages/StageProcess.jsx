@@ -1,29 +1,79 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
-import { Box, ImageList, ImageListItem, TextareaAutosize } from "@mui/material";
+import {
+  Box,
+  ImageList,
+  ImageListItem,
+  InputAdornment,
+  TextareaAutosize,
+} from "@mui/material";
 import { uploadImage } from "../../../components/MultiUpload";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 
 export default function StageProcess({ data, setData }) {
   const [links, setLinks] = useState([]);
+  const [time, setTime] = useState(null);
 
+  const parseDate = (dateString) => {
+    const [day, month, year] = dateString.split("/");
+    const parsedDate = new Date(year, month - 1, day);
+    return parsedDate;
+  };
+
+  useEffect (() => {
+    if (data.stageProcess.timeCreate !== "") {
+      const parsedTime = parseDate(data.stageProcess.timeCreate);
+      setTime(parsedTime);
+    }
+  }, [data.stageProcess.timeCreate]);
+
+  const handleChange = (date) => {
+    const formattedDate = date.toLocaleDateString("en-GB");
+    setTime(date);
+    setData({
+      ...data,
+      stageProcess: {
+        ...data.stageProcess,
+        timeCreate: formattedDate,
+      },
+    });
+  };
+  const CustomInput = ({ value, onClick }) => (
+    <TextField
+      type="text"
+      fullWidth
+      required
+      value={value}
+      onClick={onClick}
+      // className="custom-datepicker-input"  
+      placeholder="Select a date"
+      readOnly
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="start">
+            <CalendarMonthRoundedIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
-        Step 1
+      <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
+        Thông tin chung
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <label>
-            Process's name <b>(*)</b>
+            Tên quy trình <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Process's name"
+            placeholder="VD: Quy trình trồng cam"
             fullWidth
             variant="outlined"
             onChange={(e) =>
@@ -35,26 +85,32 @@ export default function StageProcess({ data, setData }) {
             value={data.stageProcess.name}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={3}>
           <label>
-            Time <b>(*)</b>
+            Thời gian tạo <b className="requireDot">*</b>
           </label>
-          <TextField
+
+          {/* <DatePicker
+            name="time"
             required
-            type="date"
-            onChange={(e) =>
-              setData({
-                ...data,
-                stageProcess: {
-                  ...data.stageProcess,
-                  timeCreate: e.target.value,
-                },
-              })
-            }
-            value={data.stageProcess.timeCreate}
-            // placeholder="Description"
             fullWidth
-            variant="outlined"
+            selected={getTime}
+            // minDate={time}
+            onChange={handleChange}
+            customInput={<CustomInput />}
+            dateFormat="dd/MM/yyyy"
+            // placeholderText="Select a date"
+          /> */}
+          <DatePicker
+            name="time"
+            required
+            fullWidth
+            selected={time}
+            minDate={time}
+            onChange={handleChange}
+            customInput={<CustomInput />}
+            dateFormat="dd/MM/yyyy"
+            // placeholderText="Select a date"
           />
         </Grid>
         <Grid
@@ -63,7 +119,7 @@ export default function StageProcess({ data, setData }) {
           sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
         >
           <label>
-            Image <b>(*)</b>
+            Hình ảnh <b className="requireDot">*</b>
           </label>
           <Box
             sx={{
@@ -97,8 +153,8 @@ export default function StageProcess({ data, setData }) {
                   return;
                 }
 
-                setImages(e.target.files);
-                console.log(e.target.files);
+                // setImages(e.target.files);
+                // console.log(e.target.files);
                 // setLoading(true);
 
                 try {
@@ -155,7 +211,7 @@ export default function StageProcess({ data, setData }) {
         </Grid>
         <Grid item xs={12} sx={{ width: { xs: 400, md: "100%" } }}>
           <label>
-            Description <b>(*)</b>
+            Mô tả <b className="requireDot">*</b>
           </label>
           <TextareaAutosize
             required
@@ -173,7 +229,7 @@ export default function StageProcess({ data, setData }) {
               })
             }
             value={data.stageProcess.description}
-            placeholder="Description"
+            placeholder="Mô tả thêm về quy trình"
             style={{ width: "100%", minHeight: "100px" }}
             variant="outlined"
           />

@@ -21,17 +21,17 @@ export default function StageCover({ data, setData }) {
 
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
-        Step 4
+      <Typography variant="h4" gutterBottom>
+        Giai đoạn 3
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <label>
-            Name stage <b>(*)</b>
+            Tên <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Name Stage"
+            placeholder="VD: Đậy trái"
             fullWidth
             variant="outlined"
             onChange={(e) => setData({ ...data, stageCover: { ...data.stageCover, name: e.target.value } })}
@@ -40,11 +40,11 @@ export default function StageCover({ data, setData }) {
         </Grid>
         <Grid item xs={12}>
           <label>
-            Description <b>(*)</b>
+            Mô tả <b className="requireDot">*</b>
           </label>
           <TextField
             required
-            placeholder="Description"
+            placeholder="Mô tả thêm về giai đoạn"
             fullWidth
             variant="outlined"
             onChange={(e) => setData({ ...data, stageCover: { ...data.stageCover, description: e.target.value } })}
