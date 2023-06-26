@@ -47,7 +47,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://traceability-hcmus.vercel.app/">
         Traceability Agriculture
       </Link>{" "}
       {new Date().getFullYear()}
@@ -100,12 +100,12 @@ export default function SignIn() {
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", data.userType);
-          setSnackbarState(true);
-          setIsValid(true);
+          // setSnackbarState(true);
+          // setIsValid(true);
 
           setTimeout(() => {
             window.location.href = "/enhome";
-          }, 1500);
+          }, 1000);
         } else if (
           data.userType == "User" ||
           data.userType == "user" ||
@@ -117,15 +117,15 @@ export default function SignIn() {
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", data.userType);
-          setSnackbarState(true);
-          setIsValid(true);
+          // setSnackbarState(true);
+          // setIsValid(true);
 
           setTimeout(() => {
             window.location.href = "/home";
-          }, 1500);
+          }, 1000);
         } else {
-          setSnackbarState(true);
-          setIsValid(false);
+          // setSnackbarState(true);
+          // setIsValid(false);
         }
       });
   };
@@ -152,7 +152,7 @@ export default function SignIn() {
             {/* <LockOutlinedIcon /> */}
             {/* </Avatar> */}
             <Typography component="h1" variant="h5">
-              Sign in
+              Đăng nhập
             </Typography>
             <Box component="form" onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <Grid container spacing={3}>
@@ -161,7 +161,7 @@ export default function SignIn() {
                     margin="normal"
                     required
                     fullWidth
-                    placeholder="Email Address"
+                    placeholder="Email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     InputProps={{
@@ -179,7 +179,7 @@ export default function SignIn() {
                     required
                     fullWidth
                     name="password"
-                    placeholder="Password"
+                    placeholder="Mật khẩu"
                     value={password}
                     InputProps={{
                       startAdornment: (
@@ -205,10 +205,10 @@ export default function SignIn() {
                 </Grid>
               </Grid>
 
-              <FormControlLabel
+              {/* <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
-              />
+              /> */}
               <Button
                 type="button"
                 fullWidth
@@ -216,12 +216,12 @@ export default function SignIn() {
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleSubmit}
               >
-                Sign In
+                Đăng nhập
               </Button>
               <Grid container>
                 <Grid item>
                   <Link href="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
+                    {"Nếu bạn chưa có tài khoản? Vui lòng đăng ký"}
                   </Link>
                 </Grid>
               </Grid>
@@ -247,21 +247,21 @@ export default function SignIn() {
           }}
         />
       </Grid>
-      <Snackbar
+      {/* <Snackbar
         open={snackbarState}
         autoHideDuration={1000}
         // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
       >
         {isValid == true ? (
           <Alert severity="success" sx={{ width: "100%" }}>
-            Login successfull !!!
+            Đăng nhập thành công !!!
           </Alert>
         ) : (
           <Alert severity="error" sx={{ width: "100%" }}>
             Incorrect email or password !!!
           </Alert>
         )}
-      </Snackbar>
+      </Snackbar> */}
     </ThemeProvider>
   );
 }

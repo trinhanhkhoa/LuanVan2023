@@ -292,8 +292,8 @@ function EnProcess() {
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label="Product information" {...a11yProps(0)} />
-                <Tab label="Production log" {...a11yProps(1)} />
+                <Tab label="Thông tin quy trình" {...a11yProps(0)} />
+                <Tab label="Nhật ký quy trình" {...a11yProps(1)} />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>

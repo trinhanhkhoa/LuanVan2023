@@ -42,7 +42,7 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://traceability-hcmus.vercel.app/">
         Traceability Agriculture
       </Link>{" "}
       {new Date().getFullYear()}
@@ -150,9 +150,12 @@ export default function SignUp() {
               alignItems: "center",
             }}
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} src={avatarImg} />
+            <Avatar
+              sx={{ width: 100, height: 100, m: 2, bgcolor: "secondary.main" }}
+              src={avatarImg}
+            />
             <Typography component="h1" variant="h5">
-              Sign Up
+              Đăng ký
             </Typography>
             <Form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
@@ -167,7 +170,7 @@ export default function SignUp() {
                     value="Farmer"
                     control={<Radio />}
                     onChange={(e) => setUserType(e.target.value)}
-                    label="Farmer"
+                    label="Nông dân"
                   />
                   <FormControlLabel
                     value="Admin"
@@ -181,7 +184,7 @@ export default function SignUp() {
                     <TextField
                       required
                       name="secretKey"
-                      placeholder="Secret Key"
+                      placeholder="Khóa bí mật"
                       value={secretKey}
                       type={showKey ? "text" : "password"}
                       fullWidth
@@ -213,7 +216,7 @@ export default function SignUp() {
                     required
                     fullWidth
                     name="name"
-                    placeholder="Fullname"
+                    placeholder="Họ và tên"
                     InputProps={{
                       startAdornment: (
                         <InputAdornment position="start">
@@ -248,7 +251,7 @@ export default function SignUp() {
                   <TextField
                     required
                     fullWidth
-                    placeholder="Password"
+                    placeholder="Mật khẩu"
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={password}
@@ -280,13 +283,13 @@ export default function SignUp() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                Đăng ký
               </Button>
             </Form>
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/" variant="body2">
-                  Already have an account? Sign in
+                  Nếu bạn đã có tài khoản? Hãy đăng nhập
                 </Link>
               </Grid>
             </Grid>

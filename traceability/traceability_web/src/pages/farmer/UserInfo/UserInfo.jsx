@@ -23,12 +23,18 @@ export default function UserInfo() {
   const [token, setToken] = useState("");
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [userType, setUserType] = useState("");
+  // const [userType, setUserType] = useState("");
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
+  const [dataProcess, setDataProcess] = useState(0);
+  const [dataProduct, setDataProduct] = useState(0);
 
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
+  const userType = window.localStorage.getItem("userType");
+
+  console.log(userType);
+
 
   const getProfile = async () => {
     setLoading(true);
@@ -41,16 +47,38 @@ export default function UserInfo() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data, "userRegister");
+        console.log(data.data.products.length, "userRegister");
         // setName(data.data.name);
         // setEmail(data.data.email);
         // setUserType(data.data.userType);
         setData(data.data);
+        setDataProduct(data.data.products.length);
       });
     setLoading(false);
   };
   useEffect(() => {
     getProfile();
+  }, []);
+
+  useEffect(() => {
+    const getInfoProcess = async () => {
+      let data = await fetch(
+        `${process.env.REACT_APP_API}/process/get-processes`,
+        {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((res) => res.data);
+
+      data = data.filter((p) => p.userId == id);
+      setDataProcess(data.length);
+      console.log(data.length);
+    };
+    getInfoProcess();
   }, []);
 
   return (
@@ -86,16 +114,14 @@ export default function UserInfo() {
                 variant="h5"
                 color="black"
                 sx={{ mt: 2 }}
-              >
-                Welcome to Profile!
-              </Typography>
+              ></Typography>
               <Box noValidate sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
                   fullWidth
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">Name</InputAdornment>
+                      <InputAdornment position="start">Tên</InputAdornment>
                     ),
                     readOnly: true,
                   }}
@@ -118,23 +144,41 @@ export default function UserInfo() {
                   fullWidth
                   InputProps={{
                     startAdornment: (
-                      <InputAdornment position="start">Role</InputAdornment>
+                      <InputAdornment position="start">Vai trò</InputAdornment>
                     ),
                     readOnly: true,
                   }}
                   value={data.userType}
                 />
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">Products</InputAdornment>
-                    ),
-                    readOnly: true,
-                  }}
-                  value={data.products}
-                />
+                {userType === "Admin" || userType === "admin" ? (
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          Số lượng quy trình
+                        </InputAdornment>
+                      ),
+                      readOnly: true,
+                    }}
+                    value={dataProcess}
+                  />
+                ) : (
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          Số lượng sản phẩm
+                        </InputAdornment>
+                      ),
+                      readOnly: true,
+                    }}
+                    value={dataProduct}
+                  />
+                )}
               </Box>
             </Card>
           </Box>

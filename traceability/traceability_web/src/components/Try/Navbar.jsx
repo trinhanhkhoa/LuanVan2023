@@ -238,9 +238,9 @@ export default function PersistentDrawerLeft() {
             horizontal: "right",
           }}
         >
-          <MenuItem onClick={profile}>Profile</MenuItem>
+          <MenuItem onClick={profile}>Thông tin cá nhân</MenuItem>
           {/* <MenuItem>My account</MenuItem> */}
-          <MenuItem onClick={logout}>Logout</MenuItem>
+          <MenuItem onClick={logout}>Đăng xuất</MenuItem>
         </Menu>
       </AppBar>
       <Drawer
