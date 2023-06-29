@@ -57,73 +57,72 @@ function EnCreateProcess() {
     stageSell: { name: "", description: "", purchasingUnit: "" },
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
-    const userId = JSON.parse(window.localStorage.getItem("user"))._id;
-    setLoading(true);
+      const userId = JSON.parse(window.localStorage.getItem("user"))._id;
+      setLoading(true);
 
-    await fetch(`${process.env.REACT_APP_API}/process/add-process`, {
-      // await fetch(`${process.env.REACT_APP_API_LOCAL}/process/add-process`, {
-      method: "POST",
-      crossDomain: true,
-      headers: {
-        "x-auth-token": tokenData,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({
-        userId,
-        stageProcess: {
-          name: data.stageProcess.name,
-          description: data.stageProcess.description,
-          images: data.stageProcess.images,
-          timeCreate: data.stageProcess.timeCreate,
+      await fetch(`${process.env.REACT_APP_API}/process/add-process`, {
+        method: "POST",
+        crossDomain: true,
+        headers: {
+          "x-auth-token": tokenData,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "Access-Control-Allow-Origin": "*",
         },
-        stagePlantSeeds: {
-          name: data.stagePlantSeeds.name,
-          description: data.stagePlantSeeds.description,
-        },
-        stagePlantCare: {
-          name: data.stagePlantCare.name,
-          description: data.stagePlantCare.description,
-          water: data.stagePlantCare.water,
-          fertilizer: data.stagePlantCare.fertilizer,
-        },
-        stageBloom: {
-          name: data.stageBloom.name,
-          description: data.stageBloom.description,
-        },
-        stageCover: {
-          name: data.stageCover.name,
-          description: data.stageCover.description,
-        },
-        stageHarvest: {
-          name: data.stageHarvest.name,
-          description: data.stageHarvest.description,
-          quantity: data.stageHarvest.quantity,
-        },
-        stageSell: {
-          name: data.stageSell.name,
-          description: data.stageSell.description,
-          purchasingUnit: data.stageSell.purchasingUnit,
-        },
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("BE", data);
-        // console.log(time);
-        setLoading(false);
+        body: JSON.stringify({
+          userId,
+          stageProcess: {
+            name: data.stageProcess.name,
+            description: data.stageProcess.description,
+            images: data.stageProcess.images,
+            timeCreate: data.stageProcess.timeCreate,
+          },
+          stagePlantSeeds: {
+            name: data.stagePlantSeeds.name,
+            description: data.stagePlantSeeds.description,
+          },
+          stagePlantCare: {
+            name: data.stagePlantCare.name,
+            description: data.stagePlantCare.description,
+            water: data.stagePlantCare.water,
+            fertilizer: data.stagePlantCare.fertilizer,
+          },
+          stageBloom: {
+            name: data.stageBloom.name,
+            description: data.stageBloom.description,
+          },
+          stageCover: {
+            name: data.stageCover.name,
+            description: data.stageCover.description,
+          },
+          stageHarvest: {
+            name: data.stageHarvest.name,
+            description: data.stageHarvest.description,
+            quantity: data.stageHarvest.quantity,
+          },
+          stageSell: {
+            name: data.stageSell.name,
+            description: data.stageSell.description,
+            purchasingUnit: data.stageSell.purchasingUnit,
+          },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("BE", data);
+          // console.log(time);
+          setLoading(false);
 
-        setSnackbarState(true);
+          setSnackbarState(true);
 
-        setTimeout(() => {
-          window.location.href = "/listofprocesses";
-        }, 1500);
-      });
-  };
+          setTimeout(() => {
+            // window.location.href = "/listofprocesses";
+          }, 1500);
+        });
+    };
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);

@@ -84,8 +84,6 @@ const ImageWithText = styled("img")({
 
 export default function Home() {
   const [data, setData] = useState([]);
-  const [tracking, setTracking] = useState([]);
-  let temp = 0;
   const [length, setLength] = useState(0);
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
@@ -103,42 +101,37 @@ export default function Home() {
   const tokenData = window.localStorage.getItem("token");
   const id = window.localStorage.getItem("userId");
 
-  useEffect(() => {
-    const getProduct = async () => {
-      setLoading(true);
+  let temp = 0;
+  const getProduct = async () => {
+    setLoading(true);
 
-      await fetch(`${process.env.REACT_APP_API}/product/get-product`, {
+    const data = await fetch(
+      `${process.env.REACT_APP_API}/product/get-product`,
+      {
         method: "GET",
         headers: {
           "x-auth-token": tokenData,
         },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          // console.log(res.data);
-          let data = res.data;
+      }
+    ).then((res) => res.json());
+    let res = data.data;
 
-          data = data.filter((p) => p.userId == id);
-          // console.log(`product has user id: `, data);
+    res = res.filter((p) => p.userId == id);
+    console.log(`product has user id: `, res);
 
-          let tracking = data;
-          tracking = tracking.filter((t) => t.tracking.length != 0);
-          // console.log(`tracking: `, tracking);
+    let tracking = res;
+    tracking = tracking.filter((t) => t.tracking.length != 0);
+    tracking.forEach((track) => {
+      temp += track.tracking.length;
 
-          setTracking(tracking);
-          setData(data);
+    });
+    setLength(temp);
+    setData(res);
 
-          tracking.forEach((track, index) => {
-            temp += tracking[index].tracking.length;
-          });
-          // console.log("temp", temp);
+    setLoading(false);
+  };
 
-          setLength(temp);
-        });
-
-      setLoading(false);
-    };
-
+  useEffect(() => {
     getProduct();
   }, []);
 
@@ -293,49 +286,6 @@ export default function Home() {
           md={6}
           sx={{ display: { xs: "none", md: "inline" } }}
         >
-          {/* <Box
-            sx={{
-              display: { md: "flex" },
-              justifyContent: "center",
-              alignItems: "center",
-              color: "#000",
-              fontSize: "10px",
-              boxShadow:
-                "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-              backgroundColor: "#D0F5BE",
-              maxWidth: "100rem",
-              minHeight: { xs: "5rem", md: "16rem" },
-              borderRadius: "10px",
-              // marginRight: "10px",
-            }}
-          > */}
-            {/* <ImageWithText
-              src={imgCover}
-              alt="Chào mừng bạn đến với Traceability Agriculture"
-            /> */}
-            {/* <Box 
-              component="img"
-              src={imgCover}
-              sx={{
-                display: { md: "flex" },
-                justifyContent: "center",
-                alignItems: "center",
-                color: "#000",
-                fontSize: "10px",
-                boxShadow:
-                  "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-                backgroundColor: "#D0F5BE",
-                width: "100%",
-                minHeight: { xs: "5rem", md: "16rem" },
-                borderRadius: "10px",
-                // marginRight: "10px",
-              }}
-            /> */}
-            {/* <TextOverlay variant="h5">
-              Chào mừng bạn đến với hệ thống Traceability Agriculture
-            </TextOverlay> */}
-          {/* </Box> */}
-
           <ImageContainer>
             <ImageWithText
               src={imgCover}

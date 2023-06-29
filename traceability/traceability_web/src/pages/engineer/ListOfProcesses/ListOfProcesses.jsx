@@ -91,21 +91,22 @@ function ListOfProcesses() {
     })
       .then((res) => res.json())
       .then((data) => {
+        // console.log(data.data);
         const updatedData = data.data.map((obj) => ({
           ...obj,
           stageProcess: {
             ...obj.stageProcess,
-            _id: obj._id,
+            processId: obj._id,
           },
         }));
 
-        console.log("updatedData", updatedData);
+        // console.log("updatedData", updatedData);
 
         let arr = [];
         let DATA = updatedData;
         DATA = updatedData.forEach((item) => {
           arr.push(item.stageProcess);
-          console.log("arr", arr);
+          // console.log("arr", arr);
         });
 
         setDataTable(arr);
@@ -284,7 +285,7 @@ function ListOfProcesses() {
                         <IconButton
                           color="info"
                           onClick={() => {
-                            window.location.href = `/enprocess/${item._id}`;
+                            window.location.href = `/enprocess/${item.processId}`;
                           }}
                         >
                           <SearchIcon />
@@ -294,7 +295,7 @@ function ListOfProcesses() {
                         <IconButton
                           color="success"
                           onClick={() => {
-                            window.location.href = `/enupdateprocess/${item._id}`;
+                            window.location.href = `/enupdateprocess/${item.processId}`;
                           }}
                         >
                           <EditIcon />
@@ -305,7 +306,7 @@ function ListOfProcesses() {
                           color="error"
                           onClick={() => {
                             setOpenPopup(true);
-                            setIdPopup(item._id);
+                            setIdPopup(item.processId);
                           }}
                         >
                           <DeleteIcon />

@@ -23,7 +23,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 function TrackingForm(props) {
   const id = props;
-  console.log("id", id.processId);
+  // console.log("id", id.processId);
   const [images, setImages] = useState([]);
   const [links, setLinks] = useState([]);
   const [img, setImg] = useState([]);
@@ -254,7 +254,7 @@ function TrackingForm(props) {
                   value={quantity}
                   onChange={(e) => {
                     setQuantity(e.target.value);
-                    setNotes(["Sản lượng: " + quantity]);
+                    setNotes(["Sản lượng: " + e.target.value]);
                   }}
                   variant="outlined"
                   placeholder={processStage.stageHarvest.quantity}
@@ -274,7 +274,7 @@ function TrackingForm(props) {
                   value={unit}
                   onChange={(e) => {
                     setUnit(e.target.value);
-                    setNotes(["Nơi thu mua" + unit]);
+                    setNotes(["Nơi thu mua" + e.target.value]);
                   }}
                   variant="outlined"
                   placeholder={processStage.stageSell.name}
@@ -300,7 +300,7 @@ function TrackingForm(props) {
                     ]);
                   }}
                   variant="outlined"
-                  placeholder="Thời lượng tưới nước"
+                  placeholder={processStage.stagePlantCare.water}
                   sx={{
                     width: { xs: 350, md: 600 },
                     borderRadius: "20%",
@@ -320,7 +320,7 @@ function TrackingForm(props) {
                     ]);
                   }}
                   variant="outlined"
-                  placeholder="Lượng phân bón"
+                  placeholder={processStage.stagePlantCare.fertilizer}
                   sx={{ width: { xs: 350, md: 600 }, borderRadius: "20%" }}
                 />
               </Box>

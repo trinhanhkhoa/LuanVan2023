@@ -73,7 +73,7 @@ function EnUpdateProcess() {
     current.getMonth() + 1
   }/${current.getFullYear()}`;
   const [value, setValue] = useState(dayjs(date));
-
+  console.log(params.id);
   const getInfoProcess = async () => {
     const data = await fetch(
       `${process.env.REACT_APP_API}/process/get-process/${params.id}`,
