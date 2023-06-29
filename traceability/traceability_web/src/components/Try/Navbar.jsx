@@ -194,7 +194,7 @@ export default function PersistentDrawerLeft() {
             }}
           >
             <img src={logo} width={80} height={80} />
-            <Typography variant="h6">TRACEABILITY AGRICULTURE</Typography>
+            <Typography variant="h7" sx={{ width: 350}}>TRACEABILITY AGRICULTURE</Typography>
           </Box>
 
           <Search>{/* <InputBase placeholder="search..." /> */}</Search>

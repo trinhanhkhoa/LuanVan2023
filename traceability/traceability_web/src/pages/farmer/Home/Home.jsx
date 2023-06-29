@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Home.css";
-import news_img from "../../../asserts/news.png";
+import imgCover from "../../../asserts/news.png";
 
 import * as TbIcons from "react-icons/tb";
 import * as MdIcons from "react-icons/md";
@@ -12,6 +12,7 @@ import {
   Button,
   Card,
   CardContent,
+  Paper,
   Table,
   TableBody,
   TableCell,
@@ -54,6 +55,32 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     border: 0,
   },
 }));
+
+// Define custom styles
+const ImageContainer = styled(Box)({
+  position: "relative",
+  display: "inline-block",
+  borderRadius: "10px",
+});
+
+const TextOverlay = styled(Typography)({
+  position: "absolute",
+  top: "50%",
+  left: "20%",
+  transform: "translate(-10%, -50%)",
+  color: "white",
+  textAlign: "center",
+  textShadow: "0 0 25px black",
+  whiteSpace: "pre-wrap",
+});
+
+const ImageWithText = styled("img")({
+  borderRadius: "8px",
+  width: "100%",
+  height: "16rem",
+  boxShadow: "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+  filter: "contrast(1.35) brightness(0.65)",
+});
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -198,6 +225,7 @@ export default function Home() {
           flexDirection: "row",
           justifyContent: "right",
           alignItems: "center",
+          marginTop: 3,
         }}
       >
         <Loading loading={loading} />
@@ -207,8 +235,8 @@ export default function Home() {
             marginRight: { xs: "10px", md: "10px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "5rem", md: "5rem" },
-            minHeight: { xs: "2rem", md: "2rem" },
+            minWidth: { xs: "10rem", md: "9rem" },
+            minHeight: { xs: "4rem", md: "4rem" },
             color: "black",
             borderRadius: "10px",
             backgroundColor: "#D0F5BE",
@@ -221,10 +249,8 @@ export default function Home() {
             window.location.href = "/createqr";
           }}
         >
-          <CardContent>
-            {/* <QrCode2RoundedIcon sx={{ fontSize: { xs: "1rem", md: "4rem", margin: 5 } }} /> */}
-            <Typography> Tạo sản phẩm</Typography>
-          </CardContent>
+          {/* <QrCode2RoundedIcon sx={{ fontSize: { xs: "1rem", md: "4rem", margin: 5 } }} /> */}
+          <Typography> Tạo sản phẩm</Typography>
         </Button>
         <Button
           variant="contained"
@@ -233,8 +259,8 @@ export default function Home() {
             marginLeft: { xs: "10px", md: "10px" },
             boxShadow:
               "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
-            minWidth: { xs: "5rem", md: "5rem" },
-            minHeight: { xs: "2rem", md: "2rem" },
+            minWidth: { xs: "14rem", md: "10rem" },
+            minHeight: { xs: "4rem", md: "4rem" },
             color: "black",
             backgroundColor: "#D0F5BE",
             ":hover": {
@@ -246,26 +272,30 @@ export default function Home() {
             window.location.href = "/process";
           }}
         >
-          <CardContent>
-            {/* <AutorenewRoundedIcon
+          {/* <AutorenewRoundedIcon
               sx={{ fontSize: { xs: "1rem", md: "4rem", margin: 5 } }}
             /> */}
-            <Typography> Danh sách quy trình</Typography>
-          </CardContent>
+          <Typography> Danh sách quy trình</Typography>
         </Button>
       </Box>
       <Grid
         container
         spacing={3}
         sx={{
-          marginBottom: 4,
-          marginTop: 1,
+          marginBottom: 3,
+          marginTop: 0,
         }}
       >
-        <Grid item xs={12} sm={6} md={6}>
-          <Box
+        <Grid
+          item
+          xs={12}
+          sm={6}
+          md={6}
+          sx={{ display: { xs: "none", md: "inline" } }}
+        >
+          {/* <Box
             sx={{
-              display: "flex",
+              display: { md: "flex" },
               justifyContent: "center",
               alignItems: "center",
               color: "#000",
@@ -273,28 +303,56 @@ export default function Home() {
               boxShadow:
                 "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
               backgroundColor: "#D0F5BE",
-              maxWidth: "60rem",
+              maxWidth: "100rem",
               minHeight: { xs: "5rem", md: "16rem" },
               borderRadius: "10px",
               // marginRight: "10px",
             }}
-          >
-            <Typography
-              variant="h4"
-              sx={{ fontSize: { xs: "18px", md: "30px" } }}
-            >
-              Chào mừng bạn đã đến với Traceability Agriculture
-            </Typography>
-          </Box>
-        </Grid>
+          > */}
+            {/* <ImageWithText
+              src={imgCover}
+              alt="Chào mừng bạn đến với Traceability Agriculture"
+            /> */}
+            {/* <Box 
+              component="img"
+              src={imgCover}
+              sx={{
+                display: { md: "flex" },
+                justifyContent: "center",
+                alignItems: "center",
+                color: "#000",
+                fontSize: "10px",
+                boxShadow:
+                  "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
+                backgroundColor: "#D0F5BE",
+                width: "100%",
+                minHeight: { xs: "5rem", md: "16rem" },
+                borderRadius: "10px",
+                // marginRight: "10px",
+              }}
+            /> */}
+            {/* <TextOverlay variant="h5">
+              Chào mừng bạn đến với hệ thống Traceability Agriculture
+            </TextOverlay> */}
+          {/* </Box> */}
 
+          <ImageContainer>
+            <ImageWithText
+              src={imgCover}
+              alt="Chào mừng bạn đến với Traceability Agriculture"
+            />
+            <TextOverlay variant="h5">
+              Chào mừng bạn đến với hệ thống Traceability Agriculture
+            </TextOverlay>
+          </ImageContainer>
+        </Grid>
         <Grid item xs={12} sm={6} md={3}>
           <Box>
             <AppWidgetSummary
               title="Tổng số sản phẩm"
               total={data.length}
               color="success"
-              icon={"ant-design:android-filled"}
+              icon={"fluent-emoji:watermelon"}
               sx={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -311,7 +369,7 @@ export default function Home() {
               title="Tổng số nhật ký"
               total={length}
               color="success"
-              icon={"ant-design:apple-filled"}
+              icon={"fluent-emoji:check-mark-button"}
               sx={{
                 boxShadow:
                   "rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px",
@@ -323,7 +381,6 @@ export default function Home() {
           </Box>
         </Grid>
       </Grid>
-
       <Card>
         <TableContainer
           sx={{

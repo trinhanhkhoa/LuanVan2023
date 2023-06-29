@@ -249,7 +249,7 @@ export default function EnHome() {
           flexDirection: { xs: "row", md: "row" },
           justifyContent: "right",
           alignItems: "center",
-          marginTop: { xs: "20px" },
+          marginTop: { xs: "30px" },
           marginBottom: { xs: "20px" },
         }}
       >

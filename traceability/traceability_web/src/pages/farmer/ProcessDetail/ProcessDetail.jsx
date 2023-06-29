@@ -190,7 +190,6 @@ function ProcessDetail() {
           setUserName(user[0].name);
           setUserType(user[0].userType);
           setUserEmail(user[0].email);
-
         });
     };
     getUserInfo();
@@ -205,7 +204,6 @@ function ProcessDetail() {
         justifyContent: "center",
         alignItems: "center",
         minHeight: 900,
-        // backgroundColor: "azure"
       }}
     >
       <ProductDetailWrapper>
@@ -238,8 +236,6 @@ function ProcessDetail() {
                   pauseIconSize="40px"
                   slideBackgroundColor="darkgrey"
                   slideImageFit="cover"
-                  // thumbnails={true}
-                  // thumbnailWidth="100px"
                 />
               )}
             </ProductDetail>
@@ -251,7 +247,6 @@ function ProcessDetail() {
             sx={{
               lineHeight: 2,
               whiteSpace: "pre-line",
-              // width: { xs: 400, md: 800 },
             }}
           >
             <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -260,8 +255,11 @@ function ProcessDetail() {
                 onChange={handleChange}
                 aria-label="basic tabs example"
               >
-                <Tab label="Product information" {...a11yProps(0)} />
-                <Tab label="Production log" {...a11yProps(1)} />
+                <Tab label="Thông tin chung" {...a11yProps(0)} />
+                <Tab
+                  label="Nhật ký các giai đoạn trồng cây"
+                  {...a11yProps(1)}
+                />
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
@@ -271,25 +269,34 @@ function ProcessDetail() {
               <Grid>
                 <Typography
                   variant="body"
-                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                  sx={{
+                    fontSize: { xs: "12px", md: "15px" },
+                    fontStyle: "italic",
+                  }}
                 >
-                  Created by: {userName} - Role: {userType}
+                  Tạo bởi: <b>{userName}</b> - Vai trò: <b>{userType}</b>
                 </Typography>
               </Grid>
               <Grid>
                 <Typography
                   variant="body"
-                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                  sx={{
+                    fontSize: { xs: "12px", md: "15px" },
+                    fontStyle: "italic",
+                  }}
                 >
-                  Email: {userEmail}
+                  Email: <b>{userEmail}</b>
                 </Typography>
               </Grid>
               <Grid>
                 <Typography
                   variant="body"
-                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                  sx={{
+                    fontSize: { xs: "12px", md: "15px" },
+                    fontStyle: "italic",
+                  }}
                 >
-                  Created Time: {time}
+                  Ngày tạo: <b>{time}</b>
                 </Typography>
               </Grid>
 
@@ -300,71 +307,56 @@ function ProcessDetail() {
               >
                 {" "}
                 <Typography variant="h5" sx={{ mt: 2 }}>
-                  Description
+                  Mô tả
                 </Typography>
                 <ReactReadMoreReadLess
                   readMoreClassName="readMoreClassName"
                   readLessClassName="readMoreClassName"
                   charLimit={600}
-                  readMoreText="Read more"
-                  readLessText="Read less"
+                  readMoreText="Xem thêm"
+                  readLessText="Thu gọn"
                 >
                   {description}
-                  {/* dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi
-                  ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa qui officia deserunt mollit anim id
-                  est laborum. dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum. dolor sit amet, consectetur */}
                 </ReactReadMoreReadLess>
               </Typography>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Box>
                 <Fragment>
-                  <h2>Product traceability</h2>
-                  <Typography variant="body2" marginBottom={3}>
-                    Information is written by "{userName}"
+                  <h2>Thông tin các giai đoạn trồng cây</h2>
+                  <Typography
+                    variant="body2"
+                    marginBottom={3}
+                    fontStyle={"italic"}
+                  >
+                    Được viết bởi {userName}
                   </Typography>
                   <div className="timeline">
                     <p>
-                      <h4>{stagePlantSeeds.name}</h4>
-                      Description: {stagePlantSeeds.description}
+                      <h3>{stagePlantSeeds.name}</h3>
+                      Mô tả: {stagePlantSeeds.description}
                     </p>
                     <p>
-                      <h4>{stagePlantCare.name}</h4>
-                      Description: {stagePlantCare.description}
-                      <ul>
-                        <li>Watering time: {stagePlantCare.water}</li>
-                        <li>
-                          Amount of fertilizer: {stagePlantCare.fertilizer}
-                        </li>
-                      </ul>
+                      <h3>{stagePlantCare.name}</h3>
+                      Mô tả: {stagePlantCare.description}
+                      <br />
+                      Thời gian tưới nước: {stagePlantCare.water}
+                      <br />
+                      Lượng phân bón: {stagePlantCare.fertilizer}
                     </p>
                     <p>
-                      <h4>{stageBloom.name}</h4>
-                      Description: {stageBloom.description}
+                      <h3>{stageBloom.name}</h3>
+                      Mô tả: {stageBloom.description}
                     </p>
                     <p>
-                      <h4>{stageCover.name}</h4>
-                      Description: {stageCover.description}
+                      <h3>{stageCover.name}</h3>
+                      Mô tả: {stageCover.description}
                     </p>
                     <p>
-                      <h4>{stageHarvest.name}</h4>
-                      Description: {stageHarvest.description}
-                      Notes:{" "}
-                      <ul>
-                        <li>Quantity: {stageHarvest.quantity}</li>
-                      </ul>
+                      <h3>{stageHarvest.name}</h3>
+                      Mô tả: {stageHarvest.description}
+                      <br />
+                      Sản lượng: {stageHarvest.quantity}
                     </p>
                   </div>
                 </Fragment>

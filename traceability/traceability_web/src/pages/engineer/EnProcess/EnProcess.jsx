@@ -303,25 +303,31 @@ function EnProcess() {
               <Grid>
                 <Typography
                   variant="body"
-                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                  sx={{
+                    fontSize: { xs: "12px", md: "15px" },
+                  }}
                 >
-                  Được tạo bởi: {userName} - Vai trò: {userType}
+                  Tạo bởi: <b>{userName}</b> - Vai trò: <b>{userType}</b>
                 </Typography>
               </Grid>
               <Grid>
                 <Typography
                   variant="body"
-                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                  sx={{
+                    fontSize: { xs: "12px", md: "15px" },
+                  }}
                 >
-                  Email: {userEmail}
+                  Email: <b>{userEmail}</b>
                 </Typography>
               </Grid>
               <Grid>
                 <Typography
                   variant="body"
-                  sx={{ fontSize: { xs: "12px", md: "15px" } }}
+                  sx={{
+                    fontSize: { xs: "12px", md: "15px" },
+                  }}
                 >
-                  Ngày tạo: {time}
+                  Ngày tạo: <b>{time}</b>
                 </Typography>
               </Grid>
               <Divider />
@@ -341,21 +347,6 @@ function EnProcess() {
                   readLessText="Read less"
                 >
                   {description}
-                  {/* dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                  minim veniam, quis nostrud exercitation ullamco laboris nisi
-                  ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-                  reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                  nulla pariatur. Excepteur sint occaecat cupidatat non
-                  proident, sunt in culpa qui officia deserunt mollit anim id
-                  est laborum. dolor sit amet, consectetur adipisicing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum. dolor sit amet, consectetur */}
                 </ReactReadMoreReadLess>
               </Typography>
             </TabPanel>
@@ -368,37 +359,30 @@ function EnProcess() {
                   </Typography>
                   <div className="timeline-admin">
                     <p>
-                      <h4>{stagePlantSeeds.name}</h4>
+                      <h3>{stagePlantSeeds.name}</h3>
                       Mô tả: {stagePlantSeeds.description}
                     </p>
                     <p>
-                      <h4>{stagePlantCare.name}</h4>
-                        Mô tả: {stagePlantCare.description}
-                      <ul>
-                        <li>
-                          Thời lượng tưới nước: {stagePlantCare.descriptionWater}
-                        </li>
-                        <li>
-                          Số lượng phân bón:{" "}
-                          {stagePlantCare.descriptionFertilizer}
-                        </li>
-                      </ul>
+                      <h3>{stagePlantCare.name}</h3>
+                      Mô tả: {stagePlantCare.description}
+                      <br />
+                      Thời gian tưới nước: {stagePlantCare.water}
+                      <br />
+                      Lượng phân bón: {stagePlantCare.fertilizer}
                     </p>
                     <p>
-                      <h4>{stageBloom.name}</h4>
+                      <h3>{stageBloom.name}</h3>
                       Mô tả: {stageBloom.description}
                     </p>
                     <p>
-                      <h4>{stageCover.name}</h4>
+                      <h3>{stageCover.name}</h3>
                       Mô tả: {stageCover.description}
                     </p>
                     <p>
-                      <h4>{stageHarvest.name}</h4>
+                      <h3>{stageHarvest.name}</h3>
                       Mô tả: {stageHarvest.description}
-                      Chi tiết:{" "}
-                      <ul>
-                        <li>Sản lượng: {stageHarvest.descriptionQuantity}</li>
-                      </ul>
+                      <br />
+                      Sản lượng: {stageHarvest.quantity}
                     </p>
                   </div>
                 </Fragment>

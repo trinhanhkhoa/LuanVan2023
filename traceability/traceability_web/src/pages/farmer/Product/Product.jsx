@@ -311,7 +311,7 @@ function Product() {
                   {status}{" "}
                 </Typography>
                 <Typography
-                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" } }}
+                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" }, fontStyle: "italic", }}
                   variant="body"
                 >
                   Địa chỉ: {address}
@@ -364,7 +364,7 @@ function Product() {
                     sx={{
                       display: { xs: "block", md: "none" },
                       borderRadius: "10px",
-                      width: 180,
+                      minWidth: 180,
                       lineHeight: 2,
                       m: { xs: 2, md: 0 },
                       mt: { xs: 2, md: 2 },
@@ -394,8 +394,8 @@ function Product() {
                   readMoreClassName="readMoreClassName"
                   readLessClassName="readMoreClassName"
                   charLimit={200}
-                  readMoreText="Read more"
-                  readLessText="Read less"
+                  readMoreText="Xem thêm"
+                  readLessText="Thu gọn"
                 >
                   {description}
                 </ReactReadMoreReadLess>
