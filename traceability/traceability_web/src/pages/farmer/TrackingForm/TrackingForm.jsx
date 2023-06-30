@@ -277,7 +277,7 @@ function TrackingForm(props) {
                     setNotes(["Nơi thu mua" + e.target.value]);
                   }}
                   variant="outlined"
-                  placeholder={processStage.stageSell.name}
+                  placeholder={processStage.stageSell.purchasingUnit}
                   sx={{
                     width: { xs: 350, md: 600 },
                     borderRadius: "20%",

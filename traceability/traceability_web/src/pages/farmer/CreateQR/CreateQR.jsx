@@ -105,7 +105,7 @@ function CreateQR() {
         setSnackbarState(true);
 
         setTimeout(() => {
-          window.location.href = "/list";
+          // window.location.href = "/list";
         }, 1500);
       });
   };

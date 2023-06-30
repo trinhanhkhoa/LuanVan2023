@@ -130,7 +130,7 @@ function Product() {
           },
         }
       ).then((res) => res.json());
-
+      console.log(data.data);
       // .then((res) => res.data);
       setName(data.data.name);
       setAddress(data.data.address);

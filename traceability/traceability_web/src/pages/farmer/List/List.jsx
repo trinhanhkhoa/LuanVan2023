@@ -90,7 +90,7 @@ function List() {
     const getProducts = async () => {
       setLoading(true);
 
-      let data = await fetch(
+      await fetch(
         `${process.env.REACT_APP_API}/product/get-product`,
         {
           method: "GET",
@@ -106,25 +106,21 @@ function List() {
           dataSC = dataSC.filter((p) => p.status != 3);
 
           data = data.filter((p) => p.userId == id);
+          // console.log(data);
+          // console.log(dataSC);
 
           const filteredArray = data.filter((item1) =>
             dataSC.some(
-              (item2) => item2.pid === item1._id && item2.status !== 3
+              (item2) => item2.pid === item1.productId && item2.status !== 3
             )
           );
 
-          // console.log(filteredArray)
+          console.log(filteredArray)
 
           setDataSC(dataSC);
           setData(data);
           setDataFilter(filteredArray);
         });
-
-      // data = data.filter((p) => p.userId == id);
-
-      // console.log(`product has user id: `, data);
-
-      // setData(data);
 
       setLoading(false);
     };
@@ -301,7 +297,7 @@ function List() {
                           <IconButton
                             color="info"
                             onClick={() => {
-                              window.location.href = `/product/${item._id}`;
+                              window.location.href = `/product/${item.productId}`;
                             }}
                           >
                             <SearchIcon />
@@ -312,7 +308,7 @@ function List() {
                           <IconButton
                             color="success"
                             onClick={() => {
-                              window.location.href = `/updateproduct/${item._id}`;
+                              window.location.href = `/updateproduct/${item.productId}`;
                             }}
                           >
                             <EditIcon />
@@ -323,7 +319,7 @@ function List() {
                             color="error"
                             onClick={() => {
                               setOpenPopup(true);
-                              setIdPopup(item._id);
+                              setIdPopup(item.productId);
                             }}
                           >
                             <DeleteIcon />
