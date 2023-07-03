@@ -117,13 +117,12 @@ export default function Home() {
     let res = data.data;
 
     res = res.filter((p) => p.userId == id);
-    console.log(`product has user id: `, res);
+    // console.log(`product has user id: `, res);
 
     let tracking = res;
     tracking = tracking.filter((t) => t.tracking.length != 0);
     tracking.forEach((track) => {
       temp += track.tracking.length;
-
     });
     setLength(temp);
     setData(res);
@@ -191,18 +190,6 @@ export default function Home() {
     setOrderBy(id);
   };
 
-  const handleSearch = (e) => {
-    let target = e.target;
-    setFilterFn({
-      fn: (items) => {
-        if (e.target.value == "") return items;
-        else
-          return items.filter((x) =>
-            x.name.toLowerCase().includes(target.value)
-          );
-      },
-    });
-  };
   return (
     <Box
       sx={{

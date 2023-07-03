@@ -116,8 +116,8 @@ export default function EnHome() {
           );
           setFarmer(getAmountFarmers);
           // // setFarmer(getAmountFarmers);
-          console.log("farmer", farmer);
-          console.log("user", user);
+          // console.log("farmer", farmer);
+          // console.log("user", user);
 
           setLoading(false);
         });
@@ -126,7 +126,7 @@ export default function EnHome() {
   }, []);
 
   useEffect(() => {
-    if (userType == "admin") {
+    if (userType == "admin" || userType == "Admin") {
       setAdmin(true);
     }
 
@@ -219,20 +219,7 @@ export default function EnHome() {
     setOrderBy(id);
   };
 
-  const handleSearch = (e) => {
-    let target = e.target;
-    setFilterFn({
-      fn: (items) => {
-        if (e.target.value == "") return items;
-        else
-          return items.filter((x) =>
-            x.name.toLowerCase().includes(target.value)
-          );
-      },
-    });
-  };
-
-  return admin ? (
+  return admin  ? (
     <Box
       sx={{
         minHeight: "80vh",

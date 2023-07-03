@@ -10,9 +10,9 @@ import {
 import React from "react";
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
 import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
-import GroupIcon from '@mui/icons-material/Group';
+import GroupIcon from "@mui/icons-material/Group";
 import CachedRoundedIcon from "@mui/icons-material/CachedRounded";
-import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import ManageSearchIcon from "@mui/icons-material/ManageSearch";
 
 const Sidebar = () => {
   const userType = window.localStorage.getItem("userType");
@@ -24,7 +24,7 @@ const Sidebar = () => {
           <ListItem disablePadding>
             <ListItemButton
               LinkComponent="a"
-              href={userType == "admin" ? "/enhome" : "/home"}
+              href={userType == "Admin" ? "/enhome" : "/home"}
             >
               <ListItemIcon>
                 <HomeRoundedIcon />
@@ -35,21 +35,21 @@ const Sidebar = () => {
           <ListItem disablePadding>
             <ListItemButton
               LinkComponent="a"
-              href={userType == "admin" ? "/listofprocesses" : "/list"}
+              href={userType == "Admin" ? "/listofprocesses" : "/list"}
             >
               <ListItemIcon>
-                {userType == "admin" ? (
+                {userType == "Admin" ? (
                   <CachedRoundedIcon />
                 ) : (
                   <Inventory2RoundedIcon />
                 )}
               </ListItemIcon>
               <ListItemText
-                primary={userType == "admin" ? "Quy trình" : "Sản phẩm"}
+                primary={userType == "Admin" ? "Quy trình" : "Sản phẩm"}
               />
             </ListItemButton>
           </ListItem>
-          {userType != "admin" ? (
+          {userType != "Admin" ? (
             <ListItem disablePadding>
               <ListItemButton LinkComponent="a" href="/process">
                 <ListItemIcon>
@@ -59,7 +59,7 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ) : null}
-          {userType != "admin" ? (
+          {userType != "Admin" ? (
             <ListItem disablePadding>
               <ListItemButton LinkComponent="a" href="/history">
                 <ListItemIcon>
@@ -69,7 +69,7 @@ const Sidebar = () => {
               </ListItemButton>
             </ListItem>
           ) : null}
-          {userType == "admin" ? (
+          {userType == "Admin" ? (
             <ListItem disablePadding>
               <ListItemButton LinkComponent="a" href="/enmanageaccounts">
                 <ListItemIcon>

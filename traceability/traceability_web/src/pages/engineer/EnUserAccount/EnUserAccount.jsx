@@ -60,6 +60,8 @@ function EnUserAccount() {
   const [data, setData] = useState([]);
   const [dataUser, setDataUser] = useState([]);
   const [idPopup, setIdPopup] = useState("");
+  const [processIdPopup, setProcessIdPopup] = useState("");
+
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
@@ -112,6 +114,8 @@ function EnUserAccount() {
           data = data.filter((p) => p.userId == params.id);
 
           setData(data);
+
+          // console.log(data);
         });
       setLoading(false);
     };
@@ -194,6 +198,9 @@ function EnUserAccount() {
       <Loading loading={loading} />
 
       <Card sx={{ p: 3, borderRadius: "10px" }}>
+        <Typography variant="h3" sx={{ fontSize: { xs: "25px", md: "35px" }, marginBottom: "10px" }}>
+          Sản phẩm của {dataUser.name}
+        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -203,45 +210,40 @@ function EnUserAccount() {
             marginBottom: "20px",
           }}
         >
-          <Typography
-            variant="h3"
-            sx={{ fontSize: { xs: "25px", md: "35px" } }}
-          >
-            Danh sách sản phẩm của nông dân
-          </Typography>
           <Card
             sx={{
               backgroundColor: "rgba(71, 167, 162, 0.12)",
               padding: "1%",
               mt: { xs: 2, md: 0 },
+              width: { xs: "100%", md: "20%" },
             }}
           >
-            <Typography>Tên nông dân: {dataUser.name}</Typography>
-            <Typography>Email: {dataUser.email}</Typography>
-            <Typography>ID: {dataUser._id}</Typography>
-            <Typography>Vai trò: {dataUser.userType}</Typography>
+            <Typography fontStyle="italic">Tên: <b>{dataUser.name}</b></Typography>
+            <Typography fontStyle="italic">Email: <b>{dataUser.email}</b></Typography>
+            <Typography fontStyle="italic">ID: <b>{dataUser._id}</b></Typography>
+            <Typography fontStyle="italic">Vai trò: <b>{dataUser.userType}</b></Typography>
           </Card>
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Tìm kiếm sản phẩm"
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "100%" },
+                marginTop: "20px",
+                marginBottom: "20px",
+                marginLeft: "0",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
         </Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            placeholder="Tìm kiếm sản phẩm"
-            onChange={handleSearch}
-            sx={{
-              width: { xs: "100%", md: "30%" },
-              marginTop: "20px",
-              marginBottom: "20px",
-              marginLeft: "0",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",
@@ -281,7 +283,8 @@ function EnUserAccount() {
                         color="info"
                         onClick={() => {
                           setOpenPopupTracking(true);
-                          setIdPopup(item._id);
+                          setIdPopup(item.productId);
+                          setProcessIdPopup(item.processId);
                         }}
                       >
                         Chi tiết
@@ -291,7 +294,7 @@ function EnUserAccount() {
                         openPopup={openPopupTracking}
                         setOpenPopup={setOpenPopupTracking}
                       >
-                        <ProductTracking id={idPopup} />
+                        <ProductTracking id={idPopup} processId={processIdPopup}/>
                       </Popup>
                     </ButtonGroup>
                   </StyledTableCell>

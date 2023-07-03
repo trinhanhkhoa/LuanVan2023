@@ -13,10 +13,12 @@ import { uploadImage } from "../../../components/MultiUpload";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import Loading from "../../../components/Loading";
 
 export default function StageProcess({ data, setData }) {
   const [links, setLinks] = useState([]);
   const [time, setTime] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split("/");
@@ -24,7 +26,7 @@ export default function StageProcess({ data, setData }) {
     return parsedDate;
   };
 
-  useEffect (() => {
+  useEffect(() => {
     if (data.stageProcess.timeCreate !== "") {
       const parsedTime = parseDate(data.stageProcess.timeCreate);
       setTime(parsedTime);
@@ -33,6 +35,7 @@ export default function StageProcess({ data, setData }) {
 
   const handleChange = (date) => {
     const formattedDate = date.toLocaleDateString("en-GB");
+    console.log(formattedDate);
     setTime(date);
     setData({
       ...data,
@@ -49,7 +52,6 @@ export default function StageProcess({ data, setData }) {
       required
       value={value}
       onClick={onClick}
-      // className="custom-datepicker-input"  
       placeholder="Select a date"
       readOnly
       InputProps={{
@@ -66,6 +68,8 @@ export default function StageProcess({ data, setData }) {
       <Typography variant="h4" gutterBottom sx={{ mb: 2 }}>
         Thông tin chung
       </Typography>
+      <Loading loading={loading} />
+
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <label>
@@ -89,18 +93,6 @@ export default function StageProcess({ data, setData }) {
           <label>
             Thời gian tạo <b className="requireDot">*</b>
           </label>
-
-          {/* <DatePicker
-            name="time"
-            required
-            fullWidth
-            selected={getTime}
-            // minDate={time}
-            onChange={handleChange}
-            customInput={<CustomInput />}
-            dateFormat="dd/MM/yyyy"
-            // placeholderText="Select a date"
-          /> */}
           <DatePicker
             name="time"
             required
@@ -110,7 +102,6 @@ export default function StageProcess({ data, setData }) {
             onChange={handleChange}
             customInput={<CustomInput />}
             dateFormat="dd/MM/yyyy"
-            // placeholderText="Select a date"
           />
         </Grid>
         <Grid
@@ -153,11 +144,9 @@ export default function StageProcess({ data, setData }) {
                   return;
                 }
 
-                // setImages(e.target.files);
-                // console.log(e.target.files);
-                // setLoading(true);
-
                 try {
+                  setLoading(true);
+
                   let arr = [];
                   for (let i = 0; i < e.target.files.length; i++) {
                     const data = await uploadImage(e.target.files[i]);
@@ -169,10 +158,10 @@ export default function StageProcess({ data, setData }) {
                     ...data,
                     stageProcess: { ...data.stageProcess, images: arr },
                   });
+                  setLoading(false);
                 } catch (error) {
                   console.log(error);
                 }
-                // setLoading(false);
               }}
             />
             <ImageList

@@ -314,7 +314,13 @@ function Product() {
                   sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" }, fontStyle: "italic", }}
                   variant="body"
                 >
-                  Địa chỉ: {address}
+                  Địa chỉ: <b>{address}</b>
+                </Typography>
+                <Typography
+                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" }, fontStyle: "italic", }}
+                  variant="body"
+                >
+                  Ngày tạo: <b>{time}</b>
                 </Typography>
                 <Divider sx={{ mt: 2, mb: 2 }} />
                 <Box display={"flex"} flexDirection={"column"}>
@@ -413,7 +419,7 @@ function Product() {
                     Nhật ký
                   </Button>
                   <Popup
-                    title="Tracking"
+                    title="Nhật ký"
                     openPopup={openPopupTracking}
                     setOpenPopup={setOpenPopupTracking}
                   >

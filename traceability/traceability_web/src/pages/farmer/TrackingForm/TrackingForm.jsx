@@ -7,6 +7,7 @@ import {
   Container,
   ImageList,
   ImageListItem,
+  InputAdornment,
   Snackbar,
   TextField,
   TextareaAutosize,
@@ -16,6 +17,9 @@ import { useParams } from "react-router-dom";
 import Loading from "../../../components/Loading";
 import MuiAlert from "@mui/material/Alert";
 import { useForm, Form } from "../../../components/Try/useForm";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,7 +37,12 @@ function TrackingForm(props) {
   const [amountOfFertilizer, setAmountOfFertilizer] = useState("");
   const [unit, setUnit] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [time, setTime] = useState("");
+  const today = new Date();
+  const [time, setTime] = useState(today);
+
+  const handleChange = (date) => {
+    setTime(date);
+  };
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
@@ -119,6 +128,25 @@ function TrackingForm(props) {
       });
   };
 
+  const CustomInput = ({ value, onClick }) => (
+    <TextField
+      type="text"
+      fullWidth
+      required
+      value={value}
+      onClick={onClick}
+      placeholder="Chọn thời gian"
+      readOnly
+      InputProps={{
+        endAdornment: (
+          <InputAdornment position="start">
+            <CalendarMonthRoundedIcon />
+          </InputAdornment>
+        ),
+      }}
+    />
+  );
+
   useEffect(() => {
     getProcess();
   }, []);
@@ -142,7 +170,7 @@ function TrackingForm(props) {
         },
         body: JSON.stringify({
           name,
-          time,
+          time: time.toLocaleDateString("en-GB"),
           images: links,
           description,
           notes,
@@ -216,7 +244,7 @@ function TrackingForm(props) {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Chọn giai đoạn <b>(*)</b>
+              Chọn giai đoạn <b className="requireDot">*</b>
             </label>
             <Autocomplete
               disablePortal
@@ -316,7 +344,7 @@ function TrackingForm(props) {
                     setAmountOfFertilizer(e.target.value);
                     setNotes([
                       "Lượng phân bón: " + e.target.value,
-                      "Thời lượng tưới nước: "+ amountOfWater,
+                      "Thời lượng tưới nước: " + amountOfWater,
                     ]);
                   }}
                   variant="outlined"
@@ -330,21 +358,24 @@ function TrackingForm(props) {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Thời gian <b>(*)</b>
+              Thời gian <b className="requireDot">*</b>
             </label>
-            <TextField
-              variant="outlined"
-              type="date"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              sx={{ width: { xs: 350, md: 600 }, borderRadius: "20%" }}
+            <DatePicker
+              name="time"
+              required
+              fullWidth
+              selected={time}
+              minDate={today}
+              onChange={handleChange}
+              customInput={<CustomInput />}
+              dateFormat="dd/MM/yyyy"
             />
           </Box>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Hình ảnh <b>(*)</b>
+              Hình ảnh <b className="requireDot">*</b>
             </label>
             <Box
               sx={{
@@ -433,7 +464,7 @@ function TrackingForm(props) {
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
           >
             <label>
-              Mô tả <b>(*)</b>
+              Mô tả <b className="requireDot">*</b>
             </label>
             <Box sx={{ width: { xs: 350, md: 600 } }}>
               <TextareaAutosize

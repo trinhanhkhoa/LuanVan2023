@@ -93,7 +93,7 @@ function EnProcess() {
     setIsOpen(!isOpen);
   };
   const params = useParams();
-  console.log("params", params);
+  // console.log("params", params);
 
   const [data, setData] = useState([]);
   let id = "";
@@ -152,7 +152,7 @@ function EnProcess() {
 
       setData(data);
       id = data.userId;
-      // console.log(id);
+      // console.log("id", id);
       setName(data.stageProcess.name);
       setTime(data.stageProcess.timeCreate);
       setDescription(data.stageProcess.description);
@@ -181,9 +181,8 @@ function EnProcess() {
         .then((res) => res.json())
         .then((res) => {
           let user = res.data;
-          // console.log(user);
 
-          user = user.filter((u) => u._id == id);
+          user = user.filter((u) => u._id == data.userId);
           console.log(user[0]);
           setUserName(user[0].name);
           setUserType(user[0].userType);
@@ -343,8 +342,8 @@ function EnProcess() {
                   readMoreClassName="readMoreClassName"
                   readLessClassName="readMoreClassName"
                   charLimit={600}
-                  readMoreText="Read more"
-                  readLessText="Read less"
+                  readMoreText="Xem thêm"
+                  readLessText="Thu gọn"
                 >
                   {description}
                 </ReactReadMoreReadLess>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./CreateQR.css";
 import { uploadImage } from "../../../components/MultiUpload";
 import {
+  Autocomplete,
   Box,
   Button,
   Container,
@@ -105,7 +106,7 @@ function CreateQR() {
         setSnackbarState(true);
 
         setTimeout(() => {
-          // window.location.href = "/list";
+          window.location.href = "/list";
         }, 1500);
       });
   };
@@ -135,8 +136,7 @@ function CreateQR() {
       required
       value={value}
       onClick={onClick}
-      className="custom-datepicker-input" // Apply your custom styles here
-      placeholder="Select a date"
+      placeholder="Chọn ngày"
       readOnly
       InputProps={{
         endAdornment: (
@@ -151,9 +151,6 @@ function CreateQR() {
   useEffect(() => {
     getProcesses();
   }, []);
-
-  // const tomorrow = new Date(today);
-  // tomorrow.setDate(tomorrow.getDate());
 
   return (
     <Container
@@ -192,7 +189,6 @@ function CreateQR() {
               fullWidth
               onChange={(e) => {
                 setName(e.target.value);
-                console.log(name);
               }}
               variant="outlined"
               name="name"
@@ -238,7 +234,7 @@ function CreateQR() {
               required
               variant="outlined"
               fullWidth
-              placeholder="Address"
+              placeholder="Địa chỉ"
               type="text"
               name="address"
               value={address}

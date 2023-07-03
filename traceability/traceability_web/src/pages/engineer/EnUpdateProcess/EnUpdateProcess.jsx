@@ -68,12 +68,6 @@ function EnUpdateProcess() {
   const tokenData = window.localStorage.getItem("token");
   const userId = window.localStorage.getItem("userId");
 
-  const current = new Date();
-  const date = `${current.getDate()}/${
-    current.getMonth() + 1
-  }/${current.getFullYear()}`;
-  const [value, setValue] = useState(dayjs(date));
-  console.log(params.id);
   const getInfoProcess = async () => {
     const data = await fetch(
       `${process.env.REACT_APP_API}/process/get-process/${params.id}`,
@@ -86,7 +80,7 @@ function EnUpdateProcess() {
     )
       .then((res) => res.json())
       .then((res) => res.data);
-    console.log(data);
+    // console.log(data);
     setData(data);
     // setName(data.stageProcess.name);
     // setDescription(data.stageProcess.description);
@@ -148,7 +142,7 @@ function EnUpdateProcess() {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         window.location.href = "/listofprocesses";
       });
   };
@@ -214,7 +208,7 @@ function EnUpdateProcess() {
                   fontWeight: 500,
                 }}
               >
-                Cập nhật thông tin chung {name}
+                Cập nhật thông tin chung
               </Typography>
             </Box>
             <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>

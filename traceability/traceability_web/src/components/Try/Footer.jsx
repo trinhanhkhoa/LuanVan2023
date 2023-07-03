@@ -45,7 +45,7 @@ export default function StickyFooter() {
       <Box
         component="footer"
         sx={
-          userType == "admin"
+          (userType == "admin" || userType == "Admin")
             ? {
                 py: 2,
                 px: 2,

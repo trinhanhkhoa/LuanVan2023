@@ -170,7 +170,7 @@ export default function PersistentDrawerLeft() {
         open={openMenu}
         // color={userType == "admin" ? "#90caf9" : "success"}
         sx={
-          userType == "admin"
+          (userType == "admin" || userType == "Admin")
             ? { backgroundColor: "#fff59d", color: "#000" }
             : { backgroundColor: "#aed581", color: "#000" }
         }
