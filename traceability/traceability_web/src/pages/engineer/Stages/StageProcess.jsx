@@ -19,7 +19,6 @@ export default function StageProcess({ data, setData }) {
   const [links, setLinks] = useState([]);
   const [time, setTime] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const parseDate = (dateString) => {
     const [day, month, year] = dateString.split("/");
     const parsedDate = new Date(year, month - 1, day);
@@ -30,6 +29,10 @@ export default function StageProcess({ data, setData }) {
     if (data.stageProcess.timeCreate !== "") {
       const parsedTime = parseDate(data.stageProcess.timeCreate);
       setTime(parsedTime);
+    }
+
+    if (data.stageProcess.images !== "") {
+      setLinks(data.stageProcess.images);
     }
   }, [data.stageProcess.timeCreate]);
 
@@ -45,6 +48,9 @@ export default function StageProcess({ data, setData }) {
       },
     });
   };
+
+
+  console.log(data.stageProcess.images);
   const CustomInput = ({ value, onClick }) => (
     <TextField
       type="text"

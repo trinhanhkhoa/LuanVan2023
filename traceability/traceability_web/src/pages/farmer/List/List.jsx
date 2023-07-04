@@ -90,15 +90,12 @@ function List() {
     const getProducts = async () => {
       setLoading(true);
 
-      await fetch(
-        `${process.env.REACT_APP_API}/product/get-product`,
-        {
-          method: "GET",
-          headers: {
-            "x-auth-token": tokenData,
-          },
-        }
-      )
+      await fetch(`${process.env.REACT_APP_API}/product/get-product`, {
+        method: "GET",
+        headers: {
+          "x-auth-token": tokenData,
+        },
+      })
         .then((res) => res.json())
         .then((res) => {
           let data = res.data;
@@ -115,7 +112,7 @@ function List() {
             )
           );
 
-          console.log(filteredArray)
+          console.log(filteredArray);
 
           setDataSC(dataSC);
           setData(data);
@@ -163,10 +160,10 @@ function List() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    return stableSort(filterFn.fn(dataFilter), getComparator(order, orderBy)).slice(
-      page * rowsPerPage,
-      (page + 1) * rowsPerPage
-    );
+    return stableSort(
+      filterFn.fn(dataFilter),
+      getComparator(order, orderBy)
+    ).slice(page * rowsPerPage, (page + 1) * rowsPerPage);
   };
 
   const handleSordRequest = (id) => {
@@ -200,7 +197,9 @@ function List() {
       }}
     >
       <Loading loading={loading} />
-
+      <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}>
+        Danh sách các sản phẩm
+      </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Box
           sx={{
@@ -208,12 +207,25 @@ function List() {
             justifyContent: "space-between",
           }}
         >
-          <Typography
-            variant="h3"
-            sx={{ fontSize: { xs: "20px", md: "35px" } }}
-          >
-            Danh sách các sản phẩm
-          </Typography>
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Tìm kiếm sản phẩm"
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "100%" },
+                marginBottom: "20px",
+                marginLeft: "0",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
           <Button
             variant="contained"
             color="success"
@@ -236,26 +248,6 @@ function List() {
             Thêm sản phẩm
           </Button>
         </Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            placeholder="Tìm kiếm sản phẩm"
-            onChange={handleSearch}
-            sx={{
-              width: { xs: "100%", md: "30%" },
-              marginTop: "20px",
-              marginBottom: "20px",
-              marginLeft: "0",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",

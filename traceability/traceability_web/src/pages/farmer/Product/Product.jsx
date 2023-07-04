@@ -23,6 +23,8 @@ import ProductTracking from "../ProductTracking/ProductTracking";
 import Loading from "../../../components/Loading";
 import * as HiIcons from "react-icons/hi";
 import { Carousel } from "react-carousel-minimal";
+import LabelImportantIcon from "@mui/icons-material/LabelImportant";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 const ProductDetailWrapper = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -59,7 +61,8 @@ export const ProductImage = styled("img")(({ src, theme }) => ({
   },
 }));
 
-function Product() {
+function Product(props) {
+  const { pid } = props;
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePopup = () => {
@@ -68,12 +71,13 @@ function Product() {
 
   const params = useParams();
   const [user, setUser] = useState([]);
-  const tokenData = window.localStorage.getItem("token");
 
   const [name, setName] = useState("");
   const [time, setTime] = useState("");
   const [url, setUrl] = useState("");
   const [images, setImages] = useState([]);
+  const [imagesCertificates, setImagesCertificates] = useState([]);
+
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [tracking, setTracking] = useState([]);
@@ -87,6 +91,7 @@ function Product() {
 
   const [openPopup, setOpenPopup] = useState(false);
   const [openQrCode, setOpenQrCode] = useState(false);
+  const [openCertificates, setOpenCertificates] = useState(false);
   const [openPopupTracking, setOpenPopupTracking] = useState(false);
 
   const prepareImages = async (images) => {
@@ -102,27 +107,17 @@ function Product() {
     return null;
   };
 
+  const tokenData = window.localStorage.getItem("token");
+  const userType = window.localStorage.getItem("userType");
+
   useEffect(() => {
-    const getUser = async () => {
-      await fetch(`${process.env.REACT_APP_API}/getAnAuth`, {
-        method: "GET",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setUser(data.data);
-        });
-    };
-
-    getUser();
-
     const getInfoProduct = async () => {
       setLoading(true);
 
       const data = await fetch(
-        `${process.env.REACT_APP_API}/product/get-product/${params.id}`,
+        `${process.env.REACT_APP_API}/product/get-product/${
+          userType === "Admin" || userType === "admin" ? pid : params.id
+        }`,
         {
           method: "GET",
           headers: {
@@ -130,8 +125,9 @@ function Product() {
           },
         }
       ).then((res) => res.json());
-      console.log(data.data);
-      // .then((res) => res.data);
+      const userId = data.data.userId;
+      // console.log("id", userId);
+
       setName(data.data.name);
       setAddress(data.data.address);
       setDescription(data.data.description);
@@ -140,6 +136,7 @@ function Product() {
       setUrl(data.data.url);
       setImages(data.data.images);
       setProcessId(data.data.processId);
+      setImagesCertificates(data.data.certificates);
 
       if (data.dataBC[6] == 0) setStatus("Đã tạo");
       else if (data.dataBC[6] == 1) setStatus("Đã cập nhật");
@@ -152,6 +149,23 @@ function Product() {
       const mappingImages = await prepareImages(data.data.images);
 
       if (mappingImages) setImg([...mappingImages[0]]);
+
+      const getUserInfo = async () => {
+        await fetch(`${process.env.REACT_APP_API}/`, {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            let user = res.data;
+
+            user = user.filter((u) => u._id == userId);
+            setUser(user[0]);
+          });
+      };
+      getUserInfo();
     };
     getInfoProduct();
   }, []);
@@ -240,7 +254,7 @@ function Product() {
                   size={200}
                   // includeMargin={true}
                 />
-                <Button
+                {/* <Button
                   variant="contained"
                   sx={{
                     display: { xs: "none", md: "block" },
@@ -255,10 +269,10 @@ function Product() {
                   }}
                 >
                   Kiểm tra sản phẩm
-                </Button>
+                </Button> */}
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="info"
                   sx={{
                     display: { xs: "none", md: "block" },
                     borderRadius: "10px",
@@ -311,28 +325,78 @@ function Product() {
                   {status}{" "}
                 </Typography>
                 <Typography
-                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" }, fontStyle: "italic", }}
+                  sx={{
+                    lineHeight: 2,
+                    fontSize: { xs: "15px", md: "15px" },
+                    fontStyle: "italic",
+                  }}
                   variant="body"
                 >
                   Địa chỉ: <b>{address}</b>
                 </Typography>
                 <Typography
-                  sx={{ lineHeight: 2, fontSize: { xs: "15px", md: "15px" }, fontStyle: "italic", }}
+                  sx={{
+                    lineHeight: 2,
+                    fontSize: { xs: "15px", md: "15px" },
+                    fontStyle: "italic",
+                  }}
                   variant="body"
                 >
                   Ngày tạo: <b>{time}</b>
                 </Typography>
+                <Typography
+                  color="green"
+                  sx={{
+                    width: 180,
+                    lineHeight: 2,
+                    cursor: "pointer",
+                  }}
+                  onClick={() => {
+                    window.location.href = `${url}`;
+                  }}
+                >
+                  <VerifiedIcon style={{ marginRight: 10, fontSize: 25 }} />{" "}
+                  Kiểm tra sản phẩm
+                </Typography>
+                {userType === "Admin" || userType === "admin" ? null : (
+                  <Typography
+                    color="blue"
+                    sx={{
+                      width: 150,
+                      lineHeight: 2,
+                      cursor: "pointer",
+                    }}
+                    onClick={() => {
+                      setOpenCertificates(true);
+                    }}
+                  >
+                    <LabelImportantIcon
+                      style={{ marginRight: 10, fontSize: 25 }}
+                    />{" "}
+                    Chứng nhận
+                  </Typography>
+                )}
+                <Popup
+                  title="Chứng nhận"
+                  openPopup={openCertificates}
+                  setOpenPopup={setOpenCertificates}
+                >
+                  {imagesCertificates &&
+                    imagesCertificates.map((item) => {
+                      return <img src={item} width={400} height={600} />;
+                    })}
+                </Popup>
                 <Divider sx={{ mt: 2, mb: 2 }} />
                 <Box display={"flex"} flexDirection={"column"}>
                   <Typography variant="text" sx={{}}>
                     <HiIcons.HiUser style={{ marginRight: 10, fontSize: 25 }} />{" "}
-                    Tên nông dân: {user.name}
+                    Tên: <b>{user.name}</b>
                   </Typography>
                   <Typography variant="text">
                     <HiIcons.HiOutlineMail
                       style={{ marginRight: 10, fontSize: 25 }}
                     />{" "}
-                    Email: {user.email}
+                    Email: <b>{user.email}</b>
                   </Typography>
                 </Box>
                 <Box
@@ -406,63 +470,65 @@ function Product() {
                   {description}
                 </ReactReadMoreReadLess>
               </Typography>
-              <Grid container xs={11} sx={{ mt: 4 }}>
-                <Grid item xs={2}>
-                  <Button
-                    variant="contained"
-                    color="warning"
-                    sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
-                    onClick={() => {
-                      setOpenPopupTracking(true);
-                    }}
-                  >
-                    Nhật ký
-                  </Button>
-                  <Popup
-                    title="Nhật ký"
-                    openPopup={openPopupTracking}
-                    setOpenPopup={setOpenPopupTracking}
-                  >
-                    <ProductTracking id={params.id} processId={processId} />
-                  </Popup>
+              {userType === "Admin" || userType === "admin" ? null : (
+                <Grid container xs={11} sx={{ mt: 4 }}>
+                  <Grid item xs={2}>
+                    <Button
+                      variant="contained"
+                      color="warning"
+                      sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
+                      onClick={() => {
+                        setOpenPopupTracking(true);
+                      }}
+                    >
+                      Nhật ký
+                    </Button>
+                    <Popup
+                      title="Nhật ký"
+                      openPopup={openPopupTracking}
+                      setOpenPopup={setOpenPopupTracking}
+                    >
+                      <ProductTracking id={params.id} processId={processId} />
+                    </Popup>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Button
+                      variant="contained"
+                      color="success"
+                      sx={
+                        status === "Đã xóa" || status === "Đã vận chuyển"
+                          ? {
+                              display: "none",
+                              borderRadius: "10px",
+                              width: { xs: 100, md: 200 },
+                              mr: 2,
+                            }
+                          : {
+                              display: "block",
+                              borderRadius: "10px",
+                              width: { xs: 100, md: 200 },
+                              mr: 2,
+                            }
+                      }
+                      onClick={() => {
+                        setOpenPopup(true);
+                      }}
+                    >
+                      Thêm nhật ký
+                    </Button>
+                    <Popup
+                      title="Update Tracking"
+                      openPopup={openPopup}
+                      setOpenPopup={setOpenPopup}
+                    >
+                      <TrackingForm processId={processId} />
+                    </Popup>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <Button
-                    variant="contained"
-                    color="success"
-                    sx={
-                      status === "Đã xóa" || status === "Đã vận chuyển"
-                        ? {
-                            display: "none",
-                            borderRadius: "10px",
-                            width: { xs: 100, md: 200 },
-                            mr: 2,
-                          }
-                        : {
-                            display: "block",
-                            borderRadius: "10px",
-                            width: { xs: 100, md: 200 },
-                            mr: 2,
-                          }
-                    }
-                    onClick={() => {
-                      setOpenPopup(true);
-                    }}
-                  >
-                    Thêm nhật ký
-                  </Button>
-                  <Popup
-                    title="Update Tracking"
-                    openPopup={openPopup}
-                    setOpenPopup={setOpenPopup}
-                  >
-                    <TrackingForm processId={processId} />
-                  </Popup>
-                </Grid>
-              </Grid>
+              )}
             </Box>
             <Divider sx={{ mt: 2, mb: 2 }} />
-            <Typography sx={{ mt: 2, fontSize: 15 }} variant="h5">
+            <Typography sx={{ mt: 2, fontSize: 15, color: "red" }} variant="h5">
               <HiIcons.HiInformationCircle
                 style={{ marginRight: 10, fontSize: 20 }}
               />

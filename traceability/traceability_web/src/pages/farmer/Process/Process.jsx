@@ -182,14 +182,13 @@ function Process() {
       }}
     >
       <Loading loading={loading} />
-
+      <Typography
+        variant="h3"
+        sx={{ fontSize: { xs: "18px", md: "30px" }, mb: 2 }}
+      >
+        Danh sách các quy trình
+      </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
-        <Typography
-          variant="h3"
-          sx={{ fontSize: { xs: "18px", md: "30px", marginBottom: "10px" } }}
-        >
-          Danh sách các quy trình
-        </Typography>
         <Toolbar>
           <TextField
             variant="outlined"

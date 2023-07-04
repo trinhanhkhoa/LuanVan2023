@@ -39,8 +39,6 @@ export default function ProductTracking(props) {
   const params = useParams();
 
   const tokenData = window.localStorage.getItem("token");
-  const user = window.localStorage.getItem("userId");
-  const userId = window.localStorage.getItem("userId");
   const [loading, setLoading] = useState(false);
   const [processStage, setProcessStage] = useState({
     stageProcess: {
@@ -293,7 +291,7 @@ export default function ProductTracking(props) {
           ))}
         </Timeline>
       ) : (
-        <Typography> Have not updated any tracking yet! </Typography>
+        <Typography> Sản phẩm chưa thêm nhật ký </Typography>
       )}
     </Box>
   );

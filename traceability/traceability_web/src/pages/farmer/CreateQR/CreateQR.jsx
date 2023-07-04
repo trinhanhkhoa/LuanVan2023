@@ -33,7 +33,10 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 function CreateQR() {
   const [images, setImages] = useState([]);
   const [links, setLinks] = useState([]);
-  const [img, setImg] = useState([]);
+
+  const [imagesCertificates, setImagesCertificates] = useState([]);
+  const [linksCertificates, setLinksCertificates] = useState([]);
+
   const [data, setData] = useState([]);
   const [processId, setProcessId] = useState("");
   const [name, setName] = useState("");
@@ -95,6 +98,7 @@ function CreateQR() {
         address,
         time: time.toLocaleDateString("en-GB"),
         images: links,
+        certificates: linksCertificates,
         description,
         processId,
       }),
@@ -122,7 +126,7 @@ function CreateQR() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         setLoading(false);
 
         setData(data.data);
@@ -241,7 +245,7 @@ function CreateQR() {
               onChange={(e) => setAddress(e.target.value)}
             />
           </Grid>
-          <Grid item xs={11} sm={3}>
+          <Grid item xs={9} sm={3}>
             <label>
               Thời gian tạo <b className="requireDot">*</b>
             </label>
@@ -266,7 +270,7 @@ function CreateQR() {
               // placeholderText="Select a date"
             />
           </Grid>
-          <Grid item xs={11}>
+          <Grid item xs={12} sm={6}>
             <label>
               Hình ảnh sản phẩm <b className="requireDot">*</b>
             </label>
@@ -280,7 +284,7 @@ function CreateQR() {
                 border: "2px dashed #1475cf",
                 borderRadius: "10px",
                 height: "200px",
-                width: "450px",
+                width: {xs: "350px", md:"450px"},
                 cursor: "pointer",
               }}
               onClick={() => {
@@ -295,22 +299,23 @@ function CreateQR() {
                 hidden
                 onChange={async (e) => {
                   e.preventDefault();
+                  let arrayImages = e.target.files;
 
                   const MAX_LENGTH = 3;
-                  if (Array.from(e.target.files).length > MAX_LENGTH) {
+                  if (Array.from(arrayImages).length > MAX_LENGTH) {
                     e.preventDefault();
                     alert(`Cannot upload files more than ${MAX_LENGTH}`);
                     return;
                   }
 
-                  setImages(e.target.files);
-                  console.log(e.target.files);
+                  console.log(`arrayImages`, arrayImages);
+
                   setLoading(true);
 
                   try {
                     let arr = [];
-                    for (let i = 0; i < e.target.files.length; i++) {
-                      const data = await uploadImage(e.target.files[i]);
+                    for (let i = 0; i < arrayImages.length; i++) {
+                      const data = await uploadImage(arrayImages[i]);
                       arr.push(data.url);
                     }
                     setLinks(arr);
@@ -322,7 +327,96 @@ function CreateQR() {
               />
               <ImageList
                 sx={{
-                  width: { xs: 400, md: 400 },
+                  minWidth: { xs: 300, md: 300 },
+                  height: 200,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                cols={3}
+                rowHeight={140}
+              >
+                {links &&
+                  links.map((item) => {
+                    return (
+                      <ImageListItem
+                        key={item}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={item}
+                          width={100}
+                          height={100}
+                          className="image-link"
+                        />
+                      </ImageListItem>
+                    );
+                  })}
+              </ImageList>
+            </Box>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <label>
+              Hình ảnh chứng nhận <b className="requireDot">*</b>
+            </label>
+
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "2px dashed #1475cf",
+                borderRadius: "10px",
+                height: "200px",
+                width: {xs: "350px", md:"450px"},
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                document.querySelector(".input-field-certificates").click();
+              }}
+            >
+              <input
+                className="input-field-certificates"
+                type="file"
+                accept="image/*"
+                multiple
+                hidden
+                onChange={async (e) => {
+                  e.preventDefault();
+                  let arrayCertificates = e.target.files;
+
+                  const MAX_LENGTH = 3;
+                  if (Array.from(arrayCertificates).length > MAX_LENGTH) {
+                    e.preventDefault();
+                    alert(`Cannot upload files more than ${MAX_LENGTH}`);
+                    return;
+                  }
+
+
+                  console.log(`arrayCertificates`, arrayCertificates);
+                  setLoading(true);
+
+                  try {
+                    let arr = [];
+                    for (let i = 0; i < arrayCertificates.length; i++) {
+                      const data = await uploadImage(arrayCertificates[i]);
+                      arr.push(data.url);
+                    }
+                    setLinksCertificates(arr);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                  setLoading(false);
+                }}
+              />
+              <ImageList
+                sx={{
+                  minWidth: { xs: 300, md: 300 },
                   height: 200,
                   display: "flex",
                   justifyContent: "center",
@@ -331,8 +425,8 @@ function CreateQR() {
                 cols={3}
                 rowHeight={164}
               >
-                {links &&
-                  links.map((item) => {
+                {linksCertificates &&
+                  linksCertificates.map((item) => {
                     return (
                       <ImageListItem
                         key={item}
@@ -359,7 +453,7 @@ function CreateQR() {
               Mô tả <b className="requireDot">*</b>
             </label>
 
-            <Box sx={{ width: { xs: 400, md: "100%" } }}>
+            <Box sx={{ width: { xs: 350, md: "100%" } }}>
               <TextareaAutosize
                 required
                 maxRows={20}
@@ -373,7 +467,7 @@ function CreateQR() {
             </Box>
           </Grid>
         </Grid>
-        <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 2 }}>
           <Button
             type="submit"
             variant="contained"

@@ -151,8 +151,7 @@ function EnProcess() {
       // console.log(data.userId);
 
       setData(data);
-      id = data.userId;
-      // console.log("id", id);
+      const userId = data.userId;
       setName(data.stageProcess.name);
       setTime(data.stageProcess.timeCreate);
       setDescription(data.stageProcess.description);
@@ -166,30 +165,29 @@ function EnProcess() {
       const mappingImages = await prepareImages(data.stageProcess.images);
 
       if (mappingImages) setImg([...mappingImages[0]]);
+
+      const getUserInfo = async () => {
+        await fetch(`${process.env.REACT_APP_API}/`, {
+          method: "GET",
+          headers: {
+            "x-auth-token": tokenData,
+          },
+        })
+          .then((res) => res.json())
+          .then((res) => {
+            let user = res.data;
+
+            user = user.filter((u) => u._id == userId);
+            // console.log(user[0]);
+            setUserName(user[0].name);
+            setUserType(user[0].userType);
+            setUserEmail(user[0].email);
+          });
+      };
+      getUserInfo();
     };
+
     getInfoProcess();
-  }, []);
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      await fetch(`${process.env.REACT_APP_API}/`, {
-        method: "GET",
-        headers: {
-          "x-auth-token": tokenData,
-        },
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          let user = res.data;
-
-          user = user.filter((u) => u._id == data.userId);
-          console.log(user[0]);
-          setUserName(user[0].name);
-          setUserType(user[0].userType);
-          setUserEmail(user[0].email);
-        });
-    };
-    getUserInfo();
   }, []);
 
   const captionStyle = {

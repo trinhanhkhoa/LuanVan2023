@@ -100,8 +100,8 @@ export default function SignIn() {
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", data.userType);
-          // setSnackbarState(true);
-          // setIsValid(true);
+          setSnackbarState(true);
+          setIsValid(true);
 
           setTimeout(() => {
             window.location.href = "/enhome";
@@ -117,15 +117,15 @@ export default function SignIn() {
           window.localStorage.setItem("token", data.token);
           window.localStorage.setItem("signedIn", true);
           window.localStorage.setItem("userType", data.userType);
-          // setSnackbarState(true);
-          // setIsValid(true);
+          setSnackbarState(true);
+          setIsValid(true);
 
           setTimeout(() => {
             window.location.href = "/home";
           }, 1000);
         } else {
-          // setSnackbarState(true);
-          // setIsValid(false);
+          setSnackbarState(true);
+          setIsValid(false);
         }
       });
   };
@@ -247,7 +247,7 @@ export default function SignIn() {
           }}
         />
       </Grid>
-      {/* <Snackbar
+      <Snackbar
         open={snackbarState}
         autoHideDuration={1000}
         // anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
@@ -261,7 +261,7 @@ export default function SignIn() {
             Incorrect email or password !!!
           </Alert>
         )}
-      </Snackbar> */}
+      </Snackbar>
     </ThemeProvider>
   );
 }

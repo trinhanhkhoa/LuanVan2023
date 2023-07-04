@@ -204,10 +204,10 @@ function History() {
       }}
     >
       <Loading loading={loading} />
+      <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}>
+        Lịch sử
+      </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
-        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
-          Lịch sử
-        </Typography>
         <Toolbar>
           <TextField
             variant="outlined"
@@ -215,9 +215,7 @@ function History() {
             onChange={handleSearch}
             sx={{
               width: { xs: "100%", md: "30%" },
-              marginTop: "20px",
               marginBottom: "20px",
-              marginLeft: "0",
             }}
             InputProps={{
               startAdornment: (

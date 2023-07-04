@@ -32,20 +32,6 @@ const defaultTheme = createTheme();
 
 function EnUpdateProcess() {
   const [isOpen, setIsOpen] = useState(false);
-  const [getData, setGetData] = useState({
-    stageProcess: {
-      name: "",
-      description: "",
-      images: [],
-      timeCreate: "",
-    },
-    stagePlantSeeds: { name: "", description: "" },
-    stagePlantCare: { name: "", description: "", water: "", fertilizer: "" },
-    stageBloom: { name: "", description: "" },
-    stageCover: { name: "", description: "" },
-    stageHarvest: { name: "", description: "", quantity: "" },
-    stageSell: { name: "", description: "", purchasingUnit: "" },
-  });
 
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState({
@@ -82,11 +68,6 @@ function EnUpdateProcess() {
       .then((res) => res.data);
     // console.log(data);
     setData(data);
-    // setName(data.stageProcess.name);
-    // setDescription(data.stageProcess.description);
-    // setTime(data.stageProcess.time);
-    // setAddress(data.data.address);
-    // setImages(data.data.images);
   };
 
   const handleUpdate = async () => {

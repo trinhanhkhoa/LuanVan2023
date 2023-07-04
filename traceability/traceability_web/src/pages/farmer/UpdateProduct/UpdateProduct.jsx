@@ -32,8 +32,7 @@ function UpdateProduct() {
   };
 
   const [images, setImages] = useState([]);
-
-  const [fileName, setFileName] = useState("No choosen file");
+  const [imagesCertificates, setImagesCertificates] = useState([]);
 
   const [tracking, setTracking] = useState(0);
   const [name, setName] = useState("");
@@ -72,9 +71,9 @@ function UpdateProduct() {
         let dateTime = parseDate(data.data.time);
         // let dateTime = Date.parse(data.data.time);
 
-        console.log(`time`, (dateTime))
         setName(data.data.name);
         setImages(data.data.images);
+        setImagesCertificates(data.data.certificates);
         setAddress(data.data.address);
         setDescription(data.data.description);
         setTime(dateTime);
@@ -120,7 +119,8 @@ function UpdateProduct() {
           user,
           name,
           address,
-          images,
+          images: images,
+          certificates: imagesCertificates,
           time: time.toLocaleDateString("en-GB"),
           description,
         }),
@@ -139,23 +139,13 @@ function UpdateProduct() {
     getInfoProduct();
   }, []);
 
-
   const parseDate = (dateString) => {
-    const [day, month, year] = dateString.split('/');
-  
-    // Note: JavaScript uses zero-based indexing for months (0 - 11)
+    const [day, month, year] = dateString.split("/");
     const parsedDate = new Date(year, month - 1, day);
-  
     return parsedDate;
   };
-  
-  // Usage example:
-  // const dateStr = '22/06/2023';
-  // const parsedDate = parseDate(dateStr);
-  // console.log(parsedDate);
 
   const downloadQRCode = () => {
-    // Generate download with use canvas and stream
     const canvas = document.getElementById("qr-gen");
     const pngUrl = canvas
       .toDataURL("image/png")
@@ -175,8 +165,7 @@ function UpdateProduct() {
       required
       value={value}
       onClick={onClick}
-      className="custom-datepicker-input" // Apply your custom styles here
-      placeholder="Select a date"
+      placeholder="Chọn thời gian"
       readOnly
       InputProps={{
         endAdornment: (
@@ -220,7 +209,6 @@ function UpdateProduct() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              // marginRight: 5
             }}
           >
             <QRCode
@@ -228,7 +216,6 @@ function UpdateProduct() {
               level={"H"}
               value={`${params.id}`}
               size={180}
-              // includeMargin={true}
             />
           </Box>
           <Box
@@ -438,27 +425,190 @@ function UpdateProduct() {
             <label>
               Hình ảnh sản phẩm <b className="requireDot">*</b>
             </label>
-            <input
-              required
-              type="file"
-              // className="image-field"
-              multiple
-              hidden
-              onChange={(e) => setImages(e.target.files)}
-            />
-            <ImageList
-              sx={{ width: { xs: 400 }, height: 200 }}
-              cols={3}
-              rowHeight={164}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "2px dashed #1475cf",
+                borderRadius: "10px",
+                height: "200px",
+                width: { xs: "350px", md: "450px" },
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                document.querySelector(".input-field").click();
+              }}
             >
-              {images.map((item, index) => {
-                return (
-                  <ImageListItem key={index}>
-                    <img src={item} />
-                  </ImageListItem>
-                );
-              })}
-            </ImageList>
+              <input
+                className="input-field"
+                type="file"
+                accept="image/*"
+                multiple
+                hidden
+                onChange={async (e) => {
+                  e.preventDefault();
+                  let arrayImages = e.target.files;
+
+                  const MAX_LENGTH = 3;
+                  if (Array.from(arrayImages).length > MAX_LENGTH) {
+                    e.preventDefault();
+                    alert(`Cannot upload files more than ${MAX_LENGTH}`);
+                    return;
+                  }
+
+                  if (Array.from(arrayImages).length < 1) {
+                    e.preventDefault();
+                    return;
+                  }
+
+                  console.log(`arrayImages`, arrayImages);
+
+                  setLoading(true);
+
+                  try {
+                    let arr = [];
+                    for (let i = 0; i < arrayImages.length; i++) {
+                      const data = await uploadImage(arrayImages[i]);
+                      arr.push(data.url);
+                    }
+                    setImages(arr);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                  setLoading(false);
+                }}
+              />
+              <ImageList
+                sx={{
+                  minWidth: { xs: 300, md: 300 },
+                  height: 200,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                cols={3}
+                rowHeight={140}
+              >
+                {images &&
+                  images.map((item) => {
+                    return (
+                      <ImageListItem
+                        key={item}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={item}
+                          width={100}
+                          height={100}
+                          className="image-link"
+                        />
+                      </ImageListItem>
+                    );
+                  })}
+              </ImageList>
+            </Box>
+          </Box>
+          <Box
+            sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
+          >
+            <label>
+              Hình ảnh chứng nhận <b className="requireDot">*</b>
+            </label>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "2px dashed #1475cf",
+                borderRadius: "10px",
+                height: "200px",
+                width: { xs: "350px", md: "450px" },
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                document.querySelector(".input-field-certificates").click();
+              }}
+            >
+              <input
+                className="input-field-certificates"
+                type="file"
+                accept="image/*"
+                multiple
+                hidden
+                onChange={async (e) => {
+                  e.preventDefault();
+                  let arrayImages = e.target.files;
+
+                  const MAX_LENGTH = 3;
+                  if (Array.from(arrayImages).length > MAX_LENGTH) {
+                    e.preventDefault();
+                    alert(`Cannot upload files more than ${MAX_LENGTH}`);
+                    return;
+                  }
+
+                  
+                  if (Array.from(arrayImages).length < 1) {
+                    e.preventDefault();
+                    return;
+                  }
+
+                  console.log(`arrayImages`, arrayImages);
+
+                  setLoading(true);
+
+                  try {
+                    let arr = [];
+                    for (let i = 0; i < arrayImages.length; i++) {
+                      const data = await uploadImage(arrayImages[i]);
+                      arr.push(data.url);
+                    }
+                    setImagesCertificates(arr);
+                  } catch (error) {
+                    console.log(error);
+                  }
+                  setLoading(false);
+                }}
+              />
+              <ImageList
+                sx={{
+                  minWidth: { xs: 300, md: 300 },
+                  height: 200,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                cols={3}
+                rowHeight={140}
+              >
+                {imagesCertificates &&
+                  imagesCertificates.map((item) => {
+                    return (
+                      <ImageListItem
+                        key={item}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={item}
+                          width={100}
+                          height={100}
+                          className="image-link"
+                        />
+                      </ImageListItem>
+                    );
+                  })}
+              </ImageList>
+            </Box>
           </Box>
           <Box
             sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}

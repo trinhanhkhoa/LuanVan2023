@@ -28,6 +28,7 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Loading from "../../../components/Loading";
 import Popup from "../../../components/Popup";
 import ProductTracking from "../../farmer/ProductTracking/ProductTracking";
+import Product from "../../farmer/Product/Product";
 
 const headCell = [
   { id: "id", label: "STT", disableSorting: true },
@@ -72,6 +73,7 @@ function EnUserAccount() {
       return items;
     },
   });
+  const [openPopupProduct, setOpenPopupProduct] = useState(false);
   const [openPopupTracking, setOpenPopupTracking] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -196,11 +198,13 @@ function EnUserAccount() {
       }}
     >
       <Loading loading={loading} />
-
+      <Typography
+        variant="h3"
+        sx={{ fontSize: { xs: "25px", md: "35px" }, marginBottom: 2 }}
+      >
+        Sản phẩm của {dataUser.name}
+      </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
-        <Typography variant="h3" sx={{ fontSize: { xs: "25px", md: "35px" }, marginBottom: "10px" }}>
-          Sản phẩm của {dataUser.name}
-        </Typography>
         <Box
           sx={{
             display: "flex",
@@ -218,10 +222,18 @@ function EnUserAccount() {
               width: { xs: "100%", md: "20%" },
             }}
           >
-            <Typography fontStyle="italic">Tên: <b>{dataUser.name}</b></Typography>
-            <Typography fontStyle="italic">Email: <b>{dataUser.email}</b></Typography>
-            <Typography fontStyle="italic">ID: <b>{dataUser._id}</b></Typography>
-            <Typography fontStyle="italic">Vai trò: <b>{dataUser.userType}</b></Typography>
+            <Typography>
+              Tên: <b>{dataUser.name}</b>
+            </Typography>
+            <Typography>
+              Email: <b>{dataUser.email}</b>
+            </Typography>
+            <Typography>
+              ID: <b>{dataUser._id}</b>
+            </Typography>
+            <Typography>
+              Vai trò: <b>{dataUser.userType}</b>
+            </Typography>
           </Card>
           <Toolbar>
             <TextField
@@ -278,25 +290,46 @@ function EnUserAccount() {
                   <StyledTableCell>{item.name}</StyledTableCell>
                   <StyledTableCell>{item.tracking.length}</StyledTableCell>
                   <StyledTableCell align="center">
-                    <ButtonGroup variant="contained">
-                      <Button
-                        color="info"
-                        onClick={() => {
-                          setOpenPopupTracking(true);
-                          setIdPopup(item.productId);
-                          setProcessIdPopup(item.processId);
-                        }}
-                      >
-                        Chi tiết
-                      </Button>
-                      <Popup
-                        title="Nhật ký"
-                        openPopup={openPopupTracking}
-                        setOpenPopup={setOpenPopupTracking}
-                      >
-                        <ProductTracking id={idPopup} processId={processIdPopup}/>
-                      </Popup>
-                    </ButtonGroup>
+                    <Button
+                      sx={{ mr: 2 }}
+                      variant="contained"
+                      color="success"
+                      onClick={() => {
+                        setOpenPopupProduct(true);
+                        setIdPopup(item.productId);
+                        setProcessIdPopup(item.processId);
+                      }}
+                    >
+                      Sản phẩm
+                    </Button>
+                    <Popup
+                      title="Nhật ký"
+                      openPopup={openPopupProduct}
+                      setOpenPopup={setOpenPopupProduct}
+                    >
+                      <Product pid={idPopup} />
+                    </Popup>
+                    <Button
+                      variant="contained"
+                      color="info"
+                      onClick={() => {
+                        setOpenPopupTracking(true);
+                        setIdPopup(item.productId);
+                        setProcessIdPopup(item.processId);
+                      }}
+                    >
+                      Nhật ký
+                    </Button>
+                    <Popup
+                      title="Nhật ký"
+                      openPopup={openPopupTracking}
+                      setOpenPopup={setOpenPopupTracking}
+                    >
+                      <ProductTracking
+                        id={idPopup}
+                        processId={processIdPopup}
+                      />
+                    </Popup>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}

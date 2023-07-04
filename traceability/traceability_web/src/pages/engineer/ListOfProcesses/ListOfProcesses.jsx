@@ -190,7 +190,9 @@ function ListOfProcesses() {
       }}
     >
       <Loading loading={loading} />
-
+      <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}>
+        Danh sách các quy trình
+      </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Box
           sx={{
@@ -199,12 +201,24 @@ function ListOfProcesses() {
             marginBottom: "20px",
           }}
         >
-          <Typography
-            variant="h3"
-            sx={{ fontSize: { xs: "20px", md: "35px" } }}
-          >
-            Danh sách các quy trình
-          </Typography>
+          <Toolbar>
+            <TextField
+              variant="outlined"
+              placeholder="Tìm kiếm quy trình"
+              onChange={handleSearch}
+              sx={{
+                width: { xs: "100%", md: "100%" },
+                marginBottom: "20px",
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchRoundedIcon />
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Toolbar>
           <Button
             variant="contained"
             sx={{
@@ -226,26 +240,6 @@ function ListOfProcesses() {
             <AddIcon /> Tạo
           </Button>
         </Box>
-        <Toolbar>
-          <TextField
-            variant="outlined"
-            placeholder="Tìm kiếm quy trình"
-            onChange={handleSearch}
-            sx={{
-              width: { xs: "100%", md: "30%" },
-              marginBottom: "20px",
-              marginTop: "20px",
-              marginLeft: "0",
-            }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Toolbar>
         <TableContainer
           sx={{
             width: "100%",

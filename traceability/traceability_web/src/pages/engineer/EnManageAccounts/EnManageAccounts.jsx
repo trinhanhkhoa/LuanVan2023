@@ -173,11 +173,10 @@ function EnManageAccounts() {
       }}
     >
       <Loading loading={loading} />
-
+      <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}>
+        Danh sách người dùng
+      </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
-        <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" } }}>
-          Danh sách người dùng
-        </Typography>
         <Toolbar>
           <TextField
             variant="outlined"
@@ -186,8 +185,6 @@ function EnManageAccounts() {
             sx={{
               width: { xs: "100%", md: "30%" },
               marginBottom: "20px",
-              marginTop: "20px",
-              marginLeft: "0",
             }}
             InputProps={{
               startAdornment: (
