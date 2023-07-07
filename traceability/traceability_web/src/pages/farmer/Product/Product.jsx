@@ -254,22 +254,6 @@ function Product(props) {
                   size={200}
                   // includeMargin={true}
                 />
-                {/* <Button
-                  variant="contained"
-                  sx={{
-                    display: { xs: "none", md: "block" },
-                    borderRadius: "10px",
-                    width: 180,
-                    lineHeight: 2,
-                    m: { xs: 2, md: 0 },
-                    mt: { xs: 2, md: 2 },
-                  }}
-                  onClick={() => {
-                    window.location.href = `${url}`;
-                  }}
-                >
-                  Kiểm tra sản phẩm
-                </Button> */}
                 <Button
                   variant="contained"
                   color="info"
@@ -292,30 +276,34 @@ function Product(props) {
                 sx={{ ml: { xs: 0, md: 5 } }}
               >
                 <Typography
-                  variant="h4"
-                  sx={{ fontSize: { xs: "20px", md: "30px" } }}
+                  variant="h3"
+                  sx={{
+                    fontSize: { xs: "30px", md: "30px" },
+                    mt: { xs: 2, md: 0 },
+                  }}
                 >
                   {name}
                 </Typography>
 
-                <Typography
+                <Button
                   maxWidth={false}
-                  variant="body"
+                  variant="outlined"
+                  color={
+                    status == "Đã tạo"
+                      ? "success"
+                      : status == "Đã cập nhật"
+                      ? "warning"
+                      : status == "Đã xóa"
+                      ? "error"
+                      : status == "Đã vận chuyển"
+                      ? "info"
+                      : "primary"
+                  }
                   sx={{
                     mt: 1,
                     mb: 1,
-                    padding: 0.5,
+                    // padding: 0.5,
                     minWidth: 100,
-                    backgroundColor:
-                      status == "Đã tạo"
-                        ? "#76ff03"
-                        : status == "Đã cập nhật"
-                        ? "#ffff00"
-                        : status == "Đã xóa"
-                        ? "#ff5722"
-                        : status == "Đã vận chuyển"
-                        ? "#40c4ff"
-                        : "#ff3d00",
                     borderRadius: 2,
                     textAlign: "center",
                     fontSize: { xs: "15px", md: "15px" },
@@ -323,7 +311,7 @@ function Product(props) {
                 >
                   {" "}
                   {status}{" "}
-                </Typography>
+                </Button>
                 <Typography
                   sx={{
                     lineHeight: 2,
@@ -344,6 +332,29 @@ function Product(props) {
                 >
                   Ngày tạo: <b>{time}</b>
                 </Typography>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                    borderRadius: "10px",
+                    width: 150,
+                    lineHeight: 2,
+                    m: 2,
+                  }}
+                  onClick={() => {
+                    setOpenQrCode(true);
+                  }}
+                >
+                  Mã QR
+                </Button>
+                <Popup
+                  title="Qr Code"
+                  openPopup={openQrCode}
+                  setOpenPopup={setOpenQrCode}
+                >
+                  <QRCode value={`${params.id}`} size={180} />
+                </Popup>
                 <Typography
                   color="green"
                   sx={{
@@ -386,6 +397,7 @@ function Product(props) {
                       return <img src={item} width={400} height={600} />;
                     })}
                 </Popup>
+
                 <Divider sx={{ mt: 2, mb: 2 }} />
                 <Box display={"flex"} flexDirection={"column"}>
                   <Typography variant="text" sx={{}}>
@@ -398,53 +410,6 @@ function Product(props) {
                     />{" "}
                     Email: <b>{user.email}</b>
                   </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    display: { xs: "flex", md: "block" },
-                    flexDirection: { xs: "row", md: "column" },
-                    alignItems: "center",
-                  }}
-                >
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                      display: { xs: "block", md: "none" },
-                      borderRadius: "10px",
-                      width: 150,
-                      lineHeight: 2,
-                      m: 2,
-                    }}
-                    onClick={() => {
-                      setOpenQrCode(true);
-                    }}
-                  >
-                    Mã QR
-                  </Button>
-                  <Popup
-                    title="Qr Code"
-                    openPopup={openQrCode}
-                    setOpenPopup={setOpenQrCode}
-                  >
-                    <QRCode value={`${params.id}`} size={180} />
-                  </Popup>
-                  <Button
-                    variant="contained"
-                    sx={{
-                      display: { xs: "block", md: "none" },
-                      borderRadius: "10px",
-                      minWidth: 180,
-                      lineHeight: 2,
-                      m: { xs: 2, md: 0 },
-                      mt: { xs: 2, md: 2 },
-                    }}
-                    onClick={() => {
-                      window.location.href = `${url}`;
-                    }}
-                  >
-                    Kiểm tra sản phẩm
-                  </Button>
                 </Box>
               </Box>
             </Box>
@@ -472,11 +437,11 @@ function Product(props) {
               </Typography>
               {userType === "Admin" || userType === "admin" ? null : (
                 <Grid container xs={11} sx={{ mt: 4 }}>
-                  <Grid item xs={2}>
+                  <Grid item xs={5}>
                     <Button
                       variant="contained"
                       color="warning"
-                      sx={{ borderRadius: "10px", height: { xs: 60, md: 37 } }}
+                      sx={{ borderRadius: "10px", width: { xs: 100, md: 37 } }}
                       onClick={() => {
                         setOpenPopupTracking(true);
                       }}
@@ -491,7 +456,7 @@ function Product(props) {
                       <ProductTracking id={params.id} processId={processId} />
                     </Popup>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={6}>
                     <Button
                       variant="contained"
                       color="success"
@@ -506,7 +471,7 @@ function Product(props) {
                           : {
                               display: "block",
                               borderRadius: "10px",
-                              width: { xs: 100, md: 200 },
+                              width: { xs: 150, md: 200 },
                               mr: 2,
                             }
                       }

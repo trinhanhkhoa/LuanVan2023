@@ -24,10 +24,13 @@ import {
   Typography,
   tableCellClasses,
   Grid,
+  IconButton,
+  Tooltip,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Loading from "../../../components/Loading";
+import SearchIcon from "@mui/icons-material/Search";
 
 const headCell = [
   { id: "id", label: "STT", disableSorting: true },
@@ -184,7 +187,7 @@ function Process() {
       <Loading loading={loading} />
       <Typography
         variant="h3"
-        sx={{ fontSize: { xs: "18px", md: "30px" }, mb: 2 }}
+        sx={{ fontSize: { xs: "28px", md: "30px" }, mb: 2 }}
       >
         Danh sách các quy trình
       </Typography>
@@ -222,6 +225,11 @@ function Process() {
                 <StyledTableCell
                   key={item.id}
                   sortDirection={orderBy === item.id ? order : false}
+                  sx={
+                    item.label == "Ngày tạo"
+                      ? { display: { xs: "none", md: "table-cell" } }
+                      : null
+                  }
                 >
                   {item.disableSorting ? (
                     item.label
@@ -242,18 +250,33 @@ function Process() {
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.name}</StyledTableCell>
-                  <StyledTableCell>{item.timeCreate}</StyledTableCell>
+                  <StyledTableCell
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    {item.timeCreate}
+                  </StyledTableCell>
                   <StyledTableCell align="center">
-                    <ButtonGroup variant="contained">
-                      <Button
+                    <Button
+                      color="info"
+                      variant="contained"
+                      onClick={() => {
+                        window.location.href = `/processdetail/${item._id}`;
+                      }}
+                      sx={{ display: { xs: "none", md: "table-cell" } }}
+                    >
+                      Chi tiết
+                    </Button>
+                    <Tooltip title="Detail">
+                      <IconButton
                         color="info"
                         onClick={() => {
                           window.location.href = `/processdetail/${item._id}`;
                         }}
+                        sx={{ display: { xs: "block", md: "none" } }}
                       >
-                        Chi tiết
-                      </Button>
-                    </ButtonGroup>
+                        <SearchIcon />
+                      </IconButton>
+                    </Tooltip>
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
