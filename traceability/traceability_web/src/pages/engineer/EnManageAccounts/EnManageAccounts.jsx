@@ -34,6 +34,7 @@ const headCell = [
   { id: "name", label: "Tên người dùng" },
   { id: "userType", label: "Vai trò" },
   { id: "email", label: "Email" },
+  { id: "length", label: "Sản phẩm" },
   { id: "button", label: "" },
 ];
 
@@ -173,7 +174,10 @@ function EnManageAccounts() {
       }}
     >
       <Loading loading={loading} />
-      <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}>
+      <Typography
+        variant="h3"
+        sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}
+      >
         Danh sách người dùng
       </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
@@ -206,7 +210,7 @@ function EnManageAccounts() {
               {headCell.map((item) => (
                 <StyledTableCell
                   sx={
-                    item.label == "Role" || item.label == "No"
+                    item.label == "Vai trò" || item.label == "STT" || item.label == "Sản phẩm"
                       ? { display: { xs: "none", md: "table-cell" } }
                       : null
                   }
@@ -244,7 +248,13 @@ function EnManageAccounts() {
                     >
                       {item.userType}
                     </StyledTableCell>
+
                     <StyledTableCell>{item.email}</StyledTableCell>
+                    <StyledTableCell
+                      sx={{ display: { xs: "none", md: "table-cell" } }}
+                    >
+                      {item.products.length}
+                    </StyledTableCell>
                     <StyledTableCell align="center">
                       <Button
                         sx={{ display: { xs: "none", md: "block" } }}

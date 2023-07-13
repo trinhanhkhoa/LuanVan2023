@@ -138,6 +138,7 @@ function Product(props) {
       setProcessId(data.data.processId);
       setImagesCertificates(data.data.certificates);
 
+      console.log(data.dataBC);
       if (data.dataBC[6] == 0) setStatus("Đã tạo");
       else if (data.dataBC[6] == 1) setStatus("Đã cập nhật");
       else if (data.dataBC[6] == 2) setStatus("Đã xóa");
@@ -213,26 +214,29 @@ function Product(props) {
         <ProductDetailInfoWrapper
           sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
         >
-          <ProductDetail sx={{ mr: 4 }}>
-            {img && img.length > 0 && (
-              <Carousel
-                data={img}
-                time={2000}
-                width="850px"
-                height="600px"
-                captionStyle={captionStyle}
-                radius="10px"
-                slideNumber={true}
-                slideNumberStyle={slideNumberStyle}
-                automatic={true}
-                dots={true}
-                pauseIconColor="white"
-                pauseIconSize="40px"
-                slideBackgroundColor="darkgrey"
-                slideImageFit="cover"
-              />
-            )}
-          </ProductDetail>
+          <Box sx={{ maxWidth: "750px", maxHeight: "600px" }}>
+            <ProductDetail sx={{ mr: 4 }}>
+              {img && img.length > 0 && (
+                <Carousel
+                  data={img}
+                  time={2000}
+                  width="850px"
+                  height="600px"
+                  captionStyle={captionStyle}
+                  radius="10px"
+                  slideNumber={true}
+                  slideNumberStyle={slideNumberStyle}
+                  automatic={true}
+                  dots={true}
+                  pauseIconColor="white"
+                  pauseIconSize="40px"
+                  slideBackgroundColor="darkgrey"
+                  slideImageFit="cover"
+                />
+              )}
+            </ProductDetail>
+          </Box>
+
           <Box sx={{ display: "flex", flexDirection: "column" }}>
             <Box
               sx={{
@@ -252,7 +256,6 @@ function Product(props) {
                   level={"H"}
                   value={`${params.id}`}
                   size={200}
-                  // includeMargin={true}
                 />
                 <Button
                   variant="contained"
@@ -283,35 +286,35 @@ function Product(props) {
                   }}
                 >
                   {name}
+                  <Button
+                    maxWidth={false}
+                    variant="outlined"
+                    color={
+                      status == "Đã tạo"
+                        ? "success"
+                        : status == "Đã cập nhật"
+                        ? "warning"
+                        : status == "Đã xóa"
+                        ? "error"
+                        : status == "Đã vận chuyển"
+                        ? "info"
+                        : "primary"
+                    }
+                    sx={{
+                      ml: 2,
+                      mb: 1,
+                      // padding: 0.5,
+                      minWidth: 100,
+                      borderRadius: 3,
+                      textAlign: "center",
+                      fontSize: { xs: "15px", md: "15px" },
+                    }}
+                  >
+                    {" "}
+                    {status}{" "}
+                  </Button>
                 </Typography>
 
-                <Button
-                  maxWidth={false}
-                  variant="outlined"
-                  color={
-                    status == "Đã tạo"
-                      ? "success"
-                      : status == "Đã cập nhật"
-                      ? "warning"
-                      : status == "Đã xóa"
-                      ? "error"
-                      : status == "Đã vận chuyển"
-                      ? "info"
-                      : "primary"
-                  }
-                  sx={{
-                    mt: 1,
-                    mb: 1,
-                    // padding: 0.5,
-                    minWidth: 100,
-                    borderRadius: 2,
-                    textAlign: "center",
-                    fontSize: { xs: "15px", md: "15px" },
-                  }}
-                >
-                  {" "}
-                  {status}{" "}
-                </Button>
                 <Typography
                   sx={{
                     lineHeight: 2,
@@ -421,7 +424,7 @@ function Product(props) {
                 sx={{
                   lineHeight: 2,
                   whiteSpace: "pre-line",
-                  width: { xs: 300, md: 800 },
+                  maxWidth: { xs: 300, md: 900 },
                 }}
               >
                 {" "}
@@ -437,11 +440,11 @@ function Product(props) {
               </Typography>
               {userType === "Admin" || userType === "admin" ? null : (
                 <Grid container xs={11} sx={{ mt: 4 }}>
-                  <Grid item xs={5}>
+                  <Grid item xs={5} md={3}>
                     <Button
                       variant="contained"
                       color="warning"
-                      sx={{ borderRadius: "10px", width: { xs: 100, md: 37 } }}
+                      sx={{ borderRadius: "10px", width: { xs: 100, md: 100 } }}
                       onClick={() => {
                         setOpenPopupTracking(true);
                       }}
@@ -456,7 +459,7 @@ function Product(props) {
                       <ProductTracking id={params.id} processId={processId} />
                     </Popup>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={5} md={1}>
                     <Button
                       variant="contained"
                       color="success"

@@ -258,7 +258,7 @@ export default function SignIn() {
           </Alert>
         ) : (
           <Alert severity="error" sx={{ width: "100%" }}>
-            Incorrect email or password !!!
+            Mật khẩu hoặc email không đúng !!!
           </Alert>
         )}
       </Snackbar>

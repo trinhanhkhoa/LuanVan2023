@@ -25,7 +25,7 @@ import {
   tableCellClasses,
   Menu,
   MenuItem,
-  Fade 
+  Fade,
 } from "@mui/material";
 import { styled, useTheme } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
@@ -110,15 +110,15 @@ function List() {
         .then((res) => {
           let data = res.data;
           let dataSC = res.dataSC;
-          dataSC = dataSC.filter((p) => p.status != 3);
+          dataSC = dataSC.filter((p) => p.status != 3 || p.status != 2);
 
           data = data.filter((p) => p.userId == id);
-          // console.log(data);
-          // console.log(dataSC);
+          console.log(data);
+          console.log(dataSC);
 
           const filteredArray = data.filter((item1) =>
             dataSC.some(
-              (item2) => item2.pid === item1.productId && item2.status !== 3
+              (item2) => item2.pid === item1.productId && item2.status !== 3 && item2.status !== 2
             )
           );
 
@@ -311,64 +311,67 @@ function List() {
                       {item.time}
                     </StyledTableCell>
                     <StyledTableCell align="center">
-                      <IconButton
-                        aria-label="more"
-                        id="long-button"
-                        aria-controls={open ? "long-menu" : undefined}
-                        aria-expanded={open ? "true" : undefined}
-                        aria-haspopup="true"
-                        onClick={handleClick}
-                      >
-                        <MoreVertIcon />
-                      </IconButton>
-                      <Menu
-                        id="long-menu"
-                        MenuListProps={{
-                          "aria-labelledby": "long-button",
-                        }}
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        TransitionComponent={Fade}
-                      >
-                        <MenuItem onClick={handleClose}>
-                          <Tooltip title="Detail">
-                            <IconButton
-                              color="info"
-                              onClick={() => {
-                                window.location.href = `/product/${item.productId}`;
-                              }}
-                            >
-                              <SearchIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <Tooltip title="Edit">
-                            <IconButton
-                              color="success"
-                              onClick={() => {
-                                window.location.href = `/updateproduct/${item.productId}`;
-                              }}
-                            >
-                              <EditIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </MenuItem>
-                        <MenuItem onClick={handleClose}>
-                          <Tooltip title="Delete">
-                            <IconButton
-                              color="error"
-                              onClick={() => {
-                                setOpenPopup(true);
-                                setIdPopup(item.productId);
-                              }}
-                            >
-                              <DeleteIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </MenuItem>
-                      </Menu>
+                      <Box sx={{ display: { xs: "table-cell", md: "none" } }}>
+                        <IconButton
+                          aria-label="more"
+                          id="long-button"
+                          aria-controls={open ? "long-menu" : undefined}
+                          aria-expanded={open ? "true" : undefined}
+                          aria-haspopup="true"
+                          onClick={handleClick}
+                        >
+                          <MoreVertIcon />
+                        </IconButton>
+                        <Menu
+                          id="long-menu"
+                          MenuListProps={{
+                            "aria-labelledby": "long-button",
+                          }}
+                          anchorEl={anchorEl}
+                          open={open}
+                          onClose={handleClose}
+                          TransitionComponent={Fade}
+                        >
+                          <MenuItem onClick={handleClose}>
+                            <Tooltip title="Detail">
+                              <IconButton
+                                color="info"
+                                onClick={() => {
+                                  window.location.href = `/product/${item.productId}`;
+                                }}
+                              >
+                                <SearchIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </MenuItem>
+                          <MenuItem onClick={handleClose}>
+                            <Tooltip title="Edit">
+                              <IconButton
+                                color="success"
+                                onClick={() => {
+                                  window.location.href = `/updateproduct/${item.productId}`;
+                                }}
+                              >
+                                <EditIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </MenuItem>
+                          <MenuItem onClick={handleClose}>
+                            <Tooltip title="Delete">
+                              <IconButton
+                                color="error"
+                                onClick={() => {
+                                  setOpenPopup(true);
+                                  setIdPopup(item.productId);
+                                }}
+                              >
+                                <DeleteIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </MenuItem>
+                        </Menu>
+                      </Box>
+
                       <Box sx={{ display: { xs: "none", md: "table-cell" } }}>
                         <Tooltip title="Detail">
                           <IconButton
@@ -403,7 +406,7 @@ function List() {
                           </IconButton>
                         </Tooltip>
                         <Popup
-                          title="Confirm Delete"
+                          title="Xác nhận xóa"
                           openPopup={openPopup}
                           setOpenPopup={setOpenPopup}
                         >
@@ -421,7 +424,7 @@ function List() {
           page={page}
           rowsPerPageOptions={pages}
           rowsPerPage={rowsPerPage}
-          count={data.length}
+          count={dataFilter.length}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />

@@ -2,10 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import imgCover from "../../../asserts/news.png";
 
-import * as TbIcons from "react-icons/tb";
-import * as MdIcons from "react-icons/md";
 import { Link } from "react-router-dom";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import {
   Box,

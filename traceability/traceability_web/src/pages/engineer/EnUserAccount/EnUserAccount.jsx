@@ -8,6 +8,7 @@ import {
   ButtonGroup,
   Card,
   Container,
+  IconButton,
   Input,
   InputAdornment,
   Table,
@@ -29,11 +30,14 @@ import Loading from "../../../components/Loading";
 import Popup from "../../../components/Popup";
 import ProductTracking from "../../farmer/ProductTracking/ProductTracking";
 import Product from "../../farmer/Product/Product";
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import SearchIcon from '@mui/icons-material/Search';
 
 const headCell = [
   { id: "id", label: "STT", disableSorting: true },
   { id: "name", label: "Sản phẩm" },
   { id: "length", label: "Nhật ký" },
+  { id: "time", label: "Ngày tạo" },
   { id: "button", label: "" },
 ];
 
@@ -62,7 +66,7 @@ function EnUserAccount() {
   const [dataUser, setDataUser] = useState([]);
   const [idPopup, setIdPopup] = useState("");
   const [processIdPopup, setProcessIdPopup] = useState("");
-
+  const [length, setLength] = useState(0);
   const pages = [5, 10, 25];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
@@ -96,6 +100,7 @@ function EnUserAccount() {
       .then((res) => res.json())
       .then((res) => res.data);
     setDataUser(data);
+    setLength(data.products.length)
     // console.log(data);
   };
 
@@ -114,10 +119,9 @@ function EnUserAccount() {
           let data = res.data;
 
           data = data.filter((p) => p.userId == params.id);
+          // console.log(data);
 
           setData(data);
-
-          // console.log(data);
         });
       setLoading(false);
     };
@@ -200,7 +204,11 @@ function EnUserAccount() {
       <Loading loading={loading} />
       <Typography
         variant="h3"
-        sx={{ fontSize: { xs: "25px", md: "35px" }, marginBottom: 2 }}
+        sx={{
+          fontSize: { xs: "25px", md: "35px" },
+          marginBottom: 2,
+          marginTop: 3,
+        }}
       >
         Sản phẩm của {dataUser.name}
       </Typography>
@@ -234,6 +242,10 @@ function EnUserAccount() {
             <Typography>
               Vai trò: <b>{dataUser.userType}</b>
             </Typography>
+            <Typography>
+              Số lượng sản phẩm: <b>{length}</b>
+            </Typography>
+            
           </Card>
           <Toolbar>
             <TextField
@@ -266,6 +278,11 @@ function EnUserAccount() {
             <TableHead>
               {headCell.map((item) => (
                 <StyledTableCell
+                  sx={
+                    item.label == "Nhật ký" || item.label == "Ngày tạo"
+                      ? { display: { xs: "none", md: "table-cell" } }
+                      : null
+                  }
                   key={item.id}
                   sortDirection={orderBy === item.id ? order : false}
                 >
@@ -288,20 +305,29 @@ function EnUserAccount() {
                 <StyledTableRow key={index}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.name}</StyledTableCell>
-                  <StyledTableCell>{item.tracking.length}</StyledTableCell>
+                  <StyledTableCell
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    {item.tracking.length}
+                  </StyledTableCell>
+                  <StyledTableCell
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    {item.time}
+                  </StyledTableCell>
                   <StyledTableCell align="center">
-                    <Button
+                    <IconButton
                       sx={{ mr: 2 }}
                       variant="contained"
                       color="success"
                       onClick={() => {
-                        setOpenPopupProduct(true);
                         setIdPopup(item.productId);
                         setProcessIdPopup(item.processId);
+                        setOpenPopupProduct(true);
                       }}
                     >
-                      Sản phẩm
-                    </Button>
+                      <SearchIcon/>
+                    </IconButton>
                     <Popup
                       title="Nhật ký"
                       openPopup={openPopupProduct}
@@ -309,17 +335,17 @@ function EnUserAccount() {
                     >
                       <Product pid={idPopup} />
                     </Popup>
-                    <Button
+                    <IconButton
                       variant="contained"
-                      color="info"
+                      color="warning"
                       onClick={() => {
-                        setOpenPopupTracking(true);
                         setIdPopup(item.productId);
                         setProcessIdPopup(item.processId);
+                        setOpenPopupTracking(true);
                       }}
                     >
-                      Nhật ký
-                    </Button>
+                      <MenuBookIcon/>
+                    </IconButton>
                     <Popup
                       title="Nhật ký"
                       openPopup={openPopupTracking}

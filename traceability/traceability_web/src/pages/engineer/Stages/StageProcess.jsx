@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import Loading from "../../../components/Loading";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 export default function StageProcess({ data, setData }) {
   const [links, setLinks] = useState([]);
@@ -48,7 +49,6 @@ export default function StageProcess({ data, setData }) {
       },
     });
   };
-
 
   console.log(data.stageProcess.images);
   const CustomInput = ({ value, onClick }) => (
@@ -95,20 +95,27 @@ export default function StageProcess({ data, setData }) {
             value={data.stageProcess.name}
           />
         </Grid>
-        <Grid item xs={12} sm={3}>
-          <label>
-            Thời gian tạo <b className="requireDot">*</b>
-          </label>
-          <DatePicker
-            name="time"
-            required
-            fullWidth
-            selected={time}
-            minDate={time}
-            onChange={handleChange}
-            customInput={<CustomInput />}
-            dateFormat="dd/MM/yyyy"
-          />
+        <Grid item xs={12} sm={6}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <label>
+              Thời gian tạo <b className="requireDot">*</b>
+            </label>
+            <DatePicker
+              name="time"
+              required
+              fullWidth
+              selected={time}
+              minDate={time}
+              onChange={handleChange}
+              customInput={<CustomInput />}
+              dateFormat="dd/MM/yyyy"
+            />
+          </Box>
         </Grid>
         <Grid
           item
@@ -137,6 +144,7 @@ export default function StageProcess({ data, setData }) {
             <input
               className="input-field"
               type="file"
+              required
               accept="image/*"
               multiple
               hidden
@@ -170,38 +178,45 @@ export default function StageProcess({ data, setData }) {
                 }
               }}
             />
-            <ImageList
-              sx={{
-                width: { xs: 400, md: 400 },
-                height: 200,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              cols={3}
-              rowHeight={164}
-            >
-              {links &&
-                links.map((item) => {
-                  return (
-                    <ImageListItem
-                      key={item}
-                      sx={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <img
-                        src={item}
-                        width={100}
-                        height={100}
-                        className="image-link"
-                      />
-                    </ImageListItem>
-                  );
-                })}
-            </ImageList>
+            {links.length === 0 ? (
+              <Box>
+                <CloudUploadIcon color="primary" sx={{ fontSize: 100 }} />
+                <Typography color={"#b0bec5"}>Chọn hình ảnh</Typography>
+              </Box>
+            ) : (
+              <ImageList
+                sx={{
+                  width: { xs: 400, md: 400 },
+                  height: 200,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                cols={3}
+                rowHeight={164}
+              >
+                {links &&
+                  links.map((item) => {
+                    return (
+                      <ImageListItem
+                        key={item}
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <img
+                          src={item}
+                          width={100}
+                          height={100}
+                          className="image-link"
+                        />
+                      </ImageListItem>
+                    );
+                  })}
+              </ImageList>
+            )}
           </Box>
         </Grid>
         <Grid item xs={12} sx={{ width: { xs: 400, md: "100%" } }}>

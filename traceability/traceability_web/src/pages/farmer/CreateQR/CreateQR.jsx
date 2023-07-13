@@ -25,6 +25,7 @@ import MuiAlert from "@mui/material/Alert";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -162,7 +163,9 @@ function CreateQR() {
       sx={{ justifyContent: "center", alignItems: "center", minHeight: "80vh" }}
     >
       <Form onSubmit={handleSubmit}>
-        <Box sx={{ marginBottom: "10px", textAlign: "left" }}>
+        <Box
+          sx={{ marginTop: "30px", marginBottom: "10px", textAlign: "left" }}
+        >
           <Typography
             variant="h3"
             sx={{
@@ -174,7 +177,11 @@ function CreateQR() {
           </Typography>
           <Typography
             variant="h6"
-            sx={{ fontSize: { xs: "18px", md: "30px" } }}
+            sx={{
+              fontSize: { xs: "18px", md: "25px" },
+              fontStyle: "italic",
+              mb: 2,
+            }}
           >
             Điền thông tin chung
           </Typography>
@@ -183,7 +190,7 @@ function CreateQR() {
         <Loading loading={loading} />
 
         <Grid container spacing={3}>
-          <Grid item xs={11} sm={6}>
+          <Grid item xs={12} sm={6}>
             <label>
               Tên sản phẩm <b className="requireDot">*</b>
             </label>
@@ -199,7 +206,7 @@ function CreateQR() {
               placeholder="Nhập tên sản phẩm"
             />
           </Grid>
-          <Grid item xs={11} sm={5}>
+          <Grid item xs={12} sm={5}>
             <label>
               Chọn quy trình trồng cây <b className="requireDot">*</b>
             </label>
@@ -230,7 +237,7 @@ function CreateQR() {
               </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={11} sm={8.3}>
+          <Grid item xs={12} sm={6}>
             <label>
               Địa chỉ <b className="requireDot">*</b>
             </label>
@@ -245,30 +252,27 @@ function CreateQR() {
               onChange={(e) => setAddress(e.target.value)}
             />
           </Grid>
-          <Grid item xs={9} sm={3}>
-            <label>
-              Thời gian tạo <b className="requireDot">*</b>
-            </label>
-            {/* <DatePicker
-              selected={time}
-              onChange={handleChange}
-              dateFormat="dd/MM/yyyy"
-              name="time"
-              required
-              className="form-control"
-              onClick={console.log(time)}
-            /> */}
-            <DatePicker
-              name="time"
-              required
-              fullWidth
-              selected={time}
-              minDate={today}
-              onChange={handleChange}
-              customInput={<CustomInput />}
-              dateFormat="dd/MM/yyyy"
-              // placeholderText="Select a date"
-            />
+          <Grid item xs={9} sm={5}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+              }}
+            >
+              <label>
+                Thời gian tạo <b className="requireDot">*</b>
+              </label>
+              <DatePicker
+                name="time"
+                required
+                fullWidth
+                selected={time}
+                minDate={today}
+                onChange={handleChange}
+                customInput={<CustomInput />}
+                dateFormat="dd/MM/yyyy"
+              />
+            </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
             <label>
@@ -281,10 +285,10 @@ function CreateQR() {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                border: "2px dashed #1475cf",
+                border: "1px dashed #1475cf",
                 borderRadius: "10px",
                 height: "200px",
-                width: {xs: "350px", md:"450px"},
+                width: { xs: "350px", md: "470px" },
                 cursor: "pointer",
               }}
               onClick={() => {
@@ -294,6 +298,7 @@ function CreateQR() {
               <input
                 className="input-field"
                 type="file"
+                required
                 accept="image/*"
                 multiple
                 hidden
@@ -325,38 +330,46 @@ function CreateQR() {
                   setLoading(false);
                 }}
               />
-              <ImageList
-                sx={{
-                  minWidth: { xs: 300, md: 300 },
-                  height: 200,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                cols={3}
-                rowHeight={140}
-              >
-                {links &&
-                  links.map((item) => {
-                    return (
-                      <ImageListItem
-                        key={item}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={item}
-                          width={100}
-                          height={100}
-                          className="image-link"
-                        />
-                      </ImageListItem>
-                    );
-                  })}
-              </ImageList>
+
+              {links.length === 0 ? (
+                <Box>
+                  <CloudUploadIcon color="primary" sx={{ fontSize: 100 }} />
+                  <Typography color={"#b0bec5"}>Chọn hình ảnh</Typography>
+                </Box>
+              ) : (
+                <ImageList
+                  sx={{
+                    minWidth: { xs: 300, md: 300 },
+                    height: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  cols={3}
+                  rowHeight={140}
+                >
+                  {links &&
+                    links.map((item) => {
+                      return (
+                        <ImageListItem
+                          key={item}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            src={item}
+                            width={100}
+                            height={100}
+                            className="image-link"
+                          />
+                        </ImageListItem>
+                      );
+                    })}
+                </ImageList>
+              )}
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -370,10 +383,10 @@ function CreateQR() {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-                border: "2px dashed #1475cf",
+                border: "1px dashed #1475cf",
                 borderRadius: "10px",
                 height: "200px",
-                width: {xs: "350px", md:"450px"},
+                width: { xs: "350px", md: "470px" },
                 cursor: "pointer",
               }}
               onClick={() => {
@@ -384,6 +397,7 @@ function CreateQR() {
                 className="input-field-certificates"
                 type="file"
                 accept="image/*"
+                required
                 multiple
                 hidden
                 onChange={async (e) => {
@@ -396,7 +410,6 @@ function CreateQR() {
                     alert(`Cannot upload files more than ${MAX_LENGTH}`);
                     return;
                   }
-
 
                   console.log(`arrayCertificates`, arrayCertificates);
                   setLoading(true);
@@ -414,38 +427,45 @@ function CreateQR() {
                   setLoading(false);
                 }}
               />
-              <ImageList
-                sx={{
-                  minWidth: { xs: 300, md: 300 },
-                  height: 200,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                cols={3}
-                rowHeight={164}
-              >
-                {linksCertificates &&
-                  linksCertificates.map((item) => {
-                    return (
-                      <ImageListItem
-                        key={item}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={item}
-                          width={100}
-                          height={100}
-                          className="image-link"
-                        />
-                      </ImageListItem>
-                    );
-                  })}
-              </ImageList>
+              {links.length === 0 ? (
+                <Box>
+                  <CloudUploadIcon color="primary" sx={{ fontSize: 100 }} />
+                  <Typography color={"#b0bec5"}>Chọn hình ảnh</Typography>
+                </Box>
+              ) : (
+                <ImageList
+                  sx={{
+                    minWidth: { xs: 300, md: 300 },
+                    height: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  cols={3}
+                  rowHeight={164}
+                >
+                  {linksCertificates &&
+                    linksCertificates.map((item) => {
+                      return (
+                        <ImageListItem
+                          key={item}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            src={item}
+                            width={100}
+                            height={100}
+                            className="image-link"
+                          />
+                        </ImageListItem>
+                      );
+                    })}
+                </ImageList>
+              )}
             </Box>
           </Grid>
           <Grid item xs={11}>
@@ -461,7 +481,9 @@ function CreateQR() {
                 multiline="true"
                 name="description"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
                 style={{ width: "100%", minHeight: "100px" }}
               />
             </Box>

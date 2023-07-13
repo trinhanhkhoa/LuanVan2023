@@ -211,12 +211,7 @@ function UpdateProduct() {
               justifyContent: "center",
             }}
           >
-            <QRCode
-              id="qr-gen"
-              level={"H"}
-              value={`${params.id}`}
-              size={180}
-            />
+            <QRCode id="qr-gen" level={"H"} value={`${params.id}`} size={180} />
           </Box>
           <Box
             sx={{
@@ -553,7 +548,6 @@ function UpdateProduct() {
                     return;
                   }
 
-                  
                   if (Array.from(arrayImages).length < 1) {
                     e.preventDefault();
                     return;
@@ -622,7 +616,9 @@ function UpdateProduct() {
                 maxRows={20}
                 aria-label="maximum height"
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
                 style={{ width: "100%", minHeight: "100px" }}
               />
             </Box>

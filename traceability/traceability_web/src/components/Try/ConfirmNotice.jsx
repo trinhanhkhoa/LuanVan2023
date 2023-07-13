@@ -25,7 +25,7 @@ function ConfirmNotice(props) {
       .then((res) => res.json())
       .then((data) => {
         setSnackbarState(true);
-
+        console.log(data)
         setTimeout(() => {
           window.location.href = "/list";
         }, 1500);
@@ -58,7 +58,7 @@ function ConfirmNotice(props) {
         justifyContent="center"
         alignItems="center"
       >
-        <Typography sx={{ mb: 3 }}> Do you want to delete it ? </Typography>
+        <Typography sx={{ mb: 3 }}> Bạn có muốn xóa không ? </Typography>
         <Box
           display="flex"
           flexDirection={"row"}
@@ -75,7 +75,7 @@ function ConfirmNotice(props) {
                 : deleteProduct(id);
             }}
           >
-            Confirm
+            Xác nhận
           </Button>
 
           <Button
@@ -88,17 +88,17 @@ function ConfirmNotice(props) {
                 : (window.location.href = `/list`);
             }}
           >
-            Cancel
+            Hủy
           </Button>
         </Box>
         <Snackbar open={snackbarState} autoHideDuration={1000}>
           {userType === "Admin" || userType === "admin" ? (
             <Alert severity="success" sx={{ width: "100%" }}>
-              Process is deleted
+              Quy trình đã được xóa
             </Alert>
           ) : (
             <Alert severity="success" sx={{ width: "100%" }}>
-              Product is deleted
+              Sản phẩm đã được xóa
             </Alert>
           )}
         </Snackbar>

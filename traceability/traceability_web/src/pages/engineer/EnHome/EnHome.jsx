@@ -145,7 +145,7 @@ export default function EnHome() {
           let dataSC = res.dataSC;
           // console.log(dataSC);
           dataSC = dataSC.filter((p) => p.status != -1);
-          // console.log(`product has user id: `, dataSC);
+          console.log(`product has user id: `, dataSC);
           setDataSC(dataSC);
           data = data.filter((p) => p.status != -1);
           // console.log(`product has user id: `, data);
@@ -219,7 +219,7 @@ export default function EnHome() {
     setOrderBy(id);
   };
 
-  return admin  ? (
+  return admin ? (
     <Box
       sx={{
         minHeight: "80vh",
@@ -258,10 +258,10 @@ export default function EnHome() {
             window.location.href = "/encreateprocess";
           }}
         >
-            {/* <QrCode2RoundedIcon
+          {/* <QrCode2RoundedIcon
               sx={{ fontSize: { xs: "5rem", md: "10rem" } }}
             /> */}
-            <Typography>Tạo quy trình</Typography>
+          <Typography>Tạo quy trình</Typography>
         </Button>
         <Button
           variant="contained"
@@ -414,7 +414,7 @@ export default function EnHome() {
                   </StyleTableCell>
                   <StyleTableCell>{item.address}</StyleTableCell>
                   <StyleTableCell>
-                    <Typography
+                    {/* <Typography
                       sx={{
                         width: 120,
                         textAlign: "center",
@@ -441,7 +441,42 @@ export default function EnHome() {
                         : item.status == 3
                         ? "Đã vận chuyển"
                         : "Lỗi"}
-                    </Typography>
+                    </Typography> */}
+                    <Button
+                      maxWidth={false}
+                      variant="contained"
+                      color={
+                        item.status == 0
+                          ? "success"
+                          : item.status == 1
+                          ? "warning"
+                          : item.status == 2
+                          ? "error"
+                          : item.status == 3
+                          ? "info"
+                          : "primary"
+                      }
+                      sx={{
+                        ml: 2,
+                        mb: 1,
+                        // padding: 0.5,
+                        minWidth: 100,
+                        borderRadius: 3,
+                        textAlign: "center",
+                        fontSize: { xs: "15px", md: "15px" },
+                      }}
+                    >
+                      {" "}
+                      {item.status == 0
+                        ? "Đã tạo"
+                        : item.status == 1
+                        ? "Đã cập nhật"
+                        : item.status == 2
+                        ? "Đã xóa"
+                        : item.status == 3
+                        ? "Đã vận chuyển"
+                        : "Lỗi"}{" "}
+                    </Button>
                   </StyleTableCell>
                 </StyledTableRow>
               ))}

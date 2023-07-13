@@ -20,6 +20,7 @@ import { useForm, Form } from "../../../components/Try/useForm";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -208,7 +209,7 @@ function TrackingForm(props) {
         },
         body: JSON.stringify({
           name,
-          time,
+          time: time.toLocaleDateString("en-GB"),
           images: links,
           description,
           notes,
@@ -398,6 +399,7 @@ function TrackingForm(props) {
                 type="file"
                 accept="image/*"
                 multiple
+                required
                 hidden
                 onChange={async (e) => {
                   e.preventDefault();
@@ -426,38 +428,45 @@ function TrackingForm(props) {
                   setLoading(false);
                 }}
               />
-              <ImageList
-                sx={{
-                  width: { xs: 400, md: 400 },
-                  height: 200,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                cols={3}
-                rowHeight={164}
-              >
-                {links &&
-                  links.map((item) => {
-                    return (
-                      <ImageListItem
-                        key={item}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                        }}
-                      >
-                        <img
-                          src={item}
-                          width={100}
-                          height={100}
-                          className="image-link"
-                        />
-                      </ImageListItem>
-                    );
-                  })}
-              </ImageList>
+              {links.length === 0 ? (
+                <Box>
+                  <CloudUploadIcon color="primary" sx={{ fontSize: 100 }} />
+                  <Typography color={"#b0bec5"}>Chọn hình ảnh</Typography>
+                </Box>
+              ) : (
+                <ImageList
+                  sx={{
+                    width: { xs: 400, md: 400 },
+                    height: 200,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  cols={3}
+                  rowHeight={164}
+                >
+                  {links &&
+                    links.map((item) => {
+                      return (
+                        <ImageListItem
+                          key={item}
+                          sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            src={item}
+                            width={100}
+                            height={100}
+                            className="image-link"
+                          />
+                        </ImageListItem>
+                      );
+                    })}
+                </ImageList>
+              )}
             </Box>
           </Box>
           <Box

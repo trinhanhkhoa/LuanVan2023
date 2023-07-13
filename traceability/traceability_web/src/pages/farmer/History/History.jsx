@@ -98,13 +98,14 @@ function History() {
         .then((res) => {
           let data = res.data;
           let dataSC = res.dataSC;
-          dataSC = dataSC.filter((p) => p.status == 3);
+          dataSC = dataSC.filter((p) => p.status == 3 || p.status == 2);
 
+          console.log(dataSC)
           data = data.filter((p) => p.userId == id);
 
           const filteredArray = data.filter((item1) =>
             dataSC.some(
-              (item2) => item2.pid === item1._id && item2.status === 3
+              (item2) => item2.pid === item1.productId && (item2.status === 3 || item2.status === 2)
             )
           );
 
@@ -166,7 +167,6 @@ function History() {
   }
 
   const recordsAfterPagingAndSorting = () => {
-    // console.log(`data filter`, dataFilter);
     return stableSort(
       filterFn.fn(dataFilter),
       getComparator(order, orderBy)
@@ -267,7 +267,7 @@ function History() {
                           <IconButton
                             color="info"
                             onClick={() => {
-                              window.location.href = `/product/${item._id}`;
+                              window.location.href = `/product/${item.productId}`;
                             }}
                           >
                             <SearchIcon />
@@ -287,6 +287,7 @@ function History() {
             </TableBody>
           </Table>
           <TablePagination
+            sx={{ marginTop: 2, alignItems: "center"}}
             component="div"
             page={page}
             rowsPerPageOptions={pages}

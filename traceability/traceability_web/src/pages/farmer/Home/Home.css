@@ -1,13 +1,3 @@
-.home {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  /* margin-top: 5rem; */
-  min-height: 120vh;
-  /* min-width: 100%; */
-  /* margin-bottom: 10rem; */
-}
-
 .carousel-home .carousel {
   text-align: center;
   margin-top: 10px;
@@ -23,29 +13,4 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-}
-
-.btn-createQR:hover,.btn-process:hover {
-  background-color: #2ECC71;
-  transition: background-color 350ms ease-out;
-}
-
-.link-icon:hover {
-  color: #fff;
-}
-
-.qr-icon-home, .process-icon {
-  font-size: 10rem;
-}
-
-.check-icon {
-  color: rgb(8, 238, 27);
-  width: 30px;
-  height: 30px;
-}
-
-.close-icon {
-  color: red;
-  width: 30px;
-  height: 30px;
 }
