@@ -98,14 +98,18 @@ function History() {
         .then((res) => {
           let data = res.data;
           let dataSC = res.dataSC;
-          dataSC = dataSC.filter((p) => p.status == 3 || p.status == 2);
+          // dataSC = dataSC.filter((p) => p.status == 3 || p.status == 2);
+          dataSC = dataSC.filter((p) => p.status == 3);
 
-          console.log(dataSC)
+          console.log(dataSC);
           data = data.filter((p) => p.userId == id);
 
           const filteredArray = data.filter((item1) =>
             dataSC.some(
-              (item2) => item2.pid === item1.productId && (item2.status === 3 || item2.status === 2)
+              (item2) =>
+                item2.pid === item1.productId &&
+                // (item2.status === 3 || item2.status === 2)
+                item2.status === 3
             )
           );
 
@@ -204,8 +208,11 @@ function History() {
       }}
     >
       <Loading loading={loading} />
-      <Typography variant="h3" sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}>
-        Lịch sử
+      <Typography
+        variant="h3"
+        sx={{ fontSize: { xs: "20px", md: "35px" }, mb: 2 }}
+      >
+        Thu hoạch
       </Typography>
       <Card sx={{ p: 3, borderRadius: "10px" }}>
         <Toolbar>
@@ -287,7 +294,7 @@ function History() {
             </TableBody>
           </Table>
           <TablePagination
-            sx={{ marginTop: 2, alignItems: "center"}}
+            sx={{ marginTop: 2, alignItems: "center" }}
             component="div"
             page={page}
             rowsPerPageOptions={pages}

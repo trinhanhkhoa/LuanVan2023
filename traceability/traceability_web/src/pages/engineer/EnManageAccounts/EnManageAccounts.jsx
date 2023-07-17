@@ -93,7 +93,7 @@ function EnManageAccounts() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data, "userRegister");
+        // console.log(data.data, "userRegister");
         setData(data.data);
         setLoading(false);
       });

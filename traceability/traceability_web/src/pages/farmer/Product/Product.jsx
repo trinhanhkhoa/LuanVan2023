@@ -485,7 +485,7 @@ function Product(props) {
                       Thêm nhật ký
                     </Button>
                     <Popup
-                      title="Update Tracking"
+                      title="Thêm nhật ký"
                       openPopup={openPopup}
                       setOpenPopup={setOpenPopup}
                     >
