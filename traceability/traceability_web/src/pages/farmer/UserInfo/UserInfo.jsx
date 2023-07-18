@@ -157,7 +157,7 @@ export default function UserInfo() {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
               >
-                <UpdateProfile/>
+                <UpdateProfile />
               </Popup>
             </Box>
 
@@ -243,7 +243,7 @@ export default function UserInfo() {
                 openPopup={openPopup}
                 setOpenPopup={setOpenPopup}
               >
-                <UpdateProfile/>
+                <UpdateProfile />
               </Popup>
             </Box>
           </Card>

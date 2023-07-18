@@ -233,9 +233,8 @@ function EnManageAccounts() {
             </TableHead>
             <TableBody>
               {recordsAfterPagingAndSorting().map((item, index) =>
-                item.userType === "User" ||
-                item.userType === "user" ||
-                item.userType === "Farmer" ? (
+                item.userType === "Người dùng" ||
+                item.userType === "Nông dân" ? (
                   <StyledTableRow key={index + 1}>
                     <StyledTableCell
                       sx={{ display: { xs: "none", md: "table-cell" } }}

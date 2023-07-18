@@ -131,8 +131,7 @@ export default function PersistentDrawerLeft() {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-      });
+      .then((data) => {});
   };
 
   const getUser = () => {
@@ -170,7 +169,7 @@ export default function PersistentDrawerLeft() {
         open={openMenu}
         // color={userType == "admin" ? "#90caf9" : "success"}
         sx={
-          (userType == "admin" || userType == "Admin")
+          userType == "admin" || userType == "Admin"
             ? { backgroundColor: "#fff59d", color: "#000" }
             : { backgroundColor: "#aed581", color: "#000" }
         }
@@ -186,15 +185,23 @@ export default function PersistentDrawerLeft() {
             <MenuRoundedIcon />
           </IconButton>
           <Box
-            sx={{ display: { xs: "none", sm: "flex" }, cursor: "pointer", flexDirection: "row", justifyContent: "center", alignItems: "center" }}
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              cursor: "pointer",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
             onClick={() => {
-              userType == "User" || userType == "Farmer" || userType == "user"
+              userType == "Nông dân"
                 ? (window.location.href = "/home")
                 : (window.location.href = "/enhome");
             }}
           >
             <img src={logo} width={80} height={80} />
-            <Typography variant="h7" sx={{ width: 350}}>TRACEABILITY AGRICULTURE</Typography>
+            <Typography variant="h7" sx={{ width: 350 }}>
+              TRACEABILITY AGRICULTURE
+            </Typography>
           </Box>
 
           <Search>{/* <InputBase placeholder="search..." /> */}</Search>

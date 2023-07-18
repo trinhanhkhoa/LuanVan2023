@@ -106,13 +106,13 @@ export default function EnHome() {
 
           let getAmountUsers = data.data;
           getAmountUsers = getAmountUsers.filter(
-            (i) => i.userType == "user" || i.userType == "User"
+            (i) => i.userType == "Người dùng"
           );
           setUser(getAmountUsers);
 
           let getAmountFarmers = data.data;
           getAmountFarmers = getAmountFarmers.filter(
-            (i) => i.userType == "farmer" || i.userType == "Farmer"
+            (i) => i.userType == "Nông dân"
           );
           setFarmer(getAmountFarmers);
           // // setFarmer(getAmountFarmers);
@@ -332,7 +332,7 @@ export default function EnHome() {
         <Grid item xs={12} sm={6} md={3}>
           <AppWidgetSummary
             title="Tổng số sản phẩm"
-            total={data.length}
+            total={dataSC.length}
             icon={"fluent-emoji:watermelon"}
             sx={{
               boxShadow:
