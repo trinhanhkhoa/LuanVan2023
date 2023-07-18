@@ -45,7 +45,7 @@ export default function FreeSoloCreateOptionDialog() {
           } else {
             setValue(newValue);
           }
-          console.log(newValue);
+          // console.log(newValue);
         }}
         filterOptions={(options, params) => {
           const filtered = filter(options, params);

@@ -356,7 +356,7 @@ function UpdateProduct() {
                   value={processId}
                   onChange={(e) => {
                     setProcessId(e.target.value);
-                    console.log(e.target.value);
+                    // console.log(e.target.value);
                   }}
                 >
                   {processName &&
@@ -383,7 +383,7 @@ function UpdateProduct() {
                   value={processId}
                   onChange={(e) => {
                     setProcessId(e.target.value);
-                    console.log(e.target.value);
+                    // console.log(e.target.value);
                   }}
                 >
                   {processName &&
@@ -458,7 +458,7 @@ function UpdateProduct() {
                     return;
                   }
 
-                  console.log(`arrayImages`, arrayImages);
+                  // console.log(`arrayImages`, arrayImages);
 
                   setLoading(true);
 
@@ -553,7 +553,7 @@ function UpdateProduct() {
                     return;
                   }
 
-                  console.log(`arrayImages`, arrayImages);
+                  // console.log(`arrayImages`, arrayImages);
 
                   setLoading(true);
 

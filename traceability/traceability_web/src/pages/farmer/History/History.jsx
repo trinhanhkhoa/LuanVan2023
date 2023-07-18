@@ -101,7 +101,7 @@ function History() {
           // dataSC = dataSC.filter((p) => p.status == 3 || p.status == 2);
           dataSC = dataSC.filter((p) => p.status == 3);
 
-          console.log(dataSC);
+          // console.log(dataSC);
           data = data.filter((p) => p.userId == id);
 
           const filteredArray = data.filter((item1) =>
@@ -187,7 +187,7 @@ function History() {
     let target = e.target;
     setFilterFn({
       fn: (items) => {
-        console.log(target);
+        // console.log(target);
         if (e.target.value == "") return items;
         else
           return items.filter((x) =>

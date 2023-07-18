@@ -74,12 +74,12 @@ export default function ProductTracking(props) {
         .then((res) => {
           let data = res.data;
           let dataSC = res.dataSC;
-          console.log(data);
+          // console.log(data);
 
-          console.log(`dataSC`, dataSC);
+          // console.log(`dataSC`, dataSC);
 
           data = data.filter((p) => p.productId == id);
-          console.log(data);
+          // console.log(data);
           setData(data);
         });
 

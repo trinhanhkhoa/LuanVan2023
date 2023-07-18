@@ -5,10 +5,9 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { Box, TextareaAutosize } from "@mui/material";
 
 export default function StageHarvest({ data, setData }) {
-
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
@@ -24,7 +23,12 @@ export default function StageHarvest({ data, setData }) {
             placeholder="VD: Thu hoạch"
             fullWidth
             variant="outlined"
-            onChange={(e) => setData({ ...data, stageHarvest: { ...data.stageHarvest, name: e.target.value } })}
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageHarvest: { ...data.stageHarvest, name: e.target.value },
+              })
+            }
             value={data.stageHarvest.name}
           />
         </Grid>
@@ -32,14 +36,33 @@ export default function StageHarvest({ data, setData }) {
           <label>
             Mô tả <b className="requireDot">*</b>
           </label>
-          <TextField
+          <TextareaAutosize
+            required
+            maxRows={20}
+            aria-label="maximum height"
+            multiline="true"
+            name="description"
+            placeholder="Mô tả thêm về giai đoạn"
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageHarvest: {
+                  ...data.stageHarvest,
+                  description: e.target.value,
+                },
+              })
+            }
+            value={data.stageHarvest.description}
+            style={{ width: "100%", minHeight: "100px" }}
+          />
+          {/* <TextField
             required
             placeholder="Mô tả thêm về giai đoạn"
             fullWidth
             variant="outlined"
             onChange={(e) => setData({ ...data, stageHarvest: { ...data.stageHarvest, description: e.target.value } })}
             value={data.stageHarvest.description}
-          />
+          /> */}
         </Grid>
         <Grid item xs={12}>
           <label>
@@ -50,7 +73,15 @@ export default function StageHarvest({ data, setData }) {
             placeholder="VD: 10 tấn"
             fullWidth
             variant="outlined"
-            onChange={(e) => setData({ ...data, stageHarvest: { ...data.stageHarvest, quantity: e.target.value } })}
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageHarvest: {
+                  ...data.stageHarvest,
+                  quantity: e.target.value,
+                },
+              })
+            }
             value={data.stageHarvest.quantity}
           />
         </Grid>

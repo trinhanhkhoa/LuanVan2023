@@ -5,10 +5,9 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { Box, TextareaAutosize } from "@mui/material";
 
 export default function StagePlantCare({ data, setData }) {
-
   return (
     <Box>
       <Typography variant="h6" gutterBottom>
@@ -40,7 +39,26 @@ export default function StagePlantCare({ data, setData }) {
           <label>
             Mô tả <b className="requireDot">*</b>
           </label>
-          <TextField
+          <TextareaAutosize
+            required
+            maxRows={20}
+            aria-label="maximum height"
+            multiline="true"
+            name="description"
+            placeholder="Mô tả thêm về giai đoạn"
+            onChange={(e) =>
+              setData({
+                ...data,
+                stagePlantCare: {
+                  ...data.stagePlantCare,
+                  description: e.target.value,
+                },
+              })
+            }
+            value={data.stagePlantCare.description}
+            style={{ width: "100%", minHeight: "100px" }}
+          />
+          {/* <TextField
             required
             placeholder="Mô tả thêm về giai đoạn"
             fullWidth
@@ -55,7 +73,7 @@ export default function StagePlantCare({ data, setData }) {
               })
             }
             value={data.stagePlantCare.description}
-          />
+          /> */}
         </Grid>
         <Grid item xs={12} sm={6}>
           <label>

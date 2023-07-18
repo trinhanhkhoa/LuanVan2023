@@ -138,7 +138,7 @@ function Product(props) {
       setProcessId(data.data.processId);
       setImagesCertificates(data.data.certificates);
 
-      console.log(data.dataBC);
+      // console.log(data.dataBC);
       if (data.dataBC[6] == 0) setStatus("Đã tạo");
       else if (data.dataBC[6] == 1) setStatus("Đã cập nhật");
       else if (data.dataBC[6] == 2) setStatus("Đã xóa");

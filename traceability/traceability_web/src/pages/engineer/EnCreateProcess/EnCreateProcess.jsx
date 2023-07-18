@@ -7,6 +7,7 @@ import {
   Container,
   Step,
   Stepper,
+  Snackbar,
   StepLabel,
   Paper,
   Typography,
@@ -23,6 +24,7 @@ import StageBloom from "../Stages/StageBloom";
 import StageCover from "../Stages/StageCover";
 import StageHarvest from "../Stages/StageHarvest";
 import StageSell from "../Stages/StageSell";
+import MuiAlert from "@mui/material/Alert";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -244,6 +246,11 @@ function EnCreateProcess() {
           </Paper>
         </Container>
       </ThemeProvider>
+      <Snackbar open={snackbarState} autoHideDuration={1000}>
+        <Alert severity="success" sx={{ width: "100%" }}>
+          Tạo quy trình thành công !
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

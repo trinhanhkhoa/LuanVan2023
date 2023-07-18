@@ -5,10 +5,9 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
-import { Box } from "@mui/material";
+import { Box, TextareaAutosize } from "@mui/material";
 
 export default function StageCover({ data, setData }) {
-
   return (
     <Box>
       <Typography variant="h4" gutterBottom>
@@ -24,7 +23,12 @@ export default function StageCover({ data, setData }) {
             placeholder="VD: Đậy trái"
             fullWidth
             variant="outlined"
-            onChange={(e) => setData({ ...data, stageCover: { ...data.stageCover, name: e.target.value } })}
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageCover: { ...data.stageCover, name: e.target.value },
+              })
+            }
             value={data.stageCover.name}
           />
         </Grid>
@@ -32,14 +36,30 @@ export default function StageCover({ data, setData }) {
           <label>
             Mô tả <b className="requireDot">*</b>
           </label>
-          <TextField
+          <TextareaAutosize
+            required
+            maxRows={20}
+            aria-label="maximum height"
+            multiline="true"
+            name="description"
+            placeholder="Mô tả thêm về giai đoạn"
+            onChange={(e) =>
+              setData({
+                ...data,
+                stageCover: { ...data.stageCover, description: e.target.value },
+              })
+            }
+            value={data.stageCover.description}
+            style={{ width: "100%", minHeight: "100px" }}
+          />
+          {/* <TextField
             required
             placeholder="Mô tả thêm về giai đoạn"
             fullWidth
             variant="outlined"
             onChange={(e) => setData({ ...data, stageCover: { ...data.stageCover, description: e.target.value } })}
             value={data.stageCover.description}
-          />
+          /> */}
         </Grid>
       </Grid>
     </Box>

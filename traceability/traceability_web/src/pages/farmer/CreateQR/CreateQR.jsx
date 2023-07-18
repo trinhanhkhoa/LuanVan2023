@@ -223,7 +223,7 @@ function CreateQR() {
                 value={processId}
                 onChange={(e) => {
                   setProcessId(e.target.value);
-                  console.log(e.target.value);
+                  // console.log(e.target.value);
                 }}
               >
                 {data &&
@@ -313,7 +313,7 @@ function CreateQR() {
                     return;
                   }
 
-                  console.log(`arrayImages`, arrayImages);
+                  // console.log(`arrayImages`, arrayImages);
 
                   setLoading(true);
 
@@ -411,7 +411,7 @@ function CreateQR() {
                     return;
                   }
 
-                  console.log(`arrayCertificates`, arrayCertificates);
+                  // console.log(`arrayCertificates`, arrayCertificates);
                   setLoading(true);
 
                   try {

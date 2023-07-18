@@ -119,7 +119,7 @@ function EnUserAccount() {
           let data = res.data;
 
           data = data.filter((p) => p.userId == params.id);
-          console.log(data);
+          // console.log(data);
 
           setData(data);
         });

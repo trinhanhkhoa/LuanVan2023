@@ -29,7 +29,7 @@ function UpdateProfile(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         setName(data.data.name);
         setEmail(data.data.email);
         // setUserType(data.data.userType);
@@ -58,7 +58,7 @@ function UpdateProfile(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setLoading(false);
         window.location.href = "/profile";
       });

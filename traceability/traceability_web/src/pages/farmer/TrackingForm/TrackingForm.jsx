@@ -156,7 +156,7 @@ function TrackingForm(props) {
     e.preventDefault();
 
     setLoading(true);
-    console.log("SUBMITING!!!");
+    // console.log("SUBMITING!!!");
 
     await fetch(
       `${process.env.REACT_APP_API}/tracking/add-tracking/${params.id}`,
@@ -194,7 +194,7 @@ function TrackingForm(props) {
     e.preventDefault();
 
     setLoading(true);
-    console.log("DELIVERING!!!");
+    // console.log("DELIVERING!!!");
 
     await fetch(
       `${process.env.REACT_APP_API}/tracking/deliveried/${params.id}`,

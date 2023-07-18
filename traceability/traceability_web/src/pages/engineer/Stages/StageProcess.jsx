@@ -39,7 +39,7 @@ export default function StageProcess({ data, setData }) {
 
   const handleChange = (date) => {
     const formattedDate = date.toLocaleDateString("en-GB");
-    console.log(formattedDate);
+    // console.log(formattedDate);
     setTime(date);
     setData({
       ...data,
@@ -50,7 +50,7 @@ export default function StageProcess({ data, setData }) {
     });
   };
 
-  console.log(data.stageProcess.images);
+  // console.log(data.stageProcess.images);
   const CustomInput = ({ value, onClick }) => (
     <TextField
       type="text"

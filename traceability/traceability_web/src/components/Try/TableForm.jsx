@@ -62,7 +62,7 @@ const TableForm = () => {
     })
       .then((res) => res.json() )
       .then((data) => {
-        console.log("token", data)
+        // console.log("token", data)
       });
   }
 
@@ -75,7 +75,7 @@ const TableForm = () => {
     })  
       .then((res) => res.json() )
       .then((data) => {
-        console.log(data.data, "list products");
+        // console.log(data.data, "list products");
         setData(data.data);
       });
   }

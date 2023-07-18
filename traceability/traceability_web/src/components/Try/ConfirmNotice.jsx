@@ -25,7 +25,7 @@ function ConfirmNotice(props) {
       .then((res) => res.json())
       .then((data) => {
         setSnackbarState(true);
-        console.log(data)
+        // console.log(data)
         setTimeout(() => {
           window.location.href = "/list";
         }, 1500);

@@ -9,6 +9,7 @@ import {
   Step,
   Stepper,
   StepLabel,
+  Snackbar,
   Paper,
   Typography,
   CssBaseline,
@@ -27,12 +28,17 @@ import StageBloom from "../Stages/StageBloom";
 import StageCover from "../Stages/StageCover";
 import StageHarvest from "../Stages/StageHarvest";
 import StageSell from "../Stages/StageSell";
+import MuiAlert from "@mui/material/Alert";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const defaultTheme = createTheme();
 
 function EnUpdateProcess() {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [snackbarState, setSnackbarState] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [data, setData] = useState({
     stageProcess: {
@@ -71,6 +77,8 @@ function EnUpdateProcess() {
   };
 
   const handleUpdate = async () => {
+    setLoading(true);
+
     await fetch(
       `${process.env.REACT_APP_API}/process/update-process/${params.id}`,
       {
@@ -123,7 +131,9 @@ function EnUpdateProcess() {
     )
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
+        setLoading(false);
+
+        setSnackbarState(true);
         window.location.href = "/listofprocesses";
       });
   };
@@ -134,7 +144,7 @@ function EnUpdateProcess() {
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
-    console.log("data", data);
+    // console.log("data", data);
   };
 
   const handleBack = () => {
@@ -173,7 +183,7 @@ function EnUpdateProcess() {
   };
 
   return (
-    <Container sx={{ minHeight: "80vh",}}>
+    <Container sx={{ minHeight: "80vh" }}>
       <ThemeProvider theme={defaultTheme}>
         <CssBaseline />
         <Container component="main" maxWidth="lg" sx={{ mb: 4 }}>
@@ -239,6 +249,11 @@ function EnUpdateProcess() {
           </Paper>
         </Container>
       </ThemeProvider>
+      <Snackbar open={snackbarState} autoHideDuration={1000}>
+        <Alert severity="success" sx={{ width: "100%" }}>
+          Cập nhật quy trình thành công !
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

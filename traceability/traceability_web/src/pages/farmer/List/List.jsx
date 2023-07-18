@@ -113,8 +113,8 @@ function List() {
           dataSC = dataSC.filter((p) => p.status != 3 || p.status != 2);
 
           data = data.filter((p) => p.userId == id);
-          console.log(data);
-          console.log(dataSC);
+          // console.log(data);
+          // console.log(dataSC);
 
           const filteredArray = data.filter((item1) =>
             dataSC.some(
