@@ -94,7 +94,7 @@ export default function SignIn() {
         setLoading(false);
 
         if (data.userType == "Admin" || data.userType == "admin") {
-          console.log("user json: ", data);
+          // console.log("user json: ", data);
           window.localStorage.setItem("user", JSON.stringify(data));
           window.localStorage.setItem("userId", data._id);
           window.localStorage.setItem("token", data.token);
@@ -107,10 +107,10 @@ export default function SignIn() {
             window.location.href = "/enhome";
           }, 1000);
         } else if (
-          data.userType == "User" ||
-          data.userType == "user" ||
-          data.userType == "Farmer" ||
-          data.userType == "farmer"
+          // data.userType == "User" ||
+          // data.userType == "user" ||
+          // data.userType == "Nông dân" ||
+          data.userType == "Nông dân"
         ) {
           window.localStorage.setItem("user", JSON.stringify(data));
           window.localStorage.setItem("userId", data._id);

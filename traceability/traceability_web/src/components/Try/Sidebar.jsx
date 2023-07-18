@@ -65,7 +65,7 @@ const Sidebar = () => {
                 <ListItemIcon>
                   <ManageSearchIcon />
                 </ListItemIcon>
-                <ListItemText primary="Lịch sử" />
+                <ListItemText primary="Thu hoạch" />
               </ListItemButton>
             </ListItem>
           ) : null}

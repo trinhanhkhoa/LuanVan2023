@@ -92,7 +92,7 @@ export default function SignUp() {
     if (userType == "Admin" && secretKey != "12345") {
       alert("Invalid secret key !!!");
     } else {
-      console.log(name, email, password);
+      // console.log(name, email, password);
       fetch(`${process.env.REACT_APP_API}/signup`, {
         method: "POST",
         crossDomain: true,
@@ -114,7 +114,7 @@ export default function SignUp() {
         })
         .then((data) => {
           window.location.href = "/";
-          console.log(userType);
+          // console.log(userType);
         });
     }
   };
@@ -164,10 +164,10 @@ export default function SignUp() {
                   aria-labelledby="demo-row-radio-buttons-group-label"
                   name="row-radio-buttons-group"
                   sx={{ ml: 2 }}
-                  defaultValue={"Farmer"}
+                  defaultValue={"Nông dân"}
                 >
                   <FormControlLabel
-                    value="Farmer"
+                    value="Nông dân"
                     control={<Radio />}
                     onChange={(e) => setUserType(e.target.value)}
                     label="Nông dân"
