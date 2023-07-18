@@ -1,0 +1,182 @@
+{
+	"_format": "hh-sol-artifact-1",
+	"contractName": "Api",
+	"sourceName": "contracts/Api.sol",
+	"abi": [
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "pid",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "uid",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "id",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "name",
+					"type": "string"
+				}
+			],
+			"name": "addTracking",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "pid",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "uid",
+					"type": "string"
+				}
+			],
+			"name": "createProduct",
+			"outputs": [],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+		},
+		{
+			"inputs": [],
+			"name": "getAllListProducts",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "string",
+							"name": "id",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "uid",
+							"type": "string"
+						}
+					],
+					"internalType": "struct Api.AllProducts[]",
+					"name": "",
+					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "uid",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "pid",
+					"type": "string"
+				}
+			],
+			"name": "getProductID",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "string",
+							"name": "pid",
+							"type": "string"
+						},
+						{
+							"components": [
+								{
+									"internalType": "string",
+									"name": "uid",
+									"type": "string"
+								},
+								{
+									"internalType": "string",
+									"name": "id",
+									"type": "string"
+								},
+								{
+									"internalType": "string",
+									"name": "name",
+									"type": "string"
+								},
+								{
+									"internalType": "string",
+									"name": "pid",
+									"type": "string"
+								}
+							],
+							"internalType": "struct Api.Tracking[]",
+							"name": "trackingList",
+							"type": "tuple[]"
+						}
+					],
+					"internalType": "struct Api.Product",
+					"name": "",
+					"type": "tuple"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "uid",
+					"type": "string"
+				}
+			],
+			"name": "getTrackingList",
+			"outputs": [
+				{
+					"components": [
+						{
+							"internalType": "string",
+							"name": "uid",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "id",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "name",
+							"type": "string"
+						},
+						{
+							"internalType": "string",
+							"name": "pid",
+							"type": "string"
+						}
+					],
+					"internalType": "struct Api.Tracking[]",
+					"name": "",
+					"type": "tuple[]"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+	]
+}
