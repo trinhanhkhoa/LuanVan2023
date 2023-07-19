@@ -373,9 +373,7 @@ function CreateQR() {
             </Box>
           </Grid>
           <Grid item xs={12} sm={6}>
-            <label>
-              Hình ảnh chứng nhận <b className="requireDot">*</b>
-            </label>
+            <label>Hình ảnh chứng nhận</label>
 
             <Box
               sx={{
@@ -397,7 +395,6 @@ function CreateQR() {
                 className="input-field-certificates"
                 type="file"
                 accept="image/*"
-                required
                 multiple
                 hidden
                 onChange={async (e) => {
