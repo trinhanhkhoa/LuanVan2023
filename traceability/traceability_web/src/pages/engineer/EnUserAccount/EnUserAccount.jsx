@@ -21,6 +21,7 @@ import {
   TableSortLabel,
   TextField,
   Toolbar,
+  Tooltip,
   Typography,
   tableCellClasses,
 } from "@mui/material";
@@ -30,14 +31,16 @@ import Loading from "../../../components/Loading";
 import Popup from "../../../components/Popup";
 import ProductTracking from "../../farmer/ProductTracking/ProductTracking";
 import Product from "../../farmer/Product/Product";
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import SearchIcon from '@mui/icons-material/Search';
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import SearchIcon from "@mui/icons-material/Search";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const headCell = [
   { id: "id", label: "STT", disableSorting: true },
   { id: "name", label: "Sản phẩm" },
   { id: "length", label: "Nhật ký" },
   { id: "time", label: "Ngày tạo" },
+  { id: "status", label: "Trạng thái" },
   { id: "button", label: "" },
 ];
 
@@ -63,6 +66,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 function EnUserAccount() {
   const [data, setData] = useState([]);
+  const [dataSC, setDataSC] = useState([]);
+
   const [dataUser, setDataUser] = useState([]);
   const [idPopup, setIdPopup] = useState("");
   const [processIdPopup, setProcessIdPopup] = useState("");
@@ -100,7 +105,7 @@ function EnUserAccount() {
       .then((res) => res.json())
       .then((res) => res.data);
     setDataUser(data);
-    setLength(data.products.length)
+    setLength(data.products.length);
     // console.log(data);
   };
 
@@ -115,12 +120,26 @@ function EnUserAccount() {
       })
         .then((res) => res.json())
         .then((res) => {
-          // console.log(res.data);
+          // console.log(res.dataSC);
           let data = res.data;
 
           data = data.filter((p) => p.userId == params.id);
           // console.log(data);
 
+          let dataSC = res.dataSC;
+          dataSC = dataSC.filter((p) => p.uid == params.id);
+          console.log(`SC: `, dataSC);
+
+          data.forEach((item) => {
+            const statusItem = dataSC.find(
+              (scItem) => scItem.pid === item.productId
+            );
+            item.status = statusItem ? statusItem.status : -1;
+          });
+
+          console.log(`data: `, data);
+
+          setDataSC(dataSC);
           setData(data);
         });
       setLoading(false);
@@ -243,9 +262,11 @@ function EnUserAccount() {
               Vai trò: <b>{dataUser.userType}</b>
             </Typography>
             <Typography>
-              Số lượng sản phẩm: <b>{length}</b>
+              Số lượng sản phẩm: <b>{length} </b>
+              <Tooltip title="Sản phẩm đang trồng và thu hoạch">
+                <InfoOutlinedIcon />
+              </Tooltip>
             </Typography>
-            
           </Card>
           <Toolbar>
             <TextField
@@ -315,6 +336,43 @@ function EnUserAccount() {
                   >
                     {item.time}
                   </StyledTableCell>
+                  <StyledTableCell>
+                    <Button
+                      maxWidth={false}
+                      variant="contained"
+                      color={
+                        item.status == 0
+                          ? "success"
+                          : item.status == 1
+                          ? "warning"
+                          : item.status == 2
+                          ? "error"
+                          : item.status == 3
+                          ? "info"
+                          : "primary"
+                      }
+                      sx={{
+                        ml: 2,
+                        mb: 1,
+                        // padding: 0.5,
+                        minWidth: 100,
+                        borderRadius: 3,
+                        textAlign: "center",
+                        fontSize: { xs: "15px", md: "15px" },
+                      }}
+                    >
+                      {" "}
+                      {item.status == 0
+                        ? "Đã tạo"
+                        : item.status == 1
+                        ? "Đã cập nhật"
+                        : item.status == 2
+                        ? "Đã xóa"
+                        : item.status == 3
+                        ? "Đã vận chuyển"
+                        : "Lỗi"}{" "}
+                    </Button>
+                  </StyledTableCell>
                   <StyledTableCell align="center">
                     <IconButton
                       sx={{ mr: 2 }}
@@ -326,7 +384,7 @@ function EnUserAccount() {
                         setOpenPopupProduct(true);
                       }}
                     >
-                      <SearchIcon/>
+                      <SearchIcon />
                     </IconButton>
                     <Popup
                       title="Nhật ký"
@@ -344,7 +402,7 @@ function EnUserAccount() {
                         setOpenPopupTracking(true);
                       }}
                     >
-                      <MenuBookIcon/>
+                      <MenuBookIcon />
                     </IconButton>
                     <Popup
                       title="Nhật ký"

@@ -145,7 +145,7 @@ export default function EnHome() {
           let dataSC = res.dataSC;
           // console.log(dataSC);
           dataSC = dataSC.filter((p) => p.status != -1);
-          console.log(`product has user id: `, dataSC);
+          // console.log(`product has user id: `, dataSC);
           setDataSC(dataSC);
           data = data.filter((p) => p.status != -1);
           // console.log(`product has user id: `, data);

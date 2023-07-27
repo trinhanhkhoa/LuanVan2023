@@ -29,8 +29,9 @@ import AppWidgetSummary from "../../../components/HeaderCard/HeaderCard";
 const headCell = [
   { id: "id", label: "STT", disableSorting: true },
   { id: "name", label: "Tên sản phẩm" },
-  // { id: "status", label: "Status (Is updated ?)" },
+  { id: "pid", label: "ID sản phẩm" },
   { id: "time", label: "Ngày tạo" },
+  { id: "status", label: "Trạng thái" },
 ];
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -111,10 +112,11 @@ export default function Home() {
         },
       }
     ).then((res) => res.json());
+    let dataSC = data.dataSC;
     let res = data.data;
 
-    res = res.filter((p) => p.userId == id);
-    // console.log(`product has user id: `, res);
+    dataSC = dataSC.filter((p) => p.uid == id);
+    console.log(`product has user id: `, dataSC);
 
     let tracking = res;
     tracking = tracking.filter((t) => t.tracking.length != 0);
@@ -122,7 +124,7 @@ export default function Home() {
       temp += track.tracking.length;
     });
     setLength(temp);
-    setData(res);
+    setData(dataSC);
 
     setLoading(false);
   };
@@ -327,6 +329,11 @@ export default function Home() {
               {headCell.map((item) => (
                 <StyledTableCell
                   key={item.id}
+                  sx={
+                    item.label == "ID sản phẩm" || item.label == "Trạng thái"
+                      ? { display: { xs: "none", md: "table-cell" } }
+                      : null
+                  }
                   sortDirection={orderBy === item.id ? order : false}
                 >
                   {item.disableSorting ? (
@@ -348,8 +355,52 @@ export default function Home() {
                 <StyledTableRow key={index + 1}>
                   <StyledTableCell>{index + 1}</StyledTableCell>
                   <StyledTableCell>{item.name}</StyledTableCell>
-                  {/* <StyledTableCell>{item.status}</StyledTableCell> */}
+
+                  <StyledTableCell
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    {item.pid}
+                  </StyledTableCell>
                   <StyledTableCell>{item.time}</StyledTableCell>
+                  <StyledTableCell
+                    sx={{ display: { xs: "none", md: "table-cell" } }}
+                  >
+                    <Button
+                      maxWidth={false}
+                      variant="contained"
+                      color={
+                        item.status == 0
+                          ? "success"
+                          : item.status == 1
+                          ? "warning"
+                          : item.status == 2
+                          ? "error"
+                          : item.status == 3
+                          ? "info"
+                          : "primary"
+                      }
+                      sx={{
+                        ml: 2,
+                        mb: 1,
+                        // padding: 0.5,
+                        minWidth: 100,
+                        borderRadius: 3,
+                        textAlign: "center",
+                        fontSize: { xs: "15px", md: "15px" },
+                      }}
+                    >
+                      {" "}
+                      {item.status == 0
+                        ? "Đã tạo"
+                        : item.status == 1
+                        ? "Đã cập nhật"
+                        : item.status == 2
+                        ? "Đã xóa"
+                        : item.status == 3
+                        ? "Đã vận chuyển"
+                        : "Lỗi"}{" "}
+                    </Button>
+                  </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
